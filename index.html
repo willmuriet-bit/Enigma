@@ -30,12 +30,11 @@ body{
     z-index:0;
 }
 
-/* CENTRE */
 .center{
     position:relative;
     z-index:2;
     text-align:center;
-    margin-top:6vh; /* pavé remonté */
+    margin-top:6vh;
 }
 
 /* POINTS */
@@ -60,16 +59,15 @@ body{
     transform:scale(1.2);
 }
 
-/* KEYPAD PRINCIPAL */
+/* KEYPAD */
 .keypad{
     display:grid;
-    grid-template-columns:repeat(3, 1fr);
-    gap:10px 18px; /* rapproché */
-    justify-items:center;
-    padding:0 18vw;
+    grid-template-columns:repeat(3, 75px);
+    justify-content:center;
+    gap:12px 18px;
 }
 
-/* BOUTONS (apparence inchangée) */
+/* BOUTONS NUMERIQUES */
 .key{
     width:75px;
     height:75px;
@@ -85,8 +83,10 @@ body{
     overflow:hidden;
 }
 
-/* 🔵 ANIMATION CIRCULAIRE LED */
-.key::after{
+/* 🔵 ANIMATION CIRCULAIRE EXACTE */
+.key::after,
+.delete::after,
+.ok::after{
     content:"";
     position:absolute;
     inset:0;
@@ -95,7 +95,7 @@ body{
     opacity:0;
 }
 
-.key.active::after{
+.active::after{
     animation:circlePulse 0.4s ease;
 }
 
@@ -104,26 +104,27 @@ body{
     100%{opacity:0; transform:scale(1.4);}
 }
 
-/* Ligne du bas alignée parfaitement */
+/* LIGNE BAS ALIGNÉE PARFAITEMENT */
 .bottom-row{
     display:grid;
     grid-template-columns:repeat(3, 75px);
     justify-content:center;
     gap:18px;
-    margin-top:10px;
+    margin-top:12px;
 }
 
-/* Boutons texte */
+/* OK et DELETE centrés EXACTEMENT */
 .delete, .ok{
+    width:75px;
+    height:75px;
     display:flex;
     align-items:center;
     justify-content:center;
     font-size:18px;
     cursor:pointer;
-    height:75px;
+    position:relative;
 }
 
-/* Emergency */
 .emergency{
     position:relative;
     z-index:2;
@@ -180,14 +181,14 @@ const okBtn = document.querySelector(".ok");
 let pin = "";
 const correctPin = "1234";
 
-function animateButton(el){
+function animate(el){
     el.classList.add("active");
     setTimeout(()=> el.classList.remove("active"),400);
 }
 
 keys.forEach(key=>{
     key.addEventListener("click",()=>{
-        animateButton(key);
+        animate(key);
 
         if(pin.length < 4){
             pin += key.innerText;
@@ -197,7 +198,8 @@ keys.forEach(key=>{
 });
 
 deleteBtn.addEventListener("click",()=>{
-    animateButton(deleteBtn);
+    animate(deleteBtn);
+
     if(pin.length > 0){
         dots[pin.length-1].classList.remove("active");
         pin = pin.slice(0,-1);
@@ -205,7 +207,8 @@ deleteBtn.addEventListener("click",()=>{
 });
 
 okBtn.addEventListener("click",()=>{
-    animateButton(okBtn);
+    animate(okBtn);
+
     if(pin === correctPin){
         alert("Déverrouillé !");
     } else {
