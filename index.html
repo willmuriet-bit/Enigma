@@ -23,7 +23,6 @@ body{
     color:white;
 }
 
-/* Overlay */
 .overlay{
     position:absolute;
     inset:0;
@@ -31,29 +30,19 @@ body{
     z-index:0;
 }
 
-/* Cadenas sous caméra */
-.lock-icon{
-    position:relative;
-    z-index:2;
-    text-align:center;
-    margin-top:4vh;
-    font-size:28px;
-    opacity:0.9;
-}
-
-/* Section centrale */
+/* CENTRE */
 .center{
     position:relative;
     z-index:2;
     text-align:center;
-    margin-top:2vh;   /* 👈 pavé remonté */
+    margin-top:6vh; /* pavé remonté */
 }
 
-/* Points */
+/* POINTS */
 .pin-dots{
     display:flex;
     justify-content:center;
-    gap:10px; /* 👈 rapproché */
+    gap:10px;
     margin-bottom:4vh;
 }
 
@@ -71,15 +60,16 @@ body{
     transform:scale(1.2);
 }
 
-/* KEYPAD */
+/* KEYPAD PRINCIPAL */
 .keypad{
     display:grid;
     grid-template-columns:repeat(3, 1fr);
-    gap:12px 20px; /* 👈 beaucoup plus rapproché */
+    gap:10px 18px; /* rapproché */
     justify-items:center;
-    padding:0 15vw;
+    padding:0 18vw;
 }
 
+/* BOUTONS (apparence inchangée) */
 .key{
     width:75px;
     height:75px;
@@ -90,36 +80,50 @@ body{
     align-items:center;
     font-size:26px;
     backdrop-filter: blur(6px);
-    transition:0.15s;
     cursor:pointer;
+    position:relative;
+    overflow:hidden;
 }
 
-.key:active{
-    transform:scale(0.9);
-    background:rgba(255,255,255,0.3);
+/* 🔵 ANIMATION CIRCULAIRE LED */
+.key::after{
+    content:"";
+    position:absolute;
+    inset:0;
+    border-radius:50%;
+    border:2px solid rgba(255,255,255,0.8);
+    opacity:0;
 }
 
-/* Ligne du bas */
+.key.active::after{
+    animation:circlePulse 0.4s ease;
+}
+
+@keyframes circlePulse{
+    0%{opacity:1; transform:scale(0.7);}
+    100%{opacity:0; transform:scale(1.4);}
+}
+
+/* Ligne du bas alignée parfaitement */
 .bottom-row{
     display:grid;
-    grid-template-columns:1fr 1fr 1fr;
+    grid-template-columns:repeat(3, 75px);
+    justify-content:center;
+    gap:18px;
+    margin-top:10px;
+}
+
+/* Boutons texte */
+.delete, .ok{
+    display:flex;
     align-items:center;
-    margin-top:15px;
-    padding:0 18vw;
+    justify-content:center;
     font-size:18px;
-}
-
-.delete{
-    text-align:left;
     cursor:pointer;
+    height:75px;
 }
 
-.ok{
-    text-align:right;
-    cursor:pointer;
-}
-
-/* Appel d'urgence */
+/* Emergency */
 .emergency{
     position:relative;
     z-index:2;
@@ -135,9 +139,6 @@ body{
 <body>
 
 <div class="overlay"></div>
-
-<!-- Cadenas -->
-<div class="lock-icon">🔒</div>
 
 <div class="center">
 
@@ -177,10 +178,17 @@ const deleteBtn = document.querySelector(".delete");
 const okBtn = document.querySelector(".ok");
 
 let pin = "";
-const correctPin = "1234"; // modifie ici
+const correctPin = "1234";
+
+function animateButton(el){
+    el.classList.add("active");
+    setTimeout(()=> el.classList.remove("active"),400);
+}
 
 keys.forEach(key=>{
     key.addEventListener("click",()=>{
+        animateButton(key);
+
         if(pin.length < 4){
             pin += key.innerText;
             dots[pin.length-1].classList.add("active");
@@ -189,6 +197,7 @@ keys.forEach(key=>{
 });
 
 deleteBtn.addEventListener("click",()=>{
+    animateButton(deleteBtn);
     if(pin.length > 0){
         dots[pin.length-1].classList.remove("active");
         pin = pin.slice(0,-1);
@@ -196,10 +205,11 @@ deleteBtn.addEventListener("click",()=>{
 });
 
 okBtn.addEventListener("click",()=>{
+    animateButton(okBtn);
     if(pin === correctPin){
         alert("Déverrouillé !");
     } else {
-        pin = "";
+        pin="";
         dots.forEach(dot=>dot.classList.remove("active"));
     }
 });
