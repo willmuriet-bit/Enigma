@@ -10,31 +10,144 @@
     margin:0;
     padding:0;
     box-sizing:border-box;
-    font-family: Arial, sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
 body{
     height:100vh;
     display:flex;
     justify-content:center;
-    align-items:center;
+    align-items:flex-end;
     background:url("background.jpg") no-repeat center center/cover;
+    overflow:hidden;
 }
 
-/* Overlay sombre pour lisibilité */
+/* Assombrit légèrement */
 .overlay{
     position:absolute;
     inset:0;
-    background:rgba(0,0,0,0.4);
+    background:rgba(0,0,0,0.35);
 }
 
-/* Contenu principal */
+/* Conteneur principal */
 .lock-container{
     position:relative;
     z-index:2;
+    width:100%;
     text-align:center;
     color:white;
+    padding-bottom:60px;
 }
+
+/* Points PIN */
+.pin-dots{
+    display:flex;
+    justify-content:center;
+    gap:18px;
+    margin-bottom:60px;
+}
+
+.dot{
+    width:14px;
+    height:14px;
+    border-radius:50%;
+    background:white;
+    opacity:0.4;
+    transition:0.2s;
+}
+
+.dot.active{
+    opacity:1;
+    transform:scale(1.2);
+}
+
+/* Clavier */
+.keypad{
+    width:100%;
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:28px 40px;
+    justify-items:center;
+    padding:0 40px;
+}
+
+/* Boutons principaux */
+.key{
+    width:85px;
+    height:85px;
+    border-radius:50%;
+    background:rgba(255,255,255,0.15);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:28px;
+    backdrop-filter: blur(6px);
+    transition:0.12s ease;
+}
+
+/* Effet pression réaliste */
+.key:active{
+    transform:scale(0.85);
+    background:rgba(255,255,255,0.35);
+}
+
+/* Ligne du bas spéciale */
+.bottom-row{
+    display:grid;
+    grid-template-columns:1fr 1fr 1fr;
+    align-items:center;
+    margin-top:28px;
+    padding:0 60px;
+}
+
+/* Bouton supprimer */
+.delete{
+    font-size:22px;
+}
+
+/* Bouton OK */
+.ok{
+    font-size:20px;
+    text-align:right;
+}
+</style>
+</head>
+
+<body>
+
+<div class="overlay"></div>
+
+<div class="lock-container">
+
+    <div class="pin-dots">
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+    </div>
+
+    <div class="keypad">
+        <div class="key">1</div>
+        <div class="key">2</div>
+        <div class="key">3</div>
+        <div class="key">4</div>
+        <div class="key">5</div>
+        <div class="key">6</div>
+        <div class="key">7</div>
+        <div class="key">8</div>
+        <div class="key">9</div>
+    </div>
+
+    <div class="bottom-row">
+        <div class="delete">✕</div>
+        <div class="key">0</div>
+        <div class="ok">OK</div>
+    </div>
+
+</div>
+
+</body>
+</html>}
 
 /* Points PIN */
 .pin-dots{
