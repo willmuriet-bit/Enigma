@@ -588,49 +588,52 @@
             }
 
             function updateDots() {
-                dots.forEach((dot, index) => {
-                    if (index < pin.length) {
-                        dot.classList.add('active');
+                for (let i = 0; i < dots.length; i++) {
+                    if (i < pin.length) {
+                        dots[i].classList.add('active');
                     } else {
-                        dot.classList.remove('active');
+                        dots[i].classList.remove('active');
+                    }
+                }
+            }
+
+            // Gestionnaires pour les touches chiffres
+            for (let i = 0; i < keys.length; i++) {
+                const key = keys[i];
+                key.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    animateKey(this);
+                    
+                    const digit = this.innerText;
+                    if (pin.length < 4) {
+                        pin = pin + digit;
+                        updateDots();
+                        console.log('Pin après ajout:', pin); // Debug
                     }
                 });
             }
 
-            // Gestionnaires du lock screen
-            keys.forEach(key => {
-                key.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    animateKey(key);
-
-                    const digit = key.innerText;
-                    if (pin.length < 4) {
-                        pin += digit;
-                        updateDots();
-                    }
-                });
-            });
-
-            // BOUTON SUPPRIMER - RÉPARÉ
-            deleteBtn.addEventListener('click', (e) => {
+            // BOUTON SUPPRIMER - SOLUTION SIMPLE ET ROBUSTE
+            deleteBtn.onclick = function(e) {
                 e.stopPropagation();
                 e.preventDefault();
                 
                 // Animation
-                animateText(deleteBtn);
-
-                // Logique de suppression
+                animateText(this);
+                
+                // Supprimer le dernier caractère
                 if (pin.length > 0) {
                     pin = pin.substring(0, pin.length - 1);
                     updateDots();
+                    console.log('Pin après suppression:', pin); // Debug
                 }
                 
-                console.log('Suppression effectuée, pin =', pin); // Debug
-            });
+                return false;
+            };
 
             // Appui long pour effacer tout
             let pressTimer;
-            deleteBtn.addEventListener('mousedown', (e) => {
+            deleteBtn.addEventListener('mousedown', function(e) {
                 e.preventDefault();
                 pressTimer = setTimeout(() => {
                     pin = '';
@@ -640,10 +643,16 @@
                     console.log('Effacement total'); // Debug
                 }, 600);
             });
-            deleteBtn.addEventListener('mouseup', () => clearTimeout(pressTimer));
-            deleteBtn.addEventListener('mouseleave', () => clearTimeout(pressTimer));
             
-            deleteBtn.addEventListener('touchstart', (e) => {
+            deleteBtn.addEventListener('mouseup', function() {
+                clearTimeout(pressTimer);
+            });
+            
+            deleteBtn.addEventListener('mouseleave', function() {
+                clearTimeout(pressTimer);
+            });
+            
+            deleteBtn.addEventListener('touchstart', function(e) {
                 e.preventDefault();
                 pressTimer = setTimeout(() => {
                     pin = '';
@@ -652,12 +661,19 @@
                     if (navigator.vibrate) navigator.vibrate(15);
                 }, 600);
             });
-            deleteBtn.addEventListener('touchend', () => clearTimeout(pressTimer));
-            deleteBtn.addEventListener('touchcancel', () => clearTimeout(pressTimer));
+            
+            deleteBtn.addEventListener('touchend', function() {
+                clearTimeout(pressTimer);
+            });
+            
+            deleteBtn.addEventListener('touchcancel', function() {
+                clearTimeout(pressTimer);
+            });
 
-            okBtn.addEventListener('click', (e) => {
+            // Bouton OK
+            okBtn.addEventListener('click', function(e) {
                 e.stopPropagation();
-                animateText(okBtn);
+                animateText(this);
 
                 if (pin === correctPin) {
                     alert('✅ Déverrouillage réussi !');
@@ -667,15 +683,18 @@
                     if (pin.length > 0) {
                         if (navigator.vibrate) navigator.vibrate(20);
 
-                        dots.forEach(d => d.style.transition = 'none');
-                        dots.forEach(d => d.style.opacity = '0.9');
-                        dots.forEach(d => d.style.background = '#ff8a8a');
+                        for (let i = 0; i < dots.length; i++) {
+                            dots[i].style.transition = 'none';
+                            dots[i].style.opacity = '0.9';
+                            dots[i].style.background = '#ff8a8a';
+                        }
+                        
                         setTimeout(() => {
-                            dots.forEach(d => {
-                                d.style.transition = '';
-                                d.style.opacity = '';
-                                d.style.background = '';
-                            });
+                            for (let i = 0; i < dots.length; i++) {
+                                dots[i].style.transition = '';
+                                dots[i].style.opacity = '';
+                                dots[i].style.background = '';
+                            }
                             pin = '';
                             updateDots();
                         }, 200);
@@ -684,8 +703,9 @@
             });
 
             // Appel d'urgence retourne à l'accueil
-            emergencyBtn.addEventListener('click', () => {
-                animateText(emergencyBtn);
+            emergencyBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                animateText(this);
                 
                 // Retour à la page d'accueil
                 lockPage.classList.remove('visible');
