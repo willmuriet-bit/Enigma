@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Accueil · Lock Screen</title>
+    <title>ENIGMA · Accueil</title>
     <style>
         /* RESET & BASE */
         * {
@@ -20,16 +20,16 @@
             color: white;
         }
 
-        /* PAGE D'ACCUEIL (visible par défaut) */
+        /* PAGE D'ACCUEIL */
         #home-page {
             position: absolute;
             inset: 0;
             background: black;
             display: flex;
             flex-direction: column;
-            justify-content: center;
+            justify-content: flex-end;
             align-items: center;
-            gap: 30px;
+            padding-bottom: 15vh;
             z-index: 20;
             transition: transform 0.3s ease-out;
         }
@@ -38,10 +38,26 @@
             transform: translateY(-100%);
         }
 
-        /* BOUTONS DE LA PAGE D'ACCUEIL */
+        /* Titre ENIGMA */
+        .app-title {
+            font-family: 'Georgia', 'Times New Roman', serif;
+            font-size: 48px;
+            font-weight: bold;
+            color: #FFD700;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.5), 0 0 20px rgba(255, 215, 0, 0.3);
+            letter-spacing: 4px;
+            margin-bottom: 80px;
+            position: relative;
+            top: -30px;
+            text-transform: uppercase;
+            border-bottom: 2px solid #FFD700;
+            padding-bottom: 10px;
+        }
+
+        /* BOUTONS PAGE ACCUEIL - plus larges et moins hauts */
         .home-btn {
-            width: 250px;
-            height: 80px;
+            width: 320px;
+            height: 65px;
             background: white;
             color: black;
             border: none;
@@ -54,9 +70,9 @@
             transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
             position: relative;
             overflow: hidden;
+            margin: 12px 0;
         }
 
-        /* Animation au clic (effet ripple) */
         .home-btn::after {
             content: '';
             position: absolute;
@@ -92,7 +108,7 @@
             }
         }
 
-        /* PAGE DE LOCK (cachée par défaut) */
+        /* PAGE DE LOCK */
         #lock-page {
             position: absolute;
             inset: 0;
@@ -103,6 +119,7 @@
             display: flex;
             flex-direction: column;
             justify-content: flex-end;
+            background: url('background.jpg') no-repeat center center/cover;
         }
 
         #lock-page.visible {
@@ -119,13 +136,14 @@
             backdrop-filter: blur(3px);
         }
 
-        /* contenu lock page */
+        /* contenu lock page - abaissé et réduit */
         .lock-content {
             position: relative;
             z-index: 10;
             text-align: center;
-            margin-bottom: 10vh;
+            margin-bottom: 5vh;
             padding: 0 16px;
+            transform: scale(0.9);
         }
 
         /* POINTS */
@@ -133,7 +151,7 @@
             display: flex;
             justify-content: center;
             gap: 14px;
-            margin-bottom: 5vh;
+            margin-bottom: 3vh;
         }
 
         .dot {
@@ -153,24 +171,24 @@
             box-shadow: 0 0 12px rgba(255,255,255,0.6);
         }
 
-        /* CLAVIER */
+        /* CLAVIER - réduit et abaissé */
         .keypad {
             display: grid;
-            grid-template-columns: repeat(3, 80px);
+            grid-template-columns: repeat(3, 70px);
             justify-content: center;
-            gap: 16px 20px;
-            margin-bottom: 16px;
+            gap: 12px 15px;
+            margin-bottom: 10px;
         }
 
         .key {
-            width: 80px;
-            height: 80px;
+            width: 70px;
+            height: 70px;
             border-radius: 50%;
             background: rgba(255, 255, 255, 0.2);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 32px;
+            font-size: 28px;
             font-weight: 400;
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
@@ -224,15 +242,15 @@
 
         .bottom-row {
             display: grid;
-            grid-template-columns: repeat(3, 80px);
+            grid-template-columns: repeat(3, 70px);
             justify-content: center;
-            gap: 20px;
-            margin-top: 8px;
+            gap: 15px;
+            margin-top: 5px;
         }
 
         .delete, .ok {
-            width: 80px;
-            height: 80px;
+            width: 70px;
+            height: 70px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -249,13 +267,13 @@
         }
 
         .delete {
-            font-size: 38px;
+            font-size: 34px;
             font-weight: 300;
             line-height: 1;
         }
 
         .ok {
-            font-size: 22px;
+            font-size: 20px;
             font-weight: 500;
             letter-spacing: 0.5px;
             background: rgba(50, 130, 216, 0.5);
@@ -274,7 +292,7 @@
             position: relative;
             z-index: 10;
             text-align: center;
-            margin-bottom: 5vh;
+            margin-bottom: 3vh;
             font-size: 18px;
             font-weight: 500;
             opacity: 0.9;
@@ -299,23 +317,11 @@
         }
 
         .bottom-row .key {
-            width: 80px;
-            height: 80px;
-            font-size: 32px;
+            width: 70px;
+            height: 70px;
+            font-size: 28px;
             background: rgba(255, 255, 255, 0.2);
             backdrop-filter: blur(12px);
-        }
-
-        .hint-message {
-            font-size: 14px;
-            margin-top: 16px;
-            opacity: 0.7;
-            letter-spacing: 0.5px;
-            background: rgba(0,0,0,0.3);
-            padding: 6px 14px;
-            border-radius: 50px;
-            display: inline-block;
-            backdrop-filter: blur(5px);
         }
 
         /* MODAL POUR LA LISTE */
@@ -324,10 +330,10 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            width: 300px;
+            width: 350px;
             background: white;
             border-radius: 20px;
-            padding: 20px;
+            padding: 25px;
             z-index: 100;
             display: none;
             color: black;
@@ -339,22 +345,22 @@
         }
 
         #list-modal h3 {
-            margin-bottom: 15px;
+            margin-bottom: 20px;
             text-align: center;
             color: #333;
+            font-size: 24px;
         }
 
         #list-items {
             max-height: 300px;
             overflow-y: auto;
-            margin-bottom: 15px;
-            border: 1px solid #ddd;
+            margin-bottom: 20px;
             border-radius: 10px;
-            padding: 10px;
+            padding: 5px;
         }
 
         .list-item {
-            padding: 8px;
+            padding: 10px;
             border-bottom: 1px solid #eee;
             font-size: 16px;
         }
@@ -365,36 +371,42 @@
 
         #add-item-form {
             display: flex;
-            gap: 10px;
-            margin-bottom: 15px;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 20px;
         }
 
         #new-item {
-            flex: 1;
-            padding: 8px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            font-size: 14px;
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            font-size: 18px;
+            height: 60px;
         }
 
         #add-btn {
-            padding: 8px 15px;
+            width: 100%;
+            padding: 15px;
             background: #4CAF50;
             color: white;
             border: none;
-            border-radius: 5px;
+            border-radius: 10px;
             cursor: pointer;
+            font-size: 18px;
+            font-weight: 600;
         }
 
         #close-modal {
             width: 100%;
-            padding: 10px;
+            padding: 15px;
             background: #f44336;
             color: white;
             border: none;
-            border-radius: 5px;
+            border-radius: 10px;
             cursor: pointer;
-            font-size: 16px;
+            font-size: 18px;
+            font-weight: 600;
         }
 
         /* OVERLAY MODAL */
@@ -414,12 +426,13 @@
 <body>
     <!-- PAGE D'ACCUEIL -->
     <div id="home-page">
+        <div class="app-title">ENIGMA</div>
         <button class="home-btn" id="btn-perform">PERFORM</button>
         <button class="home-btn" id="btn-language">LANGUAGE</button>
         <button class="home-btn" id="btn-list">LIST</button>
     </div>
 
-    <!-- PAGE DE LOCK (cachée initialement) -->
+    <!-- PAGE DE LOCK -->
     <div id="lock-page">
         <div class="overlay"></div>
         
@@ -448,8 +461,6 @@
                 <div class="key">0</div>
                 <div class="ok" aria-label="Valider">OK</div>
             </div>
-
-            <div class="hint-message">code secret : 1234</div>
         </div>
 
         <div class="emergency" role="button" tabindex="0">📞 Appel d'urgence</div>
@@ -459,9 +470,7 @@
     <div id="modal-overlay"></div>
     <div id="list-modal">
         <h3>Ma liste</h3>
-        <div id="list-items">
-            <!-- Les éléments de la liste apparaîtront ici -->
-        </div>
+        <div id="list-items"></div>
         <div id="add-item-form">
             <input type="text" id="new-item" placeholder="Ajouter un mot ou chiffre">
             <button id="add-btn">Ajouter</button>
@@ -503,7 +512,6 @@
             
             // Bouton PERFORM : affiche le lock screen
             btnPerform.addEventListener('click', () => {
-                // Animation du bouton (déjà gérée par CSS)
                 homePage.classList.add('hidden');
                 lockPage.classList.add('visible');
                 
@@ -512,10 +520,9 @@
                 updateDots();
             });
 
-            // Bouton LANGUAGE : pour le moment, ne fait rien (juste une animation)
+            // Bouton LANGUAGE : pour le moment, ne fait rien
             btnLanguage.addEventListener('click', () => {
-                // L'animation est déjà gérée par le CSS :active et ::after
-                console.log('LANGUAGE cliqué (pas d\'action pour le moment)');
+                console.log('LANGUAGE cliqué');
             });
 
             // Bouton LIST : ouvre la modal
@@ -526,7 +533,6 @@
 
             // === GESTION DE LA MODAL LISTE ===
             
-            // Charger les éléments existants (s'il y en a)
             let items = [];
 
             function displayItems() {
@@ -558,7 +564,6 @@
                 modalOverlay.classList.remove('visible');
             });
 
-            // Permettre l'ajout avec la touche Entrée
             newItemInput.addEventListener('keypress', (e) => {
                 if (e.key === 'Enter') {
                     addBtn.click();
@@ -606,6 +611,7 @@
                 });
             });
 
+            // CORRECTION : Bouton supprimer fonctionne maintenant
             deleteBtn.addEventListener('click', (e) => {
                 e.stopPropagation();
                 animateText(deleteBtn);
@@ -670,9 +676,17 @@
                 }
             });
 
+            // MODIFICATION : Appel d'urgence retourne à l'accueil
             emergencyBtn.addEventListener('click', () => {
                 animateText(emergencyBtn);
-                alert('📞 Appel d\'urgence simulé (composez le 112)');
+                
+                // Retour à la page d'accueil
+                lockPage.classList.remove('visible');
+                homePage.classList.remove('hidden');
+                
+                // Réinitialiser le PIN
+                pin = '';
+                updateDots();
             });
 
             // Initialisation
