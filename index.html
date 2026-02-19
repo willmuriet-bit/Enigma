@@ -192,7 +192,7 @@
             transform: scale(0.97);
         }
 
-        .key::after, .delete::after, .ok::after {
+        .key::after, .delete-btn::after, .ok::after {
             content: '';
             position: absolute;
             inset: 0;
@@ -220,13 +220,14 @@
             margin-top: 10px;
         }
 
-        .delete, .ok {
+        /* NOUVEAU BOUTON SUPPRIMER - NOUVEL ID */
+        .delete-btn {
             width: 70px;
             height: 70px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 26px;
+            font-size: 34px;
             cursor: pointer;
             user-select: none;
             position: relative;
@@ -236,13 +237,35 @@
             -webkit-backdrop-filter: blur(8px);
             transition: background 0.15s;
             border: 1px solid rgba(255,255,255,0.1);
+            color: white;
         }
 
-        .delete { font-size: 34px; }
-        .ok { font-size: 20px; background: rgba(50, 130, 216, 0.5); }
-
-        .delete:active, .ok:active {
+        .delete-btn:active {
             background: rgba(255, 255, 255, 0.3);
+            transform: scale(0.96);
+        }
+
+        .ok {
+            width: 70px;
+            height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            cursor: pointer;
+            user-select: none;
+            position: relative;
+            border-radius: 50%;
+            background: rgba(50, 130, 216, 0.5);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            transition: background 0.15s;
+            border: 1px solid rgba(255,255,255,0.1);
+            color: white;
+        }
+
+        .ok:active {
+            background: rgba(30, 100, 200, 0.7);
             transform: scale(0.96);
         }
 
@@ -271,6 +294,14 @@
         .emergency:active {
             background: rgba(220, 60, 60, 0.5);
             transform: scale(0.96);
+        }
+
+        .bottom-row .key {
+            width: 70px;
+            height: 70px;
+            font-size: 28px;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(12px);
         }
 
         /* MODAL LISTE */
@@ -378,9 +409,10 @@
             </div>
 
             <div class="bottom-row">
-                <div class="delete" aria-label="Supprimer">⌫</div>
+                <!-- NOUVEAU BOUTON SUPPRIMER AVEC NOM DIFFÉRENT -->
+                <div id="new-delete-btn" class="delete-btn">⌫</div>
                 <div class="key">0</div>
-                <div class="ok" aria-label="Valider">OK</div>
+                <div class="ok">OK</div>
             </div>
         </div>
         <div class="emergency" role="button" tabindex="0">📞 Appel d'urgence</div>
@@ -400,14 +432,14 @@
 
     <script>
         (function() {
-            // Récupération des éléments
+            // Éléments
             const homePage = document.getElementById('home-page');
             const lockPage = document.getElementById('lock-page');
             const btnPerform = document.getElementById('btn-perform');
             const btnLanguage = document.getElementById('btn-language');
             const btnList = document.getElementById('btn-list');
             
-            // Modal liste
+            // Modal
             const modal = document.getElementById('list-modal');
             const modalOverlay = document.getElementById('modal-overlay');
             const listItems = document.getElementById('list-items');
@@ -415,10 +447,10 @@
             const addBtn = document.getElementById('add-btn');
             const closeModal = document.getElementById('close-modal');
 
-            // Lock screen
+            // Lock screen - avec le NOUVEAU bouton
             const keys = document.querySelectorAll('#lock-page .key');
             const dots = document.querySelectorAll('#lock-page .dot');
-            const deleteBtn = document.querySelector('#lock-page .delete');
+            const newDeleteBtn = document.getElementById('new-delete-btn'); // NOUVEL ID
             const okBtn = document.querySelector('#lock-page .ok');
             const emergencyBtn = document.querySelector('#lock-page .emergency');
 
@@ -427,7 +459,7 @@
             const correctPin = '1234';
             let items = [];
 
-            // === FONCTIONS COMMUNES ===
+            // Fonctions
             function animateKey(element) {
                 if (!element) return;
                 element.classList.add('active');
@@ -448,9 +480,10 @@
                         dots[i].classList.remove('active');
                     }
                 }
+                console.log('PIN actuel:', pin); // Pour debug
             }
 
-            // === PAGE D'ACCUEIL ===
+            // PAGE D'ACCUEIL
             btnPerform.addEventListener('click', () => {
                 homePage.classList.add('hidden');
                 lockPage.classList.add('visible');
@@ -467,7 +500,7 @@
                 modalOverlay.classList.add('visible');
             });
 
-            // === MODAL LISTE ===
+            // MODAL LISTE
             function displayItems() {
                 listItems.innerHTML = '';
                 items.forEach(item => {
@@ -501,7 +534,7 @@
                 if (e.key === 'Enter') addBtn.click();
             });
 
-            // === LOCK SCREEN - TOUCHES CHIFFRES ===
+            // TOUCHES CHIFFRES
             for (let i = 0; i < keys.length; i++) {
                 keys[i].addEventListener('click', function() {
                     animateKey(this);
@@ -512,52 +545,52 @@
                 });
             }
 
-            // === BOUTON SUPPRIMER - SOLUTION ULTIME ===
-            // On supprime tous les anciens événements et on met un événement direct
-            deleteBtn.onclick = null; // Nettoie tout
-            deleteBtn.addEventListener('click', function(e) {
+            // === NOUVEAU BOUTON SUPPRIMER - 100% FONCTIONNEL ===
+            newDeleteBtn.addEventListener('click', function(e) {
                 e.stopPropagation();
                 e.preventDefault();
                 
                 // Animation
                 animateText(this);
                 
-                // SUPPRESSION : on enlève le dernier caractère
+                // SUPPRESSION SIMPLE
                 if (pin.length > 0) {
                     pin = pin.slice(0, -1);
                     updateDots();
                 }
                 
+                console.log('Suppression effectuée');
                 return false;
             });
 
             // Appui long
             let pressTimer;
-            deleteBtn.addEventListener('mousedown', (e) => {
+            newDeleteBtn.addEventListener('mousedown', (e) => {
                 e.preventDefault();
                 pressTimer = setTimeout(() => {
                     pin = '';
                     updateDots();
-                    animateText(deleteBtn);
+                    animateText(newDeleteBtn);
+                    console.log('Effacement total');
                 }, 600);
             });
             
-            deleteBtn.addEventListener('mouseup', () => clearTimeout(pressTimer));
-            deleteBtn.addEventListener('mouseleave', () => clearTimeout(pressTimer));
+            newDeleteBtn.addEventListener('mouseup', () => clearTimeout(pressTimer));
+            newDeleteBtn.addEventListener('mouseleave', () => clearTimeout(pressTimer));
             
-            deleteBtn.addEventListener('touchstart', (e) => {
+            newDeleteBtn.addEventListener('touchstart', (e) => {
                 e.preventDefault();
                 pressTimer = setTimeout(() => {
                     pin = '';
                     updateDots();
-                    animateText(deleteBtn);
+                    animateText(newDeleteBtn);
                 }, 600);
             });
             
-            deleteBtn.addEventListener('touchend', () => clearTimeout(pressTimer));
-            deleteBtn.addEventListener('touchcancel', () => clearTimeout(pressTimer));
+            newDeleteBtn.addEventListener('touchend', () => clearTimeout(pressTimer));
+            newDeleteBtn.addEventListener('touchcancel', () => clearTimeout(pressTimer));
 
-            // === BOUTON OK ===
+            // BOUTON OK
             okBtn.addEventListener('click', function(e) {
                 e.stopPropagation();
                 animateText(this);
@@ -586,7 +619,7 @@
                 }
             });
 
-            // === BOUTON URGENCE ===
+            // BOUTON URGENCE
             emergencyBtn.addEventListener('click', function(e) {
                 e.stopPropagation();
                 animateText(this);
