@@ -3,14 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Lock Screen</title>
-
+<title>iPhone Lock Screen</title>
 <style>
 *{
     margin:0;
     padding:0;
     box-sizing:border-box;
-    font-family: system-ui, -apple-system, sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
     -webkit-tap-highlight-color: transparent;
 }
 
@@ -18,74 +17,231 @@ body{
     height:100vh;
     display:flex;
     flex-direction:column;
-    justify-content:flex-end;
-    background:url("background.jpg") no-repeat center center/cover;
+    justify-content:space-between;
+    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
     overflow:hidden;
     color:white;
+    position:relative;
+}
+
+/* Image de fond avec overlay */
+.background{
+    position:absolute;
+    inset:0;
+    background:url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?q=80&w=2070&auto=format&fit=crop') no-repeat center center/cover;
+    filter: brightness(0.9) blur(2px);
+    transform: scale(1.05);
+    z-index:0;
 }
 
 .overlay{
     position:absolute;
     inset:0;
-    background:rgba(0,0,0,0.35);
-    z-index:0;
+    background:rgba(0,0,0,0.2);
+    z-index:1;
 }
 
-.center{
+/* STATUS BAR */
+.status-bar{
+    position:relative;
+    z-index:10;
+    display:flex;
+    justify-content:space-between;
+    padding:15px 25px;
+    font-size:16px;
+    font-weight:600;
+    letter-spacing:0.3px;
+    background: rgba(0,0,0,0.1);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.status-left, .status-right{
+    display:flex;
+    gap:5px;
+}
+
+/* NOTIFICATIONS */
+.notifications{
+    position:relative;
+    z-index:5;
+    padding:20px;
+    margin-top:20px;
+}
+
+.notification-card{
+    background: rgba(255,255,255,0.15);
+    backdrop-filter: blur(20px);
+    border-radius: 15px;
+    padding:15px;
+    margin-bottom:12px;
+    border: 1px solid rgba(255,255,255,0.2);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+    animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn{
+    from{
+        opacity:0;
+        transform:translateX(-20px);
+    }
+    to{
+        opacity:1;
+        transform:translateX(0);
+    }
+}
+
+.notification-app{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin-bottom:8px;
+}
+
+.app-icon{
+    width:36px;
+    height:36px;
+    border-radius:8px;
+    background: #007AFF;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:20px;
+}
+
+.app-name{
+    font-weight:600;
+    font-size:16px;
+}
+
+.notification-time{
+    margin-left:auto;
+    font-size:12px;
+    opacity:0.7;
+}
+
+.notification-text{
+    font-size:14px;
+    margin-left:46px;
+    opacity:0.9;
+}
+
+/* DATE */
+.date-container{
     position:relative;
     z-index:2;
     text-align:center;
-    margin-bottom:8vh;
+    margin-top:30px;
+    margin-bottom:20px;
 }
 
-/* POINTS */
+.time{
+    font-size:82px;
+    font-weight:300;
+    letter-spacing:-2px;
+    text-shadow:0 4px 20px rgba(0,0,0,0.5);
+    line-height:1;
+}
+
+.date{
+    font-size:18px;
+    opacity:0.9;
+    margin-top:5px;
+    text-transform:uppercase;
+    letter-spacing:2px;
+    font-weight:400;
+    text-shadow:0 2px 10px rgba(0,0,0,0.3);
+}
+
+/* LOCK MESSAGE */
+.lock-message{
+    position:relative;
+    z-index:2;
+    text-align:center;
+    font-size:14px;
+    opacity:0.7;
+    margin-bottom:15px;
+    text-transform:uppercase;
+    letter-spacing:1px;
+}
+
+/* POINTS AMÉLIORÉS */
 .pin-dots{
     display:flex;
     justify-content:center;
-    gap:10px;
-    margin-bottom:4vh;
+    gap:15px;
+    margin-bottom:30px;
+    position:relative;
+    z-index:2;
 }
 
 .dot{
-    width:12px;
-    height:12px;
+    width:14px;
+    height:14px;
     border-radius:50%;
     background:white;
     opacity:0.3;
-    transition:0.2s;
+    transition:0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    box-shadow:0 2px 10px rgba(0,0,0,0.3);
 }
 
 .dot.active{
     opacity:1;
     transform:scale(1.2);
+    background:#007AFF;
+    box-shadow:0 0 15px #007AFF;
 }
 
-/* KEYPAD */
+/* KEYPAD AMÉLIORÉ */
+.keypad-container{
+    position:relative;
+    z-index:2;
+    margin-bottom:30px;
+}
+
 .keypad{
     display:grid;
-    grid-template-columns:repeat(3, 75px);
+    grid-template-columns:repeat(3, 1fr);
     justify-content:center;
-    gap:12px 18px;
+    gap:15px;
+    max-width:330px;
+    margin:0 auto;
+    padding:0 20px;
 }
 
-/* Boutons chiffres */
 .key{
-    width:75px;
-    height:75px;
+    width:85px;
+    height:85px;
     border-radius:50%;
     background:rgba(255,255,255,0.15);
+    backdrop-filter: blur(15px);
     display:flex;
+    flex-direction:column;
     justify-content:center;
     align-items:center;
-    font-size:26px;
-    backdrop-filter: blur(6px);
+    font-size:32px;
+    font-weight:400;
     cursor:pointer;
     position:relative;
     overflow:hidden;
     user-select:none;
+    border:1px solid rgba(255,255,255,0.2);
+    box-shadow:0 4px 15px rgba(0,0,0,0.3);
+    transition:transform 0.1s ease, background 0.2s ease;
+    margin:0 auto;
 }
 
-/* Animation circulaire uniquement */
+.key:active{
+    transform:scale(0.95);
+    background:rgba(255,255,255,0.25);
+}
+
+.key small{
+    font-size:12px;
+    opacity:0.7;
+    margin-top:-5px;
+}
+
 .key::after{
     content:"";
     position:absolute;
@@ -95,73 +251,180 @@ body{
     opacity:0;
 }
 
-.active::after{
+.key.active::after{
     animation:circlePulse 0.4s ease;
 }
 
 @keyframes circlePulse{
-    0%{opacity:1; transform:scale(0.7);}
+    0%{opacity:1; transform:scale(0.8);}
     100%{opacity:0; transform:scale(1.4);}
 }
 
 /* Ligne du bas */
 .bottom-row{
     display:grid;
-    grid-template-columns:repeat(3, 75px);
+    grid-template-columns:repeat(3, 1fr);
     justify-content:center;
-    gap:18px;
-    margin-top:12px;
+    gap:15px;
+    max-width:330px;
+    margin:15px auto 0;
+    padding:0 20px;
 }
 
-/* OK et DELETE en TEXTE SIMPLE */
 .delete, .ok{
-    width:75px;
-    height:75px;
+    width:85px;
+    height:85px;
     display:flex;
     align-items:center;
     justify-content:center;
-    font-size:18px;
+    font-size:24px;
     cursor:pointer;
     user-select:none;
     position:relative;
+    margin:0 auto;
+    background:rgba(255,255,255,0.1);
+    backdrop-filter: blur(15px);
+    border-radius:50%;
+    border:1px solid rgba(255,255,255,0.2);
+    box-shadow:0 4px 15px rgba(0,0,0,0.3);
+    transition:transform 0.1s ease, background 0.2s ease;
 }
 
-/* Animation circulaire pour texte */
-.delete::after,
-.ok::after{
+.delete:active, .ok:active{
+    transform:scale(0.95);
+    background:rgba(255,255,255,0.2);
+}
+
+.delete::after, .ok::after{
     content:"";
     position:absolute;
-    width:75px;
-    height:75px;
+    width:85px;
+    height:85px;
     border-radius:50%;
     border:2px solid rgba(255,255,255,0.8);
     opacity:0;
 }
 
-.active-text::after{
+.delete.active-text::after, .ok.active-text::after{
     animation:circlePulse 0.4s ease;
 }
 
 /* Emergency */
-.emergency{
+.emergency-row{
+    position:relative;
+    z-index:2;
+    display:flex;
+    justify-content:space-between;
+    padding:15px 30px;
+    margin-bottom:20px;
+    font-size:16px;
+    background: rgba(0,0,0,0.3);
+    backdrop-filter: blur(10px);
+    border-top: 1px solid rgba(255,255,255,0.1);
+}
+
+.emergency, .cancel{
+    cursor:pointer;
+    opacity:0.9;
+    transition:opacity 0.2s ease;
+}
+
+.emergency:hover, .cancel:hover{
+    opacity:1;
+}
+
+/* Face ID indicator */
+.face-id-hint{
     position:relative;
     z-index:2;
     text-align:center;
-    margin-bottom:3vh;
-    font-size:16px;
-    opacity:0.9;
-    cursor:pointer;
-    user-select:none;
+    margin-bottom:15px;
+    font-size:14px;
+    opacity:0.7;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+}
+
+.face-id-icon{
+    font-size:20px;
+}
+
+/* Touch feedback */
+.touch-feedback{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    pointer-events:none;
+    z-index:100;
+}
+
+@keyframes hapticFeedback{
+    0%{opacity:0;}
+    50%{opacity:0.1;}
+    100%{opacity:0;}
+}
+
+/* Message d'erreur */
+.error-message{
+    position:relative;
+    z-index:2;
+    text-align:center;
+    color:#ff3b30;
+    font-size:14px;
+    margin-top:15px;
+    opacity:0;
+    transition:opacity 0.3s ease;
+}
+
+.error-message.show{
+    opacity:1;
 }
 </style>
 </head>
-
 <body>
 
+<div class="background"></div>
 <div class="overlay"></div>
 
-<div class="center">
+<!-- Status Bar -->
+<div class="status-bar">
+    <div class="status-left">9:41</div>
+    <div class="status-right">📶 🔋 100%</div>
+</div>
 
+<!-- Notifications -->
+<div class="notifications">
+    <div class="notification-card">
+        <div class="notification-app">
+            <div class="app-icon">📱</div>
+            <span class="app-name">Messages</span>
+            <span class="notification-time">il y a 5 min</span>
+        </div>
+        <div class="notification-text">Bonjour ! Comment ça va aujourd'hui ?</div>
+    </div>
+    <div class="notification-card">
+        <div class="notification-app">
+            <div class="app-icon">📅</div>
+            <span class="app-name">Rappel</span>
+            <span class="notification-time">9:00</span>
+        </div>
+        <div class="notification-text">Réunion d'équipe dans 30 minutes</div>
+    </div>
+</div>
+
+<!-- Date et heure -->
+<div class="date-container">
+    <div class="time" id="currentTime">9:41</div>
+    <div class="date" id="currentDate">jeudi 20 février</div>
+</div>
+
+<div class="lock-message">⬆️ Balayer pour déverrouiller</div>
+
+<div class="center">
     <div class="pin-dots">
         <div class="dot"></div>
         <div class="dot"></div>
@@ -169,72 +432,244 @@ body{
         <div class="dot"></div>
     </div>
 
-    <div class="keypad">
-        <div class="key">1</div>
-        <div class="key">2</div>
-        <div class="key">3</div>
-        <div class="key">4</div>
-        <div class="key">5</div>
-        <div class="key">6</div>
-        <div class="key">7</div>
-        <div class="key">8</div>
-        <div class="key">9</div>
-    </div>
+    <div class="keypad-container">
+        <div class="keypad">
+            <div class="key">1 <small> </small></div>
+            <div class="key">2 <small>ABC</small></div>
+            <div class="key">3 <small>DEF</small></div>
+            <div class="key">4 <small>GHI</small></div>
+            <div class="key">5 <small>JKL</small></div>
+            <div class="key">6 <small>MNO</small></div>
+            <div class="key">7 <small>PQRS</small></div>
+            <div class="key">8 <small>TUV</small></div>
+            <div class="key">9 <small>WXYZ</small></div>
+        </div>
 
-    <div class="bottom-row">
-        <div class="delete">⌫</div>
-        <div class="key">0</div>
-        <div class="ok">OK</div>
+        <div class="bottom-row">
+            <div class="delete">⌫</div>
+            <div class="key">0 <small>+</small></div>
+            <div class="ok">OK</div>
+        </div>
     </div>
-
 </div>
 
-<div class="emergency">Appel d'urgence</div>
+<!-- Face ID hint -->
+<div class="face-id-hint">
+    <span class="face-id-icon">👤</span> Face ID
+</div>
+
+<!-- Emergency row -->
+<div class="emergency-row">
+    <span class="emergency">⬅️ Appel d'urgence</span>
+    <span class="cancel">Annuler ➔</span>
+</div>
+
+<!-- Message d'erreur -->
+<div class="error-message" id="errorMessage">Code incorrect</div>
 
 <script>
+// Éléments DOM
 const keys = document.querySelectorAll(".key");
 const dots = document.querySelectorAll(".dot");
 const deleteBtn = document.querySelector(".delete");
 const okBtn = document.querySelector(".ok");
+const errorMessage = document.getElementById("errorMessage");
+const timeElement = document.getElementById("currentTime");
+const dateElement = document.getElementById("currentDate");
 
 let pin = "";
 const correctPin = "1234";
+let attempts = 0;
+let locked = false;
 
+// Mise à jour de l'heure
+function updateDateTime() {
+    const now = new Date();
+    
+    // Heure
+    const hours = now.getHours().toString().padStart(2, '0');
+    const minutes = now.getMinutes().toString().padStart(2, '0');
+    timeElement.textContent = `${hours}:${minutes}`;
+    
+    // Date
+    const options = { weekday: 'long', day: 'numeric', month: 'long' };
+    dateElement.textContent = now.toLocaleDateString('fr-FR', options);
+}
+
+updateDateTime();
+setInterval(updateDateTime, 1000);
+
+// Animations
 function animateKey(el){
     el.classList.add("active");
-    setTimeout(()=> el.classList.remove("active"),400);
+    setTimeout(()=> el.classList.remove("active"), 400);
 }
 
 function animateText(el){
     el.classList.add("active-text");
-    setTimeout(()=> el.classList.remove("active-text"),400);
+    setTimeout(()=> el.classList.remove("active-text"), 400);
 }
 
-keys.forEach(key=>{
-    key.addEventListener("click",()=>{
+// Feedback tactile (simulé)
+function hapticFeedback() {
+    if (window.navigator && window.navigator.vibrate) {
+        window.navigator.vibrate(10);
+    }
+}
+
+// Saisie des chiffres
+keys.forEach(key => {
+    key.addEventListener("click", (e) => {
+        if (locked) return;
+        
         animateKey(key);
-        if(pin.length < 4){
-            pin += key.innerText;
-            dots[pin.length-1].classList.add("active");
+        hapticFeedback();
+        
+        if (pin.length < 4) {
+            pin += key.innerText.trim()[0]; // Prend le premier caractère
+            dots[pin.length - 1].classList.add("active");
+            
+            // Efface le message d'erreur
+            errorMessage.classList.remove("show");
         }
     });
 });
 
-deleteBtn.addEventListener("click",()=>{
+// Suppression
+deleteBtn.addEventListener("click", () => {
+    if (locked) return;
+    
     animateText(deleteBtn);
-    if(pin.length > 0){
-        dots[pin.length-1].classList.remove("active");
-        pin = pin.slice(0,-1);
+    hapticFeedback();
+    
+    if (pin.length > 0) {
+        dots[pin.length - 1].classList.remove("active");
+        pin = pin.slice(0, -1);
+        errorMessage.classList.remove("show");
     }
 });
 
-okBtn.addEventListener("click",()=>{
+// Validation
+okBtn.addEventListener("click", () => {
+    if (locked) return;
+    
     animateText(okBtn);
-    if(pin === correctPin){
-        alert("Déverrouillé !");
-    } else {
-        pin="";
-        dots.forEach(dot=>dot.classList.remove("active"));
+    hapticFeedback();
+    
+    if (pin.length === 4) {
+        if (pin === correctPin) {
+            // Animation de succès
+            dots.forEach(dot => {
+                dot.style.background = "#34c759";
+                dot.style.boxShadow = "0 0 20px #34c759";
+            });
+            
+            setTimeout(() => {
+                alert("✅ Déverrouillage réussi !");
+                // Réinitialisation après succès
+                window.location.href = "https://www.apple.com"; // Redirection simulée
+            }, 500);
+            
+        } else {
+            // Animation d'erreur
+            attempts++;
+            
+            dots.forEach(dot => {
+                dot.style.background = "#ff3b30";
+                dot.style.boxShadow = "0 0 20px #ff3b30";
+            });
+            
+            errorMessage.classList.add("show");
+            
+            setTimeout(() => {
+                // Reset des points
+                dots.forEach(dot => {
+                    dot.style.background = "";
+                    dot.style.boxShadow = "";
+                    dot.classList.remove("active");
+                });
+                pin = "";
+                errorMessage.classList.remove("show");
+            }, 800);
+            
+            // Verrouillage après trop de tentatives
+            if (attempts >= 5) {
+                locked = true;
+                errorMessage.textContent = "iPhone indisponible, réessayer dans 1 minute";
+                errorMessage.classList.add("show");
+                
+                setTimeout(() => {
+                    locked = false;
+                    attempts = 0;
+                    errorMessage.textContent = "Code incorrect";
+                }, 60000);
+            }
+        }
+    }
+});
+
+// Face ID simulé
+document.querySelector(".face-id-hint").addEventListener("click", () => {
+    animateText(document.querySelector(".face-id-hint"));
+    hapticFeedback();
+    
+    setTimeout(() => {
+        alert("🔐 Authentification Face ID simulée");
+    }, 500);
+});
+
+// Appel d'urgence
+document.querySelector(".emergency").addEventListener("click", () => {
+    animateText(document.querySelector(".emergency"));
+    hapticFeedback();
+    alert("📞 Appel d'urgence simulé");
+});
+
+// Annuler
+document.querySelector(".cancel").addEventListener("click", () => {
+    animateText(document.querySelector(".cancel"));
+    hapticFeedback();
+    
+    // Reset complet
+    dots.forEach(dot => {
+        dot.style.background = "";
+        dot.style.boxShadow = "";
+        dot.classList.remove("active");
+    });
+    pin = "";
+    errorMessage.classList.remove("show");
+});
+
+// Swipe pour déverrouiller (simulé)
+let touchStart = 0;
+document.addEventListener("touchstart", (e) => {
+    touchStart = e.touches[0].clientY;
+});
+
+document.addEventListener("touchend", (e) => {
+    if (touchStart > 100) { // Swipe vers le haut
+        const touchEnd = e.changedTouches[0].clientY;
+        if (touchStart - touchEnd > 100) {
+            alert("⬆️ Balayage pour déverrouiller simulé");
+        }
+    }
+});
+
+// Support clavier pour tester
+document.addEventListener("keydown", (e) => {
+    if (locked) return;
+    
+    const key = e.key;
+    if (key >= "0" && key <= "9") {
+        // Simulation click sur le bouton correspondant
+        const keyElement = Array.from(keys).find(k => k.innerText.includes(key));
+        if (keyElement) {
+            keyElement.click();
+        }
+    } else if (key === "Backspace") {
+        deleteBtn.click();
+    } else if (key === "Enter") {
+        okBtn.click();
     }
 });
 </script>
