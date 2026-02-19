@@ -16,34 +16,45 @@
 body{
     height:100vh;
     display:flex;
-    justify-content:center;
-    align-items:flex-end;
+    flex-direction:column;
+    justify-content:space-between;
     background:url("background.jpg") no-repeat center center/cover;
     overflow:hidden;
+    color:white;
 }
 
-/* Overlay sombre */
+/* Overlay */
 .overlay{
     position:absolute;
     inset:0;
     background:rgba(0,0,0,0.35);
+    z-index:0;
 }
 
-.lock-container{
-    width:100%;
+/* Cadenas sous caméra */
+.lock-icon{
     position:relative;
     z-index:2;
     text-align:center;
-    color:white;
-    padding-bottom:6vh;
+    margin-top:4vh;
+    font-size:28px;
+    opacity:0.9;
 }
 
-/* POINTS */
+/* Section centrale */
+.center{
+    position:relative;
+    z-index:2;
+    text-align:center;
+    margin-top:2vh;   /* 👈 pavé remonté */
+}
+
+/* Points */
 .pin-dots{
     display:flex;
     justify-content:center;
-    gap:3vw;
-    margin-bottom:6vh;
+    gap:10px; /* 👈 rapproché */
+    margin-bottom:4vh;
 }
 
 .dot{
@@ -57,65 +68,35 @@ body{
 
 .dot.active{
     opacity:1;
-    transform:scale(1.3);
+    transform:scale(1.2);
 }
 
-/* KEYPAD rapproché */
+/* KEYPAD */
 .keypad{
     display:grid;
     grid-template-columns:repeat(3, 1fr);
-    gap:4vw 6vw;  /* 👈 RAPPROCHÉ */
+    gap:12px 20px; /* 👈 beaucoup plus rapproché */
     justify-items:center;
-    padding:0 10vw;
+    padding:0 15vw;
 }
 
-/* Boutons */
 .key{
-    width:20vw;
-    height:20vw;
-    max-width:85px;
-    max-height:85px;
+    width:75px;
+    height:75px;
     border-radius:50%;
-    background:rgba(255,255,255,0.12);
+    background:rgba(255,255,255,0.15);
     display:flex;
     justify-content:center;
     align-items:center;
-    font-size:6vw;
-    color:white;
-    position:relative;
-    overflow:hidden;
+    font-size:26px;
     backdrop-filter: blur(6px);
     transition:0.15s;
-}
-
-/* LED ring animation */
-.key::after{
-    content:"";
-    position:absolute;
-    inset:0;
-    border-radius:50%;
-    border:2px solid rgba(255,255,255,0.6);
-    opacity:0;
-}
-
-.key.active::after{
-    animation:ledPulse 0.4s ease;
-}
-
-@keyframes ledPulse{
-    0%{opacity:1; transform:scale(0.8);}
-    100%{opacity:0; transform:scale(1.4);}
-}
-
-/* Ripple effect */
-.key span{
-    position:relative;
-    z-index:2;
+    cursor:pointer;
 }
 
 .key:active{
     transform:scale(0.9);
-    background:rgba(255,255,255,0.25);
+    background:rgba(255,255,255,0.3);
 }
 
 /* Ligne du bas */
@@ -123,25 +104,30 @@ body{
     display:grid;
     grid-template-columns:1fr 1fr 1fr;
     align-items:center;
-    margin-top:4vw;
-    padding:0 12vw;
-    font-size:5vw;
+    margin-top:15px;
+    padding:0 18vw;
+    font-size:18px;
 }
 
-.delete{ text-align:left; }
-.ok{ text-align:right; }
-
-/* Shake animation */
-.shake{
-    animation:shake 0.3s;
+.delete{
+    text-align:left;
+    cursor:pointer;
 }
 
-@keyframes shake{
-    0%{transform:translateX(0);}
-    25%{transform:translateX(-8px);}
-    50%{transform:translateX(8px);}
-    75%{transform:translateX(-8px);}
-    100%{transform:translateX(0);}
+.ok{
+    text-align:right;
+    cursor:pointer;
+}
+
+/* Appel d'urgence */
+.emergency{
+    position:relative;
+    z-index:2;
+    text-align:center;
+    margin-bottom:3vh;
+    font-size:16px;
+    opacity:0.9;
+    cursor:pointer;
 }
 </style>
 </head>
@@ -150,7 +136,10 @@ body{
 
 <div class="overlay"></div>
 
-<div class="lock-container" id="lock">
+<!-- Cadenas -->
+<div class="lock-icon">🔒</div>
+
+<div class="center">
 
     <div class="pin-dots">
         <div class="dot"></div>
@@ -160,54 +149,59 @@ body{
     </div>
 
     <div class="keypad">
-        <div class="key"><span>1</span></div>
-        <div class="key"><span>2</span></div>
-        <div class="key"><span>3</span></div>
-        <div class="key"><span>4</span></div>
-        <div class="key"><span>5</span></div>
-        <div class="key"><span>6</span></div>
-        <div class="key"><span>7</span></div>
-        <div class="key"><span>8</span></div>
-        <div class="key"><span>9</span></div>
+        <div class="key">1</div>
+        <div class="key">2</div>
+        <div class="key">3</div>
+        <div class="key">4</div>
+        <div class="key">5</div>
+        <div class="key">6</div>
+        <div class="key">7</div>
+        <div class="key">8</div>
+        <div class="key">9</div>
     </div>
 
     <div class="bottom-row">
-        <div class="delete">✕</div>
-        <div class="key"><span>0</span></div>
+        <div class="delete">⌫</div>
+        <div class="key">0</div>
         <div class="ok">OK</div>
     </div>
 
 </div>
 
+<div class="emergency">Appel d'urgence</div>
+
 <script>
 const keys = document.querySelectorAll(".key");
 const dots = document.querySelectorAll(".dot");
-const lock = document.getElementById("lock");
+const deleteBtn = document.querySelector(".delete");
+const okBtn = document.querySelector(".ok");
 
 let pin = "";
-const correctPin = "1234"; // change ici
+const correctPin = "1234"; // modifie ici
 
 keys.forEach(key=>{
     key.addEventListener("click",()=>{
-        key.classList.add("active");
-        setTimeout(()=> key.classList.remove("active"),400);
-
         if(pin.length < 4){
-            pin += key.innerText.trim();
+            pin += key.innerText;
             dots[pin.length-1].classList.add("active");
         }
-
-        if(pin.length === 4){
-            setTimeout(()=>{
-                if(pin !== correctPin){
-                    lock.classList.add("shake");
-                    setTimeout(()=> lock.classList.remove("shake"),300);
-                }
-                pin="";
-                dots.forEach(dot=>dot.classList.remove("active"));
-            },300);
-        }
     });
+});
+
+deleteBtn.addEventListener("click",()=>{
+    if(pin.length > 0){
+        dots[pin.length-1].classList.remove("active");
+        pin = pin.slice(0,-1);
+    }
+});
+
+okBtn.addEventListener("click",()=>{
+    if(pin === correctPin){
+        alert("Déverrouillé !");
+    } else {
+        pin = "";
+        dots.forEach(dot=>dot.classList.remove("active"));
+    }
 });
 </script>
 
