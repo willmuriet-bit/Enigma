@@ -210,14 +210,11 @@
         .ok {
             font-size: 20px;
             background: rgba(50, 130, 216, 0.5);
+            /* On garde le fond bleu, on enlève seulement la bordure bleue */
+            border: none;
         }
 
-        /* SUPPRESSION DES CERCLES POUR OK ET SUPPRIMER */
-        .ok::after,
-        .delete-btn::after {
-            display: none;
-        }
-
+        /* Garder l'animation du cercle blanc */
         .key::after {
             content: '';
             position: absolute;
@@ -287,7 +284,6 @@
             align-items: center;
             justify-content: flex-start;
             cursor: pointer;
-            padding-top: 340px;
         }
 
         #result-page.visible {
@@ -302,22 +298,30 @@
             z-index: 31;
         }
 
-        .result-content {
-            position: relative;
-            z-index: 32;
-            color: #666666;
-            font-size: 14px;
-            font-weight: normal;
-            text-shadow: none;
-            padding: 0 20px;
-            text-align: center;
+        /* Conteneur pour la liste L */
+        .words-container {
+            position: absolute;
+            top: 300px;
+            left: 0;
             width: 100%;
+            z-index: 32;
+            color: white;
+            font-size: 21px;
+            padding-left: 2em;
+            padding-right: 2em;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            text-align: center;
+            box-sizing: border-box;
+        }
+
+        .words-line {
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
-            gap: 0;
-            letter-spacing: 0.5px;
-            max-width: 100%;
+            gap: 5px;
+            width: 100%;
         }
 
         .result-word {
@@ -326,41 +330,39 @@
             border-radius: 0;
             backdrop-filter: none;
             border: none;
-            font-size: 14px;
-            color: #666666;
+            font-size: 21px;
+            color: white;
             white-space: nowrap;
             cursor: pointer;
             display: inline-block;
         }
 
-        .result-word:not(:last-child)::after {
-            content: " ";
-            white-space: pre;
-        }
-
         /* Conteneur pour les lettres cliquables */
         .letters-container {
             position: absolute;
-            top: 500px;
+            top: 480px;
             left: 0;
             width: 100%;
             text-align: center;
-            color: #666666;
-            font-size: 14px;
+            color: white;
+            font-size: 28px;
             z-index: 32;
             padding: 0 20px;
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
-            gap: 5px;
+            gap: 0;
+            letter-spacing: 4px;
         }
 
         .letter-btn {
             cursor: pointer;
             text-decoration: none;
-            color: #666666;
-            font-size: 14px;
+            color: white;
+            font-size: 28px;
             display: inline-block;
+            text-transform: uppercase;
+            margin: 0 2px;
         }
 
         .letter-btn.selected {
@@ -368,9 +370,24 @@
         }
 
         .separator {
-            color: #666666;
-            font-size: 14px;
+            color: white;
+            font-size: 28px;
             display: inline-block;
+            opacity: 0;
+            width: 4px;
+        }
+
+        /* Indice (chiffre) */
+        .index-display {
+            position: absolute;
+            top: 510px;
+            left: 50%;
+            transform: translateX(calc(-50% - 20px));
+            color: #00ff00;
+            font-size: 50px;
+            font-weight: bold;
+            z-index: 32;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
         }
 
         /* MODAL LISTE */
@@ -524,8 +541,9 @@
     <!-- PAGE IMAGE (RÉSULTATS) -->
     <div id="result-page">
         <div class="result-overlay"></div>
-        <div class="result-content" id="result-content"></div>
+        <div class="words-container" id="words-container"></div>
         <div class="letters-container" id="letters-container"></div>
+        <div class="index-display" id="index-display"></div>
     </div>
 
     <!-- MODAL LISTE -->
@@ -548,8 +566,9 @@
             const homePage = document.getElementById('home-page');
             const lockPage = document.getElementById('lock-page');
             const resultPage = document.getElementById('result-page');
-            const resultContent = document.getElementById('result-content');
+            const wordsContainer = document.getElementById('words-container');
             const lettersContainer = document.getElementById('letters-container');
+            const indexDisplay = document.getElementById('index-display');
             
             const btnPerform = document.getElementById('btn-perform');
             const btnLanguage = document.getElementById('btn-language');
@@ -695,23 +714,23 @@
             }
 
             function displayWords(words) {
-                resultContent.innerHTML = '';
+                wordsContainer.innerHTML = '';
                 
                 if (words.length === 0) {
                     const noWord = document.createElement('span');
                     noWord.className = 'result-word';
                     noWord.textContent = 'Aucun mot trouvé';
-                    resultContent.appendChild(noWord);
+                    
+                    const line = document.createElement('div');
+                    line.className = 'words-line';
+                    line.appendChild(noWord);
+                    wordsContainer.appendChild(line);
                     return;
                 }
                 
-                // Afficher les mots avec retour à la ligne si > 50 caractères
-                let currentLine = '';
-                let lineContainer = document.createElement('div');
-                lineContainer.style.display = 'flex';
-                lineContainer.style.flexWrap = 'wrap';
-                lineContainer.style.justifyContent = 'center';
-                lineContainer.style.width = '100%';
+                // Afficher les mots avec retour à la ligne naturel
+                let currentLine = document.createElement('div');
+                currentLine.className = 'words-line';
                 
                 for (let i = 0; i < words.length; i++) {
                     const word = words[i];
@@ -719,38 +738,25 @@
                     wordSpan.className = 'result-word';
                     wordSpan.textContent = word;
                     
-                    // Ajouter l'espace après le mot (sauf pour le dernier)
-                    if (i < words.length - 1) {
-                        wordSpan.style.marginRight = '5px';
-                    }
-                    
                     wordSpan.addEventListener('click', function(e) {
                         e.stopPropagation();
                         window.open(`https://www.google.com/search?tbm=isch&q=${encodeURIComponent(this.textContent)}`, '_blank');
                     });
                     
-                    // Vérifier la longueur de la ligne
-                    const testLine = currentLine + (currentLine ? ' ' : '') + word;
-                    if (testLine.length > 50 && currentLine !== '') {
-                        // Nouvelle ligne
-                        resultContent.appendChild(lineContainer);
-                        lineContainer = document.createElement('div');
-                        lineContainer.style.display = 'flex';
-                        lineContainer.style.flexWrap = 'wrap';
-                        lineContainer.style.justifyContent = 'center';
-                        lineContainer.style.width = '100%';
-                        lineContainer.style.marginTop = '5px';
-                        currentLine = word;
-                    } else {
-                        currentLine = testLine;
+                    currentLine.appendChild(wordSpan);
+                    
+                    // Ajouter un espace après chaque mot sauf le dernier
+                    if (i < words.length - 1) {
+                        const space = document.createElement('span');
+                        space.textContent = ' ';
+                        currentLine.appendChild(space);
                     }
                     
-                    lineContainer.appendChild(wordSpan);
+                    // Vérifier si on doit passer à la ligne suivante (quand la ligne déborde)
+                    // On ne fait pas de vérification stricte, on laisse le flex-wrap gérer
                 }
                 
-                if (lineContainer.children.length > 0) {
-                    resultContent.appendChild(lineContainer);
-                }
+                wordsContainer.appendChild(currentLine);
             }
 
             function displayLetterButtons(index, letters) {
@@ -758,21 +764,7 @@
                 
                 if (index === -1 || letters.length === 0) return;
                 
-                // Afficher l'indice
-                const indexSpan = document.createElement('span');
-                indexSpan.className = 'letter-btn';
-                indexSpan.textContent = (index + 1).toString();
-                indexSpan.style.cursor = 'default';
-                indexSpan.style.textDecoration = 'none';
-                lettersContainer.appendChild(indexSpan);
-                
-                // Afficher les tirets
-                const dash1 = document.createElement('span');
-                dash1.className = 'separator';
-                dash1.textContent = ' - ';
-                lettersContainer.appendChild(dash1);
-                
-                // Afficher les lettres
+                // Afficher les lettres en majuscules
                 for (let i = 0; i < letters.length; i++) {
                     const letter = letters[i];
                     const letterSpan = document.createElement('span');
@@ -780,7 +772,7 @@
                     if (selectedLetter === letter) {
                         letterSpan.classList.add('selected');
                     }
-                    letterSpan.textContent = letter;
+                    letterSpan.textContent = letter.toUpperCase();
                     
                     letterSpan.addEventListener('click', function(e) {
                         e.stopPropagation();
@@ -810,12 +802,12 @@
                     
                     lettersContainer.appendChild(letterSpan);
                     
-                    // Ajouter un tiret après chaque lettre sauf la dernière
+                    // Ajouter 4 espaces (via un span invisible avec largeur)
                     if (i < letters.length - 1) {
-                        const dash = document.createElement('span');
-                        dash.className = 'separator';
-                        dash.textContent = ' - ';
-                        lettersContainer.appendChild(dash);
+                        const spacer = document.createElement('span');
+                        spacer.className = 'separator';
+                        spacer.innerHTML = '&nbsp;&nbsp;&nbsp;&nbsp;';
+                        lettersContainer.appendChild(spacer);
                     }
                 }
             }
@@ -927,6 +919,9 @@
                     letterLists = calculateLetterLists(originalWords);
                     bestListIndex = findBestList(letterLists);
                     bestListLetters = bestListIndex !== -1 ? letterLists[bestListIndex] : [];
+                    
+                    // Afficher l'indice
+                    indexDisplay.textContent = bestListIndex !== -1 ? (bestListIndex + 1).toString() : '';
                     
                     // Afficher les mots
                     displayWords(currentWords);
