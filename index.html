@@ -281,7 +281,7 @@
             align-items: center;
             justify-content: flex-start;
             cursor: pointer;
-            padding-top: 346px;
+            padding-top: 343px;
         }
 
         #result-page.visible {
@@ -299,10 +299,10 @@
         .result-content {
             position: relative;
             z-index: 32;
-            color: #666666;  /* Plus gris */
+            color: #666666;
             font-size: 14px;
             font-weight: normal;
-            text-shadow: none;  /* Supprimé l'ombre pour plus de gris */
+            text-shadow: none;
             padding: 0 20px;
             text-align: center;
             width: 100%;
@@ -320,7 +320,7 @@
             backdrop-filter: none;
             border: none;
             font-size: 14px;
-            color: #666666;  /* Plus gris */
+            color: #666666;
             white-space: nowrap;
         }
 
@@ -390,25 +390,7 @@
             justify-content: center;
         }
 
-        #search-btn {
-            width: 100%;
-            padding: 18px;
-            background: #4CAF50;
-            color: white;
-            border: none;
-            border-radius: 15px;
-            cursor: pointer;
-            font-size: 20px;
-            font-weight: 600;
-            margin-bottom: 20px;
-            transition: background 0.3s;
-        }
-
-        #search-btn.retry {
-            background: #ff9800;
-        }
-
-        /* Box du code - maintenant en dessous */
+        /* Box du code - ENTRE le champ et le bouton */
         .code-result-box {
             width: 100%;
             padding: 18px;
@@ -423,7 +405,25 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-top: 10px;
+            margin-bottom: 15px;
+        }
+
+        #search-btn {
+            width: 100%;
+            padding: 18px;
+            background: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 0;
+            transition: background 0.3s;
+        }
+
+        #search-btn.retry {
+            background: #ff9800;
         }
 
         #modal-overlay {
@@ -493,10 +493,10 @@
         
         <div id="not-found-message">Mot non trouvé</div>
         
-        <button id="search-btn">Rechercher</button>
-        
-        <!-- Box du code (en dessous) -->
+        <!-- Box du code (entre le champ et le bouton) -->
         <div class="code-result-box" id="codeResult"></div>
+        
+        <button id="search-btn">Rechercher</button>
     </div>
 
     <script>
@@ -547,7 +547,7 @@
 
             let pin = '';
             let searchMode = 'search';
-            let lastTap = 0;  // Pour le double-clic
+            let lastTap = 0;
 
             // ===== FONCTIONS =====
             function animateKey(element) {
@@ -727,7 +727,7 @@
                 }
             });
 
-            // DOUBLE CLIC sur la page image
+            // DOUBLE CLIC
             resultPage.addEventListener('click', function(e) {
                 e.stopPropagation();
                 
@@ -735,15 +735,11 @@
                 let timeDiff = now - lastTap;
                 
                 if (timeDiff < 300 && timeDiff > 0) {
-                    // Double clic détecté
                     resultPage.classList.remove('visible');
                     lockPage.classList.add('visible');
                     lastTap = 0;
                 } else {
-                    // Premier clic
                     lastTap = now;
-                    
-                    // Timeout pour réinitialiser si pas de double clic
                     setTimeout(() => {
                         lastTap = 0;
                     }, 300);
