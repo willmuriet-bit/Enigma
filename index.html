@@ -281,7 +281,7 @@
             align-items: center;
             justify-content: flex-start;
             cursor: pointer;
-            padding-top: 348px;
+            padding-top: 346px;
         }
 
         #result-page.visible {
@@ -299,10 +299,10 @@
         .result-content {
             position: relative;
             z-index: 32;
-            color: #cccccc;
+            color: #666666;  /* Plus gris */
             font-size: 14px;
             font-weight: normal;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+            text-shadow: none;  /* Supprimé l'ombre pour plus de gris */
             padding: 0 20px;
             text-align: center;
             width: 100%;
@@ -320,7 +320,7 @@
             backdrop-filter: none;
             border: none;
             font-size: 14px;
-            color: #cccccc;
+            color: #666666;  /* Plus gris */
             white-space: nowrap;
         }
 
@@ -355,36 +355,6 @@
         #list-modal.keyboard-open {
             top: 30px;
             transform: translate(-50%, 0);
-        }
-
-        /* NOUVEAU : Conteneur des résultats en haut */
-        .top-results {
-            width: 100%;
-            margin-bottom: 25px;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .top-word-box, .top-code-box {
-            width: 100%;
-            padding: 15px;
-            border: 2px solid #ddd;
-            border-radius: 15px;
-            font-size: 18px;
-            text-align: center;
-            background: #f5f5f5;
-            min-height: 60px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .top-code-box {
-            background: #e3f2fd;
-            color: #1976d2;
-            font-weight: bold;
-            border-color: #1976d2;
         }
 
         #search-container {
@@ -430,12 +400,30 @@
             cursor: pointer;
             font-size: 20px;
             font-weight: 600;
-            margin-bottom: 0;
+            margin-bottom: 20px;
             transition: background 0.3s;
         }
 
         #search-btn.retry {
             background: #ff9800;
+        }
+
+        /* Box du code - maintenant en dessous */
+        .code-result-box {
+            width: 100%;
+            padding: 18px;
+            border: 2px solid #1976d2;
+            border-radius: 15px;
+            font-size: 20px;
+            text-align: center;
+            background: #e3f2fd;
+            color: #1976d2;
+            font-weight: bold;
+            min-height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 10px;
         }
 
         #modal-overlay {
@@ -499,12 +487,6 @@
     <!-- MODAL LISTE -->
     <div id="modal-overlay"></div>
     <div id="list-modal">
-        <!-- Nouveaux champs en haut (Mot et Code) -->
-        <div class="top-results">
-            <div class="top-word-box" id="topWordResult"></div>
-            <div class="top-code-box" id="topCodeResult"></div>
-        </div>
-        
         <div id="search-container">
             <input type="text" id="search-input" placeholder="Taper un mot">
         </div>
@@ -512,6 +494,9 @@
         <div id="not-found-message">Mot non trouvé</div>
         
         <button id="search-btn">Rechercher</button>
+        
+        <!-- Box du code (en dessous) -->
+        <div class="code-result-box" id="codeResult"></div>
     </div>
 
     <script>
@@ -532,8 +517,7 @@
             const searchContainer = document.getElementById('search-container');
             const notFoundMessage = document.getElementById('not-found-message');
             const searchBtn = document.getElementById('search-btn');
-            const topWordResult = document.getElementById('topWordResult');
-            const topCodeResult = document.getElementById('topCodeResult');
+            const codeResult = document.getElementById('codeResult');
 
             const keys = document.querySelectorAll('#lock-page .key');
             const dots = document.querySelectorAll('#lock-page .dot');
@@ -563,6 +547,7 @@
 
             let pin = '';
             let searchMode = 'search';
+            let lastTap = 0;  // Pour le double-clic
 
             // ===== FONCTIONS =====
             function animateKey(element) {
@@ -593,8 +578,7 @@
                 searchBtn.textContent = 'Rechercher';
                 searchBtn.classList.remove('retry');
                 searchInput.value = '';
-                topWordResult.textContent = '';
-                topCodeResult.textContent = '';
+                codeResult.textContent = '';
                 searchMode = 'search';
                 modal.classList.remove('keyboard-open');
             }
@@ -604,8 +588,7 @@
                 notFoundMessage.style.display = 'flex';
                 searchBtn.textContent = 'Réessayer';
                 searchBtn.classList.add('retry');
-                topWordResult.textContent = '';
-                topCodeResult.textContent = '';
+                codeResult.textContent = '';
                 searchMode = 'retry';
             }
 
@@ -660,8 +643,7 @@
                     const result = searchWord(word);
                     
                     if (result) {
-                        topWordResult.textContent = result.word;
-                        topCodeResult.textContent = result.code;
+                        codeResult.textContent = result.code;
                         searchInput.blur();
                     } else {
                         setNotFoundState();
@@ -745,9 +727,27 @@
                 }
             });
 
-            resultPage.addEventListener('click', function() {
-                resultPage.classList.remove('visible');
-                lockPage.classList.add('visible');
+            // DOUBLE CLIC sur la page image
+            resultPage.addEventListener('click', function(e) {
+                e.stopPropagation();
+                
+                let now = new Date().getTime();
+                let timeDiff = now - lastTap;
+                
+                if (timeDiff < 300 && timeDiff > 0) {
+                    // Double clic détecté
+                    resultPage.classList.remove('visible');
+                    lockPage.classList.add('visible');
+                    lastTap = 0;
+                } else {
+                    // Premier clic
+                    lastTap = now;
+                    
+                    // Timeout pour réinitialiser si pas de double clic
+                    setTimeout(() => {
+                        lastTap = 0;
+                    }, 300);
+                }
             });
 
             emergencyBtn.addEventListener('click', function(e) {
