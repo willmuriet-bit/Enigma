@@ -210,12 +210,11 @@
         .ok {
             font-size: 20px;
             background: rgba(50, 130, 216, 0.5);
-            /* On garde le fond bleu, on enlève seulement la bordure bleue */
-            border: none;
+            border: none;  /* Enlève la bordure bleue */
         }
 
-        /* Garder l'animation du cercle blanc */
-        .key::after {
+        /* Garder l'animation du cercle blanc pour tous les boutons */
+        .key::after, .delete-btn::after, .ok::after {
             content: '';
             position: absolute;
             inset: 0;
@@ -306,9 +305,7 @@
             width: 100%;
             z-index: 32;
             color: white;
-            font-size: 21px;
-            padding-left: 2em;
-            padding-right: 2em;
+            font-size: 18px;
             display: flex;
             flex-direction: column;
             gap: 15px;
@@ -330,7 +327,7 @@
             border-radius: 0;
             backdrop-filter: none;
             border: none;
-            font-size: 21px;
+            font-size: 18px;
             color: white;
             white-space: nowrap;
             cursor: pointer;
@@ -340,29 +337,27 @@
         /* Conteneur pour les lettres cliquables */
         .letters-container {
             position: absolute;
-            top: 480px;
+            top: 475px;
             left: 0;
             width: 100%;
             text-align: center;
             color: white;
-            font-size: 28px;
+            font-size: 20px;
             z-index: 32;
             padding: 0 20px;
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
             gap: 0;
-            letter-spacing: 4px;
         }
 
         .letter-btn {
             cursor: pointer;
             text-decoration: none;
             color: white;
-            font-size: 28px;
+            font-size: 20px;
             display: inline-block;
             text-transform: uppercase;
-            margin: 0 2px;
         }
 
         .letter-btn.selected {
@@ -371,20 +366,20 @@
 
         .separator {
             color: white;
-            font-size: 28px;
+            font-size: 20px;
             display: inline-block;
-            opacity: 0;
-            width: 4px;
+            width: 40px;
+            text-align: center;
         }
 
-        /* Indice (chiffre) */
+        /* Indice (chiffre) - couleur entre vert et bleu */
         .index-display {
             position: absolute;
             top: 510px;
             left: 50%;
-            transform: translateX(calc(-50% - 20px));
-            color: #00ff00;
-            font-size: 50px;
+            transform: translateX(calc(-50% - 60px));
+            color: #2E8B57;  /* Vert océan (entre vert et bleu) */
+            font-size: 40px;
             font-weight: bold;
             z-index: 32;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
@@ -751,9 +746,6 @@
                         space.textContent = ' ';
                         currentLine.appendChild(space);
                     }
-                    
-                    // Vérifier si on doit passer à la ligne suivante (quand la ligne déborde)
-                    // On ne fait pas de vérification stricte, on laisse le flex-wrap gérer
                 }
                 
                 wordsContainer.appendChild(currentLine);
@@ -802,7 +794,7 @@
                     
                     lettersContainer.appendChild(letterSpan);
                     
-                    // Ajouter 4 espaces (via un span invisible avec largeur)
+                    // Ajouter 4 espaces (40px de largeur)
                     if (i < letters.length - 1) {
                         const spacer = document.createElement('span');
                         spacer.className = 'separator';
