@@ -212,7 +212,13 @@
             background: rgba(50, 130, 216, 0.5);
         }
 
-        .key::after, .delete-btn::after, .ok::after {
+        /* SUPPRESSION DES CERCLES POUR OK ET SUPPRIMER */
+        .ok::after,
+        .delete-btn::after {
+            display: none;
+        }
+
+        .key::after {
             content: '';
             position: absolute;
             inset: 0;
@@ -281,7 +287,7 @@
             align-items: center;
             justify-content: flex-start;
             cursor: pointer;
-            padding-top: 343px;
+            padding-top: 340px;
         }
 
         #result-page.visible {
@@ -311,6 +317,7 @@
             justify-content: center;
             gap: 0;
             letter-spacing: 0.5px;
+            max-width: 100%;
         }
 
         .result-word {
@@ -322,11 +329,48 @@
             font-size: 14px;
             color: #666666;
             white-space: nowrap;
+            cursor: pointer;
+            display: inline-block;
         }
 
         .result-word:not(:last-child)::after {
             content: " ";
             white-space: pre;
+        }
+
+        /* Conteneur pour les lettres cliquables */
+        .letters-container {
+            position: absolute;
+            top: 500px;
+            left: 0;
+            width: 100%;
+            text-align: center;
+            color: #666666;
+            font-size: 14px;
+            z-index: 32;
+            padding: 0 20px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 5px;
+        }
+
+        .letter-btn {
+            cursor: pointer;
+            text-decoration: none;
+            color: #666666;
+            font-size: 14px;
+            display: inline-block;
+        }
+
+        .letter-btn.selected {
+            text-decoration: underline;
+        }
+
+        .separator {
+            color: #666666;
+            font-size: 14px;
+            display: inline-block;
         }
 
         /* MODAL LISTE */
@@ -481,6 +525,7 @@
     <div id="result-page">
         <div class="result-overlay"></div>
         <div class="result-content" id="result-content"></div>
+        <div class="letters-container" id="letters-container"></div>
     </div>
 
     <!-- MODAL LISTE -->
@@ -504,6 +549,7 @@
             const lockPage = document.getElementById('lock-page');
             const resultPage = document.getElementById('result-page');
             const resultContent = document.getElementById('result-content');
+            const lettersContainer = document.getElementById('letters-container');
             
             const btnPerform = document.getElementById('btn-perform');
             const btnLanguage = document.getElementById('btn-language');
@@ -546,10 +592,15 @@
             let pin = '';
             let searchMode = 'search';
             
-            // ===== NOUVELLES VARIABLES POUR PAGE 3 =====
+            // Variables pour la page 3
+            let currentCode = '';
+            let originalWords = [];
+            let currentWords = [];
+            let letterLists = [];
+            let bestListIndex = -1;
+            let bestListLetters = [];
+            let selectedLetter = '';
             let lastTap = 0;
-            let longPressTimer;
-            let isLongPress = false;
 
             // ===== FONCTIONS =====
             function animateKey(element) {
@@ -603,6 +654,170 @@
                     }
                 }
                 return null;
+            }
+
+            // ===== FONCTIONS POUR LA PAGE 3 =====
+            function calculateLetterLists(words) {
+                if (words.length === 0) return [];
+                
+                const firstDigit = parseInt(currentCode[0]);
+                const lists = [];
+                
+                for (let pos = 0; pos < firstDigit; pos++) {
+                    lists[pos] = [];
+                }
+                
+                for (let i = 0; i < words.length; i++) {
+                    const word = words[i];
+                    for (let pos = 0; pos < word.length && pos < firstDigit; pos++) {
+                        const letter = word[pos];
+                        if (!lists[pos].includes(letter)) {
+                            lists[pos].push(letter);
+                        }
+                    }
+                }
+                
+                return lists;
+            }
+
+            function findBestList(lists) {
+                let maxSize = -1;
+                let bestIndex = -1;
+                
+                for (let i = 0; i < lists.length; i++) {
+                    if (lists[i].length > maxSize) {
+                        maxSize = lists[i].length;
+                        bestIndex = i;
+                    }
+                }
+                
+                return bestIndex;
+            }
+
+            function displayWords(words) {
+                resultContent.innerHTML = '';
+                
+                if (words.length === 0) {
+                    const noWord = document.createElement('span');
+                    noWord.className = 'result-word';
+                    noWord.textContent = 'Aucun mot trouvé';
+                    resultContent.appendChild(noWord);
+                    return;
+                }
+                
+                // Afficher les mots avec retour à la ligne si > 50 caractères
+                let currentLine = '';
+                let lineContainer = document.createElement('div');
+                lineContainer.style.display = 'flex';
+                lineContainer.style.flexWrap = 'wrap';
+                lineContainer.style.justifyContent = 'center';
+                lineContainer.style.width = '100%';
+                
+                for (let i = 0; i < words.length; i++) {
+                    const word = words[i];
+                    const wordSpan = document.createElement('span');
+                    wordSpan.className = 'result-word';
+                    wordSpan.textContent = word;
+                    
+                    // Ajouter l'espace après le mot (sauf pour le dernier)
+                    if (i < words.length - 1) {
+                        wordSpan.style.marginRight = '5px';
+                    }
+                    
+                    wordSpan.addEventListener('click', function(e) {
+                        e.stopPropagation();
+                        window.open(`https://www.google.com/search?tbm=isch&q=${encodeURIComponent(this.textContent)}`, '_blank');
+                    });
+                    
+                    // Vérifier la longueur de la ligne
+                    const testLine = currentLine + (currentLine ? ' ' : '') + word;
+                    if (testLine.length > 50 && currentLine !== '') {
+                        // Nouvelle ligne
+                        resultContent.appendChild(lineContainer);
+                        lineContainer = document.createElement('div');
+                        lineContainer.style.display = 'flex';
+                        lineContainer.style.flexWrap = 'wrap';
+                        lineContainer.style.justifyContent = 'center';
+                        lineContainer.style.width = '100%';
+                        lineContainer.style.marginTop = '5px';
+                        currentLine = word;
+                    } else {
+                        currentLine = testLine;
+                    }
+                    
+                    lineContainer.appendChild(wordSpan);
+                }
+                
+                if (lineContainer.children.length > 0) {
+                    resultContent.appendChild(lineContainer);
+                }
+            }
+
+            function displayLetterButtons(index, letters) {
+                lettersContainer.innerHTML = '';
+                
+                if (index === -1 || letters.length === 0) return;
+                
+                // Afficher l'indice
+                const indexSpan = document.createElement('span');
+                indexSpan.className = 'letter-btn';
+                indexSpan.textContent = (index + 1).toString();
+                indexSpan.style.cursor = 'default';
+                indexSpan.style.textDecoration = 'none';
+                lettersContainer.appendChild(indexSpan);
+                
+                // Afficher les tirets
+                const dash1 = document.createElement('span');
+                dash1.className = 'separator';
+                dash1.textContent = ' - ';
+                lettersContainer.appendChild(dash1);
+                
+                // Afficher les lettres
+                for (let i = 0; i < letters.length; i++) {
+                    const letter = letters[i];
+                    const letterSpan = document.createElement('span');
+                    letterSpan.className = 'letter-btn';
+                    if (selectedLetter === letter) {
+                        letterSpan.classList.add('selected');
+                    }
+                    letterSpan.textContent = letter;
+                    
+                    letterSpan.addEventListener('click', function(e) {
+                        e.stopPropagation();
+                        
+                        if (this.classList.contains('selected')) {
+                            // Deuxième clic : annuler
+                            this.classList.remove('selected');
+                            selectedLetter = '';
+                            currentWords = [...originalWords];
+                            displayWords(currentWords);
+                        } else {
+                            // Premier clic : enlever la sélection précédente
+                            document.querySelectorAll('.letter-btn.selected').forEach(el => {
+                                el.classList.remove('selected');
+                            });
+                            this.classList.add('selected');
+                            selectedLetter = letter;
+                            
+                            // Filtrer les mots
+                            const pos = bestListIndex;
+                            currentWords = originalWords.filter(word => 
+                                word.length > pos && word[pos] === letter
+                            );
+                            displayWords(currentWords);
+                        }
+                    });
+                    
+                    lettersContainer.appendChild(letterSpan);
+                    
+                    // Ajouter un tiret après chaque lettre sauf la dernière
+                    if (i < letters.length - 1) {
+                        const dash = document.createElement('span');
+                        dash.className = 'separator';
+                        dash.textContent = ' - ';
+                        lettersContainer.appendChild(dash);
+                    }
+                }
             }
 
             // Gestion responsive
@@ -697,29 +912,27 @@
                 animateText(this);
 
                 if (pin.length === 4) {
-                    const matchingWords = [];
+                    currentCode = pin;
+                    originalWords = [];
                     
                     for (let i = 0; i < wordsList.length; i++) {
                         if (wordsList[i].code === pin) {
-                            matchingWords.push(wordsList[i].word);
+                            originalWords.push(wordsList[i].word);
                         }
                     }
                     
-                    resultContent.innerHTML = '';
+                    currentWords = [...originalWords];
                     
-                    if (matchingWords.length > 0) {
-                        for (let i = 0; i < matchingWords.length; i++) {
-                            const wordSpan = document.createElement('span');
-                            wordSpan.className = 'result-word';
-                            wordSpan.textContent = matchingWords[i];
-                            resultContent.appendChild(wordSpan);
-                        }
-                    } else {
-                        const noResultSpan = document.createElement('span');
-                        noResultSpan.className = 'result-word';
-                        noResultSpan.textContent = 'Aucun mot trouvé';
-                        resultContent.appendChild(noResultSpan);
-                    }
+                    // Calculer les listes de lettres
+                    letterLists = calculateLetterLists(originalWords);
+                    bestListIndex = findBestList(letterLists);
+                    bestListLetters = bestListIndex !== -1 ? letterLists[bestListIndex] : [];
+                    
+                    // Afficher les mots
+                    displayWords(currentWords);
+                    
+                    // Afficher les boutons de lettres
+                    displayLetterButtons(bestListIndex, bestListLetters);
                     
                     lockPage.classList.remove('visible');
                     resultPage.classList.add('visible');
@@ -729,90 +942,27 @@
                 }
             });
 
-            // ===== PAGE 3 : DOUBLE-CLIC CORRIGÉ + APPUI LONG =====
-            
-            // Appui long 1 seconde pour ouvrir Google Chrome
-            resultPage.addEventListener('touchstart', function(e) {
-                e.preventDefault();
-                isLongPress = false;
-                longPressTimer = setTimeout(() => {
-                    isLongPress = true;
-                    // Ouvre Google dans le navigateur par défaut
-                    window.open('https://www.google.com', '_blank');
-                    
-                    // Petit retour haptique (vibration) si supporté
-                    if (navigator.vibrate) navigator.vibrate(50);
-                    
-                    console.log('Ouverture de Google');
-                }, 1000); // 1 seconde
-            });
-
-            resultPage.addEventListener('touchend', function(e) {
-                e.preventDefault();
-                clearTimeout(longPressTimer);
-                
-                // Si ce n'était pas un appui long, on vérifie le double-clic
-                if (!isLongPress) {
-                    let now = new Date().getTime();
-                    let timeDiff = now - lastTap;
-                    
-                    if (timeDiff < 300 && timeDiff > 0) {
-                        // Double clic détecté
-                        resultPage.classList.remove('visible');
-                        lockPage.classList.add('visible');
-                        lastTap = 0;
-                        console.log('Double-clic détecté - retour au lock screen');
-                    } else {
-                        // Premier clic
-                        lastTap = now;
-                        
-                        // Timeout pour réinitialiser si pas de double clic
-                        setTimeout(() => {
-                            lastTap = 0;
-                        }, 300);
-                    }
+            // Double-clic sur la page image pour revenir au lock screen
+            resultPage.addEventListener('click', function(e) {
+                // Ignorer si on clique sur un mot ou une lettre
+                if (e.target.classList.contains('result-word') || e.target.classList.contains('letter-btn')) {
+                    return;
                 }
-            });
-
-            resultPage.addEventListener('touchcancel', function() {
-                clearTimeout(longPressTimer);
-            });
-
-            // Pour la souris (ordinateur)
-            resultPage.addEventListener('mousedown', function(e) {
-                e.preventDefault();
-                isLongPress = false;
-                longPressTimer = setTimeout(() => {
-                    isLongPress = true;
-                    window.open('https://www.google.com', '_blank');
-                    console.log('Ouverture de Google');
-                }, 1000);
-            });
-
-            resultPage.addEventListener('mouseup', function(e) {
-                e.preventDefault();
-                clearTimeout(longPressTimer);
                 
-                if (!isLongPress) {
-                    let now = new Date().getTime();
-                    let timeDiff = now - lastTap;
-                    
-                    if (timeDiff < 300 && timeDiff > 0) {
-                        resultPage.classList.remove('visible');
-                        lockPage.classList.add('visible');
+                let now = new Date().getTime();
+                let timeDiff = now - lastTap;
+                
+                if (timeDiff < 300 && timeDiff > 0) {
+                    resultPage.classList.remove('visible');
+                    lockPage.classList.add('visible');
+                    selectedLetter = '';
+                    lastTap = 0;
+                } else {
+                    lastTap = now;
+                    setTimeout(() => {
                         lastTap = 0;
-                        console.log('Double-clic détecté - retour au lock screen');
-                    } else {
-                        lastTap = now;
-                        setTimeout(() => {
-                            lastTap = 0;
-                        }, 300);
-                    }
+                    }, 300);
                 }
-            });
-
-            resultPage.addEventListener('mouseleave', function() {
-                clearTimeout(longPressTimer);
             });
 
             // BOUTON URGENCE
