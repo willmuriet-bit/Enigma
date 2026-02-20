@@ -210,10 +210,10 @@
         .ok {
             font-size: 20px;
             background: rgba(50, 130, 216, 0.5);
-            border: none;  /* Enlève la bordure bleue */
+            border: none;
         }
 
-        /* Garder l'animation du cercle blanc pour tous les boutons */
+        /* Animation du cercle blanc pour tous les boutons */
         .key::after, .delete-btn::after, .ok::after {
             content: '';
             position: absolute;
@@ -372,14 +372,14 @@
             text-align: center;
         }
 
-        /* Indice (chiffre) - couleur entre vert et bleu */
+        /* Indice (chiffre) - modifié selon les demandes */
         .index-display {
             position: absolute;
             top: 510px;
             left: 50%;
-            transform: translateX(calc(-50% - 60px));
-            color: #2E8B57;  /* Vert océan (entre vert et bleu) */
-            font-size: 40px;
+            transform: translateX(calc(-50% - 50px));
+            color: #3A9B5E;  /* Plus bleuté */
+            font-size: 35px;
             font-weight: bold;
             z-index: 32;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
