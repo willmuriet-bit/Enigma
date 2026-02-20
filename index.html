@@ -545,8 +545,11 @@
 
             let pin = '';
             let searchMode = 'search';
+            
+            // ===== NOUVELLES VARIABLES POUR PAGE 3 =====
             let lastTap = 0;
             let longPressTimer;
+            let isLongPress = false;
 
             // ===== FONCTIONS =====
             function animateKey(element) {
@@ -726,35 +729,14 @@
                 }
             });
 
-            // ===== PAGE 3 : DOUBLE-CLIC + APPUI LONG 1 SECONDE =====
+            // ===== PAGE 3 : DOUBLE-CLIC CORRIGÉ + APPUI LONG =====
             
-            // Double-clic pour revenir au lock screen
-            resultPage.addEventListener('click', function(e) {
-                e.stopPropagation();
-                
-                let now = new Date().getTime();
-                let timeDiff = now - lastTap;
-                
-                if (timeDiff < 300 && timeDiff > 0) {
-                    // Double clic détecté
-                    resultPage.classList.remove('visible');
-                    lockPage.classList.add('visible');
-                    lastTap = 0;
-                } else {
-                    // Premier clic
-                    lastTap = now;
-                    
-                    // Timeout pour réinitialiser si pas de double clic
-                    setTimeout(() => {
-                        lastTap = 0;
-                    }, 300);
-                }
-            });
-
             // Appui long 1 seconde pour ouvrir Google Chrome
             resultPage.addEventListener('touchstart', function(e) {
                 e.preventDefault();
+                isLongPress = false;
                 longPressTimer = setTimeout(() => {
+                    isLongPress = true;
                     // Ouvre Google dans le navigateur par défaut
                     window.open('https://www.google.com', '_blank');
                     
@@ -765,8 +747,31 @@
                 }, 1000); // 1 seconde
             });
 
-            resultPage.addEventListener('touchend', function() {
+            resultPage.addEventListener('touchend', function(e) {
+                e.preventDefault();
                 clearTimeout(longPressTimer);
+                
+                // Si ce n'était pas un appui long, on vérifie le double-clic
+                if (!isLongPress) {
+                    let now = new Date().getTime();
+                    let timeDiff = now - lastTap;
+                    
+                    if (timeDiff < 300 && timeDiff > 0) {
+                        // Double clic détecté
+                        resultPage.classList.remove('visible');
+                        lockPage.classList.add('visible');
+                        lastTap = 0;
+                        console.log('Double-clic détecté - retour au lock screen');
+                    } else {
+                        // Premier clic
+                        lastTap = now;
+                        
+                        // Timeout pour réinitialiser si pas de double clic
+                        setTimeout(() => {
+                            lastTap = 0;
+                        }, 300);
+                    }
+                }
             });
 
             resultPage.addEventListener('touchcancel', function() {
@@ -776,14 +781,34 @@
             // Pour la souris (ordinateur)
             resultPage.addEventListener('mousedown', function(e) {
                 e.preventDefault();
+                isLongPress = false;
                 longPressTimer = setTimeout(() => {
+                    isLongPress = true;
                     window.open('https://www.google.com', '_blank');
                     console.log('Ouverture de Google');
                 }, 1000);
             });
 
-            resultPage.addEventListener('mouseup', function() {
+            resultPage.addEventListener('mouseup', function(e) {
+                e.preventDefault();
                 clearTimeout(longPressTimer);
+                
+                if (!isLongPress) {
+                    let now = new Date().getTime();
+                    let timeDiff = now - lastTap;
+                    
+                    if (timeDiff < 300 && timeDiff > 0) {
+                        resultPage.classList.remove('visible');
+                        lockPage.classList.add('visible');
+                        lastTap = 0;
+                        console.log('Double-clic détecté - retour au lock screen');
+                    } else {
+                        lastTap = now;
+                        setTimeout(() => {
+                            lastTap = 0;
+                        }, 300);
+                    }
+                }
             });
 
             resultPage.addEventListener('mouseleave', function() {
