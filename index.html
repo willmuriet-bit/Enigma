@@ -329,7 +329,7 @@
             white-space: pre;
         }
 
-        /* MODAL LISTE - MODIFIÉE */
+        /* MODAL LISTE */
         #list-modal {
             position: absolute;
             top: 50%;
@@ -390,7 +390,6 @@
             justify-content: center;
         }
 
-        /* Box du code - ENTRE le champ et le bouton */
         .code-result-box {
             width: 100%;
             padding: 18px;
@@ -493,7 +492,6 @@
         
         <div id="not-found-message">Mot non trouvé</div>
         
-        <!-- Box du code (entre le champ et le bouton) -->
         <div class="code-result-box" id="codeResult"></div>
         
         <button id="search-btn">Rechercher</button>
@@ -548,6 +546,7 @@
             let pin = '';
             let searchMode = 'search';
             let lastTap = 0;
+            let longPressTimer;
 
             // ===== FONCTIONS =====
             function animateKey(element) {
@@ -727,7 +726,9 @@
                 }
             });
 
-            // DOUBLE CLIC
+            // ===== PAGE 3 : DOUBLE-CLIC + APPUI LONG 1 SECONDE =====
+            
+            // Double-clic pour revenir au lock screen
             resultPage.addEventListener('click', function(e) {
                 e.stopPropagation();
                 
@@ -735,17 +736,61 @@
                 let timeDiff = now - lastTap;
                 
                 if (timeDiff < 300 && timeDiff > 0) {
+                    // Double clic détecté
                     resultPage.classList.remove('visible');
                     lockPage.classList.add('visible');
                     lastTap = 0;
                 } else {
+                    // Premier clic
                     lastTap = now;
+                    
+                    // Timeout pour réinitialiser si pas de double clic
                     setTimeout(() => {
                         lastTap = 0;
                     }, 300);
                 }
             });
 
+            // Appui long 1 seconde pour ouvrir Google Chrome
+            resultPage.addEventListener('touchstart', function(e) {
+                e.preventDefault();
+                longPressTimer = setTimeout(() => {
+                    // Ouvre Google dans le navigateur par défaut
+                    window.open('https://www.google.com', '_blank');
+                    
+                    // Petit retour haptique (vibration) si supporté
+                    if (navigator.vibrate) navigator.vibrate(50);
+                    
+                    console.log('Ouverture de Google');
+                }, 1000); // 1 seconde
+            });
+
+            resultPage.addEventListener('touchend', function() {
+                clearTimeout(longPressTimer);
+            });
+
+            resultPage.addEventListener('touchcancel', function() {
+                clearTimeout(longPressTimer);
+            });
+
+            // Pour la souris (ordinateur)
+            resultPage.addEventListener('mousedown', function(e) {
+                e.preventDefault();
+                longPressTimer = setTimeout(() => {
+                    window.open('https://www.google.com', '_blank');
+                    console.log('Ouverture de Google');
+                }, 1000);
+            });
+
+            resultPage.addEventListener('mouseup', function() {
+                clearTimeout(longPressTimer);
+            });
+
+            resultPage.addEventListener('mouseleave', function() {
+                clearTimeout(longPressTimer);
+            });
+
+            // BOUTON URGENCE
             emergencyBtn.addEventListener('click', function(e) {
                 e.stopPropagation();
                 animateText(this);
