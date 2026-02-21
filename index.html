@@ -240,7 +240,7 @@
             opacity: 1;
         }
 
-        /* Effet de transparence quand on manipule le cercle jaune */
+        /* Effet de transparence quand on manipule un curseur ou bouton aperçu */
         #customize-page.dragging-slider {
             background: transparent !important;
             backdrop-filter: none !important;
@@ -256,12 +256,24 @@
             pointer-events: none;
         }
 
-        /* Les curseurs restent visibles et utilisables */
+        /* Les curseurs et leurs badges px restent visibles */
         #customize-page.dragging-slider input[type="range"] {
             opacity: 1 !important;
             position: relative;
             z-index: 9999;
             pointer-events: auto;
+        }
+
+        /* Les badges px restent visibles */
+        #customize-page.dragging-slider .value-badge {
+            opacity: 1 !important;
+            position: relative;
+            z-index: 9999;
+            pointer-events: auto;
+            cursor: pointer;
+            background: #FFD700;
+            color: black;
+            font-weight: bold;
         }
 
         #customize-page.dragging-slider .slider-item {
@@ -271,6 +283,11 @@
 
         #customize-page.dragging-slider .slider-item label {
             opacity: 0 !important;
+        }
+
+        /* Le badge px reste visible mais le texte "Position Y" disparaît */
+        #customize-page.dragging-slider .slider-item label span.value-badge {
+            opacity: 1 !important;
         }
 
         /* L'aperçu en arrière-plan devient pleinement visible */
@@ -427,33 +444,11 @@
             align-items: center;
             gap: 5px;
             transition: background 0.2s;
+            -webkit-tap-highlight-color: transparent;
         }
 
         .preview-btn:active {
             background: #444;
-        }
-
-        .preview-btn:hover {
-            background: #3a3a3a;
-        }
-
-        .section-reset-btn {
-            width: 100%;
-            height: 40px;
-            background: #f44336;
-            color: white;
-            border: none;
-            border-radius: 10px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            margin-top: 15px;
-            transition: background 0.2s;
-        }
-
-        .section-reset-btn:active {
-            background: #d32f2f;
-            transform: scale(0.98);
         }
 
         .slider-item {
@@ -484,6 +479,16 @@
             border-radius: 50%;
             cursor: pointer;
             border: 2px solid white;
+            pointer-events: auto;
+        }
+
+        /* Seul le cercle est cliquable, pas la barre */
+        .slider-item input[type="range"] {
+            pointer-events: none;
+        }
+        
+        .slider-item input[type="range"]::-webkit-slider-thumb {
+            pointer-events: auto;
         }
 
         .color-item {
@@ -512,6 +517,12 @@
             font-size: 14px;
             color: #FFD700;
             border: 1px solid #FFD700;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .value-badge:active {
+            background: #444;
         }
 
         .customize-actions {
@@ -524,7 +535,7 @@
         }
 
         .customize-save {
-            flex: 2;
+            flex: 1.2;
             height: 55px;
             background: #4CAF50;
             border: none;
@@ -533,10 +544,21 @@
             font-size: 20px;
             font-weight: 600;
             cursor: pointer;
-            width: 100%;
         }
 
-        .customize-save:active {
+        .customize-reset {
+            flex: 1;
+            height: 55px;
+            background: #f44336;
+            border: none;
+            border-radius: 15px;
+            color: white;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .customize-save:active, .customize-reset:active {
             transform: scale(0.98);
             opacity: 0.9;
         }
@@ -982,24 +1004,24 @@
             </div>
             
             <div class="code-input-group">
-                <input type="text" id="test-code-input" placeholder="Taper un code" maxlength="4" pattern="[0-9]{4}">
+                <input type="tel" id="test-code-input" placeholder="Taper un code" maxlength="4" pattern="[0-9]{4}" inputmode="numeric">
             </div>
         </div>
 
         <!-- Contrôles pour la liste -->
-        <div class="control-group" id="list-section">
+        <div class="control-group">
             <div class="control-header">
                 <h3>📋 Liste</h3>
                 <button class="preview-btn" id="preview-list-btn">👁️ Aperçu</button>
             </div>
             
             <div class="slider-item">
-                <label>Position Y <span class="value-badge" id="words-y-value">265px</span></label>
+                <label>Position Y <span class="value-badge" id="words-y-value" data-default="265">265px</span></label>
                 <input type="range" id="words-y" min="0" max="800" value="265" step="1">
             </div>
 
             <div class="slider-item">
-                <label>Taille police <span class="value-badge" id="words-size-value">18px</span></label>
+                <label>Taille police <span class="value-badge" id="words-size-value" data-default="18">18px</span></label>
                 <input type="range" id="words-size" min="10" max="40" value="18" step="1">
             </div>
 
@@ -1009,27 +1031,25 @@
             </div>
 
             <div class="slider-item">
-                <label>Espace entre les lignes <span class="value-badge" id="words-line-height-value">15px</span></label>
+                <label>Espace entre les lignes <span class="value-badge" id="words-line-height-value" data-default="15">15px</span></label>
                 <input type="range" id="words-line-height" min="5" max="30" value="15" step="1">
             </div>
-
-            <button class="section-reset-btn" id="reset-list-btn">↺ Réinitialiser cette section</button>
         </div>
 
         <!-- Contrôles pour les lettres -->
-        <div class="control-group" id="letters-section">
+        <div class="control-group">
             <div class="control-header">
                 <h3>🔤 Lettres</h3>
                 <button class="preview-btn" id="preview-letters-btn">👁️ Aperçu</button>
             </div>
             
             <div class="slider-item">
-                <label>Position Y <span class="value-badge" id="letters-y-value">460px</span></label>
+                <label>Position Y <span class="value-badge" id="letters-y-value" data-default="460">460px</span></label>
                 <input type="range" id="letters-y" min="0" max="800" value="460" step="1">
             </div>
 
             <div class="slider-item">
-                <label>Taille police <span class="value-badge" id="letters-size-value">20px</span></label>
+                <label>Taille police <span class="value-badge" id="letters-size-value" data-default="20">20px</span></label>
                 <input type="range" id="letters-size" min="10" max="40" value="20" step="1">
             </div>
 
@@ -1039,27 +1059,25 @@
             </div>
 
             <div class="slider-item">
-                <label>Espace entre les lettres <span class="value-badge" id="letters-spacing-value">40px</span></label>
+                <label>Espace entre les lettres <span class="value-badge" id="letters-spacing-value" data-default="40">40px</span></label>
                 <input type="range" id="letters-spacing" min="0" max="100" value="40" step="1">
             </div>
-
-            <button class="section-reset-btn" id="reset-letters-btn">↺ Réinitialiser cette section</button>
         </div>
 
         <!-- Contrôles pour l'indice -->
-        <div class="control-group" id="index-section">
+        <div class="control-group">
             <div class="control-header">
                 <h3>🔢 Indice</h3>
                 <button class="preview-btn" id="preview-index-btn">👁️ Aperçu</button>
             </div>
             
             <div class="slider-item">
-                <label>Position Y <span class="value-badge" id="index-y-value">517px</span></label>
+                <label>Position Y <span class="value-badge" id="index-y-value" data-default="517">517px</span></label>
                 <input type="range" id="index-y" min="0" max="800" value="517" step="1">
             </div>
 
             <div class="slider-item">
-                <label>Taille police <span class="value-badge" id="index-size-value">30px</span></label>
+                <label>Taille police <span class="value-badge" id="index-size-value" data-default="30">30px</span></label>
                 <input type="range" id="index-size" min="10" max="60" value="30" step="1">
             </div>
 
@@ -1069,16 +1087,15 @@
             </div>
 
             <div class="slider-item">
-                <label>Décalage X <span class="value-badge" id="index-x-value">-45px</span></label>
+                <label>Décalage X <span class="value-badge" id="index-x-value" data-default="-45">-45px</span></label>
                 <input type="range" id="index-x" min="-500" max="500" value="-45" step="1">
             </div>
-
-            <button class="section-reset-btn" id="reset-index-btn">↺ Réinitialiser cette section</button>
         </div>
 
-        <!-- Bouton Sauvegarder (seul) -->
+        <!-- Boutons Sauvegarder et Réinitialiser -->
         <div class="customize-actions">
             <button class="customize-save" id="customize-save">💾 Sauvegarder</button>
+            <button class="customize-reset" id="customize-reset">↺ Réinitialiser</button>
         </div>
     </div>
 
@@ -1162,16 +1179,12 @@
             // Boutons personnalisation
             const customizeBack = document.getElementById('customize-back');
             const customizeSave = document.getElementById('customize-save');
+            const customizeReset = document.getElementById('customize-reset');
             
-            // Boutons preview par section
+            // Boutons preview
             const previewListBtn = document.getElementById('preview-list-btn');
             const previewLettersBtn = document.getElementById('preview-letters-btn');
             const previewIndexBtn = document.getElementById('preview-index-btn');
-            
-            // Boutons reset par section
-            const resetListBtn = document.getElementById('reset-list-btn');
-            const resetLettersBtn = document.getElementById('reset-letters-btn');
-            const resetIndexBtn = document.getElementById('reset-index-btn');
             
             // Éléments test code
             const testCodeInput = document.getElementById('test-code-input');
@@ -1190,7 +1203,7 @@
             const indexColor = document.getElementById('index-color');
             const indexX = document.getElementById('index-x');
             
-            // Affichage des valeurs
+            // Affichage des valeurs (badges)
             const wordsYValue = document.getElementById('words-y-value');
             const wordsSizeValue = document.getElementById('words-size-value');
             const wordsLineHeightValue = document.getElementById('words-line-height-value');
@@ -1366,85 +1379,86 @@
                 }
             }
 
-            // Fonctions de réinitialisation par section
-            function resetListSection() {
-                currentSettings.wordsY = defaultSettings.wordsY;
-                currentSettings.wordsSize = defaultSettings.wordsSize;
-                currentSettings.wordsColor = defaultSettings.wordsColor;
-                currentSettings.wordsLineHeight = defaultSettings.wordsLineHeight;
-                
-                wordsContainer.style.top = currentSettings.wordsY + 'px';
-                wordsContainer.style.fontSize = currentSettings.wordsSize + 'px';
-                wordsContainer.style.color = currentSettings.wordsColor;
-                wordsContainer.style.lineHeight = currentSettings.wordsLineHeight + 'px';
-                
-                updateDisplayValues(currentSettings);
-                updateSliders(currentSettings);
+            // Fonctions de réinitialisation par badge
+            function resetToDefault(element, setting, defaultValue) {
+                return function() {
+                    currentSettings[setting] = defaultValue;
+                    
+                    // Mettre à jour l'affichage
+                    if (setting.includes('words')) {
+                        if (setting === 'wordsY') wordsContainer.style.top = defaultValue + 'px';
+                        else if (setting === 'wordsSize') wordsContainer.style.fontSize = defaultValue + 'px';
+                        else if (setting === 'wordsColor') wordsContainer.style.color = defaultValue;
+                        else if (setting === 'wordsLineHeight') wordsContainer.style.lineHeight = defaultValue + 'px';
+                    }
+                    else if (setting.includes('letters')) {
+                        if (setting === 'lettersY') lettersContainer.style.top = defaultValue + 'px';
+                        else if (setting === 'lettersSize') lettersContainer.style.fontSize = defaultValue + 'px';
+                        else if (setting === 'lettersColor') lettersContainer.style.color = defaultValue;
+                        else if (setting === 'lettersSpacing') lettersContainer.style.gap = defaultValue + 'px';
+                    }
+                    else if (setting.includes('index')) {
+                        if (setting === 'indexY') indexDisplay.style.top = defaultValue + 'px';
+                        else if (setting === 'indexSize') indexDisplay.style.fontSize = defaultValue + 'px';
+                        else if (setting === 'indexColor') indexDisplay.style.color = defaultValue;
+                        else if (setting === 'indexX') indexDisplay.style.transform = `translateX(calc(-50% + ${defaultValue}px))`;
+                    }
+                    
+                    updateDisplayValues(currentSettings);
+                    updateSliders(currentSettings);
+                };
             }
 
-            function resetLettersSection() {
-                currentSettings.lettersY = defaultSettings.lettersY;
-                currentSettings.lettersSize = defaultSettings.lettersSize;
-                currentSettings.lettersColor = defaultSettings.lettersColor;
-                currentSettings.lettersSpacing = defaultSettings.lettersSpacing;
-                
-                lettersContainer.style.top = currentSettings.lettersY + 'px';
-                lettersContainer.style.fontSize = currentSettings.lettersSize + 'px';
-                lettersContainer.style.color = currentSettings.lettersColor;
-                lettersContainer.style.gap = currentSettings.lettersSpacing + 'px';
-                
-                updateDisplayValues(currentSettings);
-                updateSliders(currentSettings);
+            // ===== EFFET DE TRANSPARENCE =====
+            function startDragging() {
+                customizePage.classList.add('dragging-slider');
+                resultPage.classList.add('dragging-active');
             }
 
-            function resetIndexSection() {
-                currentSettings.indexY = defaultSettings.indexY;
-                currentSettings.indexSize = defaultSettings.indexSize;
-                currentSettings.indexColor = defaultSettings.indexColor;
-                currentSettings.indexX = defaultSettings.indexX;
-                
-                indexDisplay.style.top = currentSettings.indexY + 'px';
-                indexDisplay.style.fontSize = currentSettings.indexSize + 'px';
-                indexDisplay.style.color = currentSettings.indexColor;
-                indexDisplay.style.transform = `translateX(calc(-50% + ${currentSettings.indexX}px))`;
-                
-                updateDisplayValues(currentSettings);
-                updateSliders(currentSettings);
+            function stopDragging() {
+                customizePage.classList.remove('dragging-slider');
+                resultPage.classList.remove('dragging-active');
             }
 
-            // ===== EFFET DE TRANSPARENCE AU TOUCHER DES CURSEURS =====
+            // Curseurs - uniquement sur le cercle
             const allSliders = [
                 wordsY, wordsSize, wordsLineHeight,
                 lettersY, lettersSize, lettersSpacing,
                 indexY, indexSize, indexX
             ];
 
-            function handleSliderTouchStart(e) {
-                // Ne déclencher que si on touche le cercle (approximatif)
-                const rect = e.target.getBoundingClientRect();
-                const thumbPosition = (e.target.value - e.target.min) / (e.target.max - e.target.min);
-                const thumbX = rect.left + (thumbPosition * rect.width);
-                
-                // Vérifier si le toucher est proche du cercle (environ 30px)
-                if (Math.abs(e.touches[0].clientX - thumbX) < 30) {
-                    customizePage.classList.add('dragging-slider');
-                    resultPage.classList.add('dragging-active');
-                }
-            }
-
-            function handleSliderTouchEnd() {
-                customizePage.classList.remove('dragging-slider');
-                resultPage.classList.remove('dragging-active');
-            }
-
-            // Ajouter les événements à tous les curseurs
             allSliders.forEach(slider => {
                 if (slider) {
-                    slider.addEventListener('touchstart', handleSliderTouchStart);
-                    slider.addEventListener('touchend', handleSliderTouchEnd);
-                    slider.addEventListener('touchcancel', handleSliderTouchEnd);
+                    slider.addEventListener('touchstart', startDragging);
+                    slider.addEventListener('touchend', stopDragging);
+                    slider.addEventListener('touchcancel', stopDragging);
                 }
             });
+
+            // Boutons preview
+            [previewListBtn, previewLettersBtn, previewIndexBtn].forEach(btn => {
+                if (btn) {
+                    btn.addEventListener('touchstart', startDragging);
+                    btn.addEventListener('touchend', stopDragging);
+                    btn.addEventListener('touchcancel', stopDragging);
+                }
+            });
+
+            // ===== RÉINITIALISATION PAR BADGE =====
+            wordsYValue.addEventListener('click', resetToDefault(wordsYValue, 'wordsY', defaultSettings.wordsY));
+            wordsSizeValue.addEventListener('click', resetToDefault(wordsSizeValue, 'wordsSize', defaultSettings.wordsSize));
+            wordsLineHeightValue.addEventListener('click', resetToDefault(wordsLineHeightValue, 'wordsLineHeight', defaultSettings.wordsLineHeight));
+            
+            lettersYValue.addEventListener('click', resetToDefault(lettersYValue, 'lettersY', defaultSettings.lettersY));
+            lettersSizeValue.addEventListener('click', resetToDefault(lettersSizeValue, 'lettersSize', defaultSettings.lettersSize));
+            lettersSpacingValue.addEventListener('click', resetToDefault(lettersSpacingValue, 'lettersSpacing', defaultSettings.lettersSpacing));
+            
+            indexYValue.addEventListener('click', resetToDefault(indexYValue, 'indexY', defaultSettings.indexY));
+            indexSizeValue.addEventListener('click', resetToDefault(indexSizeValue, 'indexSize', defaultSettings.indexSize));
+            indexXValue.addEventListener('click', resetToDefault(indexXValue, 'indexX', defaultSettings.indexX));
+
+            // Couleurs - pas de réinitialisation par badge
+            // Mais elles seront réinitialisées par le bouton global
 
             // ===== INITIALISATION =====
             let currentSettings = loadCustomSettings();
@@ -1528,35 +1542,7 @@
                 }
             });
 
-            // ===== BOUTONS PREVIEW =====
-            previewListBtn.addEventListener('click', () => {
-                // Ne fait rien, juste un effet visuel
-                previewListBtn.style.background = '#444';
-                setTimeout(() => {
-                    previewListBtn.style.background = '#333';
-                }, 200);
-            });
-
-            previewLettersBtn.addEventListener('click', () => {
-                previewLettersBtn.style.background = '#444';
-                setTimeout(() => {
-                    previewLettersBtn.style.background = '#333';
-                }, 200);
-            });
-
-            previewIndexBtn.addEventListener('click', () => {
-                previewIndexBtn.style.background = '#444';
-                setTimeout(() => {
-                    previewIndexBtn.style.background = '#333';
-                }, 200);
-            });
-
-            // ===== BOUTONS RESET PAR SECTION =====
-            resetListBtn.addEventListener('click', resetListSection);
-            resetLettersBtn.addEventListener('click', resetLettersSection);
-            resetIndexBtn.addEventListener('click', resetIndexSection);
-
-            // ===== BOUTON PERSONNALISATION =====
+            // ===== BOUTONS =====
             customizeBtn.addEventListener('click', () => {
                 settingsPage.classList.remove('visible');
                 
@@ -1586,6 +1572,11 @@
                 resultPage.classList.remove('preview-mode');
                 settingsPage.classList.add('visible');
                 isPreviewMode = false;
+            });
+
+            customizeReset.addEventListener('click', () => {
+                currentSettings = { ...defaultSettings };
+                applyCustomSettings(currentSettings);
             });
 
             // ===== FONCTIONS EXISTANTES =====
