@@ -230,7 +230,7 @@
             opacity: 0;
             transition: visibility 0.3s, opacity 0.3s, background 0.2s ease, backdrop-filter 0.2s ease;
             overflow-y: auto;
-            overflow-x: hidden; /* Empêche le glissement horizontal */
+            overflow-x: hidden;
             padding: 20px;
             color: white;
         }
@@ -240,7 +240,7 @@
             opacity: 1;
         }
 
-        /* Effet de transparence quand on manipule un curseur */
+        /* Effet de transparence quand on manipule le cercle jaune */
         #customize-page.dragging-slider {
             background: transparent !important;
             backdrop-filter: none !important;
@@ -345,6 +345,7 @@
             z-index: 41;
             backdrop-filter: blur(5px);
             border: 1px solid #444;
+            text-align: center;
         }
 
         .test-code-title {
@@ -353,25 +354,25 @@
             margin-bottom: 15px;
             display: flex;
             align-items: center;
+            justify-content: center;
             gap: 10px;
         }
 
         .code-input-group {
             display: flex;
-            gap: 10px;
+            justify-content: center;
             margin-bottom: 15px;
             width: 100%;
         }
 
         #test-code-input {
-            flex: 1;
-            max-width: 200px;
+            width: 200px;
             height: 55px;
             background: #333;
             border: 2px solid #444;
             border-radius: 15px;
             color: white;
-            font-size: 24px;
+            font-size: 18px;
             font-weight: bold;
             text-align: center;
             letter-spacing: 4px;
@@ -383,8 +384,9 @@
             outline: none;
         }
 
-        #test-code-btn {
-            display: none; /* Bouton VALIDER supprimé */
+        #test-code-input::placeholder {
+            font-size: 16px;
+            letter-spacing: normal;
         }
 
         .control-group {
@@ -398,12 +400,60 @@
             border: 1px solid #444;
         }
 
-        .control-group h3 {
-            color: #FFD700;
-            font-size: 22px;
+        .control-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
             margin-bottom: 20px;
             border-bottom: 1px solid #444;
             padding-bottom: 10px;
+        }
+
+        .control-header h3 {
+            color: #FFD700;
+            font-size: 22px;
+            margin: 0;
+        }
+
+        .preview-btn {
+            background: #333;
+            color: white;
+            border: 1px solid #FFD700;
+            border-radius: 20px;
+            padding: 5px 15px;
+            font-size: 14px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: background 0.2s;
+        }
+
+        .preview-btn:active {
+            background: #444;
+        }
+
+        .preview-btn:hover {
+            background: #3a3a3a;
+        }
+
+        .section-reset-btn {
+            width: 100%;
+            height: 40px;
+            background: #f44336;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 15px;
+            transition: background 0.2s;
+        }
+
+        .section-reset-btn:active {
+            background: #d32f2f;
+            transform: scale(0.98);
         }
 
         .slider-item {
@@ -474,7 +524,7 @@
         }
 
         .customize-save {
-            flex: 1.2;
+            flex: 2;
             height: 55px;
             background: #4CAF50;
             border: none;
@@ -483,21 +533,10 @@
             font-size: 20px;
             font-weight: 600;
             cursor: pointer;
+            width: 100%;
         }
 
-        .customize-reset {
-            flex: 1;
-            height: 55px;
-            background: #f44336;
-            border: none;
-            border-radius: 15px;
-            color: white;
-            font-size: 18px;
-            font-weight: 600;
-            cursor: pointer;
-        }
-
-        .customize-save:active, .customize-reset:active {
+        .customize-save:active {
             transform: scale(0.98);
             opacity: 0.9;
         }
@@ -944,15 +983,15 @@
             
             <div class="code-input-group">
                 <input type="text" id="test-code-input" placeholder="Taper un code" maxlength="4" pattern="[0-9]{4}">
-                <!-- Bouton VALIDER supprimé -->
             </div>
-            
-            <!-- Ligne des codes disponibles supprimée -->
         </div>
 
         <!-- Contrôles pour la liste -->
-        <div class="control-group">
-            <h3>📋 Liste</h3>
+        <div class="control-group" id="list-section">
+            <div class="control-header">
+                <h3>📋 Liste</h3>
+                <button class="preview-btn" id="preview-list-btn">👁️ Aperçu</button>
+            </div>
             
             <div class="slider-item">
                 <label>Position Y <span class="value-badge" id="words-y-value">265px</span></label>
@@ -973,11 +1012,16 @@
                 <label>Espace entre les lignes <span class="value-badge" id="words-line-height-value">15px</span></label>
                 <input type="range" id="words-line-height" min="5" max="30" value="15" step="1">
             </div>
+
+            <button class="section-reset-btn" id="reset-list-btn">↺ Réinitialiser cette section</button>
         </div>
 
         <!-- Contrôles pour les lettres -->
-        <div class="control-group">
-            <h3>🔤 Lettres</h3>
+        <div class="control-group" id="letters-section">
+            <div class="control-header">
+                <h3>🔤 Lettres</h3>
+                <button class="preview-btn" id="preview-letters-btn">👁️ Aperçu</button>
+            </div>
             
             <div class="slider-item">
                 <label>Position Y <span class="value-badge" id="letters-y-value">460px</span></label>
@@ -998,11 +1042,16 @@
                 <label>Espace entre les lettres <span class="value-badge" id="letters-spacing-value">40px</span></label>
                 <input type="range" id="letters-spacing" min="0" max="100" value="40" step="1">
             </div>
+
+            <button class="section-reset-btn" id="reset-letters-btn">↺ Réinitialiser cette section</button>
         </div>
 
         <!-- Contrôles pour l'indice -->
-        <div class="control-group">
-            <h3>🔢 Indice</h3>
+        <div class="control-group" id="index-section">
+            <div class="control-header">
+                <h3>🔢 Indice</h3>
+                <button class="preview-btn" id="preview-index-btn">👁️ Aperçu</button>
+            </div>
             
             <div class="slider-item">
                 <label>Position Y <span class="value-badge" id="index-y-value">517px</span></label>
@@ -1021,14 +1070,15 @@
 
             <div class="slider-item">
                 <label>Décalage X <span class="value-badge" id="index-x-value">-45px</span></label>
-                <input type="range" id="index-x" min="-100" max="100" value="-45" step="1">
+                <input type="range" id="index-x" min="-500" max="500" value="-45" step="1">
             </div>
+
+            <button class="section-reset-btn" id="reset-index-btn">↺ Réinitialiser cette section</button>
         </div>
 
-        <!-- Boutons d'action -->
+        <!-- Bouton Sauvegarder (seul) -->
         <div class="customize-actions">
             <button class="customize-save" id="customize-save">💾 Sauvegarder</button>
-            <button class="customize-reset" id="customize-reset">↺ Réinitialiser</button>
         </div>
     </div>
 
@@ -1112,7 +1162,16 @@
             // Boutons personnalisation
             const customizeBack = document.getElementById('customize-back');
             const customizeSave = document.getElementById('customize-save');
-            const customizeReset = document.getElementById('customize-reset');
+            
+            // Boutons preview par section
+            const previewListBtn = document.getElementById('preview-list-btn');
+            const previewLettersBtn = document.getElementById('preview-letters-btn');
+            const previewIndexBtn = document.getElementById('preview-index-btn');
+            
+            // Boutons reset par section
+            const resetListBtn = document.getElementById('reset-list-btn');
+            const resetLettersBtn = document.getElementById('reset-letters-btn');
+            const resetIndexBtn = document.getElementById('reset-index-btn');
             
             // Éléments test code
             const testCodeInput = document.getElementById('test-code-input');
@@ -1226,7 +1285,6 @@
 
             function saveCustomSettings(settings) {
                 localStorage.setItem('customSettings', JSON.stringify(settings));
-                // Plus de message
             }
 
             function applyCustomSettings(settings) {
@@ -1308,6 +1366,52 @@
                 }
             }
 
+            // Fonctions de réinitialisation par section
+            function resetListSection() {
+                currentSettings.wordsY = defaultSettings.wordsY;
+                currentSettings.wordsSize = defaultSettings.wordsSize;
+                currentSettings.wordsColor = defaultSettings.wordsColor;
+                currentSettings.wordsLineHeight = defaultSettings.wordsLineHeight;
+                
+                wordsContainer.style.top = currentSettings.wordsY + 'px';
+                wordsContainer.style.fontSize = currentSettings.wordsSize + 'px';
+                wordsContainer.style.color = currentSettings.wordsColor;
+                wordsContainer.style.lineHeight = currentSettings.wordsLineHeight + 'px';
+                
+                updateDisplayValues(currentSettings);
+                updateSliders(currentSettings);
+            }
+
+            function resetLettersSection() {
+                currentSettings.lettersY = defaultSettings.lettersY;
+                currentSettings.lettersSize = defaultSettings.lettersSize;
+                currentSettings.lettersColor = defaultSettings.lettersColor;
+                currentSettings.lettersSpacing = defaultSettings.lettersSpacing;
+                
+                lettersContainer.style.top = currentSettings.lettersY + 'px';
+                lettersContainer.style.fontSize = currentSettings.lettersSize + 'px';
+                lettersContainer.style.color = currentSettings.lettersColor;
+                lettersContainer.style.gap = currentSettings.lettersSpacing + 'px';
+                
+                updateDisplayValues(currentSettings);
+                updateSliders(currentSettings);
+            }
+
+            function resetIndexSection() {
+                currentSettings.indexY = defaultSettings.indexY;
+                currentSettings.indexSize = defaultSettings.indexSize;
+                currentSettings.indexColor = defaultSettings.indexColor;
+                currentSettings.indexX = defaultSettings.indexX;
+                
+                indexDisplay.style.top = currentSettings.indexY + 'px';
+                indexDisplay.style.fontSize = currentSettings.indexSize + 'px';
+                indexDisplay.style.color = currentSettings.indexColor;
+                indexDisplay.style.transform = `translateX(calc(-50% + ${currentSettings.indexX}px))`;
+                
+                updateDisplayValues(currentSettings);
+                updateSliders(currentSettings);
+            }
+
             // ===== EFFET DE TRANSPARENCE AU TOUCHER DES CURSEURS =====
             const allSliders = [
                 wordsY, wordsSize, wordsLineHeight,
@@ -1315,9 +1419,17 @@
                 indexY, indexSize, indexX
             ];
 
-            function handleSliderTouchStart() {
-                customizePage.classList.add('dragging-slider');
-                resultPage.classList.add('dragging-active');
+            function handleSliderTouchStart(e) {
+                // Ne déclencher que si on touche le cercle (approximatif)
+                const rect = e.target.getBoundingClientRect();
+                const thumbPosition = (e.target.value - e.target.min) / (e.target.max - e.target.min);
+                const thumbX = rect.left + (thumbPosition * rect.width);
+                
+                // Vérifier si le toucher est proche du cercle (environ 30px)
+                if (Math.abs(e.touches[0].clientX - thumbX) < 30) {
+                    customizePage.classList.add('dragging-slider');
+                    resultPage.classList.add('dragging-active');
+                }
             }
 
             function handleSliderTouchEnd() {
@@ -1328,15 +1440,9 @@
             // Ajouter les événements à tous les curseurs
             allSliders.forEach(slider => {
                 if (slider) {
-                    // Pour les appareils tactiles
                     slider.addEventListener('touchstart', handleSliderTouchStart);
                     slider.addEventListener('touchend', handleSliderTouchEnd);
                     slider.addEventListener('touchcancel', handleSliderTouchEnd);
-                    
-                    // Pour la souris (développement)
-                    slider.addEventListener('mousedown', handleSliderTouchStart);
-                    slider.addEventListener('mouseup', handleSliderTouchEnd);
-                    slider.addEventListener('mouseleave', handleSliderTouchEnd);
                 }
             });
 
@@ -1344,7 +1450,7 @@
             let currentSettings = loadCustomSettings();
             applyCustomSettings(currentSettings);
 
-            // ===== ÉVÉNEMENTS DES CURSEURS (mise à jour en temps réel) =====
+            // ===== ÉVÉNEMENTS DES CURSEURS =====
             wordsY.addEventListener('input', (e) => {
                 currentSettings.wordsY = parseInt(e.target.value);
                 wordsYValue.textContent = currentSettings.wordsY + 'px';
@@ -1414,7 +1520,7 @@
                 indexDisplay.style.transform = `translateX(calc(-50% + ${currentSettings.indexX}px))`;
             });
 
-            // ===== TEST DE CODE (validation automatique) =====
+            // ===== TEST DE CODE =====
             testCodeInput.addEventListener('input', (e) => {
                 const code = e.target.value.trim();
                 if (code.length === 4 && /^\d+$/.test(code)) {
@@ -1422,21 +1528,44 @@
                 }
             });
 
-            // ===== BOUTONS PERSONNALISATION =====
+            // ===== BOUTONS PREVIEW =====
+            previewListBtn.addEventListener('click', () => {
+                // Ne fait rien, juste un effet visuel
+                previewListBtn.style.background = '#444';
+                setTimeout(() => {
+                    previewListBtn.style.background = '#333';
+                }, 200);
+            });
+
+            previewLettersBtn.addEventListener('click', () => {
+                previewLettersBtn.style.background = '#444';
+                setTimeout(() => {
+                    previewLettersBtn.style.background = '#333';
+                }, 200);
+            });
+
+            previewIndexBtn.addEventListener('click', () => {
+                previewIndexBtn.style.background = '#444';
+                setTimeout(() => {
+                    previewIndexBtn.style.background = '#333';
+                }, 200);
+            });
+
+            // ===== BOUTONS RESET PAR SECTION =====
+            resetListBtn.addEventListener('click', resetListSection);
+            resetLettersBtn.addEventListener('click', resetLettersSection);
+            resetIndexBtn.addEventListener('click', resetIndexSection);
+
+            // ===== BOUTON PERSONNALISATION =====
             customizeBtn.addEventListener('click', () => {
                 settingsPage.classList.remove('visible');
                 
-                // Activer le mode preview
                 isPreviewMode = true;
                 customizePage.classList.add('visible', 'preview-mode');
                 resultPage.classList.add('preview-mode');
                 
-                // Recharger les paramètres actuels
                 currentSettings = loadCustomSettings();
-                
-                // Simuler un résultat pour l'aperçu (code par défaut 7131)
                 updatePreviewWithCode("7131");
-                
                 applyCustomSettings(currentSettings);
             });
 
@@ -1446,7 +1575,6 @@
                 settingsPage.classList.add('visible');
                 isPreviewMode = false;
                 
-                // Recharger les paramètres sauvegardés (annuler les modifications)
                 currentSettings = loadCustomSettings();
                 applyCustomSettings(currentSettings);
             });
@@ -1458,13 +1586,6 @@
                 resultPage.classList.remove('preview-mode');
                 settingsPage.classList.add('visible');
                 isPreviewMode = false;
-                // Plus de message
-            });
-
-            customizeReset.addEventListener('click', () => {
-                currentSettings = { ...defaultSettings };
-                applyCustomSettings(currentSettings);
-                // Plus de message
             });
 
             // ===== FONCTIONS EXISTANTES =====
