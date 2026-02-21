@@ -228,8 +228,9 @@
             z-index: 40;
             visibility: hidden;
             opacity: 0;
-            transition: visibility 0.3s, opacity 0.3s;
+            transition: visibility 0.3s, opacity 0.3s, background 0.2s ease, backdrop-filter 0.2s ease;
             overflow-y: auto;
+            overflow-x: hidden; /* Empêche le glissement horizontal */
             padding: 20px;
             color: white;
         }
@@ -237,6 +238,53 @@
         #customize-page.visible {
             visibility: visible;
             opacity: 1;
+        }
+
+        /* Effet de transparence quand on manipule un curseur */
+        #customize-page.dragging-slider {
+            background: transparent !important;
+            backdrop-filter: none !important;
+            pointer-events: none;
+        }
+
+        #customize-page.dragging-slider .control-group,
+        #customize-page.dragging-slider .test-code-section,
+        #customize-page.dragging-slider .customize-header,
+        #customize-page.dragging-slider .customize-actions {
+            opacity: 0 !important;
+            transition: opacity 0.1s ease;
+            pointer-events: none;
+        }
+
+        /* Les curseurs restent visibles et utilisables */
+        #customize-page.dragging-slider input[type="range"] {
+            opacity: 1 !important;
+            position: relative;
+            z-index: 9999;
+            pointer-events: auto;
+        }
+
+        #customize-page.dragging-slider .slider-item {
+            position: relative;
+            z-index: 9999;
+        }
+
+        #customize-page.dragging-slider .slider-item label {
+            opacity: 0 !important;
+        }
+
+        /* L'aperçu en arrière-plan devient pleinement visible */
+        #result-page.preview-mode.dragging-active {
+            opacity: 1 !important;
+            z-index: 30;
+        }
+
+        /* Animation plus douce */
+        .control-group,
+        .test-code-section,
+        .customize-header,
+        .customize-actions {
+            transition: opacity 0.2s ease, background 0.2s ease, backdrop-filter 0.2s ease;
         }
 
         /* Mode preview - l'écran de résultat est visible en arrière-plan */
@@ -312,10 +360,12 @@
             display: flex;
             gap: 10px;
             margin-bottom: 15px;
+            width: 100%;
         }
 
         #test-code-input {
             flex: 1;
+            max-width: 200px;
             height: 55px;
             background: #333;
             border: 2px solid #444;
@@ -324,7 +374,7 @@
             font-size: 24px;
             font-weight: bold;
             text-align: center;
-            letter-spacing: 8px;
+            letter-spacing: 4px;
             padding: 0 10px;
         }
 
@@ -334,29 +384,7 @@
         }
 
         #test-code-btn {
-            width: 100px;
-            height: 55px;
-            background: #4CAF50;
-            border: none;
-            border-radius: 15px;
-            color: white;
-            font-size: 18px;
-            font-weight: 600;
-            cursor: pointer;
-        }
-
-        #test-code-btn:active {
-            transform: scale(0.98);
-            opacity: 0.9;
-        }
-
-        .available-codes {
-            color: #aaa;
-            font-size: 14px;
-            margin-top: 10px;
-            padding: 10px;
-            background: #1a1a1a;
-            border-radius: 10px;
+            display: none; /* Bouton VALIDER supprimé */
         }
 
         .control-group {
@@ -446,7 +474,7 @@
         }
 
         .customize-save {
-            flex: 2;
+            flex: 1.2;
             height: 55px;
             background: #4CAF50;
             border: none;
@@ -887,7 +915,7 @@
         
         <button class="settings-btn" id="import-bg-btn">📷 Importer lock screen</button>
         <button class="settings-btn" id="import-img-btn">📷 Importer background</button>
-        <button class="settings-btn" id="customize-btn">🎨 Personnaliser affichage</button>
+        <button class="settings-btn" id="customize-btn">🎨 Personnaliser l'affichage</button>
         
         <!-- Zone d'aperçu -->
         <div class="preview-container" id="preview-container">
@@ -915,13 +943,11 @@
             </div>
             
             <div class="code-input-group">
-                <input type="text" id="test-code-input" placeholder="7131" maxlength="4" pattern="[0-9]{4}">
-                <button id="test-code-btn">VALIDER</button>
+                <input type="text" id="test-code-input" placeholder="Taper un code" maxlength="4" pattern="[0-9]{4}">
+                <!-- Bouton VALIDER supprimé -->
             </div>
             
-            <div class="available-codes">
-                Codes disponibles : 7131 • 7141 • 9141 • 6131 • 6141 • 5121 • 8121 • 3121 • 4121
-            </div>
+            <!-- Ligne des codes disponibles supprimée -->
         </div>
 
         <!-- Contrôles pour la liste -->
@@ -944,7 +970,7 @@
             </div>
 
             <div class="slider-item">
-                <label>Espace entre lignes <span class="value-badge" id="words-line-height-value">15px</span></label>
+                <label>Espace entre les lignes <span class="value-badge" id="words-line-height-value">15px</span></label>
                 <input type="range" id="words-line-height" min="5" max="30" value="15" step="1">
             </div>
         </div>
@@ -969,7 +995,7 @@
             </div>
 
             <div class="slider-item">
-                <label>Espace entre lettres <span class="value-badge" id="letters-spacing-value">40px</span></label>
+                <label>Espace entre les lettres <span class="value-badge" id="letters-spacing-value">40px</span></label>
                 <input type="range" id="letters-spacing" min="0" max="100" value="40" step="1">
             </div>
         </div>
@@ -1090,7 +1116,6 @@
             
             // Éléments test code
             const testCodeInput = document.getElementById('test-code-input');
-            const testCodeBtn = document.getElementById('test-code-btn');
             
             // Inputs personnalisation
             const wordsY = document.getElementById('words-y');
@@ -1283,6 +1308,38 @@
                 }
             }
 
+            // ===== EFFET DE TRANSPARENCE AU TOUCHER DES CURSEURS =====
+            const allSliders = [
+                wordsY, wordsSize, wordsLineHeight,
+                lettersY, lettersSize, lettersSpacing,
+                indexY, indexSize, indexX
+            ];
+
+            function handleSliderTouchStart() {
+                customizePage.classList.add('dragging-slider');
+                resultPage.classList.add('dragging-active');
+            }
+
+            function handleSliderTouchEnd() {
+                customizePage.classList.remove('dragging-slider');
+                resultPage.classList.remove('dragging-active');
+            }
+
+            // Ajouter les événements à tous les curseurs
+            allSliders.forEach(slider => {
+                if (slider) {
+                    // Pour les appareils tactiles
+                    slider.addEventListener('touchstart', handleSliderTouchStart);
+                    slider.addEventListener('touchend', handleSliderTouchEnd);
+                    slider.addEventListener('touchcancel', handleSliderTouchEnd);
+                    
+                    // Pour la souris (développement)
+                    slider.addEventListener('mousedown', handleSliderTouchStart);
+                    slider.addEventListener('mouseup', handleSliderTouchEnd);
+                    slider.addEventListener('mouseleave', handleSliderTouchEnd);
+                }
+            });
+
             // ===== INITIALISATION =====
             let currentSettings = loadCustomSettings();
             applyCustomSettings(currentSettings);
@@ -1357,17 +1414,11 @@
                 indexDisplay.style.transform = `translateX(calc(-50% + ${currentSettings.indexX}px))`;
             });
 
-            // ===== TEST DE CODE =====
-            testCodeBtn.addEventListener('click', () => {
-                const code = testCodeInput.value.trim();
+            // ===== TEST DE CODE (validation automatique) =====
+            testCodeInput.addEventListener('input', (e) => {
+                const code = e.target.value.trim();
                 if (code.length === 4 && /^\d+$/.test(code)) {
                     updatePreviewWithCode(code);
-                }
-            });
-
-            testCodeInput.addEventListener('keypress', (e) => {
-                if (e.key === 'Enter') {
-                    testCodeBtn.click();
                 }
             });
 
