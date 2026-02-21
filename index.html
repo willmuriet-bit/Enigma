@@ -220,6 +220,176 @@
             background: #888;
         }
 
+        /* PAGE LISTE DE MOTS */
+        #list-page {
+            position: absolute;
+            inset: 0;
+            background: black;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 26;
+            visibility: hidden;
+            opacity: 0;
+            transition: visibility 0.3s, opacity 0.3s;
+            padding: 20px;
+        }
+
+        #list-page.visible {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        .list-title {
+            font-size: 48px;
+            color: #FFD700;
+            margin-bottom: 50px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+        }
+
+        .list-menu-btn {
+            width: 320px;
+            height: 65px;
+            background: #333;
+            color: white;
+            border: none;
+            border-radius: 15px;
+            font-size: 22px;
+            font-weight: 600;
+            cursor: pointer;
+            margin: 10px 0;
+            transition: background 0.2s;
+        }
+
+        .list-menu-btn:active {
+            background: #555;
+        }
+
+        .list-back-btn {
+            width: 320px;
+            height: 50px;
+            background: #666;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 18px;
+            cursor: pointer;
+            margin-top: 30px;
+        }
+
+        .list-back-btn:active {
+            background: #888;
+        }
+
+        /* SOUS-PAGES LISTE */
+        .list-subpage {
+            position: absolute;
+            inset: 0;
+            background: black;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 27;
+            visibility: hidden;
+            opacity: 0;
+            transition: visibility 0.3s, opacity 0.3s;
+            padding: 20px;
+        }
+
+        .list-subpage.visible {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        .subpage-title {
+            font-size: 36px;
+            color: #FFD700;
+            margin-bottom: 40px;
+            font-weight: bold;
+        }
+
+        .subpage-input {
+            width: 320px;
+            padding: 18px;
+            border: 2px solid #FFD700;
+            border-radius: 15px;
+            font-size: 18px;
+            height: 60px;
+            box-sizing: border-box;
+            background: #222;
+            color: white;
+            margin-bottom: 20px;
+        }
+
+        .subpage-textarea {
+            width: 320px;
+            padding: 18px;
+            border: 2px solid #FFD700;
+            border-radius: 15px;
+            font-size: 16px;
+            height: 300px;
+            box-sizing: border-box;
+            background: #222;
+            color: white;
+            margin-bottom: 20px;
+            resize: none;
+            font-family: monospace;
+        }
+
+        .subpage-btn {
+            width: 320px;
+            height: 60px;
+            background: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 15px;
+            font-size: 20px;
+            font-weight: 600;
+            cursor: pointer;
+            margin: 10px 0;
+            transition: background 0.3s;
+        }
+
+        .subpage-btn.retry {
+            background: #ff9800;
+        }
+
+        .subpage-btn.secondary {
+            background: #2196F3;
+        }
+
+        .message-display {
+            width: 320px;
+            padding: 15px;
+            background: #333;
+            border-radius: 10px;
+            color: #FFD700;
+            text-align: center;
+            font-size: 18px;
+            margin: 10px 0;
+            display: none;
+        }
+
+        .message-display.visible {
+            display: block;
+        }
+
+        .select-btn {
+            width: 320px;
+            height: 50px;
+            background: #2196F3;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 18px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
         /* PAGE DE LOCK */
         #lock-page {
             position: absolute;
@@ -323,7 +493,7 @@
             border: none;
         }
 
-        /* Animation du cercle blanc pour tous les boutons */
+        /* Animation du cercle blanc */
         .key::after, .delete-btn::after, .ok::after {
             content: '';
             position: absolute;
@@ -407,10 +577,9 @@
             z-index: 31;
         }
 
-        /* Conteneur pour la liste L */
         .words-container {
             position: absolute;
-            top: 265px;  /* 300px - 35px */
+            top: 265px;
             left: 0;
             width: 100%;
             z-index: 32;
@@ -448,10 +617,9 @@
             display: inline-block;
         }
 
-        /* Conteneur pour les lettres cliquables */
         .letters-container {
             position: absolute;
-            top: 460px;  /* 475px - 15px */
+            top: 460px;
             left: 0;
             width: 100%;
             text-align: center;
@@ -490,7 +658,6 @@
             text-align: center;
         }
 
-        /* Indice (chiffre) - sans ombre et cliquable */
         .index-display {
             position: absolute;
             top: 517px;
@@ -504,8 +671,8 @@
             user-select: none;
         }
 
-        /* MODAL LISTE */
-        #list-modal {
+        /* MODAL RECHERCHE (ancienne) */
+        #search-modal {
             position: absolute;
             top: 50%;
             left: 50%;
@@ -514,7 +681,7 @@
             background: white;
             border-radius: 30px;
             padding: 25px;
-            z-index: 100;
+            z-index: 101;
             display: none;
             color: black;
             box-shadow: 0 20px 40px rgba(0,0,0,0.4);
@@ -523,21 +690,21 @@
             overflow-y: auto;
         }
 
-        #list-modal.visible { 
+        #search-modal.visible { 
             display: block; 
         }
 
-        #list-modal.keyboard-open {
+        #search-modal.keyboard-open {
             top: 30px;
             transform: translate(-50%, 0);
         }
 
-        #search-container {
+        #search-modal .search-container {
             width: 100%;
             margin-bottom: 15px;
         }
 
-        #search-input {
+        #search-modal .search-input {
             width: 100%;
             padding: 18px;
             border: 2px solid #ddd;
@@ -547,7 +714,7 @@
             box-sizing: border-box;
         }
 
-        #not-found-message {
+        #search-modal .not-found-message {
             width: 100%;
             padding: 18px;
             background: #ffebee;
@@ -565,7 +732,7 @@
             justify-content: center;
         }
 
-        .code-result-box {
+        #search-modal .code-result-box {
             width: 100%;
             padding: 18px;
             border: 2px solid #1976d2;
@@ -582,7 +749,7 @@
             margin-bottom: 15px;
         }
 
-        #search-btn {
+        #search-modal .search-btn {
             width: 100%;
             padding: 18px;
             background: #4CAF50;
@@ -596,7 +763,7 @@
             transition: background 0.3s;
         }
 
-        #search-btn.retry {
+        #search-modal .search-btn.retry {
             background: #ff9800;
         }
 
@@ -604,7 +771,7 @@
             position: absolute;
             inset: 0;
             background: rgba(0,0,0,0.7);
-            z-index: 90;
+            z-index: 100;
             display: none;
         }
 
@@ -636,7 +803,6 @@
         <button class="settings-btn" id="import-bg-btn">📷 Importer lock screen</button>
         <button class="settings-btn" id="import-img-btn">📷 Importer background</button>
         
-        <!-- Zone d'aperçu -->
         <div class="preview-container" id="preview-container">
             <img class="preview-image" id="preview-image" src="" alt="Aperçu">
             <div class="preview-buttons">
@@ -646,6 +812,70 @@
         </div>
         
         <button class="back-btn" id="settings-back">← Retour à l'accueil</button>
+    </div>
+
+    <!-- PAGE LISTE DE MOTS (menu principal) -->
+    <div id="list-page">
+        <div class="list-title">LISTE DE MOTS</div>
+        
+        <button class="list-menu-btn" id="list-search-btn">Rechercher un mot</button>
+        <button class="list-menu-btn" id="list-add-btn">Ajouter un mot</button>
+        <button class="list-menu-btn" id="list-display-btn">Afficher ma liste</button>
+        
+        <button class="list-back-btn" id="list-back">← Retour à l'accueil</button>
+    </div>
+
+    <!-- SOUS-PAGE RECHERCHER UN MOT -->
+    <div class="list-subpage" id="search-subpage">
+        <div class="subpage-title">Rechercher un mot</div>
+        
+        <div class="search-container" style="width: 320px;">
+            <input type="text" class="subpage-input" id="search-word-input" placeholder="Taper un mot">
+        </div>
+        
+        <div class="message-display" id="search-not-found">Mot non trouvé</div>
+        
+        <div class="code-result-box" id="search-code-result" style="width: 320px; margin-bottom: 20px;"></div>
+        
+        <button class="subpage-btn" id="search-submit-btn">Rechercher</button>
+        <button class="subpage-btn secondary" id="search-back-btn">Retour</button>
+    </div>
+
+    <!-- SOUS-PAGE AJOUTER UN MOT -->
+    <div class="list-subpage" id="add-subpage">
+        <div class="subpage-title">Ajouter un mot</div>
+        
+        <input type="text" class="subpage-input" id="add-word-input" placeholder="Taper un mot">
+        <input type="text" class="subpage-input" id="add-code-input" placeholder="Taper le code" style="display: none;">
+        
+        <div class="message-display" id="add-message"></div>
+        
+        <button class="subpage-btn" id="add-submit-btn">Ajouter un mot</button>
+        <button class="subpage-btn secondary" id="add-back-btn">Retour</button>
+    </div>
+
+    <!-- SOUS-PAGE AFFICHER MA LISTE -->
+    <div class="list-subpage" id="display-subpage">
+        <div class="subpage-title">Ma liste complète</div>
+        
+        <textarea class="subpage-textarea" id="display-textarea" readonly></textarea>
+        
+        <button class="select-btn" id="select-list-btn">Sélectionner la liste</button>
+        <button class="subpage-btn secondary" id="display-back-btn" style="margin-top: 20px;">Retour</button>
+    </div>
+
+    <!-- MODAL DE RECHERCHE (ancienne, conservée pour compatibilité) -->
+    <div id="modal-overlay"></div>
+    <div id="search-modal">
+        <div class="search-container">
+            <input type="text" class="search-input" id="modal-search-input" placeholder="Taper un mot">
+        </div>
+        
+        <div class="not-found-message" id="modal-not-found">Mot non trouvé</div>
+        
+        <div class="code-result-box" id="modal-code-result"></div>
+        
+        <button class="search-btn" id="modal-search-btn">Rechercher</button>
     </div>
 
     <!-- PAGE DE LOCK -->
@@ -688,25 +918,16 @@
         <div class="index-display" id="index-display"></div>
     </div>
 
-    <!-- MODAL LISTE -->
-    <div id="modal-overlay"></div>
-    <div id="list-modal">
-        <div id="search-container">
-            <input type="text" id="search-input" placeholder="Taper un mot">
-        </div>
-        
-        <div id="not-found-message">Mot non trouvé</div>
-        
-        <div class="code-result-box" id="codeResult"></div>
-        
-        <button id="search-btn">Rechercher</button>
-    </div>
-
     <script>
         (function() {
             // ===== ÉLÉMENTS =====
             const homePage = document.getElementById('home-page');
             const settingsPage = document.getElementById('settings-page');
+            const listPage = document.getElementById('list-page');
+            const searchSubpage = document.getElementById('search-subpage');
+            const addSubpage = document.getElementById('add-subpage');
+            const displaySubpage = document.getElementById('display-subpage');
+            
             const lockPage = document.getElementById('lock-page');
             const resultPage = document.getElementById('result-page');
             const wordsContainer = document.getElementById('words-container');
@@ -723,6 +944,38 @@
             const importImgBtn = document.getElementById('import-img-btn');
             const settingsBack = document.getElementById('settings-back');
             
+            // Boutons liste de mots
+            const listSearchBtn = document.getElementById('list-search-btn');
+            const listAddBtn = document.getElementById('list-add-btn');
+            const listDisplayBtn = document.getElementById('list-display-btn');
+            const listBack = document.getElementById('list-back');
+            
+            // Sous-page Rechercher
+            const searchWordInput = document.getElementById('search-word-input');
+            const searchNotFound = document.getElementById('search-not-found');
+            const searchCodeResult = document.getElementById('search-code-result');
+            const searchSubmitBtn = document.getElementById('search-submit-btn');
+            const searchBackBtn = document.getElementById('search-back-btn');
+            
+            // Sous-page Ajouter
+            const addWordInput = document.getElementById('add-word-input');
+            const addCodeInput = document.getElementById('add-code-input');
+            const addMessage = document.getElementById('add-message');
+            const addSubmitBtn = document.getElementById('add-submit-btn');
+            const addBackBtn = document.getElementById('add-back-btn');
+            
+            // Sous-page Afficher
+            const displayTextarea = document.getElementById('display-textarea');
+            const selectListBtn = document.getElementById('select-list-btn');
+            const displayBackBtn = document.getElementById('display-back-btn');
+            
+            // Modal recherche (ancienne)
+            const modalOverlay = document.getElementById('modal-overlay');
+            const modalSearchInput = document.getElementById('modal-search-input');
+            const modalNotFound = document.getElementById('modal-not-found');
+            const modalCodeResult = document.getElementById('modal-code-result');
+            const modalSearchBtn = document.getElementById('modal-search-btn');
+            
             // Inputs file
             const bgFileInput = document.getElementById('bg-file-input');
             const imgFileInput = document.getElementById('img-file-input');
@@ -732,15 +985,6 @@
             const previewImage = document.getElementById('preview-image');
             const previewConfirm = document.getElementById('preview-confirm');
             const previewCancel = document.getElementById('preview-cancel');
-            
-            // Modal
-            const modal = document.getElementById('list-modal');
-            const modalOverlay = document.getElementById('modal-overlay');
-            const searchInput = document.getElementById('search-input');
-            const searchContainer = document.getElementById('search-container');
-            const notFoundMessage = document.getElementById('not-found-message');
-            const searchBtn = document.getElementById('search-btn');
-            const codeResult = document.getElementById('codeResult');
 
             // Lock screen
             const keys = document.querySelectorAll('#lock-page .key');
@@ -749,22 +993,56 @@
             const okBtn = document.getElementById('okBtn');
             const emergencyBtn = document.getElementById('emergencyBtn');
 
-            // ===== DONNÉES (10 premiers mots) =====
-            const wordsList = [
-                { code: "7131", word: "Abeille" },
-                { code: "7141", word: "Abricot" },
-                { code: "9141", word: "Accordéon" },
-                { code: "6131", word: "Agenda" },
-                { code: "6141", word: "Agneau" },
-                { code: "9141", word: "Agrafeuse" },
-                { code: "5121", word: "Aigle" },
-                { code: "8121", word: "Aiguille" },
-                { code: "3121", word: "Ail" },
-                { code: "4121", word: "Aile" }
-            ];
+            // ===== DONNÉES =====
+            // Charger la liste depuis localStorage ou utiliser la liste par défaut
+            let wordsList = [];
+            
+            function loadWordsList() {
+                const savedList = localStorage.getItem('wordsList');
+                if (savedList) {
+                    try {
+                        wordsList = JSON.parse(savedList);
+                    } catch (e) {
+                        wordsList = getDefaultWordsList();
+                    }
+                } else {
+                    wordsList = getDefaultWordsList();
+                }
+                updateDisplayTextarea();
+            }
+            
+            function getDefaultWordsList() {
+                return [
+                    { code: "7131", word: "Abeille" },
+                    { code: "7141", word: "Abricot" },
+                    { code: "9141", word: "Accordéon" },
+                    { code: "6131", word: "Agenda" },
+                    { code: "6141", word: "Agneau" },
+                    { code: "9141", word: "Agrafeuse" },
+                    { code: "5121", word: "Aigle" },
+                    { code: "8121", word: "Aiguille" },
+                    { code: "3121", word: "Ail" },
+                    { code: "4121", word: "Aile" }
+                ];
+            }
+            
+            function saveWordsList() {
+                localStorage.setItem('wordsList', JSON.stringify(wordsList));
+                updateDisplayTextarea();
+            }
+            
+            function updateDisplayTextarea() {
+                let text = '';
+                for (let i = 0; i < wordsList.length; i++) {
+                    text += wordsList[i].word + ',' + wordsList[i].code;
+                    if (i < wordsList.length - 1) {
+                        text += ',';
+                    }
+                }
+                displayTextarea.value = text;
+            }
 
             let pin = '';
-            let searchMode = 'search';
             
             // Variables pour la page 3
             let currentCode = '';
@@ -776,9 +1054,9 @@
             let selectedLetter = '';
             let lastTap = 0;
             
-            // Variables pour l'import d'images
-            let currentPreviewTarget = ''; // 'bg' ou 'img'
-            let currentPreviewData = '';
+            // Variables pour l'ajout de mot
+            let addStep = 'word'; // 'word' ou 'code'
+            let newWord = '';
 
             // ===== FONCTIONS =====
             function animateKey(element) {
@@ -801,26 +1079,6 @@
                         dots[i].classList.remove('active');
                     }
                 }
-            }
-
-            function resetModalToNormal() {
-                searchContainer.style.display = 'block';
-                notFoundMessage.style.display = 'none';
-                searchBtn.textContent = 'Rechercher';
-                searchBtn.classList.remove('retry');
-                searchInput.value = '';
-                codeResult.textContent = '';
-                searchMode = 'search';
-                modal.classList.remove('keyboard-open');
-            }
-
-            function setNotFoundState() {
-                searchContainer.style.display = 'none';
-                notFoundMessage.style.display = 'flex';
-                searchBtn.textContent = 'Réessayer';
-                searchBtn.classList.add('retry');
-                codeResult.textContent = '';
-                searchMode = 'retry';
             }
 
             function searchWord(wordToFind) {
@@ -968,12 +1226,10 @@
                     if (file) {
                         const reader = new FileReader();
                         reader.onload = function(event) {
-                            // Afficher l'aperçu
                             currentPreviewData = event.target.result;
                             previewImage.src = currentPreviewData;
                             previewContainer.classList.add('visible');
                             
-                            // Déterminer la cible
                             if (targetElement === lockPage) {
                                 currentPreviewTarget = 'bg';
                             } else {
@@ -997,10 +1253,12 @@
             }
 
             // Configuration des imports
+            let currentPreviewTarget = '';
+            let currentPreviewData = '';
+            
             setupImageImport(bgFileInput, lockPage, 'backgroundImage');
             setupImageImport(imgFileInput, resultPage, 'resultImage');
 
-            // Boutons d'import
             importBgBtn.addEventListener('click', () => {
                 bgFileInput.click();
             });
@@ -1009,7 +1267,6 @@
                 imgFileInput.click();
             });
 
-            // Confirmer l'aperçu
             previewConfirm.addEventListener('click', () => {
                 if (currentPreviewTarget === 'bg') {
                     lockPage.style.backgroundImage = `url(${currentPreviewData})`;
@@ -1023,35 +1280,32 @@
                 previewImage.src = '';
                 currentPreviewData = '';
                 currentPreviewTarget = '';
-                
-                // Réinitialiser les inputs file
                 bgFileInput.value = '';
                 imgFileInput.value = '';
             });
 
-            // Annuler l'aperçu
             previewCancel.addEventListener('click', () => {
                 previewContainer.classList.remove('visible');
                 previewImage.src = '';
                 currentPreviewData = '';
                 currentPreviewTarget = '';
-                
-                // Réinitialiser les inputs file
                 bgFileInput.value = '';
                 imgFileInput.value = '';
             });
 
-            // Gestion responsive
-            searchInput.addEventListener('focus', () => {
-                modal.classList.add('keyboard-open');
+            settingsBack.addEventListener('click', () => {
+                settingsPage.classList.remove('visible');
+                homePage.classList.remove('hidden');
+                previewContainer.classList.remove('visible');
+                previewImage.src = '';
+                currentPreviewData = '';
+                currentPreviewTarget = '';
+                bgFileInput.value = '';
+                imgFileInput.value = '';
             });
 
-            searchInput.addEventListener('blur', () => {
-                setTimeout(() => {
-                    modal.classList.remove('keyboard-open');
-                }, 200);
-            });
-
+            // ===== GESTIONNAIRES PAGES =====
+            
             // PAGE D'ACCUEIL
             btnPerform.addEventListener('click', () => {
                 homePage.classList.add('hidden');
@@ -1061,10 +1315,8 @@
             });
 
             btnList.addEventListener('click', () => {
-                resetModalToNormal();
-                modal.classList.add('visible');
-                modalOverlay.classList.add('visible');
-                modal.classList.remove('keyboard-open');
+                homePage.classList.add('hidden');
+                listPage.classList.add('visible');
             });
 
             btnSettings.addEventListener('click', () => {
@@ -1072,53 +1324,180 @@
                 settingsPage.classList.add('visible');
             });
 
-            settingsBack.addEventListener('click', () => {
-                settingsPage.classList.remove('visible');
-                homePage.classList.remove('hidden');
-                
-                // Cacher l'aperçu si visible
-                previewContainer.classList.remove('visible');
-                previewImage.src = '';
-                currentPreviewData = '';
-                currentPreviewTarget = '';
-                bgFileInput.value = '';
-                imgFileInput.value = '';
+            // PAGE LISTE DE MOTS - MENU
+            listSearchBtn.addEventListener('click', () => {
+                listPage.classList.remove('visible');
+                searchSubpage.classList.add('visible');
+                searchWordInput.value = '';
+                searchCodeResult.textContent = '';
+                searchNotFound.style.display = 'none';
+                searchWordInput.style.display = 'block';
             });
 
-            // MODAL LISTE
-            searchBtn.addEventListener('click', () => {
-                if (searchMode === 'search') {
-                    const word = searchInput.value.trim();
-                    
-                    if (word === '') return;
-                    
-                    const result = searchWord(word);
-                    
-                    if (result) {
-                        codeResult.textContent = result.code;
-                        searchInput.blur();
-                    } else {
-                        setNotFoundState();
-                        searchInput.blur();
-                    }
+            listAddBtn.addEventListener('click', () => {
+                listPage.classList.remove('visible');
+                addSubpage.classList.add('visible');
+                addWordInput.value = '';
+                addCodeInput.value = '';
+                addCodeInput.style.display = 'none';
+                addSubmitBtn.textContent = 'Ajouter un mot';
+                addMessage.style.display = 'none';
+                addStep = 'word';
+            });
+
+            listDisplayBtn.addEventListener('click', () => {
+                listPage.classList.remove('visible');
+                displaySubpage.classList.add('visible');
+                updateDisplayTextarea();
+            });
+
+            listBack.addEventListener('click', () => {
+                listPage.classList.remove('visible');
+                homePage.classList.remove('hidden');
+            });
+
+            // SOUS-PAGE RECHERCHER
+            searchSubmitBtn.addEventListener('click', () => {
+                const word = searchWordInput.value.trim();
+                if (word === '') return;
+                
+                const result = searchWord(word);
+                
+                if (result) {
+                    searchCodeResult.textContent = result.code;
+                    searchNotFound.style.display = 'none';
                 } else {
-                    resetModalToNormal();
-                    setTimeout(() => {
-                        searchInput.focus();
-                    }, 100);
+                    searchCodeResult.textContent = '';
+                    searchNotFound.style.display = 'block';
                 }
             });
 
-            searchInput.addEventListener('keypress', (e) => {
-                if (e.key === 'Enter' && searchMode === 'search') {
-                    searchBtn.click();
+            searchWordInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    searchSubmitBtn.click();
+                }
+            });
+
+            searchBackBtn.addEventListener('click', () => {
+                searchSubpage.classList.remove('visible');
+                listPage.classList.add('visible');
+            });
+
+            // SOUS-PAGE AJOUTER
+            addSubmitBtn.addEventListener('click', () => {
+                if (addStep === 'word') {
+                    const word = addWordInput.value.trim();
+                    if (word === '') return;
+                    
+                    const exists = searchWord(word);
+                    
+                    if (exists) {
+                        addMessage.textContent = 'Le mot existe déjà';
+                        addMessage.style.display = 'block';
+                        addSubmitBtn.textContent = 'Réessayer';
+                        addSubmitBtn.classList.add('retry');
+                    } else {
+                        newWord = word;
+                        addWordInput.style.display = 'none';
+                        addCodeInput.style.display = 'block';
+                        addSubmitBtn.textContent = 'Confirmer';
+                        addSubmitBtn.classList.remove('retry');
+                        addMessage.style.display = 'none';
+                        addStep = 'code';
+                    }
+                } else if (addStep === 'code') {
+                    const code = addCodeInput.value.trim();
+                    if (code.length !== 4 || isNaN(code)) {
+                        addMessage.textContent = 'Code invalide (4 chiffres requis)';
+                        addMessage.style.display = 'block';
+                        return;
+                    }
+                    
+                    wordsList.push({ code: code, word: newWord });
+                    saveWordsList();
+                    
+                    addMessage.textContent = 'Mot ajouté';
+                    addMessage.style.display = 'block';
+                    
+                    // Reset après 2 secondes
+                    setTimeout(() => {
+                        addWordInput.value = '';
+                        addCodeInput.value = '';
+                        addWordInput.style.display = 'block';
+                        addCodeInput.style.display = 'none';
+                        addSubmitBtn.textContent = 'Ajouter un mot';
+                        addMessage.style.display = 'none';
+                        addStep = 'word';
+                    }, 2000);
+                }
+            });
+
+            addBackBtn.addEventListener('click', () => {
+                addSubpage.classList.remove('visible');
+                listPage.classList.add('visible');
+                addWordInput.value = '';
+                addCodeInput.value = '';
+                addWordInput.style.display = 'block';
+                addCodeInput.style.display = 'none';
+                addSubmitBtn.textContent = 'Ajouter un mot';
+                addMessage.style.display = 'none';
+                addStep = 'word';
+            });
+
+            // SOUS-PAGE AFFICHER
+            selectListBtn.addEventListener('click', () => {
+                displayTextarea.select();
+                displayTextarea.setSelectionRange(0, 99999);
+                
+                // Option pour coller une nouvelle liste
+                const newListText = prompt("Collez votre nouvelle liste (format: mot,code,mot,code,...)");
+                if (newListText) {
+                    try {
+                        const parts = newListText.split(',');
+                        const newList = [];
+                        for (let i = 0; i < parts.length; i += 2) {
+                            if (parts[i+1]) {
+                                newList.push({
+                                    word: parts[i].trim(),
+                                    code: parts[i+1].trim()
+                                });
+                            }
+                        }
+                        if (newList.length > 0) {
+                            wordsList = newList;
+                            saveWordsList();
+                            alert('Liste mise à jour avec succès !');
+                        }
+                    } catch (e) {
+                        alert('Format invalide');
+                    }
+                }
+            });
+
+            displayBackBtn.addEventListener('click', () => {
+                displaySubpage.classList.remove('visible');
+                listPage.classList.add('visible');
+            });
+
+            // MODAL RECHERCHE (ancienne, pour compatibilité)
+            modalSearchBtn.addEventListener('click', () => {
+                const word = modalSearchInput.value.trim();
+                if (word === '') return;
+                
+                const result = searchWord(word);
+                
+                if (result) {
+                    modalCodeResult.textContent = result.code;
+                    modalNotFound.style.display = 'none';
+                } else {
+                    modalCodeResult.textContent = '';
+                    modalNotFound.style.display = 'block';
                 }
             });
 
             modalOverlay.addEventListener('click', () => {
-                modal.classList.remove('visible');
                 modalOverlay.classList.remove('visible');
-                searchInput.blur();
+                document.getElementById('search-modal').classList.remove('visible');
             });
 
             // LOCK SCREEN
@@ -1167,7 +1546,6 @@
                     displayWords(currentWords);
                     displayLetterButtons(bestListIndex, bestListLetters);
                     
-                    // S'assurer que les éléments sont visibles
                     wordsContainer.classList.remove('hidden');
                     lettersContainer.classList.remove('hidden');
                     
@@ -1179,7 +1557,7 @@
                 }
             });
 
-            // Indice cliquable pour masquer/afficher
+            // Indice cliquable
             indexDisplay.addEventListener('click', function(e) {
                 e.stopPropagation();
                 
@@ -1216,7 +1594,6 @@
                 }
             });
 
-            // BOUTON URGENCE
             emergencyBtn.addEventListener('click', function(e) {
                 e.stopPropagation();
                 animateText(this);
@@ -1228,9 +1605,9 @@
             });
 
             // Initialisation
+            loadWordsList();
             pin = '';
             updateDots();
-            resetModalToNormal();
         })();
     </script>
 </body>
