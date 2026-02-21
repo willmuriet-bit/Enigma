@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>ENIGMA</title>
+    <title>ENIGMA - Personnalisation temps réel</title>
     
     <!-- PWA Meta Tags -->
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -220,174 +220,222 @@
             background: #888;
         }
 
-        /* PAGE LISTE DE MOTS */
-        #list-page {
+        /* PAGE DE PERSONNALISATION */
+        #customize-page {
             position: absolute;
             inset: 0;
-            background: black;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            z-index: 26;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 40;
             visibility: hidden;
             opacity: 0;
             transition: visibility 0.3s, opacity 0.3s;
+            overflow-y: auto;
             padding: 20px;
+            color: white;
         }
 
-        #list-page.visible {
+        #customize-page.visible {
             visibility: visible;
             opacity: 1;
         }
 
-        .list-title {
-            font-size: 48px;
+        /* Mode preview - l'écran de résultat est visible en arrière-plan */
+        #result-page.preview-mode {
+            visibility: visible !important;
+            opacity: 1 !important;
+            z-index: 35;
+            pointer-events: none;
+        }
+
+        #customize-page.preview-mode {
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(5px);
+        }
+
+        .preview-overlay-info {
+            position: fixed;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0,0,0,0.9);
             color: #FFD700;
-            margin-bottom: 50px;
+            padding: 8px 20px;
+            border-radius: 30px;
+            font-size: 14px;
+            z-index: 50;
+            border: 2px solid #FFD700;
+            pointer-events: none;
             font-weight: bold;
-            text-transform: uppercase;
-            letter-spacing: 4px;
+            white-space: nowrap;
+            box-shadow: 0 0 15px rgba(255,215,0,0.3);
         }
 
-        .list-menu-btn {
-            width: 320px;
-            height: 65px;
+        .customize-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-top: 20px;
+            position: relative;
+            z-index: 41;
+        }
+
+        .customize-back-btn {
+            width: 40px;
+            height: 40px;
             background: #333;
-            color: white;
             border: none;
-            border-radius: 15px;
-            font-size: 22px;
-            font-weight: 600;
+            border-radius: 50%;
+            color: white;
+            font-size: 24px;
             cursor: pointer;
-            margin: 10px 0;
-            transition: background 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
         }
 
-        .list-menu-btn:active {
+        .customize-back-btn:active {
             background: #555;
         }
 
-        .list-back-btn {
-            width: 320px;
-            height: 50px;
-            background: #666;
-            color: white;
-            border: none;
-            border-radius: 10px;
-            font-size: 18px;
-            cursor: pointer;
-            margin-top: 30px;
-        }
-
-        .list-back-btn:active {
-            background: #888;
-        }
-
-        /* SOUS-PAGES LISTE */
-        .list-subpage {
-            position: absolute;
-            inset: 0;
-            background: black;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            z-index: 27;
-            visibility: hidden;
-            opacity: 0;
-            transition: visibility 0.3s, opacity 0.3s;
-            padding: 20px;
-        }
-
-        .list-subpage.visible {
-            visibility: visible;
-            opacity: 1;
-        }
-
-        .subpage-title {
-            font-size: 36px;
+        .customize-title {
+            font-size: 32px;
             color: #FFD700;
-            margin-bottom: 40px;
             font-weight: bold;
+            letter-spacing: 2px;
         }
 
-        .subpage-input {
-            width: 320px;
-            padding: 18px;
-            border: 2px solid #FFD700;
-            border-radius: 15px;
-            font-size: 18px;
-            height: 60px;
-            box-sizing: border-box;
+        .preview-section {
+            background: #1a1a1a;
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 30px;
+            border: 1px solid #333;
+            position: relative;
+            z-index: 41;
+            backdrop-filter: blur(5px);
+        }
+
+        .preview-title {
+            color: #FFD700;
+            font-size: 20px;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .control-group {
             background: #222;
-            color: white;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 25px;
+            position: relative;
+            z-index: 41;
+            backdrop-filter: blur(5px);
+            border: 1px solid #444;
+        }
+
+        .control-group h3 {
+            color: #FFD700;
+            font-size: 22px;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #444;
+            padding-bottom: 10px;
+        }
+
+        .slider-item {
             margin-bottom: 20px;
         }
 
-        .subpage-textarea {
-            width: 320px;
-            padding: 18px;
-            border: 2px solid #FFD700;
-            border-radius: 15px;
+        .slider-item label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            color: #ddd;
             font-size: 16px;
-            height: 300px;
-            box-sizing: border-box;
-            background: #222;
-            color: white;
-            margin-bottom: 20px;
-            resize: none;
-            font-family: monospace;
         }
 
-        .subpage-btn {
-            width: 320px;
-            height: 60px;
+        .slider-item input[type="range"] {
+            width: 100%;
+            height: 6px;
+            background: #444;
+            border-radius: 3px;
+            -webkit-appearance: none;
+        }
+
+        .slider-item input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 20px;
+            height: 20px;
+            background: #FFD700;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 2px solid white;
+        }
+
+        .color-item {
+            margin-bottom: 20px;
+        }
+
+        .color-item label {
+            display: block;
+            margin-bottom: 8px;
+            color: #ddd;
+        }
+
+        .color-item input[type="color"] {
+            width: 100%;
+            height: 45px;
+            border: 2px solid #444;
+            border-radius: 10px;
+            background: #333;
+            cursor: pointer;
+        }
+
+        .value-badge {
+            background: #333;
+            padding: 3px 10px;
+            border-radius: 15px;
+            font-size: 14px;
+            color: #FFD700;
+            border: 1px solid #FFD700;
+        }
+
+        .customize-actions {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+            margin-bottom: 30px;
+            position: relative;
+            z-index: 41;
+        }
+
+        .customize-save {
+            flex: 2;
+            height: 55px;
             background: #4CAF50;
-            color: white;
             border: none;
             border-radius: 15px;
+            color: white;
             font-size: 20px;
             font-weight: 600;
             cursor: pointer;
-            margin: 10px 0;
-            transition: background 0.3s;
         }
 
-        .subpage-btn.retry {
-            background: #ff9800;
-        }
-
-        .subpage-btn.secondary {
-            background: #2196F3;
-        }
-
-        .message-display {
-            width: 320px;
-            padding: 15px;
-            background: #333;
-            border-radius: 10px;
-            color: #FFD700;
-            text-align: center;
-            font-size: 18px;
-            margin: 10px 0;
-            display: none;
-        }
-
-        .message-display.visible {
-            display: block;
-        }
-
-        .select-btn {
-            width: 320px;
-            height: 50px;
-            background: #2196F3;
-            color: white;
+        .customize-reset {
+            flex: 1;
+            height: 55px;
+            background: #f44336;
             border: none;
-            border-radius: 10px;
+            border-radius: 15px;
+            color: white;
             font-size: 18px;
+            font-weight: 600;
             cursor: pointer;
-            margin-top: 10px;
+        }
+
+        .customize-save:active, .customize-reset:active {
+            transform: scale(0.98);
+            opacity: 0.9;
         }
 
         /* PAGE DE LOCK */
@@ -493,7 +541,6 @@
             border: none;
         }
 
-        /* Animation du cercle blanc */
         .key::after, .delete-btn::after, .ok::after {
             content: '';
             position: absolute;
@@ -590,6 +637,7 @@
             gap: 15px;
             text-align: center;
             box-sizing: border-box;
+            transition: all 0.1s ease;
         }
 
         .words-container.hidden {
@@ -610,8 +658,8 @@
             border-radius: 0;
             backdrop-filter: none;
             border: none;
-            font-size: 18px;
-            color: white;
+            font-size: inherit;
+            color: inherit;
             white-space: nowrap;
             cursor: pointer;
             display: inline-block;
@@ -630,7 +678,8 @@
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
-            gap: 0;
+            gap: 40px;
+            transition: all 0.1s ease;
         }
 
         .letters-container.hidden {
@@ -640,8 +689,8 @@
         .letter-btn {
             cursor: pointer;
             text-decoration: none;
-            color: white;
-            font-size: 20px;
+            color: inherit;
+            font-size: inherit;
             display: inline-block;
             text-transform: uppercase;
         }
@@ -651,8 +700,8 @@
         }
 
         .separator {
-            color: white;
-            font-size: 20px;
+            color: inherit;
+            font-size: inherit;
             display: inline-block;
             width: 40px;
             text-align: center;
@@ -669,10 +718,11 @@
             z-index: 33;
             cursor: pointer;
             user-select: none;
+            transition: all 0.1s ease;
         }
 
-        /* MODAL RECHERCHE (ancienne) */
-        #search-modal {
+        /* MODAL LISTE */
+        #list-modal {
             position: absolute;
             top: 50%;
             left: 50%;
@@ -681,7 +731,7 @@
             background: white;
             border-radius: 30px;
             padding: 25px;
-            z-index: 101;
+            z-index: 100;
             display: none;
             color: black;
             box-shadow: 0 20px 40px rgba(0,0,0,0.4);
@@ -690,21 +740,21 @@
             overflow-y: auto;
         }
 
-        #search-modal.visible { 
+        #list-modal.visible { 
             display: block; 
         }
 
-        #search-modal.keyboard-open {
+        #list-modal.keyboard-open {
             top: 30px;
             transform: translate(-50%, 0);
         }
 
-        #search-modal .search-container {
+        #search-container {
             width: 100%;
             margin-bottom: 15px;
         }
 
-        #search-modal .search-input {
+        #search-input {
             width: 100%;
             padding: 18px;
             border: 2px solid #ddd;
@@ -714,7 +764,7 @@
             box-sizing: border-box;
         }
 
-        #search-modal .not-found-message {
+        #not-found-message {
             width: 100%;
             padding: 18px;
             background: #ffebee;
@@ -732,7 +782,7 @@
             justify-content: center;
         }
 
-        #search-modal .code-result-box {
+        .code-result-box {
             width: 100%;
             padding: 18px;
             border: 2px solid #1976d2;
@@ -749,7 +799,7 @@
             margin-bottom: 15px;
         }
 
-        #search-modal .search-btn {
+        #search-btn {
             width: 100%;
             padding: 18px;
             background: #4CAF50;
@@ -763,7 +813,7 @@
             transition: background 0.3s;
         }
 
-        #search-modal .search-btn.retry {
+        #search-btn.retry {
             background: #ff9800;
         }
 
@@ -771,13 +821,12 @@
             position: absolute;
             inset: 0;
             background: rgba(0,0,0,0.7);
-            z-index: 100;
+            z-index: 90;
             display: none;
         }
 
         #modal-overlay.visible { display: block; }
 
-        /* Inputs file cachés */
         .hidden-file-input {
             display: none;
         }
@@ -802,7 +851,9 @@
         
         <button class="settings-btn" id="import-bg-btn">📷 Importer lock screen</button>
         <button class="settings-btn" id="import-img-btn">📷 Importer background</button>
+        <button class="settings-btn" id="customize-btn">🎨 Personnaliser affichage</button>
         
+        <!-- Zone d'aperçu -->
         <div class="preview-container" id="preview-container">
             <img class="preview-image" id="preview-image" src="" alt="Aperçu">
             <div class="preview-buttons">
@@ -814,68 +865,93 @@
         <button class="back-btn" id="settings-back">← Retour à l'accueil</button>
     </div>
 
-    <!-- PAGE LISTE DE MOTS (menu principal) -->
-    <div id="list-page">
-        <div class="list-title">LISTE DE MOTS</div>
-        
-        <button class="list-menu-btn" id="list-search-btn">Rechercher un mot</button>
-        <button class="list-menu-btn" id="list-add-btn">Ajouter un mot</button>
-        <button class="list-menu-btn" id="list-display-btn">Afficher ma liste</button>
-        
-        <button class="list-back-btn" id="list-back">← Retour à l'accueil</button>
-    </div>
-
-    <!-- SOUS-PAGE RECHERCHER UN MOT -->
-    <div class="list-subpage" id="search-subpage">
-        <div class="subpage-title">Rechercher un mot</div>
-        
-        <div class="search-container" style="width: 320px;">
-            <input type="text" class="subpage-input" id="search-word-input" placeholder="Taper un mot">
+    <!-- PAGE DE PERSONNALISATION -->
+    <div id="customize-page">
+        <div class="customize-header">
+            <button class="customize-back-btn" id="customize-back">←</button>
+            <span class="customize-title">PERSONNALISER</span>
         </div>
-        
-        <div class="message-display" id="search-not-found">Mot non trouvé</div>
-        
-        <div class="code-result-box" id="search-code-result" style="width: 320px; margin-bottom: 20px;"></div>
-        
-        <button class="subpage-btn" id="search-submit-btn">Rechercher</button>
-        <button class="subpage-btn secondary" id="search-back-btn">Retour</button>
-    </div>
 
-    <!-- SOUS-PAGE AJOUTER UN MOT -->
-    <div class="list-subpage" id="add-subpage">
-        <div class="subpage-title">Ajouter un mot</div>
-        
-        <input type="text" class="subpage-input" id="add-word-input" placeholder="Taper un mot">
-        <input type="text" class="subpage-input" id="add-code-input" placeholder="Taper le code" style="display: none;">
-        
-        <div class="message-display" id="add-message"></div>
-        
-        <button class="subpage-btn" id="add-submit-btn">Ajouter un mot</button>
-        <button class="subpage-btn secondary" id="add-back-btn">Retour</button>
-    </div>
+        <!-- Contrôles pour la liste L -->
+        <div class="control-group">
+            <h3>📋 Liste L (mots)</h3>
+            
+            <div class="slider-item">
+                <label>Position Y <span class="value-badge" id="words-y-value">265px</span></label>
+                <input type="range" id="words-y" min="0" max="800" value="265" step="1">
+            </div>
 
-    <!-- SOUS-PAGE AFFICHER MA LISTE -->
-    <div class="list-subpage" id="display-subpage">
-        <div class="subpage-title">Ma liste complète</div>
-        
-        <textarea class="subpage-textarea" id="display-textarea" readonly></textarea>
-        
-        <button class="select-btn" id="select-list-btn">Sélectionner la liste</button>
-        <button class="subpage-btn secondary" id="display-back-btn" style="margin-top: 20px;">Retour</button>
-    </div>
+            <div class="slider-item">
+                <label>Taille police <span class="value-badge" id="words-size-value">18px</span></label>
+                <input type="range" id="words-size" min="10" max="40" value="18" step="1">
+            </div>
 
-    <!-- MODAL DE RECHERCHE (ancienne, conservée pour compatibilité) -->
-    <div id="modal-overlay"></div>
-    <div id="search-modal">
-        <div class="search-container">
-            <input type="text" class="search-input" id="modal-search-input" placeholder="Taper un mot">
+            <div class="color-item">
+                <label>Couleur</label>
+                <input type="color" id="words-color" value="#ffffff">
+            </div>
+
+            <div class="slider-item">
+                <label>Espace entre lignes <span class="value-badge" id="words-line-height-value">15px</span></label>
+                <input type="range" id="words-line-height" min="5" max="30" value="15" step="1">
+            </div>
         </div>
-        
-        <div class="not-found-message" id="modal-not-found">Mot non trouvé</div>
-        
-        <div class="code-result-box" id="modal-code-result"></div>
-        
-        <button class="search-btn" id="modal-search-btn">Rechercher</button>
+
+        <!-- Contrôles pour les lettres cliquables -->
+        <div class="control-group">
+            <h3>🔤 Lettres cliquables</h3>
+            
+            <div class="slider-item">
+                <label>Position Y <span class="value-badge" id="letters-y-value">460px</span></label>
+                <input type="range" id="letters-y" min="0" max="800" value="460" step="1">
+            </div>
+
+            <div class="slider-item">
+                <label>Taille police <span class="value-badge" id="letters-size-value">20px</span></label>
+                <input type="range" id="letters-size" min="10" max="40" value="20" step="1">
+            </div>
+
+            <div class="color-item">
+                <label>Couleur</label>
+                <input type="color" id="letters-color" value="#ffffff">
+            </div>
+
+            <div class="slider-item">
+                <label>Espace entre lettres <span class="value-badge" id="letters-spacing-value">40px</span></label>
+                <input type="range" id="letters-spacing" min="0" max="100" value="40" step="1">
+            </div>
+        </div>
+
+        <!-- Contrôles pour l'indice -->
+        <div class="control-group">
+            <h3>🔢 Indice (chiffre)</h3>
+            
+            <div class="slider-item">
+                <label>Position Y <span class="value-badge" id="index-y-value">517px</span></label>
+                <input type="range" id="index-y" min="0" max="800" value="517" step="1">
+            </div>
+
+            <div class="slider-item">
+                <label>Taille police <span class="value-badge" id="index-size-value">30px</span></label>
+                <input type="range" id="index-size" min="10" max="60" value="30" step="1">
+            </div>
+
+            <div class="color-item">
+                <label>Couleur</label>
+                <input type="color" id="index-color" value="#1E6FF0">
+            </div>
+
+            <div class="slider-item">
+                <label>Décalage X <span class="value-badge" id="index-x-value">-45px</span></label>
+                <input type="range" id="index-x" min="-100" max="100" value="-45" step="1">
+            </div>
+        </div>
+
+        <!-- Boutons d'action -->
+        <div class="customize-actions">
+            <button class="customize-save" id="customize-save">💾 Sauvegarder</button>
+            <button class="customize-reset" id="customize-reset">↺ Réinitialiser</button>
+        </div>
     </div>
 
     <!-- PAGE DE LOCK -->
@@ -918,16 +994,26 @@
         <div class="index-display" id="index-display"></div>
     </div>
 
+    <!-- MODAL LISTE -->
+    <div id="modal-overlay"></div>
+    <div id="list-modal">
+        <div id="search-container">
+            <input type="text" id="search-input" placeholder="Taper un mot">
+        </div>
+        
+        <div id="not-found-message">Mot non trouvé</div>
+        
+        <div class="code-result-box" id="codeResult"></div>
+        
+        <button id="search-btn">Rechercher</button>
+    </div>
+
     <script>
         (function() {
             // ===== ÉLÉMENTS =====
             const homePage = document.getElementById('home-page');
             const settingsPage = document.getElementById('settings-page');
-            const listPage = document.getElementById('list-page');
-            const searchSubpage = document.getElementById('search-subpage');
-            const addSubpage = document.getElementById('add-subpage');
-            const displaySubpage = document.getElementById('display-subpage');
-            
+            const customizePage = document.getElementById('customize-page');
             const lockPage = document.getElementById('lock-page');
             const resultPage = document.getElementById('result-page');
             const wordsContainer = document.getElementById('words-container');
@@ -942,39 +1028,38 @@
             // Boutons paramètres
             const importBgBtn = document.getElementById('import-bg-btn');
             const importImgBtn = document.getElementById('import-img-btn');
+            const customizeBtn = document.getElementById('customize-btn');
             const settingsBack = document.getElementById('settings-back');
             
-            // Boutons liste de mots
-            const listSearchBtn = document.getElementById('list-search-btn');
-            const listAddBtn = document.getElementById('list-add-btn');
-            const listDisplayBtn = document.getElementById('list-display-btn');
-            const listBack = document.getElementById('list-back');
+            // Boutons personnalisation
+            const customizeBack = document.getElementById('customize-back');
+            const customizeSave = document.getElementById('customize-save');
+            const customizeReset = document.getElementById('customize-reset');
             
-            // Sous-page Rechercher
-            const searchWordInput = document.getElementById('search-word-input');
-            const searchNotFound = document.getElementById('search-not-found');
-            const searchCodeResult = document.getElementById('search-code-result');
-            const searchSubmitBtn = document.getElementById('search-submit-btn');
-            const searchBackBtn = document.getElementById('search-back-btn');
+            // Inputs personnalisation
+            const wordsY = document.getElementById('words-y');
+            const wordsSize = document.getElementById('words-size');
+            const wordsColor = document.getElementById('words-color');
+            const wordsLineHeight = document.getElementById('words-line-height');
+            const lettersY = document.getElementById('letters-y');
+            const lettersSize = document.getElementById('letters-size');
+            const lettersColor = document.getElementById('letters-color');
+            const lettersSpacing = document.getElementById('letters-spacing');
+            const indexY = document.getElementById('index-y');
+            const indexSize = document.getElementById('index-size');
+            const indexColor = document.getElementById('index-color');
+            const indexX = document.getElementById('index-x');
             
-            // Sous-page Ajouter
-            const addWordInput = document.getElementById('add-word-input');
-            const addCodeInput = document.getElementById('add-code-input');
-            const addMessage = document.getElementById('add-message');
-            const addSubmitBtn = document.getElementById('add-submit-btn');
-            const addBackBtn = document.getElementById('add-back-btn');
-            
-            // Sous-page Afficher
-            const displayTextarea = document.getElementById('display-textarea');
-            const selectListBtn = document.getElementById('select-list-btn');
-            const displayBackBtn = document.getElementById('display-back-btn');
-            
-            // Modal recherche (ancienne)
-            const modalOverlay = document.getElementById('modal-overlay');
-            const modalSearchInput = document.getElementById('modal-search-input');
-            const modalNotFound = document.getElementById('modal-not-found');
-            const modalCodeResult = document.getElementById('modal-code-result');
-            const modalSearchBtn = document.getElementById('modal-search-btn');
+            // Affichage des valeurs
+            const wordsYValue = document.getElementById('words-y-value');
+            const wordsSizeValue = document.getElementById('words-size-value');
+            const wordsLineHeightValue = document.getElementById('words-line-height-value');
+            const lettersYValue = document.getElementById('letters-y-value');
+            const lettersSizeValue = document.getElementById('letters-size-value');
+            const lettersSpacingValue = document.getElementById('letters-spacing-value');
+            const indexYValue = document.getElementById('index-y-value');
+            const indexSizeValue = document.getElementById('index-size-value');
+            const indexXValue = document.getElementById('index-x-value');
             
             // Inputs file
             const bgFileInput = document.getElementById('bg-file-input');
@@ -985,6 +1070,15 @@
             const previewImage = document.getElementById('preview-image');
             const previewConfirm = document.getElementById('preview-confirm');
             const previewCancel = document.getElementById('preview-cancel');
+            
+            // Modal
+            const modal = document.getElementById('list-modal');
+            const modalOverlay = document.getElementById('modal-overlay');
+            const searchInput = document.getElementById('search-input');
+            const searchContainer = document.getElementById('search-container');
+            const notFoundMessage = document.getElementById('not-found-message');
+            const searchBtn = document.getElementById('search-btn');
+            const codeResult = document.getElementById('codeResult');
 
             // Lock screen
             const keys = document.querySelectorAll('#lock-page .key');
@@ -994,57 +1088,38 @@
             const emergencyBtn = document.getElementById('emergencyBtn');
 
             // ===== DONNÉES =====
-            // Charger la liste depuis localStorage ou utiliser la liste par défaut
-            let wordsList = [];
-            
-            function loadWordsList() {
-                const savedList = localStorage.getItem('wordsList');
-                if (savedList) {
-                    try {
-                        wordsList = JSON.parse(savedList);
-                    } catch (e) {
-                        wordsList = getDefaultWordsList();
-                    }
-                } else {
-                    wordsList = getDefaultWordsList();
-                }
-                updateDisplayTextarea();
-            }
-            
-            function getDefaultWordsList() {
-                return [
-                    { code: "7131", word: "Abeille" },
-                    { code: "7141", word: "Abricot" },
-                    { code: "9141", word: "Accordéon" },
-                    { code: "6131", word: "Agenda" },
-                    { code: "6141", word: "Agneau" },
-                    { code: "9141", word: "Agrafeuse" },
-                    { code: "5121", word: "Aigle" },
-                    { code: "8121", word: "Aiguille" },
-                    { code: "3121", word: "Ail" },
-                    { code: "4121", word: "Aile" }
-                ];
-            }
-            
-            function saveWordsList() {
-                localStorage.setItem('wordsList', JSON.stringify(wordsList));
-                updateDisplayTextarea();
-            }
-            
-            function updateDisplayTextarea() {
-                let text = '';
-                for (let i = 0; i < wordsList.length; i++) {
-                    text += wordsList[i].word + ',' + wordsList[i].code;
-                    if (i < wordsList.length - 1) {
-                        text += ',';
-                    }
-                }
-                displayTextarea.value = text;
-            }
+            const wordsList = [
+                { code: "7131", word: "Abeille" },
+                { code: "7141", word: "Abricot" },
+                { code: "9141", word: "Accordéon" },
+                { code: "6131", word: "Agenda" },
+                { code: "6141", word: "Agneau" },
+                { code: "9141", word: "Agrafeuse" },
+                { code: "5121", word: "Aigle" },
+                { code: "8121", word: "Aiguille" },
+                { code: "3121", word: "Ail" },
+                { code: "4121", word: "Aile" }
+            ];
 
+            // ===== VALEURS PAR DÉFAUT =====
+            const defaultSettings = {
+                wordsY: 265,
+                wordsSize: 18,
+                wordsColor: '#ffffff',
+                wordsLineHeight: 15,
+                lettersY: 460,
+                lettersSize: 20,
+                lettersColor: '#ffffff',
+                lettersSpacing: 40,
+                indexY: 517,
+                indexSize: 30,
+                indexColor: '#1E6FF0',
+                indexX: -45
+            };
+
+            // ===== ÉTAT =====
             let pin = '';
-            
-            // Variables pour la page 3
+            let searchMode = 'search';
             let currentCode = '';
             let originalWords = [];
             let currentWords = [];
@@ -1053,12 +1128,235 @@
             let bestListLetters = [];
             let selectedLetter = '';
             let lastTap = 0;
+            let isPreviewMode = false;
             
-            // Variables pour l'ajout de mot
-            let addStep = 'word'; // 'word' ou 'code'
-            let newWord = '';
+            // Variables pour l'import d'images
+            let currentPreviewTarget = '';
+            let currentPreviewData = '';
 
-            // ===== FONCTIONS =====
+            // ===== CHARGEMENT DES PARAMÈTRES =====
+            function loadCustomSettings() {
+                const saved = localStorage.getItem('customSettings');
+                if (saved) {
+                    return JSON.parse(saved);
+                }
+                return { ...defaultSettings };
+            }
+
+            function saveCustomSettings(settings) {
+                localStorage.setItem('customSettings', JSON.stringify(settings));
+                console.log('✅ Paramètres sauvegardés définitivement');
+            }
+
+            function applyCustomSettings(settings) {
+                // Appliquer aux conteneurs
+                wordsContainer.style.top = settings.wordsY + 'px';
+                wordsContainer.style.fontSize = settings.wordsSize + 'px';
+                wordsContainer.style.color = settings.wordsColor;
+                wordsContainer.style.lineHeight = settings.wordsLineHeight + 'px';
+                
+                lettersContainer.style.top = settings.lettersY + 'px';
+                lettersContainer.style.fontSize = settings.lettersSize + 'px';
+                lettersContainer.style.color = settings.lettersColor;
+                lettersContainer.style.gap = settings.lettersSpacing + 'px';
+                
+                indexDisplay.style.top = settings.indexY + 'px';
+                indexDisplay.style.fontSize = settings.indexSize + 'px';
+                indexDisplay.style.color = settings.indexColor;
+                indexDisplay.style.transform = `translateX(calc(-50% + ${settings.indexX}px))`;
+
+                // Mettre à jour les valeurs affichées
+                updateDisplayValues(settings);
+                
+                // Mettre à jour les curseurs
+                updateSliders(settings);
+            }
+
+            function updateDisplayValues(settings) {
+                wordsYValue.textContent = settings.wordsY + 'px';
+                wordsSizeValue.textContent = settings.wordsSize + 'px';
+                wordsLineHeightValue.textContent = settings.wordsLineHeight + 'px';
+                lettersYValue.textContent = settings.lettersY + 'px';
+                lettersSizeValue.textContent = settings.lettersSize + 'px';
+                lettersSpacingValue.textContent = settings.lettersSpacing + 'px';
+                indexYValue.textContent = settings.indexY + 'px';
+                indexSizeValue.textContent = settings.indexSize + 'px';
+                indexXValue.textContent = settings.indexX + 'px';
+            }
+
+            function updateSliders(settings) {
+                wordsY.value = settings.wordsY;
+                wordsSize.value = settings.wordsSize;
+                wordsColor.value = settings.wordsColor;
+                wordsLineHeight.value = settings.wordsLineHeight;
+                lettersY.value = settings.lettersY;
+                lettersSize.value = settings.lettersSize;
+                lettersColor.value = settings.lettersColor;
+                lettersSpacing.value = settings.lettersSpacing;
+                indexY.value = settings.indexY;
+                indexSize.value = settings.indexSize;
+                indexColor.value = settings.indexColor;
+                indexX.value = settings.indexX;
+            }
+
+            // Fonction pour simuler un résultat dans l'aperçu
+            function simulatePreviewResult() {
+                // Simuler un code PIN 7131 (Abeille)
+                currentCode = "7131";
+                originalWords = ["Abeille", "Abricot", "Accordéon"];
+                currentWords = [...originalWords];
+                
+                letterLists = calculateLetterLists(originalWords);
+                bestListIndex = findBestList(letterLists);
+                bestListLetters = bestListIndex !== -1 ? letterLists[bestListIndex] : [];
+                
+                indexDisplay.textContent = bestListIndex !== -1 ? (bestListIndex + 1).toString() : '';
+                
+                displayWords(currentWords);
+                displayLetterButtons(bestListIndex, bestListLetters);
+                
+                wordsContainer.classList.remove('hidden');
+                lettersContainer.classList.remove('hidden');
+            }
+
+            // ===== INITIALISATION =====
+            let currentSettings = loadCustomSettings();
+            applyCustomSettings(currentSettings);
+
+            // ===== ÉVÉNEMENTS DES CURSEURS (mise à jour en temps réel) =====
+            wordsY.addEventListener('input', (e) => {
+                currentSettings.wordsY = parseInt(e.target.value);
+                wordsYValue.textContent = currentSettings.wordsY + 'px';
+                wordsContainer.style.top = currentSettings.wordsY + 'px';
+            });
+
+            wordsSize.addEventListener('input', (e) => {
+                currentSettings.wordsSize = parseInt(e.target.value);
+                wordsSizeValue.textContent = currentSettings.wordsSize + 'px';
+                wordsContainer.style.fontSize = currentSettings.wordsSize + 'px';
+            });
+
+            wordsColor.addEventListener('input', (e) => {
+                currentSettings.wordsColor = e.target.value;
+                wordsContainer.style.color = currentSettings.wordsColor;
+            });
+
+            wordsLineHeight.addEventListener('input', (e) => {
+                currentSettings.wordsLineHeight = parseInt(e.target.value);
+                wordsLineHeightValue.textContent = currentSettings.wordsLineHeight + 'px';
+                wordsContainer.style.lineHeight = currentSettings.wordsLineHeight + 'px';
+            });
+
+            lettersY.addEventListener('input', (e) => {
+                currentSettings.lettersY = parseInt(e.target.value);
+                lettersYValue.textContent = currentSettings.lettersY + 'px';
+                lettersContainer.style.top = currentSettings.lettersY + 'px';
+            });
+
+            lettersSize.addEventListener('input', (e) => {
+                currentSettings.lettersSize = parseInt(e.target.value);
+                lettersSizeValue.textContent = currentSettings.lettersSize + 'px';
+                lettersContainer.style.fontSize = currentSettings.lettersSize + 'px';
+            });
+
+            lettersColor.addEventListener('input', (e) => {
+                currentSettings.lettersColor = e.target.value;
+                lettersContainer.style.color = currentSettings.lettersColor;
+            });
+
+            lettersSpacing.addEventListener('input', (e) => {
+                currentSettings.lettersSpacing = parseInt(e.target.value);
+                lettersSpacingValue.textContent = currentSettings.lettersSpacing + 'px';
+                lettersContainer.style.gap = currentSettings.lettersSpacing + 'px';
+            });
+
+            indexY.addEventListener('input', (e) => {
+                currentSettings.indexY = parseInt(e.target.value);
+                indexYValue.textContent = currentSettings.indexY + 'px';
+                indexDisplay.style.top = currentSettings.indexY + 'px';
+            });
+
+            indexSize.addEventListener('input', (e) => {
+                currentSettings.indexSize = parseInt(e.target.value);
+                indexSizeValue.textContent = currentSettings.indexSize + 'px';
+                indexDisplay.style.fontSize = currentSettings.indexSize + 'px';
+            });
+
+            indexColor.addEventListener('input', (e) => {
+                currentSettings.indexColor = e.target.value;
+                indexDisplay.style.color = currentSettings.indexColor;
+            });
+
+            indexX.addEventListener('input', (e) => {
+                currentSettings.indexX = parseInt(e.target.value);
+                indexXValue.textContent = currentSettings.indexX + 'px';
+                indexDisplay.style.transform = `translateX(calc(-50% + ${currentSettings.indexX}px))`;
+            });
+
+            // ===== BOUTONS PERSONNALISATION =====
+            customizeBtn.addEventListener('click', () => {
+                settingsPage.classList.remove('visible');
+                
+                // Activer le mode preview
+                isPreviewMode = true;
+                customizePage.classList.add('visible', 'preview-mode');
+                resultPage.classList.add('preview-mode');
+                
+                // Ajouter un indicateur visuel
+                const infoBanner = document.createElement('div');
+                infoBanner.className = 'preview-overlay-info';
+                infoBanner.id = 'preview-info';
+                infoBanner.textContent = '🔍 MODIFICATION EN DIRECT - Aperçu en temps réel';
+                document.body.appendChild(infoBanner);
+                
+                // Recharger les paramètres actuels
+                currentSettings = loadCustomSettings();
+                
+                // Simuler un résultat pour l'aperçu
+                simulatePreviewResult();
+                
+                applyCustomSettings(currentSettings);
+            });
+
+            customizeBack.addEventListener('click', () => {
+                customizePage.classList.remove('visible', 'preview-mode');
+                resultPage.classList.remove('preview-mode');
+                settingsPage.classList.add('visible');
+                isPreviewMode = false;
+                
+                // Supprimer la bannière d'info
+                const infoBanner = document.getElementById('preview-info');
+                if (infoBanner) infoBanner.remove();
+                
+                // Recharger les paramètres sauvegardés (annuler les modifications)
+                currentSettings = loadCustomSettings();
+                applyCustomSettings(currentSettings);
+            });
+
+            customizeSave.addEventListener('click', () => {
+                saveCustomSettings(currentSettings);
+                
+                customizePage.classList.remove('visible', 'preview-mode');
+                resultPage.classList.remove('preview-mode');
+                settingsPage.classList.add('visible');
+                isPreviewMode = false;
+                
+                // Supprimer la bannière d'info
+                const infoBanner = document.getElementById('preview-info');
+                if (infoBanner) infoBanner.remove();
+                
+                // Message de confirmation
+                alert('✅ Paramètres sauvegardés définitivement !');
+            });
+
+            customizeReset.addEventListener('click', () => {
+                if (confirm('Réinitialiser tous les paramètres par défaut ?')) {
+                    currentSettings = { ...defaultSettings };
+                    applyCustomSettings(currentSettings);
+                }
+            });
+
+            // ===== FONCTIONS EXISTANTES =====
             function animateKey(element) {
                 if (!element) return;
                 element.classList.add('active');
@@ -1081,6 +1379,26 @@
                 }
             }
 
+            function resetModalToNormal() {
+                searchContainer.style.display = 'block';
+                notFoundMessage.style.display = 'none';
+                searchBtn.textContent = 'Rechercher';
+                searchBtn.classList.remove('retry');
+                searchInput.value = '';
+                codeResult.textContent = '';
+                searchMode = 'search';
+                modal.classList.remove('keyboard-open');
+            }
+
+            function setNotFoundState() {
+                searchContainer.style.display = 'none';
+                notFoundMessage.style.display = 'flex';
+                searchBtn.textContent = 'Réessayer';
+                searchBtn.classList.add('retry');
+                codeResult.textContent = '';
+                searchMode = 'retry';
+            }
+
             function searchWord(wordToFind) {
                 const normalizedSearch = wordToFind.trim().toLowerCase();
                 
@@ -1092,7 +1410,6 @@
                 return null;
             }
 
-            // ===== FONCTIONS POUR LA PAGE 3 =====
             function calculateLetterLists(words) {
                 if (words.length === 0) return [];
                 
@@ -1253,12 +1570,10 @@
             }
 
             // Configuration des imports
-            let currentPreviewTarget = '';
-            let currentPreviewData = '';
-            
             setupImageImport(bgFileInput, lockPage, 'backgroundImage');
             setupImageImport(imgFileInput, resultPage, 'resultImage');
 
+            // Boutons d'import
             importBgBtn.addEventListener('click', () => {
                 bgFileInput.click();
             });
@@ -1267,6 +1582,7 @@
                 imgFileInput.click();
             });
 
+            // Confirmer l'aperçu
             previewConfirm.addEventListener('click', () => {
                 if (currentPreviewTarget === 'bg') {
                     lockPage.style.backgroundImage = `url(${currentPreviewData})`;
@@ -1280,32 +1596,33 @@
                 previewImage.src = '';
                 currentPreviewData = '';
                 currentPreviewTarget = '';
+                
                 bgFileInput.value = '';
                 imgFileInput.value = '';
             });
 
+            // Annuler l'aperçu
             previewCancel.addEventListener('click', () => {
                 previewContainer.classList.remove('visible');
                 previewImage.src = '';
                 currentPreviewData = '';
                 currentPreviewTarget = '';
+                
                 bgFileInput.value = '';
                 imgFileInput.value = '';
             });
 
-            settingsBack.addEventListener('click', () => {
-                settingsPage.classList.remove('visible');
-                homePage.classList.remove('hidden');
-                previewContainer.classList.remove('visible');
-                previewImage.src = '';
-                currentPreviewData = '';
-                currentPreviewTarget = '';
-                bgFileInput.value = '';
-                imgFileInput.value = '';
+            // Gestion responsive
+            searchInput.addEventListener('focus', () => {
+                modal.classList.add('keyboard-open');
             });
 
-            // ===== GESTIONNAIRES PAGES =====
-            
+            searchInput.addEventListener('blur', () => {
+                setTimeout(() => {
+                    modal.classList.remove('keyboard-open');
+                }, 200);
+            });
+
             // PAGE D'ACCUEIL
             btnPerform.addEventListener('click', () => {
                 homePage.classList.add('hidden');
@@ -1315,8 +1632,10 @@
             });
 
             btnList.addEventListener('click', () => {
-                homePage.classList.add('hidden');
-                listPage.classList.add('visible');
+                resetModalToNormal();
+                modal.classList.add('visible');
+                modalOverlay.classList.add('visible');
+                modal.classList.remove('keyboard-open');
             });
 
             btnSettings.addEventListener('click', () => {
@@ -1324,180 +1643,52 @@
                 settingsPage.classList.add('visible');
             });
 
-            // PAGE LISTE DE MOTS - MENU
-            listSearchBtn.addEventListener('click', () => {
-                listPage.classList.remove('visible');
-                searchSubpage.classList.add('visible');
-                searchWordInput.value = '';
-                searchCodeResult.textContent = '';
-                searchNotFound.style.display = 'none';
-                searchWordInput.style.display = 'block';
-            });
-
-            listAddBtn.addEventListener('click', () => {
-                listPage.classList.remove('visible');
-                addSubpage.classList.add('visible');
-                addWordInput.value = '';
-                addCodeInput.value = '';
-                addCodeInput.style.display = 'none';
-                addSubmitBtn.textContent = 'Ajouter un mot';
-                addMessage.style.display = 'none';
-                addStep = 'word';
-            });
-
-            listDisplayBtn.addEventListener('click', () => {
-                listPage.classList.remove('visible');
-                displaySubpage.classList.add('visible');
-                updateDisplayTextarea();
-            });
-
-            listBack.addEventListener('click', () => {
-                listPage.classList.remove('visible');
+            settingsBack.addEventListener('click', () => {
+                settingsPage.classList.remove('visible');
                 homePage.classList.remove('hidden');
-            });
-
-            // SOUS-PAGE RECHERCHER
-            searchSubmitBtn.addEventListener('click', () => {
-                const word = searchWordInput.value.trim();
-                if (word === '') return;
                 
-                const result = searchWord(word);
-                
-                if (result) {
-                    searchCodeResult.textContent = result.code;
-                    searchNotFound.style.display = 'none';
-                } else {
-                    searchCodeResult.textContent = '';
-                    searchNotFound.style.display = 'block';
-                }
+                previewContainer.classList.remove('visible');
+                previewImage.src = '';
+                currentPreviewData = '';
+                currentPreviewTarget = '';
+                bgFileInput.value = '';
+                imgFileInput.value = '';
             });
 
-            searchWordInput.addEventListener('keypress', (e) => {
-                if (e.key === 'Enter') {
-                    searchSubmitBtn.click();
-                }
-            });
-
-            searchBackBtn.addEventListener('click', () => {
-                searchSubpage.classList.remove('visible');
-                listPage.classList.add('visible');
-            });
-
-            // SOUS-PAGE AJOUTER
-            addSubmitBtn.addEventListener('click', () => {
-                if (addStep === 'word') {
-                    const word = addWordInput.value.trim();
+            // MODAL LISTE
+            searchBtn.addEventListener('click', () => {
+                if (searchMode === 'search') {
+                    const word = searchInput.value.trim();
+                    
                     if (word === '') return;
                     
-                    const exists = searchWord(word);
+                    const result = searchWord(word);
                     
-                    if (exists) {
-                        addMessage.textContent = 'Le mot existe déjà';
-                        addMessage.style.display = 'block';
-                        addSubmitBtn.textContent = 'Réessayer';
-                        addSubmitBtn.classList.add('retry');
+                    if (result) {
+                        codeResult.textContent = result.code;
+                        searchInput.blur();
                     } else {
-                        newWord = word;
-                        addWordInput.style.display = 'none';
-                        addCodeInput.style.display = 'block';
-                        addSubmitBtn.textContent = 'Confirmer';
-                        addSubmitBtn.classList.remove('retry');
-                        addMessage.style.display = 'none';
-                        addStep = 'code';
+                        setNotFoundState();
+                        searchInput.blur();
                     }
-                } else if (addStep === 'code') {
-                    const code = addCodeInput.value.trim();
-                    if (code.length !== 4 || isNaN(code)) {
-                        addMessage.textContent = 'Code invalide (4 chiffres requis)';
-                        addMessage.style.display = 'block';
-                        return;
-                    }
-                    
-                    wordsList.push({ code: code, word: newWord });
-                    saveWordsList();
-                    
-                    addMessage.textContent = 'Mot ajouté';
-                    addMessage.style.display = 'block';
-                    
-                    // Reset après 2 secondes
-                    setTimeout(() => {
-                        addWordInput.value = '';
-                        addCodeInput.value = '';
-                        addWordInput.style.display = 'block';
-                        addCodeInput.style.display = 'none';
-                        addSubmitBtn.textContent = 'Ajouter un mot';
-                        addMessage.style.display = 'none';
-                        addStep = 'word';
-                    }, 2000);
-                }
-            });
-
-            addBackBtn.addEventListener('click', () => {
-                addSubpage.classList.remove('visible');
-                listPage.classList.add('visible');
-                addWordInput.value = '';
-                addCodeInput.value = '';
-                addWordInput.style.display = 'block';
-                addCodeInput.style.display = 'none';
-                addSubmitBtn.textContent = 'Ajouter un mot';
-                addMessage.style.display = 'none';
-                addStep = 'word';
-            });
-
-            // SOUS-PAGE AFFICHER
-            selectListBtn.addEventListener('click', () => {
-                displayTextarea.select();
-                displayTextarea.setSelectionRange(0, 99999);
-                
-                // Option pour coller une nouvelle liste
-                const newListText = prompt("Collez votre nouvelle liste (format: mot,code,mot,code,...)");
-                if (newListText) {
-                    try {
-                        const parts = newListText.split(',');
-                        const newList = [];
-                        for (let i = 0; i < parts.length; i += 2) {
-                            if (parts[i+1]) {
-                                newList.push({
-                                    word: parts[i].trim(),
-                                    code: parts[i+1].trim()
-                                });
-                            }
-                        }
-                        if (newList.length > 0) {
-                            wordsList = newList;
-                            saveWordsList();
-                            alert('Liste mise à jour avec succès !');
-                        }
-                    } catch (e) {
-                        alert('Format invalide');
-                    }
-                }
-            });
-
-            displayBackBtn.addEventListener('click', () => {
-                displaySubpage.classList.remove('visible');
-                listPage.classList.add('visible');
-            });
-
-            // MODAL RECHERCHE (ancienne, pour compatibilité)
-            modalSearchBtn.addEventListener('click', () => {
-                const word = modalSearchInput.value.trim();
-                if (word === '') return;
-                
-                const result = searchWord(word);
-                
-                if (result) {
-                    modalCodeResult.textContent = result.code;
-                    modalNotFound.style.display = 'none';
                 } else {
-                    modalCodeResult.textContent = '';
-                    modalNotFound.style.display = 'block';
+                    resetModalToNormal();
+                    setTimeout(() => {
+                        searchInput.focus();
+                    }, 100);
+                }
+            });
+
+            searchInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter' && searchMode === 'search') {
+                    searchBtn.click();
                 }
             });
 
             modalOverlay.addEventListener('click', () => {
+                modal.classList.remove('visible');
                 modalOverlay.classList.remove('visible');
-                document.getElementById('search-modal').classList.remove('visible');
+                searchInput.blur();
             });
 
             // LOCK SCREEN
@@ -1557,7 +1748,7 @@
                 }
             });
 
-            // Indice cliquable
+            // Indice cliquable pour masquer/afficher
             indexDisplay.addEventListener('click', function(e) {
                 e.stopPropagation();
                 
@@ -1594,6 +1785,7 @@
                 }
             });
 
+            // BOUTON URGENCE
             emergencyBtn.addEventListener('click', function(e) {
                 e.stopPropagation();
                 animateText(this);
@@ -1605,9 +1797,9 @@
             });
 
             // Initialisation
-            loadWordsList();
             pin = '';
             updateDots();
+            resetModalToNormal();
         })();
     </script>
 </body>
