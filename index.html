@@ -252,24 +252,6 @@
             backdrop-filter: blur(5px);
         }
 
-        .preview-overlay-info {
-            position: fixed;
-            top: 10px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: rgba(0,0,0,0.9);
-            color: #FFD700;
-            padding: 8px 20px;
-            border-radius: 30px;
-            font-size: 14px;
-            z-index: 50;
-            border: 2px solid #FFD700;
-            pointer-events: none;
-            font-weight: bold;
-            white-space: nowrap;
-            box-shadow: 0 0 15px rgba(255,215,0,0.3);
-        }
-
         .customize-header {
             display: flex;
             align-items: center;
@@ -305,22 +287,76 @@
             letter-spacing: 2px;
         }
 
-        .preview-section {
-            background: #1a1a1a;
-            border-radius: 20px;
+        /* Section TESTER UN CODE */
+        .test-code-section {
+            background: #222;
+            border-radius: 15px;
             padding: 20px;
-            margin-bottom: 30px;
-            border: 1px solid #333;
+            margin-bottom: 25px;
             position: relative;
             z-index: 41;
             backdrop-filter: blur(5px);
+            border: 1px solid #444;
         }
 
-        .preview-title {
+        .test-code-title {
             color: #FFD700;
-            font-size: 20px;
+            font-size: 22px;
             margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .code-input-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        #test-code-input {
+            flex: 1;
+            height: 55px;
+            background: #333;
+            border: 2px solid #444;
+            border-radius: 15px;
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+            text-align: center;
+            letter-spacing: 8px;
+            padding: 0 10px;
+        }
+
+        #test-code-input:focus {
+            border-color: #FFD700;
+            outline: none;
+        }
+
+        #test-code-btn {
+            width: 100px;
+            height: 55px;
+            background: #4CAF50;
+            border: none;
+            border-radius: 15px;
+            color: white;
+            font-size: 18px;
             font-weight: 600;
+            cursor: pointer;
+        }
+
+        #test-code-btn:active {
+            transform: scale(0.98);
+            opacity: 0.9;
+        }
+
+        .available-codes {
+            color: #aaa;
+            font-size: 14px;
+            margin-top: 10px;
+            padding: 10px;
+            background: #1a1a1a;
+            border-radius: 10px;
         }
 
         .control-group {
@@ -872,9 +908,25 @@
             <span class="customize-title">PERSONNALISER</span>
         </div>
 
-        <!-- Contrôles pour la liste L -->
+        <!-- Section TESTER UN CODE -->
+        <div class="test-code-section">
+            <div class="test-code-title">
+                <span>🎯 TESTER UN CODE</span>
+            </div>
+            
+            <div class="code-input-group">
+                <input type="text" id="test-code-input" placeholder="7131" maxlength="4" pattern="[0-9]{4}">
+                <button id="test-code-btn">VALIDER</button>
+            </div>
+            
+            <div class="available-codes">
+                Codes disponibles : 7131 • 7141 • 9141 • 6131 • 6141 • 5121 • 8121 • 3121 • 4121
+            </div>
+        </div>
+
+        <!-- Contrôles pour la liste -->
         <div class="control-group">
-            <h3>📋 Liste L (mots)</h3>
+            <h3>📋 Liste</h3>
             
             <div class="slider-item">
                 <label>Position Y <span class="value-badge" id="words-y-value">265px</span></label>
@@ -897,9 +949,9 @@
             </div>
         </div>
 
-        <!-- Contrôles pour les lettres cliquables -->
+        <!-- Contrôles pour les lettres -->
         <div class="control-group">
-            <h3>🔤 Lettres cliquables</h3>
+            <h3>🔤 Lettres</h3>
             
             <div class="slider-item">
                 <label>Position Y <span class="value-badge" id="letters-y-value">460px</span></label>
@@ -924,7 +976,7 @@
 
         <!-- Contrôles pour l'indice -->
         <div class="control-group">
-            <h3>🔢 Indice (chiffre)</h3>
+            <h3>🔢 Indice</h3>
             
             <div class="slider-item">
                 <label>Position Y <span class="value-badge" id="index-y-value">517px</span></label>
@@ -1036,6 +1088,10 @@
             const customizeSave = document.getElementById('customize-save');
             const customizeReset = document.getElementById('customize-reset');
             
+            // Éléments test code
+            const testCodeInput = document.getElementById('test-code-input');
+            const testCodeBtn = document.getElementById('test-code-btn');
+            
             // Inputs personnalisation
             const wordsY = document.getElementById('words-y');
             const wordsSize = document.getElementById('words-size');
@@ -1145,7 +1201,7 @@
 
             function saveCustomSettings(settings) {
                 localStorage.setItem('customSettings', JSON.stringify(settings));
-                console.log('✅ Paramètres sauvegardés définitivement');
+                // Plus de message
             }
 
             function applyCustomSettings(settings) {
@@ -1199,24 +1255,32 @@
                 indexX.value = settings.indexX;
             }
 
-            // Fonction pour simuler un résultat dans l'aperçu
-            function simulatePreviewResult() {
-                // Simuler un code PIN 7131 (Abeille)
-                currentCode = "7131";
-                originalWords = ["Abeille", "Abricot", "Accordéon"];
-                currentWords = [...originalWords];
-                
-                letterLists = calculateLetterLists(originalWords);
-                bestListIndex = findBestList(letterLists);
-                bestListLetters = bestListIndex !== -1 ? letterLists[bestListIndex] : [];
-                
-                indexDisplay.textContent = bestListIndex !== -1 ? (bestListIndex + 1).toString() : '';
-                
-                displayWords(currentWords);
-                displayLetterButtons(bestListIndex, bestListLetters);
-                
-                wordsContainer.classList.remove('hidden');
-                lettersContainer.classList.remove('hidden');
+            // Fonction pour mettre à jour l'aperçu avec un code spécifique
+            function updatePreviewWithCode(code) {
+                if (code.length === 4) {
+                    currentCode = code;
+                    originalWords = [];
+                    
+                    for (let i = 0; i < wordsList.length; i++) {
+                        if (wordsList[i].code === code) {
+                            originalWords.push(wordsList[i].word);
+                        }
+                    }
+                    
+                    currentWords = [...originalWords];
+                    
+                    letterLists = calculateLetterLists(originalWords);
+                    bestListIndex = findBestList(letterLists);
+                    bestListLetters = bestListIndex !== -1 ? letterLists[bestListIndex] : [];
+                    
+                    indexDisplay.textContent = bestListIndex !== -1 ? (bestListIndex + 1).toString() : '';
+                    
+                    displayWords(currentWords);
+                    displayLetterButtons(bestListIndex, bestListLetters);
+                    
+                    wordsContainer.classList.remove('hidden');
+                    lettersContainer.classList.remove('hidden');
+                }
             }
 
             // ===== INITIALISATION =====
@@ -1293,6 +1357,20 @@
                 indexDisplay.style.transform = `translateX(calc(-50% + ${currentSettings.indexX}px))`;
             });
 
+            // ===== TEST DE CODE =====
+            testCodeBtn.addEventListener('click', () => {
+                const code = testCodeInput.value.trim();
+                if (code.length === 4 && /^\d+$/.test(code)) {
+                    updatePreviewWithCode(code);
+                }
+            });
+
+            testCodeInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    testCodeBtn.click();
+                }
+            });
+
             // ===== BOUTONS PERSONNALISATION =====
             customizeBtn.addEventListener('click', () => {
                 settingsPage.classList.remove('visible');
@@ -1302,18 +1380,11 @@
                 customizePage.classList.add('visible', 'preview-mode');
                 resultPage.classList.add('preview-mode');
                 
-                // Ajouter un indicateur visuel
-                const infoBanner = document.createElement('div');
-                infoBanner.className = 'preview-overlay-info';
-                infoBanner.id = 'preview-info';
-                infoBanner.textContent = '🔍 MODIFICATION EN DIRECT - Aperçu en temps réel';
-                document.body.appendChild(infoBanner);
-                
                 // Recharger les paramètres actuels
                 currentSettings = loadCustomSettings();
                 
-                // Simuler un résultat pour l'aperçu
-                simulatePreviewResult();
+                // Simuler un résultat pour l'aperçu (code par défaut 7131)
+                updatePreviewWithCode("7131");
                 
                 applyCustomSettings(currentSettings);
             });
@@ -1323,10 +1394,6 @@
                 resultPage.classList.remove('preview-mode');
                 settingsPage.classList.add('visible');
                 isPreviewMode = false;
-                
-                // Supprimer la bannière d'info
-                const infoBanner = document.getElementById('preview-info');
-                if (infoBanner) infoBanner.remove();
                 
                 // Recharger les paramètres sauvegardés (annuler les modifications)
                 currentSettings = loadCustomSettings();
@@ -1340,20 +1407,13 @@
                 resultPage.classList.remove('preview-mode');
                 settingsPage.classList.add('visible');
                 isPreviewMode = false;
-                
-                // Supprimer la bannière d'info
-                const infoBanner = document.getElementById('preview-info');
-                if (infoBanner) infoBanner.remove();
-                
-                // Message de confirmation
-                alert('✅ Paramètres sauvegardés définitivement !');
+                // Plus de message
             });
 
             customizeReset.addEventListener('click', () => {
-                if (confirm('Réinitialiser tous les paramètres par défaut ?')) {
-                    currentSettings = { ...defaultSettings };
-                    applyCustomSettings(currentSettings);
-                }
+                currentSettings = { ...defaultSettings };
+                applyCustomSettings(currentSettings);
+                // Plus de message
             });
 
             // ===== FONCTIONS EXISTANTES =====
