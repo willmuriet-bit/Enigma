@@ -919,24 +919,6 @@
             box-sizing: border-box;
         }
 
-        #not-found-message {
-            width: 100%;
-            padding: 18px;
-            background: #ffebee;
-            border: 2px solid #f44336;
-            border-radius: 15px;
-            font-size: 18px;
-            height: 60px;
-            box-sizing: border-box;
-            color: #f44336;
-            font-weight: bold;
-            text-align: center;
-            display: none;
-            margin-bottom: 15px;
-            align-items: center;
-            justify-content: center;
-        }
-
         .code-result-box {
             width: 100%;
             padding: 18px;
@@ -978,10 +960,6 @@
             background: #999;
             opacity: 0.6;
             pointer-events: none;
-        }
-
-        #search-btn.retry {
-            background: #ff9800;
         }
 
         #modal-overlay {
@@ -1351,6 +1329,27 @@
                     // Si la modal est ouverte, la fermer
                     modal.classList.remove('visible');
                     modalOverlay.classList.remove('visible');
+                }
+            });
+
+            // ===== GESTION DU RETOUR DE GOOGLE IMAGES =====
+            document.addEventListener('visibilitychange', function() {
+                if (!document.hidden) {
+                    // On revient sur l'application
+                    if (resultPage.classList.contains('visible') && !wordsContainer.classList.contains('hidden')) {
+                        // Si on était sur la page résultat avec les mots visibles
+                        wordsContainer.classList.add('hidden');
+                        lettersContainer.classList.add('hidden');
+                        selectedLetter = ''; // Réinitialiser la lettre sélectionnée
+                    }
+                }
+            });
+
+            window.addEventListener('pageshow', function() {
+                if (resultPage.classList.contains('visible') && !wordsContainer.classList.contains('hidden')) {
+                    wordsContainer.classList.add('hidden');
+                    lettersContainer.classList.add('hidden');
+                    selectedLetter = '';
                 }
             });
 
