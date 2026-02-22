@@ -199,6 +199,8 @@
             padding: 5px 15px;
             font-size: 14px;
             cursor: pointer;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
         }
 
         .preview-btn:active {
@@ -395,7 +397,7 @@
             transform: translateX(-50%) scale(0.95);
         }
 
-        /* Texte Note */
+        /* Texte Note (sur la page résultat) */
         .note-text {
             position: absolute;
             color: white;
@@ -409,6 +411,7 @@
             top: 265px;
             line-height: 15px;
             display: none;
+            white-space: pre-line; /* Permet les retours à la ligne */
         }
 
         /* Image Note (plein écran) */
@@ -449,20 +452,17 @@
             max-width: 80%;
             text-align: center;
             box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+            cursor: text;
+            white-space: pre-line; /* Permet les retours à la ligne */
+            line-height: 1.5;
+            min-width: 200px;
+            outline: none;
         }
 
-        .close-note-btn {
-            position: relative;
-            z-index: 102;
-            margin-top: 30px;
-            padding: 15px 40px;
-            background: #f44336;
-            color: white;
-            border: none;
-            border-radius: 30px;
-            font-size: 18px;
-            cursor: pointer;
-            border: 2px solid white;
+        .note-image-text[contenteditable="true"] {
+            background: rgba(0,0,0,0.8);
+            border-color: #FFD700;
+            box-shadow: 0 0 20px #FFD700;
         }
 
         .hidden-file-input {
@@ -577,14 +577,13 @@
         <div class="note-button" id="note-button"></div>
 
         <!-- Texte Note (caché par défaut) -->
-        <div class="note-text" id="note-text">Aggrafeuse Velot Ilot Orange Nuage</div>
+        <div class="note-text" id="note-text">Aggrafeuse<br>Velot<br>Ilot<br>Orange<br>Nuage</div>
     </div>
 
     <!-- Overlay image Note -->
     <div class="note-image-overlay" id="note-image-overlay">
         <img class="note-image-display" id="note-image-display" src="" alt="Note">
-        <div class="note-image-text" id="note-image-text">Aggrafeuse Velot Ilot Orange Nuage</div>
-        <button class="close-note-btn" id="close-note-btn">Fermer</button>
+        <div class="note-image-text" id="note-image-text" contenteditable="false">Aggrafeuse<br>Velot<br>Ilot<br>Orange<br>Nuage</div>
     </div>
 
     <script>
@@ -612,7 +611,6 @@
             const noteImageOverlay = document.getElementById('note-image-overlay');
             const noteImageDisplay = document.getElementById('note-image-display');
             const noteImageText = document.getElementById('note-image-text');
-            const closeNoteBtn = document.getElementById('close-note-btn');
             const wordsContainer = document.getElementById('words-container');
             
             // Inputs personnalisation Note Texte
@@ -654,12 +652,13 @@
                 noteButtonX: 43
             };
 
-            const NOTE_TEXT = "Aggrafeuse Velot Ilot Orange Nuage";
+            const DEFAULT_NOTE_TEXT = "Aggrafeuse\nVelot\nIlot\nOrange\nNuage";
 
             let currentSettings = { ...defaultSettings };
             let noteImageData = localStorage.getItem('noteImage') || '';
             let isNoteModeActive = false;
             let currentPreviewTarget = '';
+            let previewTimeout = null;
 
             // ===== FONCTIONS =====
             function applyCustomSettings(settings) {
@@ -668,6 +667,12 @@
                 noteText.style.fontSize = settings.noteTextSize + 'px';
                 noteText.style.color = settings.noteTextColor;
                 noteText.style.lineHeight = settings.noteTextSpacing + 'px';
+                
+                // Appliquer au texte dans l'overlay (pour l'aperçu)
+                noteImageText.style.top = settings.noteTextY + 'px';
+                noteImageText.style.fontSize = settings.noteTextSize + 'px';
+                noteImageText.style.color = settings.noteTextColor;
+                noteImageText.style.lineHeight = settings.noteTextSpacing + 'px';
                 
                 // Appliquer au bouton Note
                 noteButton.style.top = settings.noteButtonY + 'px';
@@ -711,6 +716,17 @@
 
             function saveCustomSettings() {
                 localStorage.setItem('noteSettings', JSON.stringify(currentSettings));
+            }
+
+            // Fonction pour fermer l'overlay et désactiver le mode
+            function closeNoteOverlayAndDeactivate() {
+                noteImageOverlay.classList.remove('visible');
+                // Désactiver le mode bleu
+                isNoteModeActive = false;
+                noteButton.classList.remove('active');
+                // Remettre le texte par défaut
+                noteImageText.textContent = DEFAULT_NOTE_TEXT;
+                noteImageText.setAttribute('contenteditable', 'false');
             }
 
             // ===== ÉVÉNEMENTS CURSEURS =====
@@ -802,9 +818,10 @@
                 if (!wordElement) return;
 
                 if (isNoteModeActive && noteImageData) {
-                    // Mode Note activé : afficher l'image Note avec le texte fixe
+                    // Mode Note activé : afficher l'image Note avec le texte par défaut
                     noteImageDisplay.src = noteImageData;
-                    noteImageText.textContent = NOTE_TEXT;
+                    noteImageText.textContent = DEFAULT_NOTE_TEXT;
+                    noteImageText.setAttribute('contenteditable', 'false');
                     noteImageOverlay.classList.add('visible');
                 } else {
                     // Mode normal : recherche Google Images
@@ -812,37 +829,90 @@
                 }
             });
 
-            // Fermer l'overlay
-            closeNoteBtn.addEventListener('click', () => {
-                noteImageOverlay.classList.remove('visible');
+            // ===== GESTION DE L'OVERLAY =====
+            // Double-clic pour fermer et désactiver
+            noteImageOverlay.addEventListener('dblclick', (e) => {
+                e.preventDefault();
+                closeNoteOverlayAndDeactivate();
             });
 
-            noteImageOverlay.addEventListener('click', (e) => {
-                if (e.target === noteImageOverlay) {
-                    noteImageOverlay.classList.remove('visible');
-                }
+            // Simple clic sur le texte pour l'éditer
+            noteImageText.addEventListener('click', (e) => {
+                e.stopPropagation();
+                noteImageText.setAttribute('contenteditable', 'true');
+                noteImageText.focus();
             });
 
-            // ===== BOUTONS PREVIEW =====
-            previewNoteTextBtn.addEventListener('click', () => {
-                if (noteImageData) {
-                    // Aperçu de l'image NOTE avec le texte
+            // Perte de focus = sortir du mode édition
+            noteImageText.addEventListener('blur', () => {
+                noteImageText.setAttribute('contenteditable', 'false');
+            });
+
+            // Empêcher la propagation des clics sur le texte pour ne pas fermer
+            noteImageText.addEventListener('dblclick', (e) => {
+                e.stopPropagation();
+            });
+
+            // ===== BOUTONS PREVIEW (avec appui long) =====
+            function showPreview(targetType) {
+                if (targetType === 'note-text' && noteImageData) {
+                    // Aperçu Note (Liste) : image NOTE + texte
                     noteImageDisplay.src = noteImageData;
-                    noteImageText.textContent = NOTE_TEXT;
+                    noteImageText.textContent = DEFAULT_NOTE_TEXT;
+                    noteImageText.setAttribute('contenteditable', 'false');
                     noteImageOverlay.classList.add('visible');
+                } else if (targetType === 'note-button') {
+                    // Aperçu Note (Bouton) : image BACKGROUND + bouton
+                    const bgImage = window.getComputedStyle(resultPage).backgroundImage;
+                    if (bgImage && bgImage !== 'none') {
+                        noteImageDisplay.src = bgImage.slice(5, -2);
+                        noteImageText.textContent = ''; // Pas de texte
+                        noteImageText.setAttribute('contenteditable', 'false');
+                        noteImageOverlay.classList.add('visible');
+                    }
                 }
-            });
+            }
 
-            previewNoteButtonBtn.addEventListener('click', () => {
-                // Aperçu de l'image BACKGROUND (celle de result-page) avec le bouton
-                // On récupère l'image de fond actuelle de result-page
-                const bgImage = window.getComputedStyle(resultPage).backgroundImage;
-                if (bgImage && bgImage !== 'none') {
-                    noteImageDisplay.src = bgImage.slice(5, -2); // Enlève url(" et ")
-                    noteImageText.textContent = ''; // Pas de texte
-                    noteImageOverlay.classList.add('visible');
-                }
-            });
+            function hidePreview() {
+                noteImageOverlay.classList.remove('visible');
+            }
+
+            // Gestion des événements tactiles et souris pour les boutons preview
+            function setupPreviewButton(btn, targetType) {
+                // Pour mobile (touch)
+                btn.addEventListener('touchstart', (e) => {
+                    e.preventDefault();
+                    showPreview(targetType);
+                });
+                
+                btn.addEventListener('touchend', (e) => {
+                    e.preventDefault();
+                    hidePreview();
+                });
+                
+                btn.addEventListener('touchcancel', (e) => {
+                    e.preventDefault();
+                    hidePreview();
+                });
+                
+                // Pour desktop (souris)
+                btn.addEventListener('mousedown', (e) => {
+                    e.preventDefault();
+                    showPreview(targetType);
+                });
+                
+                btn.addEventListener('mouseup', (e) => {
+                    e.preventDefault();
+                    hidePreview();
+                });
+                
+                btn.addEventListener('mouseleave', (e) => {
+                    hidePreview();
+                });
+            }
+
+            setupPreviewButton(previewNoteTextBtn, 'note-text');
+            setupPreviewButton(previewNoteButtonBtn, 'note-button');
 
             // ===== NAVIGATION =====
             customizeBtn.addEventListener('click', () => {
@@ -885,7 +955,8 @@
             updateSliders(defaultSettings);
             
             // Initialiser le texte Note
-            noteText.textContent = NOTE_TEXT;
+            noteText.innerHTML = DEFAULT_NOTE_TEXT.replace(/\n/g, '<br>');
+            noteImageText.innerHTML = DEFAULT_NOTE_TEXT.replace(/\n/g, '<br>');
         })();
     </script>
 </body>
