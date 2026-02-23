@@ -3,9 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>ENIGMA</title>
+    <title>ENIGMA - Version Finale</title>
+    <meta name="description" content="ENIGMA - Application de recherche de mots codés">
+    
+    <!-- PWA Meta Tags -->
     <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="ENIGMA">
+    <meta name="mobile-web-app-capable" content="yes">
     <meta name="theme-color" content="#000000">
+    
+    <link rel="apple-touch-icon" href="icon-192.png">
     <link rel="manifest" href="manifest.json">
     
     <style>
@@ -13,9 +21,10 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: system-ui, -apple-system, sans-serif;
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
             -webkit-tap-highlight-color: transparent;
             user-select: none;
+            -webkit-user-select: none;
         }
 
         body {
@@ -24,31 +33,49 @@
             color: white;
         }
 
+        /* ANIMATIONS D'OUVERTURE */
+        @keyframes soulignement {
+            0% { width: 0; opacity: 0; }
+            50% { width: 100%; opacity: 1; }
+            100% { width: 100%; opacity: 0.7; }
+        }
+
         @keyframes scintillement {
-            0%, 100% { text-shadow: 0 0 5px #FFD700, 0 0 10px #FFD700; }
-            50% { text-shadow: 0 0 20px #FFD700, 0 0 30px #FFD700; }
+            0% { text-shadow: 0 0 5px #FFD700, 0 0 10px #FFD700, 0 0 15px #FFD700; }
+            50% { text-shadow: 0 0 20px #FFD700, 0 0 30px #FFD700, 0 0 40px #FFD700; }
+            100% { text-shadow: 0 0 5px #FFD700, 0 0 10px #FFD700, 0 0 15px #FFD700; }
         }
 
         @keyframes apparitionBouton {
-            0% { opacity: 0; transform: translateY(30px); }
-            100% { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes circleWave {
-            0% { opacity: 0.9; transform: scale(0.5); }
-            100% { opacity: 0; transform: scale(1.6); }
+            0% { opacity: 0; transform: translateY(30px); }            100% { opacity: 1; transform: translateY(0); }
         }
 
         .app-title {
-            font-family: 'Georgia', serif;
+            font-family: 'Georgia', 'Times New Roman', serif;
             font-size: 68px;
             font-weight: bold;
             color: #FFD700;
+            text-shadow: 0 0 15px rgba(255, 215, 0, 0.7), 0 0 30px rgba(255, 215, 0, 0.4);
             letter-spacing: 6px;
             margin-bottom: 100px;
             position: relative;
-            top: -40px;            text-transform: uppercase;
+            top: -40px;
+            text-transform: uppercase;
+            padding-bottom: 15px;
             animation: scintillement 2s ease-in-out infinite;
+        }
+
+        .app-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 3px;
+            background: #FFD700;
+            box-shadow: 0 0 10px #FFD700;
+            animation: soulignement 1.5s ease-out forwards;
         }
 
         .home-btn {
@@ -60,18 +87,51 @@
             border-radius: 15px;
             font-size: 24px;
             font-weight: 600;
+            letter-spacing: 1px;
             cursor: pointer;
+            box-shadow: 0 4px 15px rgba(255, 255, 255, 0.2);
+            transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
+            position: relative;
+            overflow: hidden;
             margin: 12px 0;
             opacity: 0;
-            animation: apparitionBouton 0.5s ease-out forwards;
-        }
+            transform: translateY(30px);
+            animation: apparitionBouton 0.5s ease-out forwards;        }
 
         #btn-perform { animation-delay: 0.2s; }
         #btn-list { animation-delay: 0.4s; }
         #btn-settings { animation-delay: 0.6s; }
 
-        .home-btn:active { transform: scale(0.95); background: #f0f0f0; }
+        .home-btn::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 5px;
+            height: 5px;
+            background: rgba(0, 0, 0, 0.3);
+            opacity: 0;
+            border-radius: 100%;
+            transform: scale(1, 1) translate(-50%, -50%);
+            transform-origin: 50% 50%;
+        }
 
+        .home-btn:active {
+            transform: scale(0.95);
+            box-shadow: 0 2px 10px rgba(255, 255, 255, 0.4);
+            background: #f0f0f0;
+        }
+
+        .home-btn:active::after {
+            animation: ripple 0.4s ease-out;
+        }
+
+        @keyframes ripple {
+            0% { transform: scale(0, 0) translate(-50%, -50%); opacity: 0.5; }
+            100% { transform: scale(20, 20) translate(-50%, -50%); opacity: 0; }
+        }
+
+        /* PAGE D'ACCUEIL */
         #home-page {
             position: absolute;
             inset: 0;
@@ -85,8 +145,10 @@
             transition: transform 0.3s ease-out;
         }
 
-        #home-page.hidden { transform: translateY(-100%); }
+        #home-page.hidden {            transform: translateY(-100%);
+        }
 
+        /* PAGE PARAMÈTRES */
         #settings-page {
             position: absolute;
             inset: 0;
@@ -96,12 +158,16 @@
             align-items: center;
             justify-content: center;
             z-index: 25;
-            visibility: hidden;            opacity: 0;
+            visibility: hidden;
+            opacity: 0;
             transition: visibility 0.3s, opacity 0.3s;
             padding: 20px;
         }
 
-        #settings-page.visible { visibility: visible; opacity: 1; }
+        #settings-page.visible {
+            visibility: visible;
+            opacity: 1;
+        }
 
         .settings-title {
             font-size: 48px;
@@ -109,6 +175,7 @@
             margin-bottom: 50px;
             font-weight: bold;
             text-transform: uppercase;
+            letter-spacing: 4px;
         }
 
         .settings-btn {
@@ -122,9 +189,12 @@
             font-weight: 600;
             cursor: pointer;
             margin: 10px 0;
+            transition: background 0.2s, transform 0.1s;
         }
 
-        .settings-btn:active { background: #555; transform: scale(0.98); }
+        .settings-btn:active {
+            background: #555;
+            transform: scale(0.98);        }
 
         .preview-container {
             width: 320px;
@@ -134,7 +204,9 @@
             align-items: center;
         }
 
-        .preview-container.visible { display: flex; }
+        .preview-container.visible {
+            display: flex;
+        }
 
         .preview-image {
             width: 200px;
@@ -145,7 +217,12 @@
             margin-bottom: 15px;
         }
 
-        .preview-buttons { display: flex; gap: 20px; }        .preview-confirm, .preview-cancel {
+        .preview-buttons {
+            display: flex;
+            gap: 20px;
+        }
+
+        .preview-confirm, .preview-cancel {
             width: 120px;
             height: 50px;
             border: none;
@@ -155,12 +232,18 @@
             cursor: pointer;
         }
 
-        .preview-confirm { background: #4CAF50; color: white; }
-        .preview-cancel { background: #f44336; color: white; }
+        .preview-confirm {
+            background: #4CAF50;
+            color: white;
+        }
+
+        .preview-cancel {
+            background: #f44336;
+            color: white;
+        }
 
         .back-btn {
-            width: 320px;
-            height: 50px;
+            width: 320px;            height: 50px;
             background: #666;
             color: white;
             border: none;
@@ -168,10 +251,14 @@
             font-size: 18px;
             cursor: pointer;
             margin-top: 30px;
+            transition: background 0.2s;
         }
 
-        .back-btn:active { background: #888; }
+        .back-btn:active {
+            background: #888;
+        }
 
+        /* PAGE DE PERSONNALISATION */
         #customize-page {
             position: absolute;
             inset: 0;
@@ -179,28 +266,85 @@
             z-index: 40;
             visibility: hidden;
             opacity: 0;
-            transition: visibility 0.3s, opacity 0.3s;
+            transition: visibility 0.3s, opacity 0.3s, background 0.2s ease, backdrop-filter 0.2s ease;
             overflow-y: auto;
+            overflow-x: hidden;
             padding: 20px;
             color: white;
         }
 
-        #customize-page.visible { visibility: visible; opacity: 1; }
+        #customize-page.visible {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        #customize-page.dragging-slider {
+            background: transparent !important;
+            backdrop-filter: none !important;
+            pointer-events: none;
+        }
 
         #customize-page.dragging-slider .control-group,
         #customize-page.dragging-slider .test-code-section,
         #customize-page.dragging-slider .customize-header,
         #customize-page.dragging-slider .customize-actions {
             opacity: 0 !important;
+            transition: opacity 0.1s ease;
             pointer-events: none;
         }
-        #result-page.preview-mode {            visibility: visible !important;
+        #customize-page.dragging-slider input[type="range"] {
+            opacity: 1 !important;
+            position: relative;
+            z-index: 9999;
+            pointer-events: auto;
+        }
+
+        #customize-page.dragging-slider .value-badge {
+            opacity: 1 !important;
+            position: relative;
+            z-index: 9999;
+            pointer-events: auto;
+            cursor: pointer;
+            background: #FFD700;
+            color: black;
+            font-weight: bold;
+        }
+
+        #customize-page.dragging-slider .slider-item {
+            position: relative;
+            z-index: 9999;
+        }
+
+        #customize-page.dragging-slider .slider-item label {
+            opacity: 0 !important;
+        }
+
+        #customize-page.dragging-slider .slider-item label span.value-badge {
+            opacity: 1 !important;
+        }
+
+        #result-page.preview-mode.dragging-active {
+            opacity: 1 !important;
+            z-index: 30;
+        }
+
+        .control-group,
+        .test-code-section,
+        .customize-header,
+        .customize-actions {
+            transition: opacity 0.2s ease, background 0.2s ease, backdrop-filter 0.2s ease;
+        }
+
+        #result-page.preview-mode {
+            visibility: visible !important;
             opacity: 1 !important;
             z-index: 35;
             pointer-events: none;
         }
-
-        #customize-page.preview-mode { background: rgba(0, 0, 0, 0.85); }
+        #customize-page.preview-mode {
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(5px);
+        }
 
         .customize-header {
             display: flex;
@@ -224,9 +368,13 @@
             align-items: center;
             justify-content: center;
             margin-right: 15px;
+            transition: background 0.2s, transform 0.1s;
         }
 
-        .customize-back-btn:active { background: #555; transform: scale(0.95); }
+        .customize-back-btn:active {
+            background: #555;
+            transform: scale(0.95);
+        }
 
         .customize-title {
             font-size: 32px;
@@ -242,13 +390,25 @@
             margin-bottom: 25px;
             position: relative;
             z-index: 41;
-            border: 1px solid #444;
-            text-align: center;        }
+            backdrop-filter: blur(5px);            border: 1px solid #444;
+            text-align: center;
+        }
 
         .test-code-title {
             color: #FFD700;
             font-size: 22px;
             margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .code-input-group {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 15px;
+            width: 100%;
         }
 
         #test-code-input {
@@ -262,17 +422,26 @@
             font-weight: bold;
             text-align: center;
             letter-spacing: 4px;
+            padding: 0 10px;
         }
 
-        #test-code-input:focus { border-color: #FFD700; outline: none; }
+        #test-code-input:focus {
+            border-color: #FFD700;
+            outline: none;
+        }
+
+        #test-code-input::placeholder {
+            font-size: 16px;
+            letter-spacing: normal;
+        }
 
         .control-group {
             background: #222;
             border-radius: 15px;
             padding: 20px;
-            margin-bottom: 25px;
-            position: relative;
+            margin-bottom: 25px;            position: relative;
             z-index: 41;
+            backdrop-filter: blur(5px);
             border: 1px solid #444;
         }
 
@@ -285,15 +454,41 @@
             padding-bottom: 10px;
         }
 
-        .control-header h3 { color: #FFD700; font-size: 22px; margin: 0; }
+        .control-header h3 {
+            color: #FFD700;
+            font-size: 22px;
+            margin: 0;
+        }
 
-        .slider-item { margin-bottom: 20px; }
+        .preview-btn {
+            background: #333;
+            color: white;
+            border: 1px solid #FFD700;
+            border-radius: 20px;
+            padding: 5px 15px;
+            font-size: 14px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: background 0.2s, transform 0.1s;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .preview-btn:active {
+            background: #444;
+            transform: scale(0.95);
+        }
+
+        .slider-item {
+            margin-bottom: 20px;
+        }
 
         .slider-item label {
             display: flex;
             justify-content: space-between;
-            margin-bottom: 8px;            color: #ddd;
-            font-size: 16px;
+            margin-bottom: 8px;
+            color: #ddd;            font-size: 16px;
         }
 
         .slider-item input[type="range"] {
@@ -313,11 +508,19 @@
             border-radius: 50%;
             cursor: pointer;
             border: 2px solid white;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.3);
             pointer-events: auto;
         }
 
-        .color-item { margin-bottom: 20px; }
-        .color-item label { display: block; margin-bottom: 8px; color: #ddd; }
+        .color-item {
+            margin-bottom: 20px;
+        }
+
+        .color-item label {
+            display: block;
+            margin-bottom: 8px;
+            color: #ddd;
+        }
 
         .color-item input[type="color"] {
             width: 100%;
@@ -327,21 +530,25 @@
             background: #333;
             cursor: pointer;
         }
+
         .value-badge {
             background: #333;
             padding: 3px 10px;
             border-radius: 15px;
             font-size: 14px;
             color: #FFD700;
-            border: 1px solid #FFD700;
-            cursor: pointer;
+            border: 1px solid #FFD700;            cursor: pointer;
+            transition: background 0.2s;
         }
 
-        .value-badge:active { background: #444; }
+        .value-badge:active {
+            background: #444;
+        }
 
         .customize-actions {
             display: flex;
-            gap: 15px;            margin-top: 30px;
+            gap: 15px;
+            margin-top: 30px;
             margin-bottom: 30px;
             position: relative;
             z-index: 41;
@@ -357,6 +564,7 @@
             font-size: 20px;
             font-weight: 600;
             cursor: pointer;
+            transition: transform 0.1s, opacity 0.2s;
         }
 
         .customize-reset {
@@ -369,14 +577,16 @@
             font-size: 18px;
             font-weight: 600;
             cursor: pointer;
+            transition: transform 0.1s, opacity 0.2s;
         }
 
         .customize-save:active, .customize-reset:active {
             transform: scale(0.98);
             opacity: 0.9;
         }
-        #lock-page {
-            position: absolute;
+
+        /* PAGE DE LOCK */
+        #lock-page {            position: absolute;
             inset: 0;
             z-index: 10;
             visibility: hidden;
@@ -388,9 +598,13 @@
             background: url('background.jpg') no-repeat center center/cover;
         }
 
-        #lock-page.visible { visibility: visible; opacity: 1; }
+        #lock-page.visible {
+            visibility: visible;
+            opacity: 1;
+        }
 
-        .overlay {            position: absolute;
+        .overlay {
+            position: absolute;
             inset: 0;
             background: rgba(0, 0, 0, 0.3);
             z-index: 1;
@@ -403,6 +617,7 @@
             text-align: center;
             margin-bottom: 5vh;
             padding: 0 16px;
+            transform: scale(0.9);
         }
 
         .pin-dots {
@@ -418,9 +633,9 @@
             border-radius: 50%;
             background: white;
             opacity: 0.35;
-            transition: opacity 0.2s, transform 0.2s;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+            transition: opacity 0.2s, transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
-
         .dot.active {
             opacity: 1;
             transform: scale(1.25);
@@ -439,14 +654,18 @@
         .key {
             width: 70px;
             height: 70px;
-            border-radius: 50%;            display: flex;
+            border-radius: 50%;
+            display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
+            font-size: 28px;
             background: rgba(255, 255, 255, 0.2);
             backdrop-filter: blur(12px);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            -webkit-backdrop-filter: blur(12px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2), inset 0 1px 2px rgba(255,255,255,0.3);
             cursor: pointer;
+            user-select: none;
             transition: background 0.1s, transform 0.1s;
             position: relative;
             border: 1px solid rgba(255,255,255,0.1);
@@ -454,41 +673,27 @@
         }
 
         .key-number {
-            font-size: 26px;
+            font-size: 28px;
             font-weight: bold;
-            margin-bottom: 1px;
+            margin-bottom: 2px;
         }
 
         .key-letters {
-            font-size: 8px;
+            font-size: 9px;
             letter-spacing: 1px;
-            opacity: 0.7;
+            opacity: 0.8;
             text-transform: uppercase;
         }
-
         .key:active {
             background: rgba(255, 255, 255, 0.35);
             transform: scale(0.97);
         }
 
-        .key::after, .delete-btn::after, .ok::after {
-            content: '';
-            position: absolute;
-            inset: 0;
-            border-radius: 50%;
-            border: 2px solid rgba(255, 255, 255, 0.9);
-            opacity: 0;
-            pointer-events: none;
-        }
-
-        .active::after, .active-text::after {
-            animation: circleWave 0.4s ease-out forwards;
-        }
-
         .bottom-row {
             display: grid;
             grid-template-columns: repeat(3, 70px);
-            justify-content: center;            gap: 25px;
+            justify-content: center;
+            gap: 25px;
             margin-top: 10px;
         }
 
@@ -499,20 +704,45 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 22px;
+            font-size: 24px;
             font-weight: bold;
-            background: transparent !important;
-            box-shadow: none !important;
-            border: none !important;
-            backdrop-filter: none !important;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
             cursor: pointer;
-            color: white;
+            user-select: none;
             transition: background 0.1s, transform 0.1s;
+            position: relative;
+            color: white;
         }
 
         .delete-btn:active, .ok:active {
-            background: rgba(255, 255, 255, 0.1) !important;
+            background: rgba(255, 255, 255, 0.35);
             transform: scale(0.97);
+        }
+
+        .delete-btn {
+            font-size: 28px;
+        }
+
+        .key::after, .delete-btn::after, .ok::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 50%;
+            border: 2px solid rgba(255, 255, 255, 0.9);
+            opacity: 0;
+            pointer-events: none;        }
+
+        .active::after, .active-text::after {
+            animation: circleWave 0.4s ease-out forwards;
+        }
+
+        @keyframes circleWave {
+            0% { opacity: 0.9; transform: scale(0.5); }
+            70% { opacity: 0.5; transform: scale(1.3); }
+            100% { opacity: 0; transform: scale(1.6); }
         }
 
         .emergency {
@@ -524,8 +754,11 @@
             font-weight: 500;
             opacity: 0.9;
             cursor: pointer;
+            user-select: none;
             padding: 12px 24px;
             display: inline-block;
+            margin-left: auto;
+            margin-right: auto;
             border-radius: 40px;
             background: rgba(0,0,0,0.2);
             backdrop-filter: blur(10px);
@@ -538,6 +771,8 @@
             background: rgba(220, 60, 60, 0.5);
             transform: scale(0.96);
         }
+
+        /* PAGE IMAGE (RÉSULTATS) */
         #result-page {
             position: absolute;
             inset: 0;
@@ -547,13 +782,15 @@
             transition: visibility 0.3s, opacity 0.3s;
             background: url('image.jpg') no-repeat center center/cover;
             display: flex;
-            flex-direction: column;
-            align-items: center;
+            flex-direction: column;            align-items: center;
             justify-content: flex-start;
             cursor: pointer;
         }
 
-        #result-page.visible { visibility: visible; opacity: 1; }
+        #result-page.visible {
+            visibility: visible;
+            opacity: 1;
+        }
 
         .result-overlay {
             position: absolute;
@@ -575,9 +812,12 @@
             gap: 15px;
             text-align: center;
             box-sizing: border-box;
+            transition: all 0.1s ease;
         }
 
-        .words-container.hidden { display: none; }
+        .words-container.hidden {
+            display: none;
+        }
 
         .words-line {
             display: flex;
@@ -586,10 +826,12 @@
             gap: 5px;
             width: 100%;
         }
+
         .result-word {
             background: transparent;
             padding: 2px 0;
-            border: none;
+            border-radius: 0;
+            backdrop-filter: none;            border: none;
             font-size: inherit;
             color: inherit;
             white-space: nowrap;
@@ -611,9 +853,12 @@
             flex-wrap: wrap;
             justify-content: center;
             gap: 40px;
+            transition: all 0.1s ease;
         }
 
-        .letters-container.hidden { display: none; }
+        .letters-container.hidden {
+            display: none;
+        }
 
         .letter-btn {
             cursor: pointer;
@@ -624,7 +869,9 @@
             text-transform: uppercase;
         }
 
-        .letter-btn.selected { text-decoration: underline; }
+        .letter-btn.selected {
+            text-decoration: underline;
+        }
 
         .separator {
             color: inherit;
@@ -633,9 +880,9 @@
             width: 40px;
             text-align: center;
         }
-
         .index-display {
-            position: absolute;            top: 517px;
+            position: absolute;
+            top: 517px;
             left: 50%;
             transform: translateX(calc(-50% - 45px));
             color: #1E6FF0;
@@ -643,6 +890,8 @@
             font-weight: bold;
             z-index: 33;
             cursor: pointer;
+            user-select: none;
+            transition: all 0.1s ease;
         }
 
         .note-button {
@@ -655,6 +904,7 @@
             box-shadow: 0 4px 15px rgba(0,0,0,0.3);
             cursor: pointer;
             z-index: 34;
+            transition: transform 0.2s, background 0.2s, box-shadow 0.2s;
             left: calc(50% + 43px);
             transform: translateX(-50%);
             top: 520px;
@@ -667,7 +917,11 @@
             box-shadow: 0 0 20px #1877F2;
         }
 
-        .note-button.visible { display: block; }
+        .note-button.visible {
+            display: block;
+        }
+
+        /* Image Note (plein écran) */
         .note-image-overlay {
             position: fixed;
             inset: 0;
@@ -675,16 +929,18 @@
             z-index: 200;
             display: none;
             justify-content: center;
-            align-items: center;
-        }
+            align-items: center;        }
 
-        .note-image-overlay.visible { display: flex; }
+        .note-image-overlay.visible {
+            display: flex;
+        }
 
         .note-image-display {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            position: absolute;            top: 0;
+            position: absolute;
+            top: 0;
             left: 0;
             z-index: 201;
         }
@@ -705,7 +961,9 @@
             display: none;
         }
 
-        .note-button-preview.visible { display: block; }
+        .note-button-preview.visible {
+            display: block;
+        }
 
         .note-image-text {
             position: absolute;
@@ -714,25 +972,30 @@
             font-size: 24px;
             max-width: 80%;
             text-align: left;
+            cursor: text;
             white-space: pre-line;
             line-height: 1.5;
             min-width: 200px;
             outline: none;
             background: transparent;
-            border: none;
-            padding: 0;
+            border: none;            padding: 0;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
             left: 20px;
             top: 265px;
         }
 
-        .note-word-first-letter { text-decoration: none; }
+        /* Style pour le soulignement des premières lettres */
+        .note-word-first-letter {
+            text-decoration: none;
+        }
 
         .note-word-first-letter.underlined {
             text-decoration: underline;
             text-decoration-thickness: 2px;
             text-underline-offset: 4px;
         }
+
+        /* MODAL LISTE */
         #list-modal {
             position: absolute;
             top: 50%;
@@ -746,14 +1009,24 @@
             display: none;
             color: black;
             box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+            transition: top 0.2s ease-out, transform 0.2s ease-out;
             max-height: 90vh;
             overflow-y: auto;
         }
 
-        #list-modal.visible { display: block; }
+        #list-modal.visible { 
+            display: block; 
+        }
 
-        #search-container { width: 100%; margin-bottom: 15px; }
+        #list-modal.keyboard-open {
+            top: 30px;
+            transform: translate(-50%, 0);
+        }
 
+        #search-container {
+            width: 100%;
+            margin-bottom: 15px;
+        }
         #search-input {
             width: 100%;
             padding: 18px;
@@ -782,7 +1055,8 @@
         }
 
         .code-result-box.error {
-            background: #ffebee;            border-color: #f44336;
+            background: #ffebee;
+            border-color: #f44336;
             color: #f44336;
         }
 
@@ -796,10 +1070,13 @@
             cursor: pointer;
             font-size: 20px;
             font-weight: 600;
+            margin-bottom: 0;
+            transition: background 0.3s, opacity 0.3s, transform 0.1s;
         }
 
-        #search-btn:active { transform: scale(0.98); }
-
+        #search-btn:active {
+            transform: scale(0.98);
+        }
         #search-btn.disabled {
             background: #999;
             opacity: 0.6;
@@ -813,16 +1090,44 @@
             z-index: 90;
             display: none;
         }
+
         #modal-overlay.visible { display: block; }
 
-        .hidden-file-input { display: none; }
+        .hidden-file-input {
+            display: none;
+        }
+
+        /* Indicateur offline */
+        #offline-indicator {
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            background: #f44336;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            z-index: 9999;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+            transition: opacity 0.3s;
+            display: none;
+        }
+
+        #offline-indicator.visible {
+            display: block;
+            opacity: 1;
+        }
     </style>
 </head>
 <body>
+    <!-- Inputs file cachés -->
     <input type="file" id="bg-file-input" class="hidden-file-input" accept="image/*">
     <input type="file" id="img-file-input" class="hidden-file-input" accept="image/*">
     <input type="file" id="note-file-input" class="hidden-file-input" accept="image/*">
 
+    <!-- Indicateur offline -->    <div id="offline-indicator">📴 Hors ligne</div>
+
+    <!-- PAGE D'ACCUEIL -->
     <div id="home-page">
         <div class="app-title">ENIGMA</div>
         <button class="home-btn" id="btn-perform">PERFORMER</button>
@@ -830,8 +1135,10 @@
         <button class="home-btn" id="btn-settings">PARAMETRES</button>
     </div>
 
+    <!-- PAGE PARAMÈTRES -->
     <div id="settings-page">
-        <div class="settings-title">PARAMETRES</div>        
+        <div class="settings-title">PARAMÈTRES</div>
+        
         <button class="settings-btn" id="import-bg-btn">📷 Importer lock screen</button>
         <button class="settings-btn" id="import-img-btn">📷 Importer background</button>
         <button class="settings-btn" id="import-note-btn">📷 Importer Note</button>
@@ -845,9 +1152,10 @@
             </div>
         </div>
         
-        <button class="back-btn" id="settings-back">← Retour</button>
+        <button class="back-btn" id="settings-back">← Retour à l'accueil</button>
     </div>
 
+    <!-- PAGE DE PERSONNALISATION -->
     <div id="customize-page">
         <div class="customize-header">
             <button class="customize-back-btn" id="customize-back">←</button>
@@ -855,140 +1163,217 @@
         </div>
 
         <div class="test-code-section">
-            <div class="test-code-title">🎯 TESTER UN CODE</div>
+            <div class="test-code-title">
+                <span>🎯 TESTER UN CODE</span>
+            </div>
+            
             <div class="code-input-group">
-                <input type="tel" id="test-code-input" placeholder="Code" maxlength="4" inputmode="numeric">
+                <input type="tel" id="test-code-input" placeholder="Taper un code" maxlength="4" pattern="[0-9]{4}" inputmode="numeric">
             </div>
         </div>
 
         <div class="control-group">
             <div class="control-header">
-                <h3>📋 Liste</h3>
+                <h3>📋 Liste</h3>                <button class="preview-btn" data-preview="full">👁️ Aperçu</button>
             </div>
+            
             <div class="slider-item">
                 <label>Position Y <span class="value-badge" id="words-y-value" data-default="265">265px</span></label>
-                <input type="range" id="words-y" min="0" max="800" value="265">
+                <input type="range" id="words-y" min="0" max="800" value="265" step="1">
             </div>
+
             <div class="slider-item">
-                <label>Taille <span class="value-badge" id="words-size-value" data-default="18">18px</span></label>
-                <input type="range" id="words-size" min="10" max="40" value="18">
+                <label>Taille police <span class="value-badge" id="words-size-value" data-default="18">18px</span></label>
+                <input type="range" id="words-size" min="10" max="40" value="18" step="1">
             </div>
+
             <div class="color-item">
                 <label>Couleur</label>
                 <input type="color" id="words-color" value="#ffffff">
             </div>
-        </div>
 
-        <div class="control-group">
-            <div class="control-header">                <h3>🔤 Lettres</h3>
-            </div>
             <div class="slider-item">
-                <label>Position Y <span class="value-badge" id="letters-y-value" data-default="460">460px</span></label>
-                <input type="range" id="letters-y" min="0" max="800" value="460">
-            </div>
-            <div class="slider-item">
-                <label>Taille <span class="value-badge" id="letters-size-value" data-default="20">20px</span></label>
-                <input type="range" id="letters-size" min="10" max="40" value="20">
-            </div>
-            <div class="color-item">
-                <label>Couleur</label>
-                <input type="color" id="letters-color" value="#ffffff">
+                <label>Espace entre les lignes <span class="value-badge" id="words-line-height-value" data-default="15">15px</span></label>
+                <input type="range" id="words-line-height" min="5" max="30" value="15" step="1">
             </div>
         </div>
 
         <div class="control-group">
             <div class="control-header">
-                <h3>🔢 Indice</h3>
+                <h3>🔤 Lettres</h3>
+                <button class="preview-btn" data-preview="full">👁️ Aperçu</button>
             </div>
+            
+            <div class="slider-item">
+                <label>Position Y <span class="value-badge" id="letters-y-value" data-default="460">460px</span></label>
+                <input type="range" id="letters-y" min="0" max="800" value="460" step="1">
+            </div>
+
+            <div class="slider-item">
+                <label>Taille police <span class="value-badge" id="letters-size-value" data-default="20">20px</span></label>
+                <input type="range" id="letters-size" min="10" max="40" value="20" step="1">
+            </div>
+
+            <div class="color-item">
+                <label>Couleur</label>
+                <input type="color" id="letters-color" value="#ffffff">
+            </div>
+
+            <div class="slider-item">
+                <label>Espace entre les lettres <span class="value-badge" id="letters-spacing-value" data-default="40">40px</span></label>
+                <input type="range" id="letters-spacing" min="0" max="100" value="40" step="1">
+            </div>
+        </div>
+        <div class="control-group">
+            <div class="control-header">
+                <h3>🔢 Indice</h3>
+                <button class="preview-btn" data-preview="full">👁️ Aperçu</button>
+            </div>
+            
             <div class="slider-item">
                 <label>Position Y <span class="value-badge" id="index-y-value" data-default="517">517px</span></label>
-                <input type="range" id="index-y" min="0" max="800" value="517">
+                <input type="range" id="index-y" min="0" max="800" value="517" step="1">
             </div>
+
             <div class="slider-item">
-                <label>Taille <span class="value-badge" id="index-size-value" data-default="30">30px</span></label>
-                <input type="range" id="index-size" min="10" max="60" value="30">
+                <label>Taille police <span class="value-badge" id="index-size-value" data-default="30">30px</span></label>
+                <input type="range" id="index-size" min="10" max="60" value="30" step="1">
             </div>
+
             <div class="color-item">
                 <label>Couleur</label>
                 <input type="color" id="index-color" value="#1E6FF0">
+            </div>
+
+            <div class="slider-item">
+                <label>Décalage X <span class="value-badge" id="index-x-value" data-default="-45">-45px</span></label>
+                <input type="range" id="index-x" min="-500" max="500" value="-45" step="1">
             </div>
         </div>
 
         <div class="control-group">
             <div class="control-header">
                 <h3>📝 Note (Liste)</h3>
+                <button class="preview-btn" data-preview="note">👁️ Aperçu</button>
             </div>
+            
             <div class="slider-item">
                 <label>Position Y <span class="value-badge" id="note-text-y-value" data-default="265">265px</span></label>
-                <input type="range" id="note-text-y" min="0" max="1000" value="265">
+                <input type="range" id="note-text-y" min="0" max="1000" value="265" step="1">
             </div>
+
             <div class="slider-item">
                 <label>Position X <span class="value-badge" id="note-text-x-value" data-default="20">20px</span></label>
-                <input type="range" id="note-text-x" min="0" max="500" value="20">
+                <input type="range" id="note-text-x" min="0" max="500" value="20" step="1">
             </div>
+
             <div class="slider-item">
-                <label>Taille <span class="value-badge" id="note-text-size-value" data-default="20">20px</span></label>
-                <input type="range" id="note-text-size" min="10" max="60" value="20">
-            </div>            <div class="color-item">
-                <label>Couleur</label>
+                <label>Taille police <span class="value-badge" id="note-text-size-value" data-default="20">20px</span></label>
+                <input type="range" id="note-text-size" min="10" max="60" value="20" step="1">
+            </div>
+
+            <div class="color-item">                <label>Couleur</label>
                 <input type="color" id="note-text-color" value="#ffffff">
+            </div>
+
+            <div class="slider-item">
+                <label>Espace entre les lignes <span class="value-badge" id="note-text-spacing-value" data-default="15">15px</span></label>
+                <input type="range" id="note-text-spacing" min="5" max="50" value="15" step="1">
             </div>
         </div>
 
         <div class="control-group">
             <div class="control-header">
                 <h3>🔵 Note (Bouton)</h3>
+                <button class="preview-btn" data-preview="full">👁️ Aperçu</button>
             </div>
+            
             <div class="slider-item">
                 <label>Position Y <span class="value-badge" id="note-button-y-value" data-default="520">520px</span></label>
-                <input type="range" id="note-button-y" min="0" max="1000" value="520">
+                <input type="range" id="note-button-y" min="0" max="1000" value="520" step="1">
             </div>
+
             <div class="slider-item">
                 <label>Taille <span class="value-badge" id="note-button-size-value" data-default="30">30px</span></label>
-                <input type="range" id="note-button-size" min="5" max="150" value="30">
+                <input type="range" id="note-button-size" min="5" max="150" value="30" step="1">
             </div>
+
             <div class="color-item">
                 <label>Couleur</label>
                 <input type="color" id="note-button-color" value="#1877F2">
+            </div>
+
+            <div class="slider-item">
+                <label>Décalage X <span class="value-badge" id="note-button-x-value" data-default="43">43px</span></label>
+                <input type="range" id="note-button-x" min="-300" max="300" value="43" step="1">
             </div>
         </div>
 
         <div class="customize-actions">
             <button class="customize-save" id="customize-save">💾 Sauvegarder</button>
-            <button class="customize-reset" id="customize-reset">↺ Reset</button>
+            <button class="customize-reset" id="customize-reset">↺ Réinitialiser</button>
         </div>
     </div>
 
+    <!-- PAGE DE LOCK -->
     <div id="lock-page">
         <div class="overlay"></div>
         <div class="lock-content">
             <div class="pin-dots">
                 <div class="dot"></div>
-                <div class="dot"></div>
-                <div class="dot"></div>
+                <div class="dot"></div>                <div class="dot"></div>
                 <div class="dot"></div>
             </div>
 
             <div class="keypad">
-                <div class="key" data-digit="1"><span class="key-number">1</span></div>
-                <div class="key" data-digit="2"><span class="key-number">2</span><span class="key-letters">ABC</span></div>
-                <div class="key" data-digit="3"><span class="key-number">3</span><span class="key-letters">DEF</span></div>
-                <div class="key" data-digit="4"><span class="key-number">4</span><span class="key-letters">GHI</span></div>
-                <div class="key" data-digit="5"><span class="key-number">5</span><span class="key-letters">JKL</span></div>
-                <div class="key" data-digit="6"><span class="key-number">6</span><span class="key-letters">MNO</span></div>
-                <div class="key" data-digit="7"><span class="key-number">7</span><span class="key-letters">PQRS</span></div>
-                <div class="key" data-digit="8"><span class="key-number">8</span><span class="key-letters">TUV</span></div>
-                <div class="key" data-digit="9"><span class="key-number">9</span><span class="key-letters">WXYZ</span></div>            </div>
+                <div class="key" data-digit="1">
+                    <span class="key-number">1</span>
+                </div>
+                <div class="key" data-digit="2">
+                    <span class="key-number">2</span>
+                    <span class="key-letters">ABC</span>
+                </div>
+                <div class="key" data-digit="3">
+                    <span class="key-number">3</span>
+                    <span class="key-letters">DEF</span>
+                </div>
+                <div class="key" data-digit="4">
+                    <span class="key-number">4</span>
+                    <span class="key-letters">GHI</span>
+                </div>
+                <div class="key" data-digit="5">
+                    <span class="key-number">5</span>
+                    <span class="key-letters">JKL</span>
+                </div>
+                <div class="key" data-digit="6">
+                    <span class="key-number">6</span>
+                    <span class="key-letters">MNO</span>
+                </div>
+                <div class="key" data-digit="7">
+                    <span class="key-number">7</span>
+                    <span class="key-letters">PQRS</span>
+                </div>
+                <div class="key" data-digit="8">
+                    <span class="key-number">8</span>
+                    <span class="key-letters">TUV</span>
+                </div>
+                <div class="key" data-digit="9">
+                    <span class="key-number">9</span>
+                    <span class="key-letters">WXYZ</span>
+                </div>
+            </div>
 
             <div class="bottom-row">
                 <div class="delete-btn" id="deleteBtn">⌫</div>
-                <div class="key" data-digit="0"><span class="key-number">0</span></div>
+                <div class="key" data-digit="0">
+                    <span class="key-number">0</span>
+                </div>
                 <div class="ok" id="okBtn">OK</div>
             </div>
-        </div>
-        <div class="emergency" id="emergencyBtn">📞 Appel d'urgence</div>
+        </div>        <div class="emergency" id="emergencyBtn">📞 Appel d'urgence</div>
     </div>
 
+    <!-- PAGE IMAGE (RÉSULTATS) -->
     <div id="result-page">
         <div class="result-overlay"></div>
         <div class="words-container" id="words-container"></div>
@@ -997,23 +1382,28 @@
         <div class="note-button" id="note-button"></div>
     </div>
 
+    <!-- Overlay image Note -->
     <div class="note-image-overlay" id="note-image-overlay">
         <img class="note-image-display" id="note-image-display" src="" alt="">
         <div class="note-button-preview" id="note-button-preview"></div>
         <div class="note-image-text" id="note-image-text"></div>
     </div>
 
+    <!-- MODAL LISTE -->
     <div id="modal-overlay"></div>
     <div id="list-modal">
         <div id="search-container">
             <input type="text" id="search-input" placeholder="Taper un mot">
         </div>
+        
         <div class="code-result-box" id="codeResult"></div>
+        
         <button id="search-btn">Rechercher</button>
     </div>
 
     <script>
         (function() {
+            // ===== ÉLÉMENTS =====
             const homePage = document.getElementById('home-page');
             const settingsPage = document.getElementById('settings-page');
             const customizePage = document.getElementById('customize-page');
@@ -1027,47 +1417,61 @@
             const noteImageDisplay = document.getElementById('note-image-display');
             const noteImageText = document.getElementById('note-image-text');
             const noteButtonPreview = document.getElementById('note-button-preview');
-                        const btnPerform = document.getElementById('btn-perform');
-            const btnList = document.getElementById('btn-list');
+            const offlineIndicator = document.getElementById('offline-indicator');
+            
+            const btnPerform = document.getElementById('btn-perform');            const btnList = document.getElementById('btn-list');
             const btnSettings = document.getElementById('btn-settings');
+            
             const importBgBtn = document.getElementById('import-bg-btn');
             const importImgBtn = document.getElementById('import-img-btn');
             const importNoteBtn = document.getElementById('import-note-btn');
             const customizeBtn = document.getElementById('customize-btn');
             const settingsBack = document.getElementById('settings-back');
+            
             const customizeBack = document.getElementById('customize-back');
             const customizeSave = document.getElementById('customize-save');
             const customizeReset = document.getElementById('customize-reset');
+            
+            const previewBtns = document.querySelectorAll('.preview-btn');
             const testCodeInput = document.getElementById('test-code-input');
             
             const wordsY = document.getElementById('words-y');
             const wordsSize = document.getElementById('words-size');
             const wordsColor = document.getElementById('words-color');
+            const wordsLineHeight = document.getElementById('words-line-height');
             const lettersY = document.getElementById('letters-y');
             const lettersSize = document.getElementById('letters-size');
             const lettersColor = document.getElementById('letters-color');
+            const lettersSpacing = document.getElementById('letters-spacing');
             const indexY = document.getElementById('index-y');
             const indexSize = document.getElementById('index-size');
             const indexColor = document.getElementById('index-color');
+            const indexX = document.getElementById('index-x');
             const noteTextY = document.getElementById('note-text-y');
             const noteTextX = document.getElementById('note-text-x');
             const noteTextSize = document.getElementById('note-text-size');
             const noteTextColor = document.getElementById('note-text-color');
+            const noteTextSpacing = document.getElementById('note-text-spacing');
             const noteButtonY = document.getElementById('note-button-y');
             const noteButtonSize = document.getElementById('note-button-size');
             const noteButtonColor = document.getElementById('note-button-color');
+            const noteButtonX = document.getElementById('note-button-x');
             
             const wordsYValue = document.getElementById('words-y-value');
             const wordsSizeValue = document.getElementById('words-size-value');
+            const wordsLineHeightValue = document.getElementById('words-line-height-value');
             const lettersYValue = document.getElementById('letters-y-value');
             const lettersSizeValue = document.getElementById('letters-size-value');
+            const lettersSpacingValue = document.getElementById('letters-spacing-value');
             const indexYValue = document.getElementById('index-y-value');
             const indexSizeValue = document.getElementById('index-size-value');
+            const indexXValue = document.getElementById('index-x-value');
             const noteTextYValue = document.getElementById('note-text-y-value');
             const noteTextXValue = document.getElementById('note-text-x-value');
-            const noteTextSizeValue = document.getElementById('note-text-size-value');
+            const noteTextSizeValue = document.getElementById('note-text-size-value');            const noteTextSpacingValue = document.getElementById('note-text-spacing-value');
             const noteButtonYValue = document.getElementById('note-button-y-value');
             const noteButtonSizeValue = document.getElementById('note-button-size-value');
+            const noteButtonXValue = document.getElementById('note-button-x-value');
             
             const searchInput = document.getElementById('search-input');
             const searchBtn = document.getElementById('search-btn');
@@ -1076,29 +1480,35 @@
             const modalOverlay = document.getElementById('modal-overlay');
             
             const bgFileInput = document.getElementById('bg-file-input');
-            const imgFileInput = document.getElementById('img-file-input');            const noteFileInput = document.getElementById('note-file-input');
+            const imgFileInput = document.getElementById('img-file-input');
+            const noteFileInput = document.getElementById('note-file-input');
+            
             const previewContainer = document.getElementById('preview-container');
             const previewImage = document.getElementById('preview-image');
             const previewConfirm = document.getElementById('preview-confirm');
             const previewCancel = document.getElementById('preview-cancel');
+
             const keys = document.querySelectorAll('#lock-page .key');
             const dots = document.querySelectorAll('#lock-page .dot');
             const deleteBtn = document.getElementById('deleteBtn');
             const okBtn = document.getElementById('okBtn');
             const emergencyBtn = document.getElementById('emergencyBtn');
 
+            // ===== DONNÉES =====
             let wordsList = [];
             const DEFAULT_NOTE_TEXT = "Barbecue\nIceberg\nCartouche\nYaourt\nCartable\nLivre\nEnveloppe\nTapis\nTrain\nEncre";
-            const DEFAULT_NOTE_IMAGE = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="500" height="1000"%3E%3Crect fill="%23222" width="100%25" height="100%25"/%3E%3C/svg%3E';
+            const DEFAULT_NOTE_IMAGE = 'image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="500" height="1000"%3E%3Crect fill="%23222" width="100%25" height="100%25"/%3E%3Ctext fill="%23666" font-size="24" x="50%25" y="50%25" text-anchor="middle" dominant-baseline="middle"%3ENote Image%3C/text%3E%3C/svg%3E';
 
+            // ===== VALEURS PAR DÉFAUT =====
             const defaultSettings = {
-                wordsY: 265, wordsSize: 18, wordsColor: '#ffffff',
-                lettersY: 460, lettersSize: 20, lettersColor: '#ffffff',
-                indexY: 517, indexSize: 30, indexColor: '#1E6FF0',
-                noteTextY: 265, noteTextX: 20, noteTextSize: 20, noteTextColor: '#ffffff',
-                noteButtonY: 520, noteButtonSize: 30, noteButtonColor: '#1877F2'
+                wordsY: 265, wordsSize: 18, wordsColor: '#ffffff', wordsLineHeight: 15,
+                lettersY: 460, lettersSize: 20, lettersColor: '#ffffff', lettersSpacing: 40,
+                indexY: 517, indexSize: 30, indexColor: '#1E6FF0', indexX: -45,
+                noteTextY: 265, noteTextX: 20, noteTextSize: 20, noteTextColor: '#ffffff', noteTextSpacing: 15,
+                noteButtonY: 520, noteButtonSize: 30, noteButtonColor: '#1877F2', noteButtonX: 43
             };
 
+            // ===== ÉTAT =====
             let pin = '';
             let currentCode = '';
             let originalWords = [];
@@ -1107,123 +1517,280 @@
             let bestListIndex = -1;
             let bestListLetters = [];
             let selectedLetter = '';
-            let lastTap = 0;
+            let lastTap = 0;            let isPreviewMode = false;
+            let lastSearchWord = '';
+            let isSearchDisabled = false;
+            let currentPreviewTarget = '';
+            let currentPreviewData = '';
             let isNoteModeActive = false;
             let noteImageData = localStorage.getItem('noteImage') || DEFAULT_NOTE_IMAGE;
             let currentSettings = { ...defaultSettings };
             let isNoteUnderlineActive = false;
             let longPressTimer = null;
-            let isSearchDisabled = false;
 
+            // ===== CHARGEMENT DE LA LISTE DES MOTS =====
             async function loadWordsList() {
                 try {
                     const response = await fetch('words.json');
-                    if (!response.ok) throw new Error();
+                    if (!response.ok) throw new Error('words.json non trouvé');
                     wordsList = await response.json();
+                    console.log('✅ words.json chargé:', wordsList.length, 'mots');
                 } catch (e) {
+                    console.warn('⚠️ Fallback: utilisation de la liste par défaut');
                     wordsList = [
                         { code: "7131", word: "Abeille" }, { code: "7141", word: "Abricot" },
-                        { code: "9141", word: "Accordeon" }, { code: "6131", word: "Agenda" },
+                        { code: "9141", word: "Accordéon" }, { code: "6131", word: "Agenda" },
                         { code: "6141", word: "Agneau" }, { code: "9141", word: "Agrafeuse" },
-                        { code: "5121", word: "Aigle" }, { code: "8121", word: "Aiguille" },                        { code: "3121", word: "Ail" }, { code: "4121", word: "Aile" }
+                        { code: "5121", word: "Aigle" }, { code: "8121", word: "Aiguille" },
+                        { code: "3121", word: "Ail" }, { code: "4121", word: "Aile" }
                     ];
                 }
             }
 
-            function updateDisplayValues(s) {
-                wordsYValue.textContent = s.wordsY + 'px';
-                wordsSizeValue.textContent = s.wordsSize + 'px';
-                lettersYValue.textContent = s.lettersY + 'px';
-                lettersSizeValue.textContent = s.lettersSize + 'px';
-                indexYValue.textContent = s.indexY + 'px';
-                indexSizeValue.textContent = s.indexSize + 'px';
-                noteTextYValue.textContent = s.noteTextY + 'px';
-                noteTextXValue.textContent = s.noteTextX + 'px';
-                noteTextSizeValue.textContent = s.noteTextSize + 'px';
-                noteButtonYValue.textContent = s.noteButtonY + 'px';
-                noteButtonSizeValue.textContent = s.noteButtonSize + 'px';
+            // ===== FONCTIONS DE DRAGGING =====
+            function startDragging() {
+                customizePage.classList.add('dragging-slider');
+                resultPage.classList.add('dragging-active');
             }
 
-            function applyCustomSettings(s) {
-                wordsContainer.style.top = s.wordsY + 'px';
-                wordsContainer.style.fontSize = s.wordsSize + 'px';
-                wordsContainer.style.color = s.wordsColor;
-                lettersContainer.style.top = s.lettersY + 'px';
-                lettersContainer.style.fontSize = s.lettersSize + 'px';
-                lettersContainer.style.color = s.lettersColor;
-                indexDisplay.style.top = s.indexY + 'px';
-                indexDisplay.style.fontSize = s.indexSize + 'px';
-                indexDisplay.style.color = s.indexColor;
-                noteImageText.style.top = s.noteTextY + 'px';
-                noteImageText.style.left = s.noteTextX + 'px';
-                noteImageText.style.fontSize = s.noteTextSize + 'px';
-                noteImageText.style.color = s.noteTextColor;
-                noteButton.style.top = s.noteButtonY + 'px';
-                noteButton.style.width = s.noteButtonSize + 'px';
-                noteButton.style.height = s.noteButtonSize + 'px';
-                noteButton.style.background = s.noteButtonColor;
-                noteButtonPreview.style.top = s.noteButtonY + 'px';
-                noteButtonPreview.style.width = s.noteButtonSize + 'px';
-                noteButtonPreview.style.height = s.noteButtonSize + 'px';
-                noteButtonPreview.style.background = s.noteButtonColor;
-                updateDisplayValues(s);
-                wordsY.value = s.wordsY; wordsSize.value = s.wordsSize; wordsColor.value = s.wordsColor;
-                lettersY.value = s.lettersY; lettersSize.value = s.lettersSize; lettersColor.value = s.lettersColor;
-                indexY.value = s.indexY; indexSize.value = s.indexSize; indexColor.value = s.indexColor;
-                noteTextY.value = s.noteTextY; noteTextX.value = s.noteTextX; noteTextSize.value = s.noteTextSize; noteTextColor.value = s.noteTextColor;
-                noteButtonY.value = s.noteButtonY; noteButtonSize.value = s.noteButtonSize; noteButtonColor.value = s.noteButtonColor;
+            function stopDragging() {
+                customizePage.classList.remove('dragging-slider');
+                resultPage.classList.remove('dragging-active');
             }
 
-            function setupImageImport(inputEl, targetEl) {                inputEl.addEventListener('change', async function(e) {
-                    const file = e.target.files[0];
-                    if (!file) return;
+            // ===== SLIDERS OPTIMISÉS =====
+            let currentAnimationFrame = null;
+
+            function setupOptimizedSlider(slider, onUpdate) {
+                if (!slider) return;
+                
+                const handleInput = (e) => {
+                    if (currentAnimationFrame) cancelAnimationFrame(currentAnimationFrame);
+                    currentAnimationFrame = requestAnimationFrame(() => {                        onUpdate(e.target.value);
+                        currentAnimationFrame = null;
+                    });
+                };
+                
+                slider.addEventListener('input', handleInput, { passive: true });
+                slider.addEventListener('touchmove', handleInput, { passive: true });
+                
+                const cleanup = () => {
+                    if (currentAnimationFrame) cancelAnimationFrame(currentAnimationFrame);
+                };
+                slider.addEventListener('touchend', cleanup);
+                slider.addEventListener('touchcancel', cleanup);
+                slider.addEventListener('mouseup', cleanup);
+            }
+
+            // ===== AFFICHAGE =====
+            function updateDisplayValues(settings) {
+                const badges = {
+                    wordsY: wordsYValue, wordsSize: wordsSizeValue, wordsLineHeight: wordsLineHeightValue,
+                    lettersY: lettersYValue, lettersSize: lettersSizeValue, lettersSpacing: lettersSpacingValue,
+                    indexY: indexYValue, indexSize: indexSizeValue, indexX: indexXValue,
+                    noteTextY: noteTextYValue, noteTextX: noteTextXValue, noteTextSize: noteTextSizeValue, noteTextSpacing: noteTextSpacingValue,
+                    noteButtonY: noteButtonYValue, noteButtonSize: noteButtonSizeValue, noteButtonX: noteButtonXValue
+                };
+                for (const [key, badge] of Object.entries(badges)) {
+                    if (badge) badge.textContent = settings[key] + 'px';
+                }
+            }
+
+            function updateSliders(settings) {
+                const sliders = {
+                    wordsY, wordsSize, wordsColor, wordsLineHeight,
+                    lettersY, lettersSize, lettersColor, lettersSpacing,
+                    indexY, indexSize, indexColor, indexX,
+                    noteTextY, noteTextX, noteTextSize, noteTextColor, noteTextSpacing,
+                    noteButtonY, noteButtonSize, noteButtonColor, noteButtonX
+                };
+                for (const [key, slider] of Object.entries(sliders)) {
+                    if (slider) slider.value = settings[key];
+                }
+            }
+
+            function applyCustomSettings(settings) {
+                if (wordsContainer) {
+                    wordsContainer.style.top = settings.wordsY + 'px';
+                    wordsContainer.style.fontSize = settings.wordsSize + 'px';
+                    wordsContainer.style.color = settings.wordsColor;
+                    wordsContainer.style.lineHeight = settings.wordsLineHeight + 'px';
+                }                if (lettersContainer) {
+                    lettersContainer.style.top = settings.lettersY + 'px';
+                    lettersContainer.style.fontSize = settings.lettersSize + 'px';
+                    lettersContainer.style.color = settings.lettersColor;
+                    lettersContainer.style.gap = settings.lettersSpacing + 'px';
+                }
+                if (indexDisplay) {
+                    indexDisplay.style.top = settings.indexY + 'px';
+                    indexDisplay.style.fontSize = settings.indexSize + 'px';
+                    indexDisplay.style.color = settings.indexColor;
+                    indexDisplay.style.transform = `translateX(calc(-50% + ${settings.indexX}px))`;
+                }
+                if (noteImageText) {
+                    noteImageText.style.top = settings.noteTextY + 'px';
+                    noteImageText.style.left = settings.noteTextX + 'px';
+                    noteImageText.style.fontSize = settings.noteTextSize + 'px';
+                    noteImageText.style.color = settings.noteTextColor;
+                    noteImageText.style.lineHeight = settings.noteTextSpacing + 'px';
+                }
+                if (noteButton) {
+                    noteButton.style.top = settings.noteButtonY + 'px';
+                    noteButton.style.width = settings.noteButtonSize + 'px';
+                    noteButton.style.height = settings.noteButtonSize + 'px';
+                    noteButton.style.background = settings.noteButtonColor;
+                    noteButton.style.left = `calc(50% + ${settings.noteButtonX}px)`;
+                }
+                if (noteButtonPreview) {
+                    noteButtonPreview.style.top = settings.noteButtonY + 'px';
+                    noteButtonPreview.style.width = settings.noteButtonSize + 'px';
+                    noteButtonPreview.style.height = settings.noteButtonSize + 'px';
+                    noteButtonPreview.style.background = settings.noteButtonColor;
+                    noteButtonPreview.style.left = `calc(50% + ${settings.noteButtonX}px)`;
+                }
+                updateDisplayValues(settings);
+                updateSliders(settings);
+            }
+
+            // ===== GESTION D'ERREURS IMAGES =====
+            const MAX_FILE_SIZE = 5 * 1024 * 1024;
+            const ALLOWED_TYPES = ['image/jpeg', 'image/png', 'image/webp', 'image/gif'];
+
+            function compressImage(file, maxWidth = 1920, quality = 0.8) {
+                return new Promise((resolve, reject) => {
+                    const img = new Image();
                     const reader = new FileReader();
-                    reader.onload = function(event) {
-                        currentPreviewData = event.target.result;
-                        previewImage.src = currentPreviewData;
-                        previewContainer.classList.add('visible');
-                        if (targetEl === lockPage) currentPreviewTarget = 'bg';
-                        else if (targetEl === resultPage) currentPreviewTarget = 'img';
-                        else currentPreviewTarget = 'note';
+                    reader.onload = (e) => {
+                        img.onload = () => {
+                            const canvas = document.createElement('canvas');
+                            let width = img.width, height = img.height;
+                            if (width > maxWidth) {                                height = (maxWidth / width) * height;
+                                width = maxWidth;
+                            }
+                            canvas.width = width;
+                            canvas.height = height;
+                            const ctx = canvas.getContext('2d');
+                            ctx.drawImage(img, 0, 0, width, height);
+                            canvas.toBlob((blob) => {
+                                if (blob) resolve(new File([blob], file.name.replace(/\.[^.]+$/, '.webp'), { type: 'image/webp' }));
+                                else reject(new Error('Compression échouée'));
+                            }, 'image/webp', quality);
+                        };
+                        img.onerror = reject;
+                        img.src = e.target.result;
                     };
+                    reader.onerror = reject;
                     reader.readAsDataURL(file);
                 });
             }
 
+            function setupImageImport(inputElement, targetElement, storageKey) {
+                inputElement.addEventListener('change', async function(e) {
+                    const file = e.target.files[0];
+                    if (!file) return;
+                    
+                    if (!ALLOWED_TYPES.includes(file.type)) {
+                        alert('❌ Format non supporté. Utilisez JPG, PNG, WebP ou GIF.');
+                        inputElement.value = '';
+                        return;
+                    }
+                    
+                    if (file.size > MAX_FILE_SIZE) {
+                        alert(`❌ Fichier trop lourd (${Math.round(file.size/1024/1024)}Mo). Maximum : 5Mo.`);
+                        inputElement.value = '';
+                        return;
+                    }
+                    
+                    try {
+                        const processedFile = file.size > 2*1024*1024 ? await compressImage(file) : file;
+                        const reader = new FileReader();
+                        
+                        reader.onload = function(event) {
+                            const imageData = event.target.result;
+                            try {
+                                localStorage.setItem('test_quota', 'x');
+                                localStorage.removeItem('test_quota');
+                            } catch (quotaError) {
+                                alert('❌ Stockage plein. Supprimez des images existantes.');
+                                inputElement.value = '';
+                                return;                            }
+                            
+                            currentPreviewData = imageData;
+                            previewImage.src = currentPreviewData;
+                            previewContainer.classList.add('visible');
+                            
+                            if (targetElement === lockPage) currentPreviewTarget = 'bg';
+                            else if (targetElement === resultPage) currentPreviewTarget = 'img';
+                            else currentPreviewTarget = 'note';
+                        };
+                        
+                        reader.onerror = function() {
+                            alert('❌ Erreur lors de la lecture du fichier.');
+                            inputElement.value = '';
+                        };
+                        
+                        reader.readAsDataURL(processedFile);
+                    } catch (error) {
+                        console.error('Erreur import image:', error);
+                        alert('❌ Une erreur est survenue lors du traitement de l\'image.');
+                        inputElement.value = '';
+                    }
+                });
+            }
+
+            // ===== LISTE NOTE DYNAMIQUE =====
             function generateNoteList(clickedWord) {
                 const letters = clickedWord.toLowerCase().split('');
                 const result = [];
+                
+                // Grouper les mots par première lettre
                 const wordsByLetter = {};
                 wordsList.forEach(item => {
                     const firstLetter = item.word.charAt(0).toLowerCase();
                     if (!wordsByLetter[firstLetter]) wordsByLetter[firstLetter] = [];
                     wordsByLetter[firstLetter].push(item.word);
                 });
+                
                 letters.forEach(letter => {
                     const candidates = wordsByLetter[letter] || [];
+                    // Exclure le mot cliqué
                     const filtered = candidates.filter(w => w.toLowerCase() !== clickedWord.toLowerCase());
+                    
                     if (filtered.length > 0) {
                         const randomWord = filtered[Math.floor(Math.random() * filtered.length)];
+                        // Mettre la première lettre en majuscule
                         result.push(randomWord.charAt(0).toUpperCase() + randomWord.slice(1));
                     } else {
-                        result.push(letter.toUpperCase());
-                    }
+                        // Si aucun mot trouvé, mettre la lettre seule
+                        result.push(letter.toUpperCase());                    }
                 });
+                
                 return result.join('\n');
             }
 
+            // ===== SOULIGNEMENT LONG PRESS =====
             function setupLongPressUnderline() {
-                const handlePressStart = () => {
+                let pressStartTime = 0;
+                const LONG_PRESS_DURATION = 1000; // 1 seconde
+                
+                const handlePressStart = (e) => {
+                    pressStartTime = Date.now();
                     longPressTimer = setTimeout(() => {
                         isNoteUnderlineActive = !isNoteUnderlineActive;
                         updateNoteUnderline();
-                        if (navigator.vibrate) navigator.vibrate(50);
-                    }, 1000);
+                        navigator.vibrate?.(50);
+                    }, LONG_PRESS_DURATION);
                 };
+                
                 const handlePressEnd = () => {
-                    if (longPressTimer) { clearTimeout(longPressTimer); longPressTimer = null; }
+                    if (longPressTimer) {
+                        clearTimeout(longPressTimer);
+                        longPressTimer = null;
+                    }
                 };
-                noteImageOverlay.addEventListener('touchstart', handlePressStart, { passive: true });                noteImageOverlay.addEventListener('touchend', handlePressEnd);
+                
+                noteImageOverlay.addEventListener('touchstart', handlePressStart, { passive: true });
+                noteImageOverlay.addEventListener('touchend', handlePressEnd);
                 noteImageOverlay.addEventListener('touchcancel', handlePressEnd);
                 noteImageOverlay.addEventListener('mousedown', handlePressStart);
                 noteImageOverlay.addEventListener('mouseup', handlePressEnd);
@@ -1238,19 +1805,62 @@
                         const firstChar = line.charAt(0);
                         const rest = line.slice(1);
                         const className = isNoteUnderlineActive ? 'note-word-first-letter underlined' : 'note-word-first-letter';
-                        return '<span class="' + className + '">' + firstChar + '</span>' + rest;
+                        return `<span class="${className}">${firstChar}</span>${rest}`;
                     }
                     return line;
                 });
                 noteImageText.innerHTML = newLines.join('<br>');
             }
+            // ===== APERÇUS =====
+            function showFullPreview() {
+                const bgImage = window.getComputedStyle(resultPage).backgroundImage;
+                if (bgImage && bgImage !== 'none') {
+                    noteImageDisplay.src = bgImage.slice(5, -2);
+                } else {
+                    noteImageDisplay.src = DEFAULT_NOTE_IMAGE;
+                }
+                noteImageText.innerHTML = DEFAULT_NOTE_TEXT.replace(/\n/g, '<br>');
+                noteButtonPreview.classList.add('visible');
+                noteImageOverlay.classList.add('visible');
+            }
 
+            function showNotePreview() {
+                noteImageDisplay.src = noteImageData || DEFAULT_NOTE_IMAGE;
+                noteImageText.innerHTML = DEFAULT_NOTE_TEXT.replace(/\n/g, '<br>');
+                noteButtonPreview.classList.remove('visible');
+                noteImageOverlay.classList.add('visible');
+            }
+
+            function hidePreview() {
+                noteImageOverlay.classList.remove('visible');
+                noteButtonPreview.classList.remove('visible');
+            }
+
+            function setupPreviewButton(btn) {
+                if (!btn) return;
+                
+                const previewType = btn.getAttribute('data-preview');
+                
+                const showPreview = () => {
+                    if (previewType === 'note') showNotePreview();
+                    else showFullPreview();
+                };
+                
+                btn.addEventListener('contextmenu', (e) => e.preventDefault());
+                btn.addEventListener('touchstart', (e) => { e.preventDefault(); showPreview(); }, { passive: false });
+                btn.addEventListener('touchend', (e) => { e.preventDefault(); hidePreview(); });
+                btn.addEventListener('touchcancel', (e) => { e.preventDefault(); hidePreview(); });
+                btn.addEventListener('mousedown', (e) => { e.preventDefault(); showPreview(); });
+                btn.addEventListener('mouseup', (e) => { e.preventDefault(); hidePreview(); });
+                btn.addEventListener('mouseleave', () => hidePreview());
+            }
+
+            // ===== FONCTIONS EXISTANTES =====
             function animateKey(element) {
                 if (!element) return;
                 element.classList.add('active');
                 setTimeout(() => element.classList.remove('active'), 350);
             }
-
             function animateText(element) {
                 if (!element) return;
                 element.classList.add('active-text');
@@ -1268,11 +1878,13 @@
                 codeResult.textContent = '';
                 codeResult.classList.remove('error');
                 enableSearchButton();
+                modal.classList.remove('keyboard-open');
             }
 
             function searchWord(wordToFind) {
                 const normalizedSearch = wordToFind.trim().toLowerCase();
-                for (let i = 0; i < wordsList.length; i++) {                    if (wordsList[i].word.toLowerCase() === normalizedSearch) {
+                for (let i = 0; i < wordsList.length; i++) {
+                    if (wordsList[i].word.toLowerCase() === normalizedSearch) {
                         return wordsList[i];
                     }
                 }
@@ -1285,6 +1897,7 @@
                 codeResult.textContent = '';
                 codeResult.classList.remove('error');
             }
+
             function disableSearchButton() {
                 searchBtn.classList.add('disabled');
                 isSearchDisabled = true;
@@ -1296,8 +1909,7 @@
                 const lists = [];
                 for (let pos = 0; pos < firstDigit; pos++) lists[pos] = [];
                 for (let i = 0; i < words.length; i++) {
-                    const word = words[i];
-                    for (let pos = 0; pos < word.length && pos < firstDigit; pos++) {
+                    const word = words[i];                    for (let pos = 0; pos < word.length && pos < firstDigit; pos++) {
                         const letter = word[pos];
                         if (!lists[pos].includes(letter)) lists[pos].push(letter);
                     }
@@ -1321,8 +1933,9 @@
                 wordsContainer.innerHTML = '';
                 const sortedWords = [...words].sort((a, b) => a.localeCompare(b));
                 if (sortedWords.length === 0) {
-                    const noWord = document.createElement('span');                    noWord.className = 'result-word';
-                    noWord.textContent = 'Aucun mot';
+                    const noWord = document.createElement('span');
+                    noWord.className = 'result-word';
+                    noWord.textContent = 'Aucun mot trouvé';
                     const line = document.createElement('div');
                     line.className = 'words-line';
                     line.appendChild(noWord);
@@ -1339,14 +1952,14 @@
                     wordSpan.addEventListener('click', function(e) {
                         e.stopPropagation();
                         if (isNoteModeActive && noteImageData) {
+                            // Générer la liste dynamique
                             const dynamicList = generateNoteList(word);
                             noteImageDisplay.src = noteImageData;
                             noteImageText.innerHTML = dynamicList.replace(/\n/g, '<br>');
                             noteButtonPreview.classList.remove('visible');
                             noteImageOverlay.classList.add('visible');
-                            updateNoteUnderline();
-                        } else {
-                            window.open('https://www.google.com/search?tbm=isch&q=' + encodeURIComponent(this.textContent), '_blank');
+                            updateNoteUnderline();                        } else {
+                            window.open(`https://www.google.com/search?tbm=isch&q=${encodeURIComponent(this.textContent)}`, '_blank');
                         }
                     });
                     currentLine.appendChild(wordSpan);
@@ -1370,7 +1983,8 @@
                     if (selectedLetter === letter) letterSpan.classList.add('selected');
                     letterSpan.textContent = letter.toUpperCase();
                     letterSpan.addEventListener('click', function(e) {
-                        e.stopPropagation();                        if (this.classList.contains('selected')) {
+                        e.stopPropagation();
+                        if (this.classList.contains('selected')) {
                             this.classList.remove('selected');
                             selectedLetter = '';
                             currentWords = [...originalWords];
@@ -1393,7 +2007,6 @@
                     }
                 }
             }
-
             function updatePreviewWithCode(code) {
                 if (code.length === 4) {
                     currentCode = code;
@@ -1415,233 +2028,362 @@
             function loadCustomSettings() {
                 const saved = localStorage.getItem('customSettings');
                 if (saved) {
-                    try { currentSettings = { ...defaultSettings, ...JSON.parse(saved) }; }
-                    catch (e) { currentSettings = { ...defaultSettings }; }
+                    try {
+                        currentSettings = { ...defaultSettings, ...JSON.parse(saved) };
+                    } catch (e) {
+                        currentSettings = { ...defaultSettings };
+                    }
+                } else {
+                    currentSettings = { ...defaultSettings };
                 }
                 applyCustomSettings(currentSettings);
             }
+
             function saveCustomSettings(settings) {
                 localStorage.setItem('customSettings', JSON.stringify(settings));
             }
 
+            // ===== SETUP DES ÉVÉNEMENTS =====
+            const allSliders = [
+                wordsY, wordsSize, wordsLineHeight,
+                lettersY, lettersSize, lettersSpacing,
+                indexY, indexSize, indexX,
+                noteTextY, noteTextX, noteTextSize, noteTextSpacing,
+                noteButtonY, noteButtonSize, noteButtonX
+            ];
+
+            allSliders.forEach(slider => {
+                if (slider) {
+                    slider.addEventListener('touchstart', startDragging);
+                    slider.addEventListener('touchend', stopDragging);
+                    slider.addEventListener('touchcancel', stopDragging);                    slider.addEventListener('mousedown', startDragging);
+                    slider.addEventListener('mouseup', stopDragging);
+                }
+            });
+
+            // Setup sliders optimisés
+            setupOptimizedSlider(wordsY, (v) => { currentSettings.wordsY = parseInt(v); wordsYValue.textContent = v + 'px'; wordsContainer.style.top = v + 'px'; });
+            setupOptimizedSlider(wordsSize, (v) => { currentSettings.wordsSize = parseInt(v); wordsSizeValue.textContent = v + 'px'; wordsContainer.style.fontSize = v + 'px'; });
+            setupOptimizedSlider(wordsLineHeight, (v) => { currentSettings.wordsLineHeight = parseInt(v); wordsLineHeightValue.textContent = v + 'px'; wordsContainer.style.lineHeight = v + 'px'; });
+            setupOptimizedSlider(lettersY, (v) => { currentSettings.lettersY = parseInt(v); lettersYValue.textContent = v + 'px'; lettersContainer.style.top = v + 'px'; });
+            setupOptimizedSlider(lettersSize, (v) => { currentSettings.lettersSize = parseInt(v); lettersSizeValue.textContent = v + 'px'; lettersContainer.style.fontSize = v + 'px'; });
+            setupOptimizedSlider(lettersSpacing, (v) => { currentSettings.lettersSpacing = parseInt(v); lettersSpacingValue.textContent = v + 'px'; lettersContainer.style.gap = v + 'px'; });
+            setupOptimizedSlider(indexY, (v) => { currentSettings.indexY = parseInt(v); indexYValue.textContent = v + 'px'; indexDisplay.style.top = v + 'px'; });
+            setupOptimizedSlider(indexSize, (v) => { currentSettings.indexSize = parseInt(v); indexSizeValue.textContent = v + 'px'; indexDisplay.style.fontSize = v + 'px'; });
+            setupOptimizedSlider(indexX, (v) => { currentSettings.indexX = parseInt(v); indexXValue.textContent = v + 'px'; indexDisplay.style.transform = `translateX(calc(-50% + ${v}px))`; });
+            setupOptimizedSlider(noteTextY, (v) => { currentSettings.noteTextY = parseInt(v); noteTextYValue.textContent = v + 'px'; if (noteImageText) noteImageText.style.top = v + 'px'; });
+            setupOptimizedSlider(noteTextX, (v) => { currentSettings.noteTextX = parseInt(v); noteTextXValue.textContent = v + 'px'; if (noteImageText) noteImageText.style.left = v + 'px'; });
+            setupOptimizedSlider(noteTextSize, (v) => { currentSettings.noteTextSize = parseInt(v); noteTextSizeValue.textContent = v + 'px'; if (noteImageText) noteImageText.style.fontSize = v + 'px'; });
+            setupOptimizedSlider(noteTextSpacing, (v) => { currentSettings.noteTextSpacing = parseInt(v); noteTextSpacingValue.textContent = v + 'px'; if (noteImageText) noteImageText.style.lineHeight = v + 'px'; });
+            setupOptimizedSlider(noteButtonY, (v) => { currentSettings.noteButtonY = parseInt(v); noteButtonYValue.textContent = v + 'px'; if (noteButton) noteButton.style.top = v + 'px'; if (noteButtonPreview) noteButtonPreview.style.top = v + 'px'; });
+            setupOptimizedSlider(noteButtonSize, (v) => { currentSettings.noteButtonSize = parseInt(v); noteButtonSizeValue.textContent = v + 'px'; if (noteButton) { noteButton.style.width = v + 'px'; noteButton.style.height = v + 'px'; } if (noteButtonPreview) { noteButtonPreview.style.width = v + 'px'; noteButtonPreview.style.height = v + 'px'; } });
+            setupOptimizedSlider(noteButtonX, (v) => { currentSettings.noteButtonX = parseInt(v); noteButtonXValue.textContent = v + 'px'; if (noteButton) noteButton.style.left = `calc(50% + ${v}px)`; if (noteButtonPreview) noteButtonPreview.style.left = `calc(50% + ${v}px)`; });
+
+            // Couleurs
+            if (wordsColor) wordsColor.addEventListener('input', (e) => { currentSettings.wordsColor = e.target.value; wordsContainer.style.color = currentSettings.wordsColor; });
+            if (lettersColor) lettersColor.addEventListener('input', (e) => { currentSettings.lettersColor = e.target.value; lettersContainer.style.color = currentSettings.lettersColor; });
+            if (indexColor) indexColor.addEventListener('input', (e) => { currentSettings.indexColor = e.target.value; indexDisplay.style.color = currentSettings.indexColor; });
+            if (noteTextColor) noteTextColor.addEventListener('input', (e) => { currentSettings.noteTextColor = e.target.value; if (noteImageText) noteImageText.style.color = currentSettings.noteTextColor; });
+            if (noteButtonColor) noteButtonColor.addEventListener('input', (e) => { currentSettings.noteButtonColor = e.target.value; if (noteButton) noteButton.style.background = currentSettings.noteButtonColor; if (noteButtonPreview) noteButtonPreview.style.background = currentSettings.noteButtonColor; });
+
             // Reset badges
-            [[wordsYValue, 'wordsY', defaultSettings.wordsY],
-             [wordsSizeValue, 'wordsSize', defaultSettings.wordsSize],
-             [lettersYValue, 'lettersY', defaultSettings.lettersY],
-             [lettersSizeValue, 'lettersSize', defaultSettings.lettersSize],
-             [indexYValue, 'indexY', defaultSettings.indexY],
-             [indexSizeValue, 'indexSize', defaultSettings.indexSize],
-             [noteTextYValue, 'noteTextY', defaultSettings.noteTextY],
-             [noteTextXValue, 'noteTextX', defaultSettings.noteTextX],
-             [noteTextSizeValue, 'noteTextSize', defaultSettings.noteTextSize],
-             [noteButtonYValue, 'noteButtonY', defaultSettings.noteButtonY],
-             [noteButtonSizeValue, 'noteButtonSize', defaultSettings.noteButtonSize]
-            ].forEach(([badge, key, def]) => {
-                if (badge) badge.addEventListener('click', () => {
-                    currentSettings[key] = def;
-                    applyCustomSettings(currentSettings);
-                });
-            });
-
-            // Sliders
-            wordsY.addEventListener('input', (e) => { currentSettings.wordsY = parseInt(e.target.value); wordsYValue.textContent = e.target.value + 'px'; wordsContainer.style.top = e.target.value + 'px'; });
-            wordsSize.addEventListener('input', (e) => { currentSettings.wordsSize = parseInt(e.target.value); wordsSizeValue.textContent = e.target.value + 'px'; wordsContainer.style.fontSize = e.target.value + 'px'; });
-            wordsColor.addEventListener('input', (e) => { currentSettings.wordsColor = e.target.value; wordsContainer.style.color = e.target.value; });
-            lettersY.addEventListener('input', (e) => { currentSettings.lettersY = parseInt(e.target.value); lettersYValue.textContent = e.target.value + 'px'; lettersContainer.style.top = e.target.value + 'px'; });
-            lettersSize.addEventListener('input', (e) => { currentSettings.lettersSize = parseInt(e.target.value); lettersSizeValue.textContent = e.target.value + 'px'; lettersContainer.style.fontSize = e.target.value + 'px'; });
-            lettersColor.addEventListener('input', (e) => { currentSettings.lettersColor = e.target.value; lettersContainer.style.color = e.target.value; });
-            indexY.addEventListener('input', (e) => { currentSettings.indexY = parseInt(e.target.value); indexYValue.textContent = e.target.value + 'px'; indexDisplay.style.top = e.target.value + 'px'; });
-            indexSize.addEventListener('input', (e) => { currentSettings.indexSize = parseInt(e.target.value); indexSizeValue.textContent = e.target.value + 'px'; indexDisplay.style.fontSize = e.target.value + 'px'; });
-            indexColor.addEventListener('input', (e) => { currentSettings.indexColor = e.target.value; indexDisplay.style.color = e.target.value; });
-            noteTextY.addEventListener('input', (e) => { currentSettings.noteTextY = parseInt(e.target.value); noteTextYValue.textContent = e.target.value + 'px'; noteImageText.style.top = e.target.value + 'px'; });
-            noteTextX.addEventListener('input', (e) => { currentSettings.noteTextX = parseInt(e.target.value); noteTextXValue.textContent = e.target.value + 'px'; noteImageText.style.left = e.target.value + 'px'; });
-            noteTextSize.addEventListener('input', (e) => { currentSettings.noteTextSize = parseInt(e.target.value); noteTextSizeValue.textContent = e.target.value + 'px'; noteImageText.style.fontSize = e.target.value + 'px'; });
-            noteTextColor.addEventListener('input', (e) => { currentSettings.noteTextColor = e.target.value; noteImageText.style.color = e.target.value; });
-            noteButtonY.addEventListener('input', (e) => { currentSettings.noteButtonY = parseInt(e.target.value); noteButtonYValue.textContent = e.target.value + 'px'; noteButton.style.top = e.target.value + 'px'; noteButtonPreview.style.top = e.target.value + 'px'; });
-            noteButtonSize.addEventListener('input', (e) => { currentSettings.noteButtonSize = parseInt(e.target.value); noteButtonSizeValue.textContent = e.target.value + 'px'; noteButton.style.width = e.target.value + 'px'; noteButton.style.height = e.target.value + 'px'; noteButtonPreview.style.width = e.target.value + 'px'; noteButtonPreview.style.height = e.target.value + 'px'; });
-            noteButtonColor.addEventListener('input', (e) => { currentSettings.noteButtonColor = e.target.value; noteButton.style.background = e.target.value; noteButtonPreview.style.background = e.target.value; });
-
-            if (testCodeInput) testCodeInput.addEventListener('input', (e) => {
-                const code = e.target.value.trim();
-                if (code.length === 4 && /^\d+$/.test(code)) updatePreviewWithCode(code);
-            });
-
-            if (searchInput) {
-                searchInput.addEventListener('input', () => { enableSearchButton(); codeResult.textContent = ''; codeResult.classList.remove('error'); });
-                searchInput.addEventListener('keypress', (e) => { if (e.key === 'Enter' && !isSearchDisabled) searchBtn.click(); });            }
-
-            if (searchBtn) searchBtn.addEventListener('click', () => {
-                if (isSearchDisabled) return;
-                const word = searchInput.value.trim();
-                if (word === '') return;
-                const result = searchWord(word);
-                if (result) {
-                    codeResult.textContent = result.code;
-                    codeResult.classList.remove('error');
-                    disableSearchButton();
-                    searchInput.blur();
-                } else {
-                    codeResult.textContent = 'Mot introuvable !';
-                    codeResult.classList.add('error');
+            const resetBadges = [
+                [wordsYValue, 'wordsY', defaultSettings.wordsY],
+                [wordsSizeValue, 'wordsSize', defaultSettings.wordsSize],
+                [wordsLineHeightValue, 'wordsLineHeight', defaultSettings.wordsLineHeight],
+                [lettersYValue, 'lettersY', defaultSettings.lettersY],
+                [lettersSizeValue, 'lettersSize', defaultSettings.lettersSize],
+                [lettersSpacingValue, 'lettersSpacing', defaultSettings.lettersSpacing],
+                [indexYValue, 'indexY', defaultSettings.indexY],
+                [indexSizeValue, 'indexSize', defaultSettings.indexSize],
+                [indexXValue, 'indexX', defaultSettings.indexX],
+                [noteTextYValue, 'noteTextY', defaultSettings.noteTextY],
+                [noteTextXValue, 'noteTextX', defaultSettings.noteTextX],
+                [noteTextSizeValue, 'noteTextSize', defaultSettings.noteTextSize],
+                [noteTextSpacingValue, 'noteTextSpacing', defaultSettings.noteTextSpacing],
+                [noteButtonYValue, 'noteButtonY', defaultSettings.noteButtonY],
+                [noteButtonSizeValue, 'noteButtonSize', defaultSettings.noteButtonSize],
+                [noteButtonXValue, 'noteButtonX', defaultSettings.noteButtonX]
+            ];
+            resetBadges.forEach(([badge, key, defaultValue]) => {
+                if (badge) {
+                    badge.addEventListener('click', () => {
+                        currentSettings[key] = defaultValue;
+                        applyCustomSettings(currentSettings);
+                    });
                 }
             });
 
-            setupImageImport(bgFileInput, lockPage);
-            setupImageImport(imgFileInput, resultPage);
-            setupImageImport(noteFileInput, null);
-
-            if (importBgBtn) importBgBtn.addEventListener('click', () => bgFileInput.click());
-            if (importImgBtn) importImgBtn.addEventListener('click', () => imgFileInput.click());
-            if (importNoteBtn) importNoteBtn.addEventListener('click', () => noteFileInput.click());
-
-            if (previewConfirm) previewConfirm.addEventListener('click', () => {
-                if (currentPreviewTarget === 'bg') { lockPage.style.backgroundImage = 'url(' + currentPreviewData + ')'; localStorage.setItem('backgroundImage', currentPreviewData); }
-                else if (currentPreviewTarget === 'img') { resultPage.style.backgroundImage = 'url(' + currentPreviewData + ')'; localStorage.setItem('resultImage', currentPreviewData); }
-                else if (currentPreviewTarget === 'note') { noteImageData = currentPreviewData; localStorage.setItem('noteImage', noteImageData); }
-                previewContainer.classList.remove('visible');
-                previewImage.src = '';
-                currentPreviewData = '';
-                bgFileInput.value = '';
-                imgFileInput.value = '';
-                noteFileInput.value = '';
-            });
-
-            if (previewCancel) previewCancel.addEventListener('click', () => {
-                previewContainer.classList.remove('visible');
-                previewImage.src = '';
-                currentPreviewData = '';
-                bgFileInput.value = '';
-                imgFileInput.value = '';
-                noteFileInput.value = '';
-            });
-
-            if (noteButton) noteButton.addEventListener('click', () => {
-                isNoteModeActive = !isNoteModeActive;
-                noteButton.classList.toggle('active', isNoteModeActive);            });
-
-            if (noteImageOverlay) noteImageOverlay.addEventListener('dblclick', (e) => {
-                e.preventDefault();
-                noteImageOverlay.classList.remove('visible');
-                isNoteModeActive = false;
-                noteButton.classList.remove('active');
-                noteButtonPreview.classList.remove('visible');
-            });
-
-            document.addEventListener('contextmenu', (e) => e.preventDefault());
-            document.addEventListener('selectstart', (e) => e.preventDefault());
-
-            if (btnPerform) btnPerform.addEventListener('click', () => { homePage.classList.add('hidden'); lockPage.classList.add('visible'); pin = ''; updateDots(); });
-            if (btnList) btnList.addEventListener('click', () => { resetModalToNormal(); modal.classList.add('visible'); modalOverlay.classList.add('visible'); });
-            if (btnSettings) btnSettings.addEventListener('click', () => { homePage.classList.add('hidden'); settingsPage.classList.add('visible'); });
-            if (settingsBack) settingsBack.addEventListener('click', () => { settingsPage.classList.remove('visible'); homePage.classList.remove('hidden'); previewContainer.classList.remove('visible'); bgFileInput.value = ''; imgFileInput.value = ''; noteFileInput.value = ''; });
-            if (modalOverlay) modalOverlay.addEventListener('click', () => { modal.classList.remove('visible'); modalOverlay.classList.remove('visible'); searchInput.blur(); resetModalToNormal(); });
-
-            if (customizeBtn) customizeBtn.addEventListener('click', () => {
-                settingsPage.classList.remove('visible');
-                customizePage.classList.add('visible', 'preview-mode');
-                resultPage.classList.add('preview-mode');
-                if (noteButton) noteButton.classList.add('visible');
-                loadCustomSettings();
-                updatePreviewWithCode("7131");
-            });
-
-            if (customizeBack) customizeBack.addEventListener('click', () => {
-                customizePage.classList.remove('visible', 'preview-mode');
-                resultPage.classList.remove('preview-mode');
-                settingsPage.classList.add('visible');
-                if (noteButton) noteButton.classList.remove('visible');
-                loadCustomSettings();
-            });
-
-            if (customizeSave) customizeSave.addEventListener('click', () => {
-                saveCustomSettings(currentSettings);
-                customizePage.classList.remove('visible', 'preview-mode');
-                resultPage.classList.remove('preview-mode');
-                settingsPage.classList.add('visible');
-                if (noteButton) noteButton.classList.remove('visible');
-            });
-
-            if (customizeReset) customizeReset.addEventListener('click', () => {
-                currentSettings = { ...defaultSettings };
-                applyCustomSettings(currentSettings);
-            });
-
-            keys.forEach(key => {                key.addEventListener('click', function() {
-                    animateKey(this);
-                    if (pin.length < 4) { pin += this.getAttribute('data-digit'); updateDots(); }
-                });
-            });
-
-            if (deleteBtn) deleteBtn.addEventListener('click', function(e) {
-                e.stopPropagation();
-                animateText(this);
-                if (pin.length > 0) { pin = pin.slice(0, -1); updateDots(); }
-            });
-
-            if (okBtn) okBtn.addEventListener('click', function(e) {
-                e.stopPropagation();
-                animateText(this);
-                if (pin.length === 4) {
-                    currentCode = pin;
-                    originalWords = wordsList.filter(w => w.code === pin).map(w => w.word);
-                    originalWords.sort((a, b) => a.localeCompare(b));
-                    currentWords = [...originalWords];
-                    letterLists = calculateLetterLists(originalWords);
-                    bestListIndex = findBestList(letterLists);
-                    bestListLetters = bestListIndex !== -1 ? letterLists[bestListIndex] : [];
-                    bestListLetters.sort((a, b) => a.localeCompare(b));
-                    indexDisplay.textContent = bestListIndex !== -1 ? (bestListIndex + 1).toString() : '';
-                    displayWords(currentWords);
-                    displayLetterButtons(bestListIndex, bestListLetters);
-                    wordsContainer.classList.remove('hidden');
-                    lettersContainer.classList.remove('hidden');
-                    lockPage.classList.remove('visible');
-                    resultPage.classList.add('visible');
-                    if (noteButton) noteButton.classList.add('visible');
-                    pin = '';
-                    updateDots();
-                }
-            });
-
-            if (indexDisplay) indexDisplay.addEventListener('click', function(e) {
-                e.stopPropagation();
-                wordsContainer.classList.toggle('hidden');
-                lettersContainer.classList.toggle('hidden');
-            });
-
-            if (resultPage) resultPage.addEventListener('click', function(e) {
-                if (e.target.classList.contains('result-word') || e.target.classList.contains('letter-btn') || e.target === indexDisplay || e.target === noteButton) return;
-                let now = new Date().getTime();
-                let timeDiff = now - lastTap;
-                if (timeDiff < 300 && timeDiff > 0) {
-                    resultPage.classList.remove('visible');
-                    lockPage.classList.add('visible');                    if (noteButton) noteButton.classList.remove('visible');
-                    selectedLetter = '';
-                    lastTap = 0;
-                } else {
-                    lastTap = now;
-                    setTimeout(() => lastTap = 0, 300);
-                }
-            });
-            if (emergencyBtn) emergencyBtn.addEventListener('click', function(e) {
-                e.stopPropagation();
-                animateText(this);
-                lockPage.classList.remove('visible');
-                homePage.classList.remove('hidden');
-                pin = '';
-                updateDots();
-            });
-
-            if ('serviceWorker' in navigator) {
-                window.addEventListener('load', async () => {
-                    try {
-                        await navigator.serviceWorker.register('./sw.js', { scope: './' });
-                    } catch (error) { console.error('SW error:', error); }
+            // Test code
+            if (testCodeInput) {
+                testCodeInput.addEventListener('input', (e) => {
+                    const code = e.target.value.trim();
+                    if (code.length === 4 && /^\d+$/.test(code)) updatePreviewWithCode(code);
                 });
             }
 
+            // Modal liste
+            if (searchInput) {
+                searchInput.addEventListener('input', () => { enableSearchButton(); codeResult.textContent = ''; codeResult.classList.remove('error'); });
+                searchInput.addEventListener('focus', () => modal.classList.add('keyboard-open'));
+                searchInput.addEventListener('blur', () => setTimeout(() => modal.classList.remove('keyboard-open'), 200));
+                searchInput.addEventListener('keypress', (e) => { if (e.key === 'Enter' && !isSearchDisabled) searchBtn.click(); });
+            }
+
+            if (searchBtn) {
+                searchBtn.addEventListener('click', () => {
+                    if (isSearchDisabled) return;
+                    const word = searchInput.value.trim();
+                    lastSearchWord = word;
+                    if (word === '') return;
+                    const result = searchWord(word);
+                    if (result) {
+                        codeResult.textContent = result.code;
+                        codeResult.classList.remove('error');
+                        disableSearchButton();
+                        searchInput.blur();
+                    } else {
+                        codeResult.textContent = 'Mot introuvable !';
+                        codeResult.classList.add('error');
+                    }
+                });
+            }
+
+            // Import images
+            setupImageImport(bgFileInput, lockPage, 'backgroundImage');
+            setupImageImport(imgFileInput, resultPage, 'resultImage');
+            setupImageImport(noteFileInput, null, 'noteImage');
+
+            if (importBgBtn) importBgBtn.addEventListener('click', () => bgFileInput.click());            if (importImgBtn) importImgBtn.addEventListener('click', () => imgFileInput.click());
+            if (importNoteBtn) importNoteBtn.addEventListener('click', () => noteFileInput.click());
+
+            if (previewConfirm) {
+                previewConfirm.addEventListener('click', () => {
+                    if (currentPreviewTarget === 'bg') { lockPage.style.backgroundImage = `url(${currentPreviewData})`; localStorage.setItem('backgroundImage', currentPreviewData); }
+                    else if (currentPreviewTarget === 'img') { resultPage.style.backgroundImage = `url(${currentPreviewData})`; localStorage.setItem('resultImage', currentPreviewData); }
+                    else if (currentPreviewTarget === 'note') { noteImageData = currentPreviewData; localStorage.setItem('noteImage', noteImageData); }
+                    previewContainer.classList.remove('visible');
+                    previewImage.src = '';
+                    currentPreviewData = '';
+                    currentPreviewTarget = '';
+                    bgFileInput.value = '';
+                    imgFileInput.value = '';
+                    noteFileInput.value = '';
+                });
+            }
+
+            if (previewCancel) {
+                previewCancel.addEventListener('click', () => {
+                    previewContainer.classList.remove('visible');
+                    previewImage.src = '';
+                    currentPreviewData = '';
+                    currentPreviewTarget = '';
+                    bgFileInput.value = '';
+                    imgFileInput.value = '';
+                    noteFileInput.value = '';
+                });
+            }
+
+            // Bouton Note
+            if (noteButton) {
+                noteButton.addEventListener('click', () => {
+                    isNoteModeActive = !isNoteModeActive;
+                    noteButton.classList.toggle('active', isNoteModeActive);
+                });
+            }
+
+            // Overlay Note
+            if (noteImageOverlay) {
+                noteImageOverlay.addEventListener('dblclick', (e) => {
+                    e.preventDefault();
+                    noteImageOverlay.classList.remove('visible');
+                    isNoteModeActive = false;
+                    noteButton.classList.remove('active');
+                    noteButtonPreview.classList.remove('visible');
+                    if (!wordsContainer.classList.contains('hidden')) {
+                        wordsContainer.classList.add('hidden');
+                        lettersContainer.classList.add('hidden');
+                        selectedLetter = '';                    }
+                });
+            }
+
+            // Preview buttons
+            previewBtns.forEach(btn => setupPreviewButton(btn));
+
+            // Bloquer menu contextuel (partage/capture)
+            document.addEventListener('contextmenu', (e) => e.preventDefault());
+            document.addEventListener('selectstart', (e) => e.preventDefault());
+
+            // Gestion retour Google Images
+            document.addEventListener('visibilitychange', function() {
+                if (!document.hidden && resultPage.classList.contains('visible') && !wordsContainer.classList.contains('hidden')) {
+                    wordsContainer.classList.add('hidden');
+                    lettersContainer.classList.add('hidden');
+                    selectedLetter = '';
+                }
+            });
+
+            window.addEventListener('pageshow', function() {
+                if (resultPage.classList.contains('visible') && !wordsContainer.classList.contains('hidden')) {
+                    wordsContainer.classList.add('hidden');
+                    lettersContainer.classList.add('hidden');
+                    selectedLetter = '';
+                }
+            });
+
+            // Navigation
+            if (btnPerform) btnPerform.addEventListener('click', () => { homePage.classList.add('hidden'); lockPage.classList.add('visible'); pin = ''; updateDots(); });
+            if (btnList) btnList.addEventListener('click', () => { resetModalToNormal(); modal.classList.add('visible'); modalOverlay.classList.add('visible'); });
+            if (btnSettings) btnSettings.addEventListener('click', () => { homePage.classList.add('hidden'); settingsPage.classList.add('visible'); });
+            if (settingsBack) settingsBack.addEventListener('click', () => { settingsPage.classList.remove('visible'); homePage.classList.remove('hidden'); previewContainer.classList.remove('visible'); previewImage.src = ''; currentPreviewData = ''; currentPreviewTarget = ''; bgFileInput.value = ''; imgFileInput.value = ''; noteFileInput.value = ''; });
+            if (modalOverlay) modalOverlay.addEventListener('click', () => { modal.classList.remove('visible'); modalOverlay.classList.remove('visible'); searchInput.blur(); resetModalToNormal(); });
+
+            // Personnalisation
+            if (customizeBtn) {
+                customizeBtn.addEventListener('click', () => {
+                    settingsPage.classList.remove('visible');
+                    isPreviewMode = true;
+                    customizePage.classList.add('visible', 'preview-mode');
+                    resultPage.classList.add('preview-mode');
+                    if (noteButton) noteButton.classList.add('visible');
+                    loadCustomSettings();
+                    updatePreviewWithCode("7131");
+                });
+            }
+
+            if (customizeBack) {
+                customizeBack.addEventListener('click', () => {                    customizePage.classList.remove('visible', 'preview-mode');
+                    resultPage.classList.remove('preview-mode');
+                    settingsPage.classList.add('visible');
+                    isPreviewMode = false;
+                    if (noteButton) noteButton.classList.remove('visible');
+                    loadCustomSettings();
+                });
+            }
+
+            if (customizeSave) {
+                customizeSave.addEventListener('click', () => {
+                    saveCustomSettings(currentSettings);
+                    customizePage.classList.remove('visible', 'preview-mode');
+                    resultPage.classList.remove('preview-mode');
+                    settingsPage.classList.add('visible');
+                    isPreviewMode = false;
+                    if (noteButton) noteButton.classList.remove('visible');
+                });
+            }
+
+            if (customizeReset) {
+                customizeReset.addEventListener('click', () => {
+                    currentSettings = { ...defaultSettings };
+                    applyCustomSettings(currentSettings);
+                });
+            }
+
+            // Lock screen
+            keys.forEach(key => {
+                key.addEventListener('click', function() {
+                    animateKey(this);
+                    if (pin.length < 4) {
+                        pin += this.getAttribute('data-digit');
+                        updateDots();
+                    }
+                });
+            });
+
+            if (deleteBtn) {
+                deleteBtn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    animateText(this);
+                    if (pin.length > 0) { pin = pin.slice(0, -1); updateDots(); }
+                });
+            }
+
+            if (okBtn) {
+                okBtn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    animateText(this);                    if (pin.length === 4) {
+                        currentCode = pin;
+                        originalWords = wordsList.filter(w => w.code === pin).map(w => w.word);
+                        originalWords.sort((a, b) => a.localeCompare(b));
+                        currentWords = [...originalWords];
+                        letterLists = calculateLetterLists(originalWords);
+                        bestListIndex = findBestList(letterLists);
+                        bestListLetters = bestListIndex !== -1 ? letterLists[bestListIndex] : [];
+                        bestListLetters.sort((a, b) => a.localeCompare(b));
+                        indexDisplay.textContent = bestListIndex !== -1 ? (bestListIndex + 1).toString() : '';
+                        displayWords(currentWords);
+                        displayLetterButtons(bestListIndex, bestListLetters);
+                        wordsContainer.classList.remove('hidden');
+                        lettersContainer.classList.remove('hidden');
+                        lockPage.classList.remove('visible');
+                        resultPage.classList.add('visible');
+                        if (noteButton) noteButton.classList.add('visible');
+                        pin = '';
+                        updateDots();
+                    }
+                });
+            }
+
+            if (indexDisplay) {
+                indexDisplay.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    wordsContainer.classList.toggle('hidden');
+                    lettersContainer.classList.toggle('hidden');
+                });
+            }
+
+            if (resultPage) {
+                resultPage.addEventListener('click', function(e) {
+                    if (e.target.classList.contains('result-word') || e.target.classList.contains('letter-btn') || e.target === indexDisplay || e.target === noteButton) return;
+                    let now = new Date().getTime();
+                    let timeDiff = now - lastTap;
+                    if (timeDiff < 300 && timeDiff > 0) {
+                        resultPage.classList.remove('visible');
+                        lockPage.classList.add('visible');
+                        if (noteButton) noteButton.classList.remove('visible');
+                        selectedLetter = '';
+                        lastTap = 0;
+                    } else {
+                        lastTap = now;
+                        setTimeout(() => lastTap = 0, 300);
+                    }
+                });
+            }
+
+            if (emergencyBtn) {                emergencyBtn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    animateText(this);
+                    lockPage.classList.remove('visible');
+                    homePage.classList.remove('hidden');
+                    pin = '';
+                    updateDots();
+                });
+            }
+
+            // Service Worker
+            if ('serviceWorker' in navigator) {
+                window.addEventListener('load', async () => {
+                    try {
+                        const registration = await navigator.serviceWorker.register('./sw.js', { scope: './' });
+                        console.log('✅ Service Worker enregistré:', registration.scope);
+                    } catch (error) {
+                        console.error('❌ Échec Service Worker:', error);
+                    }
+                });
+            }
+
+            // Indicateur offline
+            const showOfflineIndicator = () => { if (offlineIndicator) offlineIndicator.classList.add('visible'); };
+            const hideOfflineIndicator = () => { if (offlineIndicator) offlineIndicator.classList.remove('visible'); };
+            
+            if (!navigator.onLine) showOfflineIndicator();
+            window.addEventListener('online', () => { console.log('🌐 En ligne'); hideOfflineIndicator(); });
+            window.addEventListener('offline', () => { console.log('📴 Hors ligne'); showOfflineIndicator(); });
+
+            // Setup long press underline
             setupLongPressUnderline();
 
+            // ===== INIT =====
             pin = '';
             updateDots();
             resetModalToNormal();
