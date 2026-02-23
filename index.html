@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>ENIGMA - Version Finale</title>
+    <meta name="description" content="ENIGMA - Application de recherche de mots codés">
     
     <!-- PWA Meta Tags -->
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -22,6 +23,8 @@
             box-sizing: border-box;
             font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
             -webkit-tap-highlight-color: transparent;
+            user-select: none;
+            -webkit-user-select: none;
         }
 
         body {
@@ -44,8 +47,7 @@
         }
 
         @keyframes apparitionBouton {
-            0% { opacity: 0; transform: translateY(30px); }
-            100% { opacity: 1; transform: translateY(0); }
+            0% { opacity: 0; transform: translateY(30px); }            100% { opacity: 1; transform: translateY(0); }
         }
 
         .app-title {
@@ -94,8 +96,7 @@
             margin: 12px 0;
             opacity: 0;
             transform: translateY(30px);
-            animation: apparitionBouton 0.5s ease-out forwards;
-        }
+            animation: apparitionBouton 0.5s ease-out forwards;        }
 
         #btn-perform { animation-delay: 0.2s; }
         #btn-list { animation-delay: 0.4s; }
@@ -144,8 +145,7 @@
             transition: transform 0.3s ease-out;
         }
 
-        #home-page.hidden {
-            transform: translateY(-100%);
+        #home-page.hidden {            transform: translateY(-100%);
         }
 
         /* PAGE PARAMÈTRES */
@@ -194,8 +194,7 @@
 
         .settings-btn:active {
             background: #555;
-            transform: scale(0.98);
-        }
+            transform: scale(0.98);        }
 
         .preview-container {
             width: 320px;
@@ -244,8 +243,7 @@
         }
 
         .back-btn {
-            width: 320px;
-            height: 50px;
+            width: 320px;            height: 50px;
             background: #666;
             color: white;
             border: none;
@@ -280,7 +278,6 @@
             opacity: 1;
         }
 
-        /* Effet de transparence quand on manipule un curseur */
         #customize-page.dragging-slider {
             background: transparent !important;
             backdrop-filter: none !important;
@@ -295,8 +292,6 @@
             transition: opacity 0.1s ease;
             pointer-events: none;
         }
-
-        /* Les curseurs et leurs badges px restent visibles */
         #customize-page.dragging-slider input[type="range"] {
             opacity: 1 !important;
             position: relative;
@@ -328,13 +323,11 @@
             opacity: 1 !important;
         }
 
-        /* L'aperçu en arrière-plan devient pleinement visible */
         #result-page.preview-mode.dragging-active {
             opacity: 1 !important;
             z-index: 30;
         }
 
-        /* Animation plus douce */
         .control-group,
         .test-code-section,
         .customize-header,
@@ -342,14 +335,12 @@
             transition: opacity 0.2s ease, background 0.2s ease, backdrop-filter 0.2s ease;
         }
 
-        /* Mode preview - l'écran de résultat est visible en arrière-plan */
         #result-page.preview-mode {
             visibility: visible !important;
             opacity: 1 !important;
             z-index: 35;
             pointer-events: none;
         }
-
         #customize-page.preview-mode {
             background: rgba(0, 0, 0, 0.85);
             backdrop-filter: blur(5px);
@@ -392,7 +383,6 @@
             letter-spacing: 2px;
         }
 
-        /* Section TESTER UN CODE */
         .test-code-section {
             background: #222;
             border-radius: 15px;
@@ -400,8 +390,7 @@
             margin-bottom: 25px;
             position: relative;
             z-index: 41;
-            backdrop-filter: blur(5px);
-            border: 1px solid #444;
+            backdrop-filter: blur(5px);            border: 1px solid #444;
             text-align: center;
         }
 
@@ -450,8 +439,7 @@
             background: #222;
             border-radius: 15px;
             padding: 20px;
-            margin-bottom: 25px;
-            position: relative;
+            margin-bottom: 25px;            position: relative;
             z-index: 41;
             backdrop-filter: blur(5px);
             border: 1px solid #444;
@@ -500,8 +488,7 @@
             display: flex;
             justify-content: space-between;
             margin-bottom: 8px;
-            color: #ddd;
-            font-size: 16px;
+            color: #ddd;            font-size: 16px;
         }
 
         .slider-item input[type="range"] {
@@ -510,7 +497,7 @@
             background: #444;
             border-radius: 3px;
             -webkit-appearance: none;
-            pointer-events: none; /* Seul le cercle est cliquable */
+            pointer-events: none;
         }
 
         .slider-item input[type="range"]::-webkit-slider-thumb {
@@ -522,7 +509,7 @@
             cursor: pointer;
             border: 2px solid white;
             box-shadow: 0 2px 6px rgba(0,0,0,0.3);
-            pointer-events: auto; /* Seul le cercle est cliquable */
+            pointer-events: auto;
         }
 
         .color-item {
@@ -550,8 +537,7 @@
             border-radius: 15px;
             font-size: 14px;
             color: #FFD700;
-            border: 1px solid #FFD700;
-            cursor: pointer;
+            border: 1px solid #FFD700;            cursor: pointer;
             transition: background 0.2s;
         }
 
@@ -600,8 +586,7 @@
         }
 
         /* PAGE DE LOCK */
-        #lock-page {
-            position: absolute;
+        #lock-page {            position: absolute;
             inset: 0;
             z-index: 10;
             visibility: hidden;
@@ -651,7 +636,6 @@
             box-shadow: 0 2px 6px rgba(0,0,0,0.3);
             transition: opacity 0.2s, transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
-
         .dot.active {
             opacity: 1;
             transform: scale(1.25);
@@ -667,11 +651,12 @@
             margin-bottom: 15px;
         }
 
-        .key, .delete-btn, .ok {
+        .key {
             width: 70px;
             height: 70px;
             border-radius: 50%;
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
             font-size: 28px;
@@ -687,19 +672,58 @@
             color: white;
         }
 
-        .key:active, .delete-btn:active, .ok:active {
+        .key-number {
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 2px;
+        }
+
+        .key-letters {
+            font-size: 9px;
+            letter-spacing: 1px;
+            opacity: 0.8;
+            text-transform: uppercase;
+        }
+        .key:active {
+            background: rgba(255, 255, 255, 0.35);
+            transform: scale(0.97);
+        }
+
+        .bottom-row {
+            display: grid;
+            grid-template-columns: repeat(3, 70px);
+            justify-content: center;
+            gap: 25px;
+            margin-top: 10px;
+        }
+
+        .delete-btn, .ok {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            font-weight: bold;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            user-select: none;
+            transition: background 0.1s, transform 0.1s;
+            position: relative;
+            color: white;
+        }
+
+        .delete-btn:active, .ok:active {
             background: rgba(255, 255, 255, 0.35);
             transform: scale(0.97);
         }
 
         .delete-btn {
-            font-size: 34px;
-        }
-
-        .ok {
-            font-size: 20px;
-            background: rgba(50, 130, 216, 0.5);
-            border: none;
+            font-size: 28px;
         }
 
         .key::after, .delete-btn::after, .ok::after {
@@ -709,8 +733,7 @@
             border-radius: 50%;
             border: 2px solid rgba(255, 255, 255, 0.9);
             opacity: 0;
-            pointer-events: none;
-        }
+            pointer-events: none;        }
 
         .active::after, .active-text::after {
             animation: circleWave 0.4s ease-out forwards;
@@ -720,14 +743,6 @@
             0% { opacity: 0.9; transform: scale(0.5); }
             70% { opacity: 0.5; transform: scale(1.3); }
             100% { opacity: 0; transform: scale(1.6); }
-        }
-
-        .bottom-row {
-            display: grid;
-            grid-template-columns: repeat(3, 70px);
-            justify-content: center;
-            gap: 25px;
-            margin-top: 10px;
         }
 
         .emergency {
@@ -767,8 +782,7 @@
             transition: visibility 0.3s, opacity 0.3s;
             background: url('image.jpg') no-repeat center center/cover;
             display: flex;
-            flex-direction: column;
-            align-items: center;
+            flex-direction: column;            align-items: center;
             justify-content: flex-start;
             cursor: pointer;
         }
@@ -817,8 +831,7 @@
             background: transparent;
             padding: 2px 0;
             border-radius: 0;
-            backdrop-filter: none;
-            border: none;
+            backdrop-filter: none;            border: none;
             font-size: inherit;
             color: inherit;
             white-space: nowrap;
@@ -867,7 +880,6 @@
             width: 40px;
             text-align: center;
         }
-
         .index-display {
             position: absolute;
             top: 517px;
@@ -882,7 +894,6 @@
             transition: all 0.1s ease;
         }
 
-        /* Bouton Note (bleu) */
         .note-button {
             position: absolute;
             width: 30px;
@@ -918,8 +929,7 @@
             z-index: 200;
             display: none;
             justify-content: center;
-            align-items: center;
-        }
+            align-items: center;        }
 
         .note-image-overlay.visible {
             display: flex;
@@ -935,7 +945,6 @@
             z-index: 201;
         }
 
-        /* Bouton Note dans l'aperçu */
         .note-button-preview {
             position: absolute;
             width: 30px;
@@ -956,7 +965,6 @@
             display: block;
         }
 
-        /* Texte dans l'image Note */
         .note-image-text {
             position: absolute;
             z-index: 202;
@@ -970,11 +978,21 @@
             min-width: 200px;
             outline: none;
             background: transparent;
-            border: none;
-            padding: 0;
+            border: none;            padding: 0;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
             left: 20px;
             top: 265px;
+        }
+
+        /* Style pour le soulignement des premières lettres */
+        .note-word-first-letter {
+            text-decoration: none;
+        }
+
+        .note-word-first-letter.underlined {
+            text-decoration: underline;
+            text-decoration-thickness: 2px;
+            text-underline-offset: 4px;
         }
 
         /* MODAL LISTE */
@@ -1009,7 +1027,6 @@
             width: 100%;
             margin-bottom: 15px;
         }
-
         #search-input {
             width: 100%;
             padding: 18px;
@@ -1060,7 +1077,6 @@
         #search-btn:active {
             transform: scale(0.98);
         }
-
         #search-btn.disabled {
             background: #999;
             opacity: 0.6;
@@ -1080,6 +1096,27 @@
         .hidden-file-input {
             display: none;
         }
+
+        /* Indicateur offline */
+        #offline-indicator {
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            background: #f44336;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            z-index: 9999;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+            transition: opacity 0.3s;
+            display: none;
+        }
+
+        #offline-indicator.visible {
+            display: block;
+            opacity: 1;
+        }
     </style>
 </head>
 <body>
@@ -1087,6 +1124,8 @@
     <input type="file" id="bg-file-input" class="hidden-file-input" accept="image/*">
     <input type="file" id="img-file-input" class="hidden-file-input" accept="image/*">
     <input type="file" id="note-file-input" class="hidden-file-input" accept="image/*">
+
+    <!-- Indicateur offline -->    <div id="offline-indicator">📴 Hors ligne</div>
 
     <!-- PAGE D'ACCUEIL -->
     <div id="home-page">
@@ -1105,9 +1144,8 @@
         <button class="settings-btn" id="import-note-btn">📷 Importer Note</button>
         <button class="settings-btn" id="customize-btn">🎨 Personnaliser l'affichage</button>
         
-        <!-- Zone d'aperçu -->
         <div class="preview-container" id="preview-container">
-            <img class="preview-image" id="preview-image" src="" alt="Aperçu">
+            <img class="preview-image" id="preview-image" src="" alt="">
             <div class="preview-buttons">
                 <button class="preview-confirm" id="preview-confirm">Confirmer</button>
                 <button class="preview-cancel" id="preview-cancel">Annuler</button>
@@ -1124,7 +1162,6 @@
             <span class="customize-title">PERSONNALISER</span>
         </div>
 
-        <!-- Section TESTER UN CODE -->
         <div class="test-code-section">
             <div class="test-code-title">
                 <span>🎯 TESTER UN CODE</span>
@@ -1135,11 +1172,9 @@
             </div>
         </div>
 
-        <!-- SECTION LISTE -->
         <div class="control-group">
             <div class="control-header">
-                <h3>📋 Liste</h3>
-                <button class="preview-btn" id="preview-list-btn">👁️ Aperçu</button>
+                <h3>📋 Liste</h3>                <button class="preview-btn" data-preview="full">👁️ Aperçu</button>
             </div>
             
             <div class="slider-item">
@@ -1163,11 +1198,10 @@
             </div>
         </div>
 
-        <!-- SECTION LETTRES -->
         <div class="control-group">
             <div class="control-header">
                 <h3>🔤 Lettres</h3>
-                <button class="preview-btn" id="preview-letters-btn">👁️ Aperçu</button>
+                <button class="preview-btn" data-preview="full">👁️ Aperçu</button>
             </div>
             
             <div class="slider-item">
@@ -1190,12 +1224,10 @@
                 <input type="range" id="letters-spacing" min="0" max="100" value="40" step="1">
             </div>
         </div>
-
-        <!-- SECTION INDICE -->
         <div class="control-group">
             <div class="control-header">
                 <h3>🔢 Indice</h3>
-                <button class="preview-btn" id="preview-index-btn">👁️ Aperçu</button>
+                <button class="preview-btn" data-preview="full">👁️ Aperçu</button>
             </div>
             
             <div class="slider-item">
@@ -1219,11 +1251,10 @@
             </div>
         </div>
 
-        <!-- SECTION NOTE (Liste) -->
         <div class="control-group">
             <div class="control-header">
                 <h3>📝 Note (Liste)</h3>
-                <button class="preview-btn" id="preview-note-text-btn">👁️ Aperçu</button>
+                <button class="preview-btn" data-preview="note">👁️ Aperçu</button>
             </div>
             
             <div class="slider-item">
@@ -1241,8 +1272,7 @@
                 <input type="range" id="note-text-size" min="10" max="60" value="20" step="1">
             </div>
 
-            <div class="color-item">
-                <label>Couleur</label>
+            <div class="color-item">                <label>Couleur</label>
                 <input type="color" id="note-text-color" value="#ffffff">
             </div>
 
@@ -1252,11 +1282,10 @@
             </div>
         </div>
 
-        <!-- SECTION NOTE (Bouton) -->
         <div class="control-group">
             <div class="control-header">
                 <h3>🔵 Note (Bouton)</h3>
-                <button class="preview-btn" id="preview-note-button-btn">👁️ Aperçu</button>
+                <button class="preview-btn" data-preview="full">👁️ Aperçu</button>
             </div>
             
             <div class="slider-item">
@@ -1280,7 +1309,6 @@
             </div>
         </div>
 
-        <!-- Boutons Sauvegarder et Réinitialiser -->
         <div class="customize-actions">
             <button class="customize-save" id="customize-save">💾 Sauvegarder</button>
             <button class="customize-reset" id="customize-reset">↺ Réinitialiser</button>
@@ -1293,30 +1321,56 @@
         <div class="lock-content">
             <div class="pin-dots">
                 <div class="dot"></div>
-                <div class="dot"></div>
-                <div class="dot"></div>
+                <div class="dot"></div>                <div class="dot"></div>
                 <div class="dot"></div>
             </div>
 
             <div class="keypad">
-                <div class="key">1</div>
-                <div class="key">2</div>
-                <div class="key">3</div>
-                <div class="key">4</div>
-                <div class="key">5</div>
-                <div class="key">6</div>
-                <div class="key">7</div>
-                <div class="key">8</div>
-                <div class="key">9</div>
+                <div class="key" data-digit="1">
+                    <span class="key-number">1</span>
+                </div>
+                <div class="key" data-digit="2">
+                    <span class="key-number">2</span>
+                    <span class="key-letters">ABC</span>
+                </div>
+                <div class="key" data-digit="3">
+                    <span class="key-number">3</span>
+                    <span class="key-letters">DEF</span>
+                </div>
+                <div class="key" data-digit="4">
+                    <span class="key-number">4</span>
+                    <span class="key-letters">GHI</span>
+                </div>
+                <div class="key" data-digit="5">
+                    <span class="key-number">5</span>
+                    <span class="key-letters">JKL</span>
+                </div>
+                <div class="key" data-digit="6">
+                    <span class="key-number">6</span>
+                    <span class="key-letters">MNO</span>
+                </div>
+                <div class="key" data-digit="7">
+                    <span class="key-number">7</span>
+                    <span class="key-letters">PQRS</span>
+                </div>
+                <div class="key" data-digit="8">
+                    <span class="key-number">8</span>
+                    <span class="key-letters">TUV</span>
+                </div>
+                <div class="key" data-digit="9">
+                    <span class="key-number">9</span>
+                    <span class="key-letters">WXYZ</span>
+                </div>
             </div>
 
             <div class="bottom-row">
                 <div class="delete-btn" id="deleteBtn">⌫</div>
-                <div class="key">0</div>
+                <div class="key" data-digit="0">
+                    <span class="key-number">0</span>
+                </div>
                 <div class="ok" id="okBtn">OK</div>
             </div>
-        </div>
-        <div class="emergency" id="emergencyBtn">📞 Appel d'urgence</div>
+        </div>        <div class="emergency" id="emergencyBtn">📞 Appel d'urgence</div>
     </div>
 
     <!-- PAGE IMAGE (RÉSULTATS) -->
@@ -1325,16 +1379,14 @@
         <div class="words-container" id="words-container"></div>
         <div class="letters-container" id="letters-container"></div>
         <div class="index-display" id="index-display"></div>
-        
-        <!-- Bouton Note (bleu) -->
         <div class="note-button" id="note-button"></div>
     </div>
 
     <!-- Overlay image Note -->
     <div class="note-image-overlay" id="note-image-overlay">
-        <img class="note-image-display" id="note-image-display" src="" alt="Note">
+        <img class="note-image-display" id="note-image-display" src="" alt="">
         <div class="note-button-preview" id="note-button-preview"></div>
-        <div class="note-image-text" id="note-image-text" contenteditable="false">Aggrafeuse<br>Velot<br>Ilot<br>Orange<br>Nuage</div>
+        <div class="note-image-text" id="note-image-text"></div>
     </div>
 
     <!-- MODAL LISTE -->
@@ -1360,42 +1412,29 @@
             const wordsContainer = document.getElementById('words-container');
             const lettersContainer = document.getElementById('letters-container');
             const indexDisplay = document.getElementById('index-display');
-            
-            // Nouveaux éléments Note
             const noteButton = document.getElementById('note-button');
             const noteImageOverlay = document.getElementById('note-image-overlay');
             const noteImageDisplay = document.getElementById('note-image-display');
             const noteImageText = document.getElementById('note-image-text');
             const noteButtonPreview = document.getElementById('note-button-preview');
+            const offlineIndicator = document.getElementById('offline-indicator');
             
-            // Boutons accueil
-            const btnPerform = document.getElementById('btn-perform');
-            const btnList = document.getElementById('btn-list');
+            const btnPerform = document.getElementById('btn-perform');            const btnList = document.getElementById('btn-list');
             const btnSettings = document.getElementById('btn-settings');
             
-            // Boutons paramètres
             const importBgBtn = document.getElementById('import-bg-btn');
             const importImgBtn = document.getElementById('import-img-btn');
             const importNoteBtn = document.getElementById('import-note-btn');
             const customizeBtn = document.getElementById('customize-btn');
             const settingsBack = document.getElementById('settings-back');
             
-            // Boutons personnalisation
             const customizeBack = document.getElementById('customize-back');
             const customizeSave = document.getElementById('customize-save');
             const customizeReset = document.getElementById('customize-reset');
             
-            // Boutons preview
-            const previewListBtn = document.getElementById('preview-list-btn');
-            const previewLettersBtn = document.getElementById('preview-letters-btn');
-            const previewIndexBtn = document.getElementById('preview-index-btn');
-            const previewNoteTextBtn = document.getElementById('preview-note-text-btn');
-            const previewNoteButtonBtn = document.getElementById('preview-note-button-btn');
-            
-            // Éléments test code
+            const previewBtns = document.querySelectorAll('.preview-btn');
             const testCodeInput = document.getElementById('test-code-input');
             
-            // Inputs personnalisation existants
             const wordsY = document.getElementById('words-y');
             const wordsSize = document.getElementById('words-size');
             const wordsColor = document.getElementById('words-color');
@@ -1408,21 +1447,16 @@
             const indexSize = document.getElementById('index-size');
             const indexColor = document.getElementById('index-color');
             const indexX = document.getElementById('index-x');
-            
-            // Nouveaux inputs Note Texte
             const noteTextY = document.getElementById('note-text-y');
             const noteTextX = document.getElementById('note-text-x');
             const noteTextSize = document.getElementById('note-text-size');
             const noteTextColor = document.getElementById('note-text-color');
             const noteTextSpacing = document.getElementById('note-text-spacing');
-            
-            // Nouveaux inputs Note Bouton
             const noteButtonY = document.getElementById('note-button-y');
             const noteButtonSize = document.getElementById('note-button-size');
             const noteButtonColor = document.getElementById('note-button-color');
             const noteButtonX = document.getElementById('note-button-x');
             
-            // Badges existants
             const wordsYValue = document.getElementById('words-y-value');
             const wordsSizeValue = document.getElementById('words-size-value');
             const wordsLineHeightValue = document.getElementById('words-line-height-value');
@@ -1432,37 +1466,28 @@
             const indexYValue = document.getElementById('index-y-value');
             const indexSizeValue = document.getElementById('index-size-value');
             const indexXValue = document.getElementById('index-x-value');
-            
-            // Nouveaux badges Note Texte
             const noteTextYValue = document.getElementById('note-text-y-value');
             const noteTextXValue = document.getElementById('note-text-x-value');
-            const noteTextSizeValue = document.getElementById('note-text-size-value');
-            const noteTextSpacingValue = document.getElementById('note-text-spacing-value');
-            
-            // Nouveaux badges Note Bouton
+            const noteTextSizeValue = document.getElementById('note-text-size-value');            const noteTextSpacingValue = document.getElementById('note-text-spacing-value');
             const noteButtonYValue = document.getElementById('note-button-y-value');
             const noteButtonSizeValue = document.getElementById('note-button-size-value');
             const noteButtonXValue = document.getElementById('note-button-x-value');
             
-            // Modal liste
             const searchInput = document.getElementById('search-input');
             const searchBtn = document.getElementById('search-btn');
             const codeResult = document.getElementById('codeResult');
             const modal = document.getElementById('list-modal');
             const modalOverlay = document.getElementById('modal-overlay');
             
-            // Inputs file
             const bgFileInput = document.getElementById('bg-file-input');
             const imgFileInput = document.getElementById('img-file-input');
             const noteFileInput = document.getElementById('note-file-input');
             
-            // Aperçu
             const previewContainer = document.getElementById('preview-container');
             const previewImage = document.getElementById('preview-image');
             const previewConfirm = document.getElementById('preview-confirm');
             const previewCancel = document.getElementById('preview-cancel');
 
-            // Lock screen
             const keys = document.querySelectorAll('#lock-page .key');
             const dots = document.querySelectorAll('#lock-page .dot');
             const deleteBtn = document.getElementById('deleteBtn');
@@ -1470,56 +1495,21 @@
             const emergencyBtn = document.getElementById('emergencyBtn');
 
             // ===== DONNÉES =====
-            const wordsList = [
-                { code: "7131", word: "Abeille" },
-                { code: "7141", word: "Abricot" },
-                { code: "9141", word: "Accordéon" },
-                { code: "6131", word: "Agenda" },
-                { code: "6141", word: "Agneau" },
-                { code: "9141", word: "Agrafeuse" },
-                { code: "5121", word: "Aigle" },
-                { code: "8121", word: "Aiguille" },
-                { code: "3121", word: "Ail" },
-                { code: "4121", word: "Aile" }
-            ];
-
-            // Constantes
-            const DEFAULT_NOTE_IMAGE = 'https://via.placeholder.com/500x1000/222222/666666?text=Note+Image';
-            const DEFAULT_NOTE_TEXT = "Aggrafeuse\nVelot\nIlot\nOrange\nNuage";
+            let wordsList = [];
+            const DEFAULT_NOTE_TEXT = "Barbecue\nIceberg\nCartouche\nYaourt\nCartable\nLivre\nEnveloppe\nTapis\nTrain\nEncre";
+            const DEFAULT_NOTE_IMAGE = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="500" height="1000"%3E%3Crect fill="%23222" width="100%25" height="100%25"/%3E%3Ctext fill="%23666" font-size="24" x="50%25" y="50%25" text-anchor="middle" dominant-baseline="middle"%3ENote Image%3C/text%3E%3C/svg%3E';
 
             // ===== VALEURS PAR DÉFAUT =====
             const defaultSettings = {
-                // Existants
-                wordsY: 265,
-                wordsSize: 18,
-                wordsColor: '#ffffff',
-                wordsLineHeight: 15,
-                lettersY: 460,
-                lettersSize: 20,
-                lettersColor: '#ffffff',
-                lettersSpacing: 40,
-                indexY: 517,
-                indexSize: 30,
-                indexColor: '#1E6FF0',
-                indexX: -45,
-                
-                // Nouveaux - Note Texte
-                noteTextY: 265,
-                noteTextX: 20,
-                noteTextSize: 20,
-                noteTextColor: '#ffffff',
-                noteTextSpacing: 15,
-                
-                // Nouveaux - Note Bouton
-                noteButtonY: 520,
-                noteButtonSize: 30,
-                noteButtonColor: '#1877F2',
-                noteButtonX: 43
+                wordsY: 265, wordsSize: 18, wordsColor: '#ffffff', wordsLineHeight: 15,
+                lettersY: 460, lettersSize: 20, lettersColor: '#ffffff', lettersSpacing: 40,
+                indexY: 517, indexSize: 30, indexColor: '#1E6FF0', indexX: -45,
+                noteTextY: 265, noteTextX: 20, noteTextSize: 20, noteTextColor: '#ffffff', noteTextSpacing: 15,
+                noteButtonY: 520, noteButtonSize: 30, noteButtonColor: '#1877F2', noteButtonX: 43
             };
 
             // ===== ÉTAT =====
             let pin = '';
-            let searchMode = 'search';
             let currentCode = '';
             let originalWords = [];
             let currentWords = [];
@@ -1527,21 +1517,35 @@
             let bestListIndex = -1;
             let bestListLetters = [];
             let selectedLetter = '';
-            let lastTap = 0;
-            let isPreviewMode = false;
+            let lastTap = 0;            let isPreviewMode = false;
             let lastSearchWord = '';
             let isSearchDisabled = false;
-            
-            // Variables pour les imports
             let currentPreviewTarget = '';
             let currentPreviewData = '';
-            
-            // Variables pour Note
             let isNoteModeActive = false;
             let noteImageData = localStorage.getItem('noteImage') || DEFAULT_NOTE_IMAGE;
-            
-            // Paramètres courants
             let currentSettings = { ...defaultSettings };
+            let isNoteUnderlineActive = false;
+            let longPressTimer = null;
+
+            // ===== CHARGEMENT DE LA LISTE DES MOTS =====
+            async function loadWordsList() {
+                try {
+                    const response = await fetch('words.json');
+                    if (!response.ok) throw new Error('words.json non trouvé');
+                    wordsList = await response.json();
+                    console.log('✅ words.json chargé:', wordsList.length, 'mots');
+                } catch (e) {
+                    console.warn('⚠️ Fallback: utilisation de la liste par défaut');
+                    wordsList = [
+                        { code: "7131", word: "Abeille" }, { code: "7141", word: "Abricot" },
+                        { code: "9141", word: "Accordéon" }, { code: "6131", word: "Agenda" },
+                        { code: "6141", word: "Agneau" }, { code: "9141", word: "Agrafeuse" },
+                        { code: "5121", word: "Aigle" }, { code: "8121", word: "Aiguille" },
+                        { code: "3121", word: "Ail" }, { code: "4121", word: "Aile" }
+                    ];
+                }
+            }
 
             // ===== FONCTIONS DE DRAGGING =====
             function startDragging() {
@@ -1554,80 +1558,75 @@
                 resultPage.classList.remove('dragging-active');
             }
 
-            // ===== FONCTIONS D'AFFICHAGE =====
-            function updateDisplayValues(settings) {
-                // Existants
-                if (wordsYValue) wordsYValue.textContent = settings.wordsY + 'px';
-                if (wordsSizeValue) wordsSizeValue.textContent = settings.wordsSize + 'px';
-                if (wordsLineHeightValue) wordsLineHeightValue.textContent = settings.wordsLineHeight + 'px';
-                if (lettersYValue) lettersYValue.textContent = settings.lettersY + 'px';
-                if (lettersSizeValue) lettersSizeValue.textContent = settings.lettersSize + 'px';
-                if (lettersSpacingValue) lettersSpacingValue.textContent = settings.lettersSpacing + 'px';
-                if (indexYValue) indexYValue.textContent = settings.indexY + 'px';
-                if (indexSizeValue) indexSizeValue.textContent = settings.indexSize + 'px';
-                if (indexXValue) indexXValue.textContent = settings.indexX + 'px';
+            // ===== SLIDERS OPTIMISÉS =====
+            let currentAnimationFrame = null;
+
+            function setupOptimizedSlider(slider, onUpdate) {
+                if (!slider) return;
                 
-                // Nouveaux
-                if (noteTextYValue) noteTextYValue.textContent = settings.noteTextY + 'px';
-                if (noteTextXValue) noteTextXValue.textContent = settings.noteTextX + 'px';
-                if (noteTextSizeValue) noteTextSizeValue.textContent = settings.noteTextSize + 'px';
-                if (noteTextSpacingValue) noteTextSpacingValue.textContent = settings.noteTextSpacing + 'px';
-                if (noteButtonYValue) noteButtonYValue.textContent = settings.noteButtonY + 'px';
-                if (noteButtonSizeValue) noteButtonSizeValue.textContent = settings.noteButtonSize + 'px';
-                if (noteButtonXValue) noteButtonXValue.textContent = settings.noteButtonX + 'px';
+                const handleInput = (e) => {
+                    if (currentAnimationFrame) cancelAnimationFrame(currentAnimationFrame);
+                    currentAnimationFrame = requestAnimationFrame(() => {                        onUpdate(e.target.value);
+                        currentAnimationFrame = null;
+                    });
+                };
+                
+                slider.addEventListener('input', handleInput, { passive: true });
+                slider.addEventListener('touchmove', handleInput, { passive: true });
+                
+                const cleanup = () => {
+                    if (currentAnimationFrame) cancelAnimationFrame(currentAnimationFrame);
+                };
+                slider.addEventListener('touchend', cleanup);
+                slider.addEventListener('touchcancel', cleanup);
+                slider.addEventListener('mouseup', cleanup);
+            }
+
+            // ===== AFFICHAGE =====
+            function updateDisplayValues(settings) {
+                const badges = {
+                    wordsY: wordsYValue, wordsSize: wordsSizeValue, wordsLineHeight: wordsLineHeightValue,
+                    lettersY: lettersYValue, lettersSize: lettersSizeValue, lettersSpacing: lettersSpacingValue,
+                    indexY: indexYValue, indexSize: indexSizeValue, indexX: indexXValue,
+                    noteTextY: noteTextYValue, noteTextX: noteTextXValue, noteTextSize: noteTextSizeValue, noteTextSpacing: noteTextSpacingValue,
+                    noteButtonY: noteButtonYValue, noteButtonSize: noteButtonSizeValue, noteButtonX: noteButtonXValue
+                };
+                for (const [key, badge] of Object.entries(badges)) {
+                    if (badge) badge.textContent = settings[key] + 'px';
+                }
             }
 
             function updateSliders(settings) {
-                // Existants
-                if (wordsY) wordsY.value = settings.wordsY;
-                if (wordsSize) wordsSize.value = settings.wordsSize;
-                if (wordsColor) wordsColor.value = settings.wordsColor;
-                if (wordsLineHeight) wordsLineHeight.value = settings.wordsLineHeight;
-                if (lettersY) lettersY.value = settings.lettersY;
-                if (lettersSize) lettersSize.value = settings.lettersSize;
-                if (lettersColor) lettersColor.value = settings.lettersColor;
-                if (lettersSpacing) lettersSpacing.value = settings.lettersSpacing;
-                if (indexY) indexY.value = settings.indexY;
-                if (indexSize) indexSize.value = settings.indexSize;
-                if (indexColor) indexColor.value = settings.indexColor;
-                if (indexX) indexX.value = settings.indexX;
-                
-                // Nouveaux
-                if (noteTextY) noteTextY.value = settings.noteTextY;
-                if (noteTextX) noteTextX.value = settings.noteTextX;
-                if (noteTextSize) noteTextSize.value = settings.noteTextSize;
-                if (noteTextColor) noteTextColor.value = settings.noteTextColor;
-                if (noteTextSpacing) noteTextSpacing.value = settings.noteTextSpacing;
-                if (noteButtonY) noteButtonY.value = settings.noteButtonY;
-                if (noteButtonSize) noteButtonSize.value = settings.noteButtonSize;
-                if (noteButtonColor) noteButtonColor.value = settings.noteButtonColor;
-                if (noteButtonX) noteButtonX.value = settings.noteButtonX;
+                const sliders = {
+                    wordsY, wordsSize, wordsColor, wordsLineHeight,
+                    lettersY, lettersSize, lettersColor, lettersSpacing,
+                    indexY, indexSize, indexColor, indexX,
+                    noteTextY, noteTextX, noteTextSize, noteTextColor, noteTextSpacing,
+                    noteButtonY, noteButtonSize, noteButtonColor, noteButtonX
+                };
+                for (const [key, slider] of Object.entries(sliders)) {
+                    if (slider) slider.value = settings[key];
+                }
             }
 
             function applyCustomSettings(settings) {
-                // Appliquer aux existants
                 if (wordsContainer) {
                     wordsContainer.style.top = settings.wordsY + 'px';
                     wordsContainer.style.fontSize = settings.wordsSize + 'px';
                     wordsContainer.style.color = settings.wordsColor;
                     wordsContainer.style.lineHeight = settings.wordsLineHeight + 'px';
-                }
-                
-                if (lettersContainer) {
+                }                if (lettersContainer) {
                     lettersContainer.style.top = settings.lettersY + 'px';
                     lettersContainer.style.fontSize = settings.lettersSize + 'px';
                     lettersContainer.style.color = settings.lettersColor;
                     lettersContainer.style.gap = settings.lettersSpacing + 'px';
                 }
-                
                 if (indexDisplay) {
                     indexDisplay.style.top = settings.indexY + 'px';
                     indexDisplay.style.fontSize = settings.indexSize + 'px';
                     indexDisplay.style.color = settings.indexColor;
                     indexDisplay.style.transform = `translateX(calc(-50% + ${settings.indexX}px))`;
                 }
-
-                // Appliquer aux nouveaux éléments Note Texte
                 if (noteImageText) {
                     noteImageText.style.top = settings.noteTextY + 'px';
                     noteImageText.style.left = settings.noteTextX + 'px';
@@ -1635,17 +1634,13 @@
                     noteImageText.style.color = settings.noteTextColor;
                     noteImageText.style.lineHeight = settings.noteTextSpacing + 'px';
                 }
-                
-                // Appliquer aux nouveaux éléments Note Bouton
                 if (noteButton) {
                     noteButton.style.top = settings.noteButtonY + 'px';
                     noteButton.style.width = settings.noteButtonSize + 'px';
                     noteButton.style.height = settings.noteButtonSize + 'px';
                     noteButton.style.background = settings.noteButtonColor;
                     noteButton.style.left = `calc(50% + ${settings.noteButtonX}px)`;
-                    noteButton.style.border = 'none';
                 }
-                
                 if (noteButtonPreview) {
                     noteButtonPreview.style.top = settings.noteButtonY + 'px';
                     noteButtonPreview.style.width = settings.noteButtonSize + 'px';
@@ -1653,102 +1648,187 @@
                     noteButtonPreview.style.background = settings.noteButtonColor;
                     noteButtonPreview.style.left = `calc(50% + ${settings.noteButtonX}px)`;
                 }
-
                 updateDisplayValues(settings);
                 updateSliders(settings);
             }
 
-            // ===== FONCTIONS DE RÉINITIALISATION =====
-            function resetToDefault(valueElement, setting, defaultValue) {
-                return function() {
-                    currentSettings[setting] = defaultValue;
-                    
-                    // Mettre à jour l'affichage
-                    if (setting.includes('words')) {
-                        if (setting === 'wordsY' && wordsContainer) wordsContainer.style.top = defaultValue + 'px';
-                        else if (setting === 'wordsSize' && wordsContainer) wordsContainer.style.fontSize = defaultValue + 'px';
-                        else if (setting === 'wordsColor' && wordsContainer) wordsContainer.style.color = defaultValue;
-                        else if (setting === 'wordsLineHeight' && wordsContainer) wordsContainer.style.lineHeight = defaultValue + 'px';
-                    }
-                    else if (setting.includes('letters')) {
-                        if (setting === 'lettersY' && lettersContainer) lettersContainer.style.top = defaultValue + 'px';
-                        else if (setting === 'lettersSize' && lettersContainer) lettersContainer.style.fontSize = defaultValue + 'px';
-                        else if (setting === 'lettersColor' && lettersContainer) lettersContainer.style.color = defaultValue;
-                        else if (setting === 'lettersSpacing' && lettersContainer) lettersContainer.style.gap = defaultValue + 'px';
-                    }
-                    else if (setting.includes('index')) {
-                        if (setting === 'indexY' && indexDisplay) indexDisplay.style.top = defaultValue + 'px';
-                        else if (setting === 'indexSize' && indexDisplay) indexDisplay.style.fontSize = defaultValue + 'px';
-                        else if (setting === 'indexColor' && indexDisplay) indexDisplay.style.color = defaultValue;
-                        else if (setting === 'indexX' && indexDisplay) indexDisplay.style.transform = `translateX(calc(-50% + ${defaultValue}px))`;
-                    }
-                    else if (setting.includes('noteText') && noteImageText) {
-                        if (setting === 'noteTextY') noteImageText.style.top = defaultValue + 'px';
-                        else if (setting === 'noteTextX') noteImageText.style.left = defaultValue + 'px';
-                        else if (setting === 'noteTextSize') noteImageText.style.fontSize = defaultValue + 'px';
-                        else if (setting === 'noteTextColor') noteImageText.style.color = defaultValue;
-                        else if (setting === 'noteTextSpacing') noteImageText.style.lineHeight = defaultValue + 'px';
-                    }
-                    else if (setting.includes('noteButton')) {
-                        if (setting === 'noteButtonY' && noteButton) noteButton.style.top = defaultValue + 'px';
-                        if (setting === 'noteButtonY' && noteButtonPreview) noteButtonPreview.style.top = defaultValue + 'px';
-                        
-                        if (setting === 'noteButtonSize' && noteButton) {
-                            noteButton.style.width = defaultValue + 'px';
-                            noteButton.style.height = defaultValue + 'px';
-                        }
-                        if (setting === 'noteButtonSize' && noteButtonPreview) {
-                            noteButtonPreview.style.width = defaultValue + 'px';
-                            noteButtonPreview.style.height = defaultValue + 'px';
-                        }
-                        
-                        if (setting === 'noteButtonColor' && noteButton) noteButton.style.background = defaultValue;
-                        if (setting === 'noteButtonColor' && noteButtonPreview) noteButtonPreview.style.background = defaultValue;
-                        
-                        if (setting === 'noteButtonX' && noteButton) noteButton.style.left = `calc(50% + ${defaultValue}px)`;
-                        if (setting === 'noteButtonX' && noteButtonPreview) noteButtonPreview.style.left = `calc(50% + ${defaultValue}px)`;
-                    }
-                    
-                    updateDisplayValues(currentSettings);
-                    updateSliders(currentSettings);
-                };
+            // ===== GESTION D'ERREURS IMAGES =====
+            const MAX_FILE_SIZE = 5 * 1024 * 1024;
+            const ALLOWED_TYPES = ['image/jpeg', 'image/png', 'image/webp', 'image/gif'];
+
+            function compressImage(file, maxWidth = 1920, quality = 0.8) {
+                return new Promise((resolve, reject) => {
+                    const img = new Image();
+                    const reader = new FileReader();
+                    reader.onload = (e) => {
+                        img.onload = () => {
+                            const canvas = document.createElement('canvas');
+                            let width = img.width, height = img.height;
+                            if (width > maxWidth) {                                height = (maxWidth / width) * height;
+                                width = maxWidth;
+                            }
+                            canvas.width = width;
+                            canvas.height = height;
+                            const ctx = canvas.getContext('2d');
+                            ctx.drawImage(img, 0, 0, width, height);
+                            canvas.toBlob((blob) => {
+                                if (blob) resolve(new File([blob], file.name.replace(/\.[^.]+$/, '.webp'), { type: 'image/webp' }));
+                                else reject(new Error('Compression échouée'));
+                            }, 'image/webp', quality);
+                        };
+                        img.onerror = reject;
+                        img.src = e.target.result;
+                    };
+                    reader.onerror = reject;
+                    reader.readAsDataURL(file);
+                });
             }
 
-            // ===== FONCTIONS POUR LA NOTE =====
-            function closeNoteOverlayAndDeactivate() {
-                noteImageOverlay.classList.remove('visible');
-                isNoteModeActive = false;
-                noteButton.classList.remove('active');
-                noteImageText.innerHTML = DEFAULT_NOTE_TEXT.replace(/\n/g, '<br>');
-                noteImageText.setAttribute('contenteditable', 'false');
-                noteButtonPreview.classList.remove('visible');
+            function setupImageImport(inputElement, targetElement, storageKey) {
+                inputElement.addEventListener('change', async function(e) {
+                    const file = e.target.files[0];
+                    if (!file) return;
+                    
+                    if (!ALLOWED_TYPES.includes(file.type)) {
+                        alert('❌ Format non supporté. Utilisez JPG, PNG, WebP ou GIF.');
+                        inputElement.value = '';
+                        return;
+                    }
+                    
+                    if (file.size > MAX_FILE_SIZE) {
+                        alert(`❌ Fichier trop lourd (${Math.round(file.size/1024/1024)}Mo). Maximum : 5Mo.`);
+                        inputElement.value = '';
+                        return;
+                    }
+                    
+                    try {
+                        const processedFile = file.size > 2*1024*1024 ? await compressImage(file) : file;
+                        const reader = new FileReader();
+                        
+                        reader.onload = function(event) {
+                            const imageData = event.target.result;
+                            try {
+                                localStorage.setItem('test_quota', 'x');
+                                localStorage.removeItem('test_quota');
+                            } catch (quotaError) {
+                                alert('❌ Stockage plein. Supprimez des images existantes.');
+                                inputElement.value = '';
+                                return;                            }
+                            
+                            currentPreviewData = imageData;
+                            previewImage.src = currentPreviewData;
+                            previewContainer.classList.add('visible');
+                            
+                            if (targetElement === lockPage) currentPreviewTarget = 'bg';
+                            else if (targetElement === resultPage) currentPreviewTarget = 'img';
+                            else currentPreviewTarget = 'note';
+                        };
+                        
+                        reader.onerror = function() {
+                            alert('❌ Erreur lors de la lecture du fichier.');
+                            inputElement.value = '';
+                        };
+                        
+                        reader.readAsDataURL(processedFile);
+                    } catch (error) {
+                        console.error('Erreur import image:', error);
+                        alert('❌ Une erreur est survenue lors du traitement de l\'image.');
+                        inputElement.value = '';
+                    }
+                });
+            }
+
+            // ===== LISTE NOTE DYNAMIQUE =====
+            function generateNoteList(clickedWord) {
+                const letters = clickedWord.toLowerCase().split('');
+                const result = [];
                 
-                if (!wordsContainer.classList.contains('hidden')) {
-                    wordsContainer.classList.add('hidden');
-                    lettersContainer.classList.add('hidden');
-                    selectedLetter = '';
-                }
+                // Grouper les mots par première lettre
+                const wordsByLetter = {};
+                wordsList.forEach(item => {
+                    const firstLetter = item.word.charAt(0).toLowerCase();
+                    if (!wordsByLetter[firstLetter]) wordsByLetter[firstLetter] = [];
+                    wordsByLetter[firstLetter].push(item.word);
+                });
+                
+                letters.forEach(letter => {
+                    const candidates = wordsByLetter[letter] || [];
+                    // Exclure le mot cliqué
+                    const filtered = candidates.filter(w => w.toLowerCase() !== clickedWord.toLowerCase());
+                    
+                    if (filtered.length > 0) {
+                        const randomWord = filtered[Math.floor(Math.random() * filtered.length)];
+                        // Mettre la première lettre en majuscule
+                        result.push(randomWord.charAt(0).toUpperCase() + randomWord.slice(1));
+                    } else {
+                        // Si aucun mot trouvé, mettre la lettre seule
+                        result.push(letter.toUpperCase());                    }
+                });
+                
+                return result.join('\n');
             }
 
-            // ===== FONCTIONS POUR LES APERÇUS =====
+            // ===== SOULIGNEMENT LONG PRESS =====
+            function setupLongPressUnderline() {
+                let pressStartTime = 0;
+                const LONG_PRESS_DURATION = 1000; // 1 seconde
+                
+                const handlePressStart = (e) => {
+                    pressStartTime = Date.now();
+                    longPressTimer = setTimeout(() => {
+                        isNoteUnderlineActive = !isNoteUnderlineActive;
+                        updateNoteUnderline();
+                        navigator.vibrate?.(50);
+                    }, LONG_PRESS_DURATION);
+                };
+                
+                const handlePressEnd = () => {
+                    if (longPressTimer) {
+                        clearTimeout(longPressTimer);
+                        longPressTimer = null;
+                    }
+                };
+                
+                noteImageOverlay.addEventListener('touchstart', handlePressStart, { passive: true });
+                noteImageOverlay.addEventListener('touchend', handlePressEnd);
+                noteImageOverlay.addEventListener('touchcancel', handlePressEnd);
+                noteImageOverlay.addEventListener('mousedown', handlePressStart);
+                noteImageOverlay.addEventListener('mouseup', handlePressEnd);
+                noteImageOverlay.addEventListener('mouseleave', handlePressEnd);
+            }
+
+            function updateNoteUnderline() {
+                const text = noteImageText.innerHTML;
+                const lines = text.split('<br>');
+                const newLines = lines.map(line => {
+                    if (line.length > 0) {
+                        const firstChar = line.charAt(0);
+                        const rest = line.slice(1);
+                        const className = isNoteUnderlineActive ? 'note-word-first-letter underlined' : 'note-word-first-letter';
+                        return `<span class="${className}">${firstChar}</span>${rest}`;
+                    }
+                    return line;
+                });
+                noteImageText.innerHTML = newLines.join('<br>');
+            }
+            // ===== APERÇUS =====
             function showFullPreview() {
                 const bgImage = window.getComputedStyle(resultPage).backgroundImage;
                 if (bgImage && bgImage !== 'none') {
                     noteImageDisplay.src = bgImage.slice(5, -2);
-                    noteImageText.innerHTML = '';
-                    noteButtonPreview.classList.add('visible');
-                    noteImageOverlay.classList.add('visible');
+                } else {
+                    noteImageDisplay.src = DEFAULT_NOTE_IMAGE;
                 }
+                noteImageText.innerHTML = DEFAULT_NOTE_TEXT.replace(/\n/g, '<br>');
+                noteButtonPreview.classList.add('visible');
+                noteImageOverlay.classList.add('visible');
             }
 
             function showNotePreview() {
-                if (noteImageData) {
-                    noteImageDisplay.src = noteImageData;
-                    noteImageText.innerHTML = DEFAULT_NOTE_TEXT.replace(/\n/g, '<br>');
-                    noteImageText.setAttribute('contenteditable', 'false');
-                    noteButtonPreview.classList.remove('visible');
-                    noteImageOverlay.classList.add('visible');
-                }
+                noteImageDisplay.src = noteImageData || DEFAULT_NOTE_IMAGE;
+                noteImageText.innerHTML = DEFAULT_NOTE_TEXT.replace(/\n/g, '<br>');
+                noteButtonPreview.classList.remove('visible');
+                noteImageOverlay.classList.add('visible');
             }
 
             function hidePreview() {
@@ -1756,47 +1836,23 @@
                 noteButtonPreview.classList.remove('visible');
             }
 
-            function setupPreviewButton(btn, type) {
+            function setupPreviewButton(btn) {
                 if (!btn) return;
                 
+                const previewType = btn.getAttribute('data-preview');
+                
+                const showPreview = () => {
+                    if (previewType === 'note') showNotePreview();
+                    else showFullPreview();
+                };
+                
                 btn.addEventListener('contextmenu', (e) => e.preventDefault());
-                
-                btn.addEventListener('touchstart', (e) => {
-                    e.preventDefault();
-                    if (type === 'note-text') {
-                        showNotePreview();
-                    } else {
-                        showFullPreview();
-                    }
-                });
-                
-                btn.addEventListener('touchend', (e) => {
-                    e.preventDefault();
-                    hidePreview();
-                });
-                
-                btn.addEventListener('touchcancel', (e) => {
-                    e.preventDefault();
-                    hidePreview();
-                });
-                
-                btn.addEventListener('mousedown', (e) => {
-                    e.preventDefault();
-                    if (type === 'note-text') {
-                        showNotePreview();
-                    } else {
-                        showFullPreview();
-                    }
-                });
-                
-                btn.addEventListener('mouseup', (e) => {
-                    e.preventDefault();
-                    hidePreview();
-                });
-                
-                btn.addEventListener('mouseleave', (e) => {
-                    hidePreview();
-                });
+                btn.addEventListener('touchstart', (e) => { e.preventDefault(); showPreview(); }, { passive: false });
+                btn.addEventListener('touchend', (e) => { e.preventDefault(); hidePreview(); });
+                btn.addEventListener('touchcancel', (e) => { e.preventDefault(); hidePreview(); });
+                btn.addEventListener('mousedown', (e) => { e.preventDefault(); showPreview(); });
+                btn.addEventListener('mouseup', (e) => { e.preventDefault(); hidePreview(); });
+                btn.addEventListener('mouseleave', () => hidePreview());
             }
 
             // ===== FONCTIONS EXISTANTES =====
@@ -1805,7 +1861,6 @@
                 element.classList.add('active');
                 setTimeout(() => element.classList.remove('active'), 350);
             }
-
             function animateText(element) {
                 if (!element) return;
                 element.classList.add('active-text');
@@ -1814,11 +1869,7 @@
 
             function updateDots() {
                 for (let i = 0; i < dots.length; i++) {
-                    if (i < pin.length) {
-                        dots[i].classList.add('active');
-                    } else {
-                        dots[i].classList.remove('active');
-                    }
+                    dots[i].classList.toggle('active', i < pin.length);
                 }
             }
 
@@ -1858,8 +1909,7 @@
                 const lists = [];
                 for (let pos = 0; pos < firstDigit; pos++) lists[pos] = [];
                 for (let i = 0; i < words.length; i++) {
-                    const word = words[i];
-                    for (let pos = 0; pos < word.length && pos < firstDigit; pos++) {
+                    const word = words[i];                    for (let pos = 0; pos < word.length && pos < firstDigit; pos++) {
                         const letter = word[pos];
                         if (!lists[pos].includes(letter)) lists[pos].push(letter);
                     }
@@ -1902,12 +1952,13 @@
                     wordSpan.addEventListener('click', function(e) {
                         e.stopPropagation();
                         if (isNoteModeActive && noteImageData) {
+                            // Générer la liste dynamique
+                            const dynamicList = generateNoteList(word);
                             noteImageDisplay.src = noteImageData;
-                            noteImageText.innerHTML = DEFAULT_NOTE_TEXT.replace(/\n/g, '<br>');
-                            noteImageText.setAttribute('contenteditable', 'false');
+                            noteImageText.innerHTML = dynamicList.replace(/\n/g, '<br>');
                             noteButtonPreview.classList.remove('visible');
                             noteImageOverlay.classList.add('visible');
-                        } else {
+                            updateNoteUnderline();                        } else {
                             window.open(`https://www.google.com/search?tbm=isch&q=${encodeURIComponent(this.textContent)}`, '_blank');
                         }
                     });
@@ -1951,19 +2002,15 @@
                     if (i < sortedLetters.length - 1) {
                         const spacer = document.createElement('span');
                         spacer.className = 'separator';
-                        spacer.innerHTML = '&nbsp;&nbsp;&nbsp;&nbsp;';
+                        spacer.innerHTML = '    ';
                         lettersContainer.appendChild(spacer);
                     }
                 }
             }
-
             function updatePreviewWithCode(code) {
                 if (code.length === 4) {
                     currentCode = code;
-                    originalWords = [];
-                    for (let i = 0; i < wordsList.length; i++) {
-                        if (wordsList[i].code === code) originalWords.push(wordsList[i].word);
-                    }
+                    originalWords = wordsList.filter(w => w.code === code).map(w => w.word);
                     originalWords.sort((a, b) => a.localeCompare(b));
                     currentWords = [...originalWords];
                     letterLists = calculateLetterLists(originalWords);
@@ -1997,7 +2044,6 @@
             }
 
             // ===== SETUP DES ÉVÉNEMENTS =====
-            // Dragging sur tous les curseurs
             const allSliders = [
                 wordsY, wordsSize, wordsLineHeight,
                 lettersY, lettersSize, lettersSpacing,
@@ -2010,241 +2056,78 @@
                 if (slider) {
                     slider.addEventListener('touchstart', startDragging);
                     slider.addEventListener('touchend', stopDragging);
-                    slider.addEventListener('touchcancel', stopDragging);
-                    slider.addEventListener('mousedown', startDragging);
+                    slider.addEventListener('touchcancel', stopDragging);                    slider.addEventListener('mousedown', startDragging);
                     slider.addEventListener('mouseup', stopDragging);
                 }
             });
 
-            // Événements des curseurs existants
-            if (wordsY) {
-                wordsY.addEventListener('input', (e) => {
-                    currentSettings.wordsY = parseInt(e.target.value);
-                    wordsYValue.textContent = currentSettings.wordsY + 'px';
-                    wordsContainer.style.top = currentSettings.wordsY + 'px';
-                });
-            }
+            // Setup sliders optimisés
+            setupOptimizedSlider(wordsY, (v) => { currentSettings.wordsY = parseInt(v); wordsYValue.textContent = v + 'px'; wordsContainer.style.top = v + 'px'; });
+            setupOptimizedSlider(wordsSize, (v) => { currentSettings.wordsSize = parseInt(v); wordsSizeValue.textContent = v + 'px'; wordsContainer.style.fontSize = v + 'px'; });
+            setupOptimizedSlider(wordsLineHeight, (v) => { currentSettings.wordsLineHeight = parseInt(v); wordsLineHeightValue.textContent = v + 'px'; wordsContainer.style.lineHeight = v + 'px'; });
+            setupOptimizedSlider(lettersY, (v) => { currentSettings.lettersY = parseInt(v); lettersYValue.textContent = v + 'px'; lettersContainer.style.top = v + 'px'; });
+            setupOptimizedSlider(lettersSize, (v) => { currentSettings.lettersSize = parseInt(v); lettersSizeValue.textContent = v + 'px'; lettersContainer.style.fontSize = v + 'px'; });
+            setupOptimizedSlider(lettersSpacing, (v) => { currentSettings.lettersSpacing = parseInt(v); lettersSpacingValue.textContent = v + 'px'; lettersContainer.style.gap = v + 'px'; });
+            setupOptimizedSlider(indexY, (v) => { currentSettings.indexY = parseInt(v); indexYValue.textContent = v + 'px'; indexDisplay.style.top = v + 'px'; });
+            setupOptimizedSlider(indexSize, (v) => { currentSettings.indexSize = parseInt(v); indexSizeValue.textContent = v + 'px'; indexDisplay.style.fontSize = v + 'px'; });
+            setupOptimizedSlider(indexX, (v) => { currentSettings.indexX = parseInt(v); indexXValue.textContent = v + 'px'; indexDisplay.style.transform = `translateX(calc(-50% + ${v}px))`; });
+            setupOptimizedSlider(noteTextY, (v) => { currentSettings.noteTextY = parseInt(v); noteTextYValue.textContent = v + 'px'; if (noteImageText) noteImageText.style.top = v + 'px'; });
+            setupOptimizedSlider(noteTextX, (v) => { currentSettings.noteTextX = parseInt(v); noteTextXValue.textContent = v + 'px'; if (noteImageText) noteImageText.style.left = v + 'px'; });
+            setupOptimizedSlider(noteTextSize, (v) => { currentSettings.noteTextSize = parseInt(v); noteTextSizeValue.textContent = v + 'px'; if (noteImageText) noteImageText.style.fontSize = v + 'px'; });
+            setupOptimizedSlider(noteTextSpacing, (v) => { currentSettings.noteTextSpacing = parseInt(v); noteTextSpacingValue.textContent = v + 'px'; if (noteImageText) noteImageText.style.lineHeight = v + 'px'; });
+            setupOptimizedSlider(noteButtonY, (v) => { currentSettings.noteButtonY = parseInt(v); noteButtonYValue.textContent = v + 'px'; if (noteButton) noteButton.style.top = v + 'px'; if (noteButtonPreview) noteButtonPreview.style.top = v + 'px'; });
+            setupOptimizedSlider(noteButtonSize, (v) => { currentSettings.noteButtonSize = parseInt(v); noteButtonSizeValue.textContent = v + 'px'; if (noteButton) { noteButton.style.width = v + 'px'; noteButton.style.height = v + 'px'; } if (noteButtonPreview) { noteButtonPreview.style.width = v + 'px'; noteButtonPreview.style.height = v + 'px'; } });
+            setupOptimizedSlider(noteButtonX, (v) => { currentSettings.noteButtonX = parseInt(v); noteButtonXValue.textContent = v + 'px'; if (noteButton) noteButton.style.left = `calc(50% + ${v}px)`; if (noteButtonPreview) noteButtonPreview.style.left = `calc(50% + ${v}px)`; });
 
-            if (wordsSize) {
-                wordsSize.addEventListener('input', (e) => {
-                    currentSettings.wordsSize = parseInt(e.target.value);
-                    wordsSizeValue.textContent = currentSettings.wordsSize + 'px';
-                    wordsContainer.style.fontSize = currentSettings.wordsSize + 'px';
-                });
-            }
+            // Couleurs
+            if (wordsColor) wordsColor.addEventListener('input', (e) => { currentSettings.wordsColor = e.target.value; wordsContainer.style.color = currentSettings.wordsColor; });
+            if (lettersColor) lettersColor.addEventListener('input', (e) => { currentSettings.lettersColor = e.target.value; lettersContainer.style.color = currentSettings.lettersColor; });
+            if (indexColor) indexColor.addEventListener('input', (e) => { currentSettings.indexColor = e.target.value; indexDisplay.style.color = currentSettings.indexColor; });
+            if (noteTextColor) noteTextColor.addEventListener('input', (e) => { currentSettings.noteTextColor = e.target.value; if (noteImageText) noteImageText.style.color = currentSettings.noteTextColor; });
+            if (noteButtonColor) noteButtonColor.addEventListener('input', (e) => { currentSettings.noteButtonColor = e.target.value; if (noteButton) noteButton.style.background = currentSettings.noteButtonColor; if (noteButtonPreview) noteButtonPreview.style.background = currentSettings.noteButtonColor; });
 
-            if (wordsColor) {
-                wordsColor.addEventListener('input', (e) => {
-                    currentSettings.wordsColor = e.target.value;
-                    wordsContainer.style.color = currentSettings.wordsColor;
-                });
-            }
+            // Reset badges
+            const resetBadges = [
+                [wordsYValue, 'wordsY', defaultSettings.wordsY],
+                [wordsSizeValue, 'wordsSize', defaultSettings.wordsSize],
+                [wordsLineHeightValue, 'wordsLineHeight', defaultSettings.wordsLineHeight],
+                [lettersYValue, 'lettersY', defaultSettings.lettersY],
+                [lettersSizeValue, 'lettersSize', defaultSettings.lettersSize],
+                [lettersSpacingValue, 'lettersSpacing', defaultSettings.lettersSpacing],
+                [indexYValue, 'indexY', defaultSettings.indexY],
+                [indexSizeValue, 'indexSize', defaultSettings.indexSize],
+                [indexXValue, 'indexX', defaultSettings.indexX],
+                [noteTextYValue, 'noteTextY', defaultSettings.noteTextY],
+                [noteTextXValue, 'noteTextX', defaultSettings.noteTextX],
+                [noteTextSizeValue, 'noteTextSize', defaultSettings.noteTextSize],
+                [noteTextSpacingValue, 'noteTextSpacing', defaultSettings.noteTextSpacing],
+                [noteButtonYValue, 'noteButtonY', defaultSettings.noteButtonY],
+                [noteButtonSizeValue, 'noteButtonSize', defaultSettings.noteButtonSize],
+                [noteButtonXValue, 'noteButtonX', defaultSettings.noteButtonX]
+            ];
+            resetBadges.forEach(([badge, key, defaultValue]) => {
+                if (badge) {
+                    badge.addEventListener('click', () => {
+                        currentSettings[key] = defaultValue;
+                        applyCustomSettings(currentSettings);
+                    });
+                }
+            });
 
-            if (wordsLineHeight) {
-                wordsLineHeight.addEventListener('input', (e) => {
-                    currentSettings.wordsLineHeight = parseInt(e.target.value);
-                    wordsLineHeightValue.textContent = currentSettings.wordsLineHeight + 'px';
-                    wordsContainer.style.lineHeight = currentSettings.wordsLineHeight + 'px';
-                });
-            }
-
-            if (lettersY) {
-                lettersY.addEventListener('input', (e) => {
-                    currentSettings.lettersY = parseInt(e.target.value);
-                    lettersYValue.textContent = currentSettings.lettersY + 'px';
-                    lettersContainer.style.top = currentSettings.lettersY + 'px';
-                });
-            }
-
-            if (lettersSize) {
-                lettersSize.addEventListener('input', (e) => {
-                    currentSettings.lettersSize = parseInt(e.target.value);
-                    lettersSizeValue.textContent = currentSettings.lettersSize + 'px';
-                    lettersContainer.style.fontSize = currentSettings.lettersSize + 'px';
-                });
-            }
-
-            if (lettersColor) {
-                lettersColor.addEventListener('input', (e) => {
-                    currentSettings.lettersColor = e.target.value;
-                    lettersContainer.style.color = currentSettings.lettersColor;
-                });
-            }
-
-            if (lettersSpacing) {
-                lettersSpacing.addEventListener('input', (e) => {
-                    currentSettings.lettersSpacing = parseInt(e.target.value);
-                    lettersSpacingValue.textContent = currentSettings.lettersSpacing + 'px';
-                    lettersContainer.style.gap = currentSettings.lettersSpacing + 'px';
-                });
-            }
-
-            if (indexY) {
-                indexY.addEventListener('input', (e) => {
-                    currentSettings.indexY = parseInt(e.target.value);
-                    indexYValue.textContent = currentSettings.indexY + 'px';
-                    indexDisplay.style.top = currentSettings.indexY + 'px';
-                });
-            }
-
-            if (indexSize) {
-                indexSize.addEventListener('input', (e) => {
-                    currentSettings.indexSize = parseInt(e.target.value);
-                    indexSizeValue.textContent = currentSettings.indexSize + 'px';
-                    indexDisplay.style.fontSize = currentSettings.indexSize + 'px';
-                });
-            }
-
-            if (indexColor) {
-                indexColor.addEventListener('input', (e) => {
-                    currentSettings.indexColor = e.target.value;
-                    indexDisplay.style.color = currentSettings.indexColor;
-                });
-            }
-
-            if (indexX) {
-                indexX.addEventListener('input', (e) => {
-                    currentSettings.indexX = parseInt(e.target.value);
-                    indexXValue.textContent = currentSettings.indexX + 'px';
-                    indexDisplay.style.transform = `translateX(calc(-50% + ${currentSettings.indexX}px))`;
-                });
-            }
-
-            // Événements des nouveaux curseurs Note Texte
-            if (noteTextY) {
-                noteTextY.addEventListener('input', (e) => {
-                    currentSettings.noteTextY = parseInt(e.target.value);
-                    noteTextYValue.textContent = currentSettings.noteTextY + 'px';
-                    if (noteImageText) noteImageText.style.top = currentSettings.noteTextY + 'px';
-                });
-            }
-
-            if (noteTextX) {
-                noteTextX.addEventListener('input', (e) => {
-                    currentSettings.noteTextX = parseInt(e.target.value);
-                    noteTextXValue.textContent = currentSettings.noteTextX + 'px';
-                    if (noteImageText) noteImageText.style.left = currentSettings.noteTextX + 'px';
-                });
-            }
-
-            if (noteTextSize) {
-                noteTextSize.addEventListener('input', (e) => {
-                    currentSettings.noteTextSize = parseInt(e.target.value);
-                    noteTextSizeValue.textContent = currentSettings.noteTextSize + 'px';
-                    if (noteImageText) noteImageText.style.fontSize = currentSettings.noteTextSize + 'px';
-                });
-            }
-
-            if (noteTextColor) {
-                noteTextColor.addEventListener('input', (e) => {
-                    currentSettings.noteTextColor = e.target.value;
-                    if (noteImageText) noteImageText.style.color = currentSettings.noteTextColor;
-                });
-            }
-
-            if (noteTextSpacing) {
-                noteTextSpacing.addEventListener('input', (e) => {
-                    currentSettings.noteTextSpacing = parseInt(e.target.value);
-                    noteTextSpacingValue.textContent = currentSettings.noteTextSpacing + 'px';
-                    if (noteImageText) noteImageText.style.lineHeight = currentSettings.noteTextSpacing + 'px';
-                });
-            }
-
-            // Événements des nouveaux curseurs Note Bouton
-            if (noteButtonY) {
-                noteButtonY.addEventListener('input', (e) => {
-                    currentSettings.noteButtonY = parseInt(e.target.value);
-                    noteButtonYValue.textContent = currentSettings.noteButtonY + 'px';
-                    if (noteButton) noteButton.style.top = currentSettings.noteButtonY + 'px';
-                    if (noteButtonPreview) noteButtonPreview.style.top = currentSettings.noteButtonY + 'px';
-                });
-            }
-
-            if (noteButtonSize) {
-                noteButtonSize.addEventListener('input', (e) => {
-                    currentSettings.noteButtonSize = parseInt(e.target.value);
-                    noteButtonSizeValue.textContent = currentSettings.noteButtonSize + 'px';
-                    if (noteButton) {
-                        noteButton.style.width = currentSettings.noteButtonSize + 'px';
-                        noteButton.style.height = currentSettings.noteButtonSize + 'px';
-                    }
-                    if (noteButtonPreview) {
-                        noteButtonPreview.style.width = currentSettings.noteButtonSize + 'px';
-                        noteButtonPreview.style.height = currentSettings.noteButtonSize + 'px';
-                    }
-                });
-            }
-
-            if (noteButtonColor) {
-                noteButtonColor.addEventListener('input', (e) => {
-                    currentSettings.noteButtonColor = e.target.value;
-                    if (noteButton) noteButton.style.background = currentSettings.noteButtonColor;
-                    if (noteButtonPreview) noteButtonPreview.style.background = currentSettings.noteButtonColor;
-                });
-            }
-
-            if (noteButtonX) {
-                noteButtonX.addEventListener('input', (e) => {
-                    currentSettings.noteButtonX = parseInt(e.target.value);
-                    noteButtonXValue.textContent = currentSettings.noteButtonX + 'px';
-                    if (noteButton) noteButton.style.left = `calc(50% + ${currentSettings.noteButtonX}px)`;
-                    if (noteButtonPreview) noteButtonPreview.style.left = `calc(50% + ${currentSettings.noteButtonX}px)`;
-                });
-            }
-
-            // Réinitialisation des badges existants
-            if (wordsYValue) wordsYValue.addEventListener('click', resetToDefault(wordsYValue, 'wordsY', defaultSettings.wordsY));
-            if (wordsSizeValue) wordsSizeValue.addEventListener('click', resetToDefault(wordsSizeValue, 'wordsSize', defaultSettings.wordsSize));
-            if (wordsLineHeightValue) wordsLineHeightValue.addEventListener('click', resetToDefault(wordsLineHeightValue, 'wordsLineHeight', defaultSettings.wordsLineHeight));
-            if (lettersYValue) lettersYValue.addEventListener('click', resetToDefault(lettersYValue, 'lettersY', defaultSettings.lettersY));
-            if (lettersSizeValue) lettersSizeValue.addEventListener('click', resetToDefault(lettersSizeValue, 'lettersSize', defaultSettings.lettersSize));
-            if (lettersSpacingValue) lettersSpacingValue.addEventListener('click', resetToDefault(lettersSpacingValue, 'lettersSpacing', defaultSettings.lettersSpacing));
-            if (indexYValue) indexYValue.addEventListener('click', resetToDefault(indexYValue, 'indexY', defaultSettings.indexY));
-            if (indexSizeValue) indexSizeValue.addEventListener('click', resetToDefault(indexSizeValue, 'indexSize', defaultSettings.indexSize));
-            if (indexXValue) indexXValue.addEventListener('click', resetToDefault(indexXValue, 'indexX', defaultSettings.indexX));
-
-            // Réinitialisation des nouveaux badges
-            if (noteTextYValue) noteTextYValue.addEventListener('click', resetToDefault(noteTextYValue, 'noteTextY', defaultSettings.noteTextY));
-            if (noteTextXValue) noteTextXValue.addEventListener('click', resetToDefault(noteTextXValue, 'noteTextX', defaultSettings.noteTextX));
-            if (noteTextSizeValue) noteTextSizeValue.addEventListener('click', resetToDefault(noteTextSizeValue, 'noteTextSize', defaultSettings.noteTextSize));
-            if (noteTextSpacingValue) noteTextSpacingValue.addEventListener('click', resetToDefault(noteTextSpacingValue, 'noteTextSpacing', defaultSettings.noteTextSpacing));
-            if (noteButtonYValue) noteButtonYValue.addEventListener('click', resetToDefault(noteButtonYValue, 'noteButtonY', defaultSettings.noteButtonY));
-            if (noteButtonSizeValue) noteButtonSizeValue.addEventListener('click', resetToDefault(noteButtonSizeValue, 'noteButtonSize', defaultSettings.noteButtonSize));
-            if (noteButtonXValue) noteButtonXValue.addEventListener('click', resetToDefault(noteButtonXValue, 'noteButtonX', defaultSettings.noteButtonX));
-
-            // ===== TEST DE CODE =====
+            // Test code
             if (testCodeInput) {
                 testCodeInput.addEventListener('input', (e) => {
                     const code = e.target.value.trim();
-                    if (code.length === 4 && /^\d+$/.test(code)) {
-                        updatePreviewWithCode(code);
-                    }
+                    if (code.length === 4 && /^\d+$/.test(code)) updatePreviewWithCode(code);
                 });
             }
 
-            // ===== MODAL LISTE =====
+            // Modal liste
             if (searchInput) {
-                searchInput.addEventListener('input', () => {
-                    enableSearchButton();
-                    codeResult.textContent = '';
-                    codeResult.classList.remove('error');
-                });
-
-                searchInput.addEventListener('focus', () => {
-                    modal.classList.add('keyboard-open');
-                });
-
-                searchInput.addEventListener('blur', () => {
-                    setTimeout(() => {
-                        modal.classList.remove('keyboard-open');
-                    }, 200);
-                });
-
-                searchInput.addEventListener('keypress', (e) => {
-                    if (e.key === 'Enter' && !isSearchDisabled) {
-                        searchBtn.click();
-                    }
-                });
+                searchInput.addEventListener('input', () => { enableSearchButton(); codeResult.textContent = ''; codeResult.classList.remove('error'); });
+                searchInput.addEventListener('focus', () => modal.classList.add('keyboard-open'));
+                searchInput.addEventListener('blur', () => setTimeout(() => modal.classList.remove('keyboard-open'), 200));
+                searchInput.addEventListener('keypress', (e) => { if (e.key === 'Enter' && !isSearchDisabled) searchBtn.click(); });
             }
 
             if (searchBtn) {
@@ -2266,91 +2149,42 @@
                 });
             }
 
-            // ===== FONCTIONS POUR L'IMPORT D'IMAGES =====
-            function setupImageImport(inputElement, targetElement, storageKey) {
-                inputElement.addEventListener('change', function(e) {
-                    const file = e.target.files[0];
-                    if (file) {
-                        const reader = new FileReader();
-                        reader.onload = function(event) {
-                            currentPreviewData = event.target.result;
-                            previewImage.src = currentPreviewData;
-                            previewContainer.classList.add('visible');
-                            
-                            if (targetElement === lockPage) {
-                                currentPreviewTarget = 'bg';
-                            } else if (targetElement === resultPage) {
-                                currentPreviewTarget = 'img';
-                            } else {
-                                currentPreviewTarget = 'note';
-                            }
-                        };
-                        reader.readAsDataURL(file);
-                    }
-                });
-            }
-
-            // Charger les images sauvegardées
-            const savedBg = localStorage.getItem('backgroundImage');
-            if (savedBg) {
-                lockPage.style.backgroundImage = `url(${savedBg})`;
-            }
-            
-            const savedImg = localStorage.getItem('resultImage');
-            if (savedImg) {
-                resultPage.style.backgroundImage = `url(${savedImg})`;
-            }
-
-            // Configuration des imports
+            // Import images
             setupImageImport(bgFileInput, lockPage, 'backgroundImage');
             setupImageImport(imgFileInput, resultPage, 'resultImage');
             setupImageImport(noteFileInput, null, 'noteImage');
 
-            // Boutons d'import
-            if (importBgBtn) importBgBtn.addEventListener('click', () => bgFileInput.click());
-            if (importImgBtn) importImgBtn.addEventListener('click', () => imgFileInput.click());
+            if (importBgBtn) importBgBtn.addEventListener('click', () => bgFileInput.click());            if (importImgBtn) importImgBtn.addEventListener('click', () => imgFileInput.click());
             if (importNoteBtn) importNoteBtn.addEventListener('click', () => noteFileInput.click());
 
-            // Confirmer l'aperçu
             if (previewConfirm) {
                 previewConfirm.addEventListener('click', () => {
-                    if (currentPreviewTarget === 'bg') {
-                        lockPage.style.backgroundImage = `url(${currentPreviewData})`;
-                        localStorage.setItem('backgroundImage', currentPreviewData);
-                    } else if (currentPreviewTarget === 'img') {
-                        resultPage.style.backgroundImage = `url(${currentPreviewData})`;
-                        localStorage.setItem('resultImage', currentPreviewData);
-                    } else if (currentPreviewTarget === 'note') {
-                        noteImageData = currentPreviewData;
-                        localStorage.setItem('noteImage', noteImageData);
-                    }
-                    
+                    if (currentPreviewTarget === 'bg') { lockPage.style.backgroundImage = `url(${currentPreviewData})`; localStorage.setItem('backgroundImage', currentPreviewData); }
+                    else if (currentPreviewTarget === 'img') { resultPage.style.backgroundImage = `url(${currentPreviewData})`; localStorage.setItem('resultImage', currentPreviewData); }
+                    else if (currentPreviewTarget === 'note') { noteImageData = currentPreviewData; localStorage.setItem('noteImage', noteImageData); }
                     previewContainer.classList.remove('visible');
                     previewImage.src = '';
                     currentPreviewData = '';
                     currentPreviewTarget = '';
-                    
                     bgFileInput.value = '';
                     imgFileInput.value = '';
                     noteFileInput.value = '';
                 });
             }
 
-            // Annuler l'aperçu
             if (previewCancel) {
                 previewCancel.addEventListener('click', () => {
                     previewContainer.classList.remove('visible');
                     previewImage.src = '';
                     currentPreviewData = '';
                     currentPreviewTarget = '';
-                    
                     bgFileInput.value = '';
                     imgFileInput.value = '';
                     noteFileInput.value = '';
                 });
             }
 
-            // ===== BOUTON NOTE (mode activation) =====
+            // Bouton Note
             if (noteButton) {
                 noteButton.addEventListener('click', () => {
                     isNoteModeActive = !isNoteModeActive;
@@ -2358,45 +2192,34 @@
                 });
             }
 
-            // ===== GESTION DE L'OVERLAY NOTE =====
+            // Overlay Note
             if (noteImageOverlay) {
                 noteImageOverlay.addEventListener('dblclick', (e) => {
                     e.preventDefault();
-                    closeNoteOverlayAndDeactivate();
-                });
-            }
-
-            if (noteImageText) {
-                noteImageText.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    noteImageText.setAttribute('contenteditable', 'true');
-                    noteImageText.focus();
-                });
-
-                noteImageText.addEventListener('blur', () => {
-                    noteImageText.setAttribute('contenteditable', 'false');
-                });
-
-                noteImageText.addEventListener('dblclick', (e) => {
-                    e.stopPropagation();
-                });
-            }
-
-            // ===== CONFIGURATION DES BOUTONS PREVIEW =====
-            setupPreviewButton(previewListBtn, 'list');
-            setupPreviewButton(previewLettersBtn, 'letters');
-            setupPreviewButton(previewIndexBtn, 'index');
-            setupPreviewButton(previewNoteTextBtn, 'note-text');
-            setupPreviewButton(previewNoteButtonBtn, 'note-button');
-
-            // ===== GESTION DU RETOUR DE GOOGLE IMAGES =====
-            document.addEventListener('visibilitychange', function() {
-                if (!document.hidden) {
-                    if (resultPage.classList.contains('visible') && !wordsContainer.classList.contains('hidden')) {
+                    noteImageOverlay.classList.remove('visible');
+                    isNoteModeActive = false;
+                    noteButton.classList.remove('active');
+                    noteButtonPreview.classList.remove('visible');
+                    if (!wordsContainer.classList.contains('hidden')) {
                         wordsContainer.classList.add('hidden');
                         lettersContainer.classList.add('hidden');
-                        selectedLetter = '';
-                    }
+                        selectedLetter = '';                    }
+                });
+            }
+
+            // Preview buttons
+            previewBtns.forEach(btn => setupPreviewButton(btn));
+
+            // Bloquer menu contextuel (partage/capture)
+            document.addEventListener('contextmenu', (e) => e.preventDefault());
+            document.addEventListener('selectstart', (e) => e.preventDefault());
+
+            // Gestion retour Google Images
+            document.addEventListener('visibilitychange', function() {
+                if (!document.hidden && resultPage.classList.contains('visible') && !wordsContainer.classList.contains('hidden')) {
+                    wordsContainer.classList.add('hidden');
+                    lettersContainer.classList.add('hidden');
+                    selectedLetter = '';
                 }
             });
 
@@ -2408,81 +2231,32 @@
                 }
             });
 
-            // ===== PAGE D'ACCUEIL =====
-            if (btnPerform) {
-                btnPerform.addEventListener('click', () => {
-                    homePage.classList.add('hidden');
-                    lockPage.classList.add('visible');
-                    pin = '';
-                    updateDots();
-                });
-            }
+            // Navigation
+            if (btnPerform) btnPerform.addEventListener('click', () => { homePage.classList.add('hidden'); lockPage.classList.add('visible'); pin = ''; updateDots(); });
+            if (btnList) btnList.addEventListener('click', () => { resetModalToNormal(); modal.classList.add('visible'); modalOverlay.classList.add('visible'); });
+            if (btnSettings) btnSettings.addEventListener('click', () => { homePage.classList.add('hidden'); settingsPage.classList.add('visible'); });
+            if (settingsBack) settingsBack.addEventListener('click', () => { settingsPage.classList.remove('visible'); homePage.classList.remove('hidden'); previewContainer.classList.remove('visible'); previewImage.src = ''; currentPreviewData = ''; currentPreviewTarget = ''; bgFileInput.value = ''; imgFileInput.value = ''; noteFileInput.value = ''; });
+            if (modalOverlay) modalOverlay.addEventListener('click', () => { modal.classList.remove('visible'); modalOverlay.classList.remove('visible'); searchInput.blur(); resetModalToNormal(); });
 
-            if (btnList) {
-                btnList.addEventListener('click', () => {
-                    resetModalToNormal();
-                    modal.classList.add('visible');
-                    modalOverlay.classList.add('visible');
-                    modal.classList.remove('keyboard-open');
-                });
-            }
-
-            if (btnSettings) {
-                btnSettings.addEventListener('click', () => {
-                    homePage.classList.add('hidden');
-                    settingsPage.classList.add('visible');
-                });
-            }
-
-            if (settingsBack) {
-                settingsBack.addEventListener('click', () => {
-                    settingsPage.classList.remove('visible');
-                    homePage.classList.remove('hidden');
-                    
-                    previewContainer.classList.remove('visible');
-                    previewImage.src = '';
-                    currentPreviewData = '';
-                    currentPreviewTarget = '';
-                    bgFileInput.value = '';
-                    imgFileInput.value = '';
-                    noteFileInput.value = '';
-                });
-            }
-
-            if (modalOverlay) {
-                modalOverlay.addEventListener('click', () => {
-                    modal.classList.remove('visible');
-                    modalOverlay.classList.remove('visible');
-                    searchInput.blur();
-                    resetModalToNormal();
-                });
-            }
-
-            // ===== BOUTONS PERSONNALISATION =====
+            // Personnalisation
             if (customizeBtn) {
                 customizeBtn.addEventListener('click', () => {
                     settingsPage.classList.remove('visible');
-                    
                     isPreviewMode = true;
                     customizePage.classList.add('visible', 'preview-mode');
                     resultPage.classList.add('preview-mode');
-                    
                     if (noteButton) noteButton.classList.add('visible');
-                    
                     loadCustomSettings();
                     updatePreviewWithCode("7131");
                 });
             }
 
             if (customizeBack) {
-                customizeBack.addEventListener('click', () => {
-                    customizePage.classList.remove('visible', 'preview-mode');
+                customizeBack.addEventListener('click', () => {                    customizePage.classList.remove('visible', 'preview-mode');
                     resultPage.classList.remove('preview-mode');
                     settingsPage.classList.add('visible');
                     isPreviewMode = false;
-                    
                     if (noteButton) noteButton.classList.remove('visible');
-                    
                     loadCustomSettings();
                 });
             }
@@ -2490,12 +2264,10 @@
             if (customizeSave) {
                 customizeSave.addEventListener('click', () => {
                     saveCustomSettings(currentSettings);
-                    
                     customizePage.classList.remove('visible', 'preview-mode');
                     resultPage.classList.remove('preview-mode');
                     settingsPage.classList.add('visible');
                     isPreviewMode = false;
-                    
                     if (noteButton) noteButton.classList.remove('visible');
                 });
             }
@@ -2507,120 +2279,80 @@
                 });
             }
 
-            // ===== LOCK SCREEN =====
-            for (let i = 0; i < keys.length; i++) {
-                keys[i].addEventListener('click', function() {
+            // Lock screen
+            keys.forEach(key => {
+                key.addEventListener('click', function() {
                     animateKey(this);
                     if (pin.length < 4) {
-                        pin += this.innerText;
+                        pin += this.getAttribute('data-digit');
                         updateDots();
                     }
                 });
-            }
+            });
 
             if (deleteBtn) {
                 deleteBtn.addEventListener('click', function(e) {
                     e.stopPropagation();
                     animateText(this);
-                    if (pin.length > 0) {
-                        pin = pin.slice(0, -1);
-                        updateDots();
-                    }
+                    if (pin.length > 0) { pin = pin.slice(0, -1); updateDots(); }
                 });
             }
 
             if (okBtn) {
                 okBtn.addEventListener('click', function(e) {
                     e.stopPropagation();
-                    animateText(this);
-
-                    if (pin.length === 4) {
+                    animateText(this);                    if (pin.length === 4) {
                         currentCode = pin;
-                        originalWords = [];
-                        
-                        for (let i = 0; i < wordsList.length; i++) {
-                            if (wordsList[i].code === pin) {
-                                originalWords.push(wordsList[i].word);
-                            }
-                        }
-                        
+                        originalWords = wordsList.filter(w => w.code === pin).map(w => w.word);
                         originalWords.sort((a, b) => a.localeCompare(b));
                         currentWords = [...originalWords];
-                        
                         letterLists = calculateLetterLists(originalWords);
                         bestListIndex = findBestList(letterLists);
                         bestListLetters = bestListIndex !== -1 ? letterLists[bestListIndex] : [];
                         bestListLetters.sort((a, b) => a.localeCompare(b));
-                        
                         indexDisplay.textContent = bestListIndex !== -1 ? (bestListIndex + 1).toString() : '';
-                        
                         displayWords(currentWords);
                         displayLetterButtons(bestListIndex, bestListLetters);
-                        
                         wordsContainer.classList.remove('hidden');
                         lettersContainer.classList.remove('hidden');
-                        
                         lockPage.classList.remove('visible');
                         resultPage.classList.add('visible');
-                        
                         if (noteButton) noteButton.classList.add('visible');
-                        
                         pin = '';
                         updateDots();
                     }
                 });
             }
 
-            // Indice cliquable
             if (indexDisplay) {
                 indexDisplay.addEventListener('click', function(e) {
                     e.stopPropagation();
-                    if (wordsContainer.classList.contains('hidden')) {
-                        wordsContainer.classList.remove('hidden');
-                        lettersContainer.classList.remove('hidden');
-                    } else {
-                        wordsContainer.classList.add('hidden');
-                        lettersContainer.classList.add('hidden');
-                    }
+                    wordsContainer.classList.toggle('hidden');
+                    lettersContainer.classList.toggle('hidden');
                 });
             }
 
-            // Double-clic sur la page image
             if (resultPage) {
                 resultPage.addEventListener('click', function(e) {
-                    if (e.target.classList.contains('result-word') || 
-                        e.target.classList.contains('letter-btn') ||
-                        e.target === indexDisplay ||
-                        e.target === noteButton) {
-                        return;
-                    }
-                    
+                    if (e.target.classList.contains('result-word') || e.target.classList.contains('letter-btn') || e.target === indexDisplay || e.target === noteButton) return;
                     let now = new Date().getTime();
                     let timeDiff = now - lastTap;
-                    
                     if (timeDiff < 300 && timeDiff > 0) {
                         resultPage.classList.remove('visible');
                         lockPage.classList.add('visible');
-                        
                         if (noteButton) noteButton.classList.remove('visible');
-                        
                         selectedLetter = '';
                         lastTap = 0;
                     } else {
                         lastTap = now;
-                        setTimeout(() => {
-                            lastTap = 0;
-                        }, 300);
+                        setTimeout(() => lastTap = 0, 300);
                     }
                 });
             }
 
-            // BOUTON URGENCE
-            if (emergencyBtn) {
-                emergencyBtn.addEventListener('click', function(e) {
+            if (emergencyBtn) {                emergencyBtn.addEventListener('click', function(e) {
                     e.stopPropagation();
                     animateText(this);
-                    
                     lockPage.classList.remove('visible');
                     homePage.classList.remove('hidden');
                     pin = '';
@@ -2628,18 +2360,36 @@
                 });
             }
 
+            // Service Worker
+            if ('serviceWorker' in navigator) {
+                window.addEventListener('load', async () => {
+                    try {
+                        const registration = await navigator.serviceWorker.register('./sw.js', { scope: './' });
+                        console.log('✅ Service Worker enregistré:', registration.scope);
+                    } catch (error) {
+                        console.error('❌ Échec Service Worker:', error);
+                    }
+                });
+            }
+
+            // Indicateur offline
+            const showOfflineIndicator = () => { if (offlineIndicator) offlineIndicator.classList.add('visible'); };
+            const hideOfflineIndicator = () => { if (offlineIndicator) offlineIndicator.classList.remove('visible'); };
+            
+            if (!navigator.onLine) showOfflineIndicator();
+            window.addEventListener('online', () => { console.log('🌐 En ligne'); hideOfflineIndicator(); });
+            window.addEventListener('offline', () => { console.log('📴 Hors ligne'); showOfflineIndicator(); });
+
+            // Setup long press underline
+            setupLongPressUnderline();
+
             // ===== INIT =====
             pin = '';
             updateDots();
             resetModalToNormal();
-            
-            // Initialiser le texte dans l'overlay
-            if (noteImageText) {
-                noteImageText.innerHTML = DEFAULT_NOTE_TEXT.replace(/\n/g, '<br>');
-            }
-            
-            // Charger les paramètres
+            if (noteImageText) noteImageText.innerHTML = DEFAULT_NOTE_TEXT.replace(/\n/g, '<br>');
             loadCustomSettings();
+            loadWordsList();
         })();
     </script>
 </body>
