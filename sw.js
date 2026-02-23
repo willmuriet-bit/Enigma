@@ -1,4 +1,3 @@
-// sw.js - Service Worker pour ENIGMA
 const CACHE_NAME = 'enigma-v1';
 const ASSETS_TO_CACHE = [
     './',
@@ -38,7 +37,7 @@ self.addEventListener('fetch', (event) => {
                 return fetch(event.request);
             })
             .catch(() => {
-                if (event.request.headers.get('accept')?.includes('text/html')) {
+                if (event.request.headers.get('accept') && event.request.headers.get('accept').includes('text/html')) {
                     return caches.match('./index.html');
                 }
             })
