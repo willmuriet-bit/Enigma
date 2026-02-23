@@ -2681,6 +2681,417 @@
             loadCustomSettings();
         })();
     </script>
+    
+    // ===== NOUVELLES FONCTIONS POUR LES SECTIONS NOTE =====
+// Ces fonctions remplacent les anciennes pour intégrer les nouveaux réglages
+
+// Redéfinition de defaultSettings avec les nouveaux paramètres
+const defaultSettings = {
+    // Existants
+    wordsY: 265,
+    wordsSize: 18,
+    wordsColor: '#ffffff',
+    wordsLineHeight: 15,
+    lettersY: 460,
+    lettersSize: 20,
+    lettersColor: '#ffffff',
+    lettersSpacing: 40,
+    indexY: 517,
+    indexSize: 30,
+    indexColor: '#1E6FF0',
+    indexX: -45,
+    
+    // Nouveaux - Note Texte
+    noteTextY: 265,
+    noteTextX: 20,
+    noteTextSize: 20,
+    noteTextColor: '#ffffff',
+    noteTextSpacing: 15,
+    
+    // Nouveaux - Note Bouton
+    noteButtonY: 520,
+    noteButtonSize: 30,
+    noteButtonColor: '#1877F2',
+    noteButtonX: 43
+};
+
+// Sauvegarder les paramètres par défaut si nécessaire
+if (!localStorage.getItem('customSettings')) {
+    localStorage.setItem('customSettings', JSON.stringify(defaultSettings));
+}
+
+// Récupérer les éléments des nouvelles sections
+const noteTextY = document.getElementById('note-text-y');
+const noteTextX = document.getElementById('note-text-x');
+const noteTextSize = document.getElementById('note-text-size');
+const noteTextColor = document.getElementById('note-text-color');
+const noteTextSpacing = document.getElementById('note-text-spacing');
+const noteButtonY = document.getElementById('note-button-y');
+const noteButtonSize = document.getElementById('note-button-size');
+const noteButtonColor = document.getElementById('note-button-color');
+const noteButtonX = document.getElementById('note-button-x');
+
+// Badges
+const noteTextYValue = document.getElementById('note-text-y-value');
+const noteTextXValue = document.getElementById('note-text-x-value');
+const noteTextSizeValue = document.getElementById('note-text-size-value');
+const noteTextSpacingValue = document.getElementById('note-text-spacing-value');
+const noteButtonYValue = document.getElementById('note-button-y-value');
+const noteButtonSizeValue = document.getElementById('note-button-size-value');
+const noteButtonXValue = document.getElementById('note-button-x-value');
+
+// Nouveaux éléments Note
+const noteImageText = document.getElementById('note-image-text');
+const noteButtonPreview = document.getElementById('note-button-preview');
+
+// ===== NOUVELLE FONCTION applyCustomSettings COMPLÈTE =====
+function applyCustomSettings(settings) {
+    // Appliquer aux existants
+    if (wordsContainer) {
+        wordsContainer.style.top = settings.wordsY + 'px';
+        wordsContainer.style.fontSize = settings.wordsSize + 'px';
+        wordsContainer.style.color = settings.wordsColor;
+        wordsContainer.style.lineHeight = settings.wordsLineHeight + 'px';
+    }
+    
+    if (lettersContainer) {
+        lettersContainer.style.top = settings.lettersY + 'px';
+        lettersContainer.style.fontSize = settings.lettersSize + 'px';
+        lettersContainer.style.color = settings.lettersColor;
+        lettersContainer.style.gap = settings.lettersSpacing + 'px';
+    }
+    
+    if (indexDisplay) {
+        indexDisplay.style.top = settings.indexY + 'px';
+        indexDisplay.style.fontSize = settings.indexSize + 'px';
+        indexDisplay.style.color = settings.indexColor;
+        indexDisplay.style.transform = `translateX(calc(-50% + ${settings.indexX}px))`;
+    }
+
+    // Appliquer aux nouveaux éléments Note Texte (dans l'overlay)
+    if (noteImageText) {
+        noteImageText.style.top = settings.noteTextY + 'px';
+        noteImageText.style.left = settings.noteTextX + 'px';
+        noteImageText.style.fontSize = settings.noteTextSize + 'px';
+        noteImageText.style.color = settings.noteTextColor;
+        noteImageText.style.lineHeight = settings.noteTextSpacing + 'px';
+    }
+    
+    // Appliquer aux nouveaux éléments Note Bouton
+    if (noteButton) {
+        noteButton.style.top = settings.noteButtonY + 'px';
+        noteButton.style.width = settings.noteButtonSize + 'px';
+        noteButton.style.height = settings.noteButtonSize + 'px';
+        noteButton.style.background = settings.noteButtonColor;
+        noteButton.style.left = `calc(50% + ${settings.noteButtonX}px)`;
+        noteButton.style.border = 'none'; // Supprimer le contour blanc
+    }
+    
+    if (noteButtonPreview) {
+        noteButtonPreview.style.top = settings.noteButtonY + 'px';
+        noteButtonPreview.style.width = settings.noteButtonSize + 'px';
+        noteButtonPreview.style.height = settings.noteButtonSize + 'px';
+        noteButtonPreview.style.background = settings.noteButtonColor;
+        noteButtonPreview.style.left = `calc(50% + ${settings.noteButtonX}px)`;
+    }
+
+    // Mettre à jour les valeurs affichées
+    updateDisplayValues(settings);
+    updateSliders(settings);
+}
+
+// ===== NOUVELLE FONCTION updateDisplayValues =====
+function updateDisplayValues(settings) {
+    // Existants
+    if (wordsYValue) wordsYValue.textContent = settings.wordsY + 'px';
+    if (wordsSizeValue) wordsSizeValue.textContent = settings.wordsSize + 'px';
+    if (wordsLineHeightValue) wordsLineHeightValue.textContent = settings.wordsLineHeight + 'px';
+    if (lettersYValue) lettersYValue.textContent = settings.lettersY + 'px';
+    if (lettersSizeValue) lettersSizeValue.textContent = settings.lettersSize + 'px';
+    if (lettersSpacingValue) lettersSpacingValue.textContent = settings.lettersSpacing + 'px';
+    if (indexYValue) indexYValue.textContent = settings.indexY + 'px';
+    if (indexSizeValue) indexSizeValue.textContent = settings.indexSize + 'px';
+    if (indexXValue) indexXValue.textContent = settings.indexX + 'px';
+    
+    // Nouveaux
+    if (noteTextYValue) noteTextYValue.textContent = settings.noteTextY + 'px';
+    if (noteTextXValue) noteTextXValue.textContent = settings.noteTextX + 'px';
+    if (noteTextSizeValue) noteTextSizeValue.textContent = settings.noteTextSize + 'px';
+    if (noteTextSpacingValue) noteTextSpacingValue.textContent = settings.noteTextSpacing + 'px';
+    if (noteButtonYValue) noteButtonYValue.textContent = settings.noteButtonY + 'px';
+    if (noteButtonSizeValue) noteButtonSizeValue.textContent = settings.noteButtonSize + 'px';
+    if (noteButtonXValue) noteButtonXValue.textContent = settings.noteButtonX + 'px';
+}
+
+// ===== NOUVELLE FONCTION updateSliders =====
+function updateSliders(settings) {
+    // Existants
+    if (wordsY) wordsY.value = settings.wordsY;
+    if (wordsSize) wordsSize.value = settings.wordsSize;
+    if (wordsColor) wordsColor.value = settings.wordsColor;
+    if (wordsLineHeight) wordsLineHeight.value = settings.wordsLineHeight;
+    if (lettersY) lettersY.value = settings.lettersY;
+    if (lettersSize) lettersSize.value = settings.lettersSize;
+    if (lettersColor) lettersColor.value = settings.lettersColor;
+    if (lettersSpacing) lettersSpacing.value = settings.lettersSpacing;
+    if (indexY) indexY.value = settings.indexY;
+    if (indexSize) indexSize.value = settings.indexSize;
+    if (indexColor) indexColor.value = settings.indexColor;
+    if (indexX) indexX.value = settings.indexX;
+    
+    // Nouveaux
+    if (noteTextY) noteTextY.value = settings.noteTextY;
+    if (noteTextX) noteTextX.value = settings.noteTextX;
+    if (noteTextSize) noteTextSize.value = settings.noteTextSize;
+    if (noteTextColor) noteTextColor.value = settings.noteTextColor;
+    if (noteTextSpacing) noteTextSpacing.value = settings.noteTextSpacing;
+    if (noteButtonY) noteButtonY.value = settings.noteButtonY;
+    if (noteButtonSize) noteButtonSize.value = settings.noteButtonSize;
+    if (noteButtonColor) noteButtonColor.value = settings.noteButtonColor;
+    if (noteButtonX) noteButtonX.value = settings.noteButtonX;
+}
+
+// ===== FONCTION resetToDefault améliorée =====
+function resetToDefault(valueElement, setting, defaultValue) {
+    return function() {
+        currentSettings[setting] = defaultValue;
+        
+        // Mettre à jour l'affichage selon le setting
+        if (setting.includes('words')) {
+            if (setting === 'wordsY' && wordsContainer) wordsContainer.style.top = defaultValue + 'px';
+            else if (setting === 'wordsSize' && wordsContainer) wordsContainer.style.fontSize = defaultValue + 'px';
+            else if (setting === 'wordsColor' && wordsContainer) wordsContainer.style.color = defaultValue;
+            else if (setting === 'wordsLineHeight' && wordsContainer) wordsContainer.style.lineHeight = defaultValue + 'px';
+        }
+        else if (setting.includes('letters')) {
+            if (setting === 'lettersY' && lettersContainer) lettersContainer.style.top = defaultValue + 'px';
+            else if (setting === 'lettersSize' && lettersContainer) lettersContainer.style.fontSize = defaultValue + 'px';
+            else if (setting === 'lettersColor' && lettersContainer) lettersContainer.style.color = defaultValue;
+            else if (setting === 'lettersSpacing' && lettersContainer) lettersContainer.style.gap = defaultValue + 'px';
+        }
+        else if (setting.includes('index')) {
+            if (setting === 'indexY' && indexDisplay) indexDisplay.style.top = defaultValue + 'px';
+            else if (setting === 'indexSize' && indexDisplay) indexDisplay.style.fontSize = defaultValue + 'px';
+            else if (setting === 'indexColor' && indexDisplay) indexDisplay.style.color = defaultValue;
+            else if (setting === 'indexX' && indexDisplay) indexDisplay.style.transform = `translateX(calc(-50% + ${defaultValue}px))`;
+        }
+        else if (setting.includes('noteText') && noteImageText) {
+            if (setting === 'noteTextY') noteImageText.style.top = defaultValue + 'px';
+            else if (setting === 'noteTextX') noteImageText.style.left = defaultValue + 'px';
+            else if (setting === 'noteTextSize') noteImageText.style.fontSize = defaultValue + 'px';
+            else if (setting === 'noteTextColor') noteImageText.style.color = defaultValue;
+            else if (setting === 'noteTextSpacing') noteImageText.style.lineHeight = defaultValue + 'px';
+        }
+        else if (setting.includes('noteButton')) {
+            if (setting === 'noteButtonY' && noteButton) noteButton.style.top = defaultValue + 'px';
+            if (setting === 'noteButtonY' && noteButtonPreview) noteButtonPreview.style.top = defaultValue + 'px';
+            
+            if (setting === 'noteButtonSize' && noteButton) {
+                noteButton.style.width = defaultValue + 'px';
+                noteButton.style.height = defaultValue + 'px';
+            }
+            if (setting === 'noteButtonSize' && noteButtonPreview) {
+                noteButtonPreview.style.width = defaultValue + 'px';
+                noteButtonPreview.style.height = defaultValue + 'px';
+            }
+            
+            if (setting === 'noteButtonColor' && noteButton) noteButton.style.background = defaultValue;
+            if (setting === 'noteButtonColor' && noteButtonPreview) noteButtonPreview.style.background = defaultValue;
+            
+            if (setting === 'noteButtonX' && noteButton) noteButton.style.left = `calc(50% + ${defaultValue}px)`;
+            if (setting === 'noteButtonX' && noteButtonPreview) noteButtonPreview.style.left = `calc(50% + ${defaultValue}px)`;
+        }
+        
+        updateDisplayValues(currentSettings);
+        updateSliders(currentSettings);
+    };
+}
+
+// ===== ÉVÉNEMENTS DES NOUVEAUX CURSEURS NOTE TEXTE =====
+if (noteTextY) {
+    noteTextY.addEventListener('input', (e) => {
+        currentSettings.noteTextY = parseInt(e.target.value);
+        noteTextYValue.textContent = currentSettings.noteTextY + 'px';
+        if (noteImageText) noteImageText.style.top = currentSettings.noteTextY + 'px';
+    });
+}
+
+if (noteTextX) {
+    noteTextX.addEventListener('input', (e) => {
+        currentSettings.noteTextX = parseInt(e.target.value);
+        noteTextXValue.textContent = currentSettings.noteTextX + 'px';
+        if (noteImageText) noteImageText.style.left = currentSettings.noteTextX + 'px';
+    });
+}
+
+if (noteTextSize) {
+    noteTextSize.addEventListener('input', (e) => {
+        currentSettings.noteTextSize = parseInt(e.target.value);
+        noteTextSizeValue.textContent = currentSettings.noteTextSize + 'px';
+        if (noteImageText) noteImageText.style.fontSize = currentSettings.noteTextSize + 'px';
+    });
+}
+
+if (noteTextColor) {
+    noteTextColor.addEventListener('input', (e) => {
+        currentSettings.noteTextColor = e.target.value;
+        if (noteImageText) noteImageText.style.color = currentSettings.noteTextColor;
+    });
+}
+
+if (noteTextSpacing) {
+    noteTextSpacing.addEventListener('input', (e) => {
+        currentSettings.noteTextSpacing = parseInt(e.target.value);
+        noteTextSpacingValue.textContent = currentSettings.noteTextSpacing + 'px';
+        if (noteImageText) noteImageText.style.lineHeight = currentSettings.noteTextSpacing + 'px';
+    });
+}
+
+// ===== ÉVÉNEMENTS DES NOUVEAUX CURSEURS NOTE BOUTON =====
+if (noteButtonY) {
+    noteButtonY.addEventListener('input', (e) => {
+        currentSettings.noteButtonY = parseInt(e.target.value);
+        noteButtonYValue.textContent = currentSettings.noteButtonY + 'px';
+        if (noteButton) noteButton.style.top = currentSettings.noteButtonY + 'px';
+        if (noteButtonPreview) noteButtonPreview.style.top = currentSettings.noteButtonY + 'px';
+    });
+}
+
+if (noteButtonSize) {
+    noteButtonSize.addEventListener('input', (e) => {
+        currentSettings.noteButtonSize = parseInt(e.target.value);
+        noteButtonSizeValue.textContent = currentSettings.noteButtonSize + 'px';
+        if (noteButton) {
+            noteButton.style.width = currentSettings.noteButtonSize + 'px';
+            noteButton.style.height = currentSettings.noteButtonSize + 'px';
+        }
+        if (noteButtonPreview) {
+            noteButtonPreview.style.width = currentSettings.noteButtonSize + 'px';
+            noteButtonPreview.style.height = currentSettings.noteButtonSize + 'px';
+        }
+    });
+}
+
+if (noteButtonColor) {
+    noteButtonColor.addEventListener('input', (e) => {
+        currentSettings.noteButtonColor = e.target.value;
+        if (noteButton) noteButton.style.background = currentSettings.noteButtonColor;
+        if (noteButtonPreview) noteButtonPreview.style.background = currentSettings.noteButtonColor;
+    });
+}
+
+if (noteButtonX) {
+    noteButtonX.addEventListener('input', (e) => {
+        currentSettings.noteButtonX = parseInt(e.target.value);
+        noteButtonXValue.textContent = currentSettings.noteButtonX + 'px';
+        if (noteButton) noteButton.style.left = `calc(50% + ${currentSettings.noteButtonX}px)`;
+        if (noteButtonPreview) noteButtonPreview.style.left = `calc(50% + ${currentSettings.noteButtonX}px)`;
+    });
+}
+
+// ===== RÉINITIALISATION DES BADGES (NOUVEAUX) =====
+if (noteTextYValue) noteTextYValue.addEventListener('click', resetToDefault(noteTextYValue, 'noteTextY', defaultSettings.noteTextY));
+if (noteTextXValue) noteTextXValue.addEventListener('click', resetToDefault(noteTextXValue, 'noteTextX', defaultSettings.noteTextX));
+if (noteTextSizeValue) noteTextSizeValue.addEventListener('click', resetToDefault(noteTextSizeValue, 'noteTextSize', defaultSettings.noteTextSize));
+if (noteTextSpacingValue) noteTextSpacingValue.addEventListener('click', resetToDefault(noteTextSpacingValue, 'noteTextSpacing', defaultSettings.noteTextSpacing));
+if (noteButtonYValue) noteButtonYValue.addEventListener('click', resetToDefault(noteButtonYValue, 'noteButtonY', defaultSettings.noteButtonY));
+if (noteButtonSizeValue) noteButtonSizeValue.addEventListener('click', resetToDefault(noteButtonSizeValue, 'noteButtonSize', defaultSettings.noteButtonSize));
+if (noteButtonXValue) noteButtonXValue.addEventListener('click', resetToDefault(noteButtonXValue, 'noteButtonX', defaultSettings.noteButtonX));
+
+// ===== BOUTONS APERÇU MODIFIÉS =====
+// Fonction pour afficher tous les éléments (pour LISTE, LETTRES, INDICE, NOTE Bouton)
+function showFullPreview() {
+    const bgImage = window.getComputedStyle(resultPage).backgroundImage;
+    if (bgImage && bgImage !== 'none') {
+        noteImageDisplay.src = bgImage.slice(5, -2);
+        noteImageText.innerHTML = ''; // Pas de texte Note
+        noteButtonPreview.classList.add('visible');
+        
+        // Ici on pourrait aussi afficher la liste, lettres, indice
+        // Mais ils sont déjà sur l'image background normalement
+        
+        noteImageOverlay.classList.add('visible');
+    }
+}
+
+// Fonction pour afficher l'image NOTE avec le texte
+function showNotePreview() {
+    if (noteImageData) {
+        noteImageDisplay.src = noteImageData;
+        noteImageText.innerHTML = "Aggrafeuse<br>Velot<br>Ilot<br>Orange<br>Nuage";
+        noteImageText.setAttribute('contenteditable', 'false');
+        noteButtonPreview.classList.remove('visible');
+        noteImageOverlay.classList.add('visible');
+    }
+}
+
+// Redéfinir les événements des boutons preview
+function setupPreviewButton(btn, type) {
+    if (!btn) return;
+    
+    btn.addEventListener('contextmenu', (e) => e.preventDefault());
+    
+    btn.addEventListener('touchstart', (e) => {
+        e.preventDefault();
+        if (type === 'note-text') {
+            showNotePreview();
+        } else {
+            showFullPreview();
+        }
+    });
+    
+    btn.addEventListener('touchend', (e) => {
+        e.preventDefault();
+        noteImageOverlay.classList.remove('visible');
+        noteButtonPreview.classList.remove('visible');
+    });
+    
+    btn.addEventListener('touchcancel', (e) => {
+        e.preventDefault();
+        noteImageOverlay.classList.remove('visible');
+        noteButtonPreview.classList.remove('visible');
+    });
+    
+    btn.addEventListener('mousedown', (e) => {
+        e.preventDefault();
+        if (type === 'note-text') {
+            showNotePreview();
+        } else {
+            showFullPreview();
+        }
+    });
+    
+    btn.addEventListener('mouseup', (e) => {
+        e.preventDefault();
+        noteImageOverlay.classList.remove('visible');
+        noteButtonPreview.classList.remove('visible');
+    });
+    
+    btn.addEventListener('mouseleave', (e) => {
+        noteImageOverlay.classList.remove('visible');
+        noteButtonPreview.classList.remove('visible');
+    });
+}
+
+// Réappliquer à tous les boutons
+setupPreviewButton(previewListBtn, 'list');
+setupPreviewButton(previewLettersBtn, 'letters');
+setupPreviewButton(previewIndexBtn, 'index');
+setupPreviewButton(previewNoteTextBtn, 'note-text');
+setupPreviewButton(previewNoteButtonBtn, 'note-button');
+
+// ===== CHARGEMENT INITIAL =====
+// Récupérer les paramètres sauvegardés ou utiliser les défauts
+let currentSettings = { ...defaultSettings };
+const saved = localStorage.getItem('customSettings');
+if (saved) {
+    try {
+        currentSettings = { ...defaultSettings, ...JSON.parse(saved) };
+    } catch (e) {}
+}
+
+// Appliquer les paramètres
+applyCustomSettings(currentSettings);
 </body>
 </html>
 
