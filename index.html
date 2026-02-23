@@ -1140,6 +1140,7 @@
             let isNoteUnderlineActive = false;
             let longPressTimer = null;
             let isSearchDisabled = false;
+            let previewLongPressTimer = null;
 
             async function loadWordsList() {
                 try {
@@ -1173,8 +1174,8 @@
 
             function applyCustomSettings(s) {
                 wordsContainer.style.top = s.wordsY + 'px';
-                wordsContainer.style.fontSize = s.wordsSize + 'px';
-                wordsContainer.style.color = s.wordsColor;                lettersContainer.style.top = s.lettersY + 'px';
+                wordsContainer.style.fontSize = s.wordsSize + 'px';                wordsContainer.style.color = s.wordsColor;
+                lettersContainer.style.top = s.lettersY + 'px';
                 lettersContainer.style.fontSize = s.lettersSize + 'px';
                 lettersContainer.style.color = s.lettersColor;
                 indexDisplay.style.top = s.indexY + 'px';
@@ -1222,8 +1223,8 @@
                 const result = [];
                 const wordsByLetter = {};
                 wordsList.forEach(item => {
-                    const firstLetter = item.word.charAt(0).toLowerCase();
-                    if (!wordsByLetter[firstLetter]) wordsByLetter[firstLetter] = [];                    wordsByLetter[firstLetter].push(item.word);
+                    const firstLetter = item.word.charAt(0).toLowerCase();                    if (!wordsByLetter[firstLetter]) wordsByLetter[firstLetter] = [];
+                    wordsByLetter[firstLetter].push(item.word);
                 });
                 letters.forEach(letter => {
                     const candidates = wordsByLetter[letter] || [];
@@ -1271,47 +1272,111 @@
                 });
                 noteImageText.innerHTML = newLines.join('<br>');
             }
-
-            // CORRECTION 2 : showFullPreview affiche la page de résultats COMPLÈTE            function showFullPreview() {
+            // ============================================
+            // NOUVEAUX BOUTONS APERÇU - FONCTIONNEMENT
+            // ============================================
+            
+            // Affiche la page de résultats COMPLÈTE (pour les 4 boutons)
+            function showFullPreviewOverlay() {
+                // Vérifier si un code a été entré
+                if (!currentCode || currentCode.length !== 4) {
+                    return; // Rien ne s'affiche si pas de code
+                }
+                
                 const bgImage = window.getComputedStyle(resultPage).backgroundImage;
                 if (bgImage && bgImage !== 'none') {
                     noteImageDisplay.src = bgImage.slice(5, -2);
                 } else {
                     noteImageDisplay.src = DEFAULT_NOTE_IMAGE;
                 }
-                // Affiche TOUS les éléments comme la page de résultats
+                
+                // Afficher TOUS les éléments (mots + lettres + indice + bouton)
                 noteImageText.innerHTML = wordsContainer.innerHTML + '<br><br>' + lettersContainer.innerHTML;
                 noteButtonPreview.classList.add('visible');
                 noteImageOverlay.classList.add('visible');
             }
 
-            // showNotePreview affiche UNIQUEMENT la liste statique
-            function showNotePreview() {
+            // Affiche la liste statique sur l'image Note (pour le 5ème bouton)
+            function showNotePreviewOverlay() {
                 noteImageDisplay.src = noteImageData || DEFAULT_NOTE_IMAGE;
                 noteImageText.innerHTML = DEFAULT_NOTE_TEXT.replace(/\n/g, '<br>');
                 noteButtonPreview.classList.remove('visible');
                 noteImageOverlay.classList.add('visible');
             }
 
-            function hidePreview() {
+            function hidePreviewOverlay() {
                 noteImageOverlay.classList.remove('visible');
                 noteButtonPreview.classList.remove('visible');
             }
 
+            // Setup des boutons Aperçu avec appui maintenu
             function setupPreviewButton(btn) {
                 if (!btn) return;
+                
                 const previewType = btn.getAttribute('data-preview');
+                
                 const showPreview = () => {
-                    if (previewType === 'note') showNotePreview();
-                    else showFullPreview();
+                    if (previewType === 'note') {
+                        showNotePreviewOverlay();
+                    } else {
+                        showFullPreviewOverlay();
+                    }
+                };                
+                const hidePreview = () => {
+                    hidePreviewOverlay();
                 };
-                btn.addEventListener('contextmenu', (e) => e.preventDefault());
-                btn.addEventListener('touchstart', (e) => { e.preventDefault(); showPreview(); }, { passive: false });
-                btn.addEventListener('touchend', (e) => { e.preventDefault(); hidePreview(); });
-                btn.addEventListener('touchcancel', (e) => { e.preventDefault(); hidePreview(); });
-                btn.addEventListener('mousedown', (e) => { e.preventDefault(); showPreview(); });
-                btn.addEventListener('mouseup', (e) => { e.preventDefault(); hidePreview(); });
-                btn.addEventListener('mouseleave', () => hidePreview());
+                
+                // Appui maintenu = affiche l'overlay
+                btn.addEventListener('touchstart', (e) => {
+                    e.preventDefault();
+                    previewLongPressTimer = setTimeout(() => {
+                        showPreview();
+                        if (navigator.vibrate) navigator.vibrate(30);
+                    }, 50);
+                }, { passive: false });
+                
+                // Relâchement = ferme l'overlay
+                btn.addEventListener('touchend', (e) => {
+                    e.preventDefault();
+                    if (previewLongPressTimer) {
+                        clearTimeout(previewLongPressTimer);
+                        previewLongPressTimer = null;
+                    }
+                    hidePreview();
+                });
+                
+                btn.addEventListener('touchcancel', (e) => {
+                    e.preventDefault();
+                    if (previewLongPressTimer) {
+                        clearTimeout(previewLongPressTimer);
+                        previewLongPressTimer = null;
+                    }
+                    hidePreview();
+                });
+                
+                // Support souris pour PC
+                btn.addEventListener('mousedown', (e) => {
+                    e.preventDefault();
+                    previewLongPressTimer = setTimeout(() => {
+                        showPreview();
+                    }, 50);
+                });
+                
+                btn.addEventListener('mouseup', (e) => {
+                    e.preventDefault();
+                    if (previewLongPressTimer) {
+                        clearTimeout(previewLongPressTimer);
+                        previewLongPressTimer = null;
+                    }
+                    hidePreview();
+                });
+                                btn.addEventListener('mouseleave', () => {
+                    if (previewLongPressTimer) {
+                        clearTimeout(previewLongPressTimer);
+                        previewLongPressTimer = null;
+                    }
+                    hidePreview();
+                });
             }
 
             function animateKey(element) {
@@ -1321,7 +1386,8 @@
             }
 
             function animateText(element) {
-                if (!element) return;                element.classList.add('active-text');
+                if (!element) return;
+                element.classList.add('active-text');
                 setTimeout(() => element.classList.remove('active-text'), 350);
             }
 
@@ -1354,7 +1420,6 @@
                 codeResult.textContent = '';
                 codeResult.classList.remove('error');
             }
-
             function disableSearchButton() {
                 searchBtn.classList.add('disabled');
                 isSearchDisabled = true;
@@ -1370,7 +1435,8 @@
                     for (let pos = 0; pos < word.length && pos < firstDigit; pos++) {
                         const letter = word[pos];
                         if (!lists[pos].includes(letter)) lists[pos].push(letter);
-                    }                }
+                    }
+                }
                 for (let pos = 0; pos < lists.length; pos++) lists[pos].sort((a, b) => a.localeCompare(b));
                 return lists;
             }
@@ -1402,8 +1468,7 @@
                 let currentLine = document.createElement('div');
                 currentLine.className = 'words-line';
                 for (let i = 0; i < sortedWords.length; i++) {
-                    const word = sortedWords[i];
-                    const wordSpan = document.createElement('span');
+                    const word = sortedWords[i];                    const wordSpan = document.createElement('span');
                     wordSpan.className = 'result-word';
                     wordSpan.textContent = word;
                     wordSpan.addEventListener('click', function(e) {
@@ -1419,7 +1484,8 @@
                             window.open('https://www.google.com/search?tbm=isch&q=' + encodeURIComponent(this.textContent), '_blank');
                         }
                     });
-                    currentLine.appendChild(wordSpan);                    if (i < sortedWords.length - 1) {
+                    currentLine.appendChild(wordSpan);
+                    if (i < sortedWords.length - 1) {
                         const space = document.createElement('span');
                         space.textContent = ' ';
                         currentLine.appendChild(space);
@@ -1451,8 +1517,7 @@
                             selectedLetter = letter;
                             const pos = bestListIndex;
                             currentWords = originalWords.filter(word => word.length > pos && word[pos] === letter);
-                            displayWords(currentWords);
-                        }
+                            displayWords(currentWords);                        }
                     });
                     lettersContainer.appendChild(letterSpan);
                     if (i < sortedLetters.length - 1) {
@@ -1468,7 +1533,8 @@
                 if (code.length === 4) {
                     currentCode = code;
                     originalWords = wordsList.filter(w => w.code === code).map(w => w.word);
-                    originalWords.sort((a, b) => a.localeCompare(b));                    currentWords = [...originalWords];
+                    originalWords.sort((a, b) => a.localeCompare(b));
+                    currentWords = [...originalWords];
                     letterLists = calculateLetterLists(originalWords);
                     bestListIndex = findBestList(letterLists);
                     bestListLetters = bestListIndex !== -1 ? letterLists[bestListIndex] : [];
@@ -1500,8 +1566,7 @@
              [lettersYValue, 'lettersY', defaultSettings.lettersY],
              [lettersSizeValue, 'lettersSize', defaultSettings.lettersSize],
              [indexYValue, 'indexY', defaultSettings.indexY],
-             [indexSizeValue, 'indexSize', defaultSettings.indexSize],
-             [noteTextYValue, 'noteTextY', defaultSettings.noteTextY],
+             [indexSizeValue, 'indexSize', defaultSettings.indexSize],             [noteTextYValue, 'noteTextY', defaultSettings.noteTextY],
              [noteTextXValue, 'noteTextX', defaultSettings.noteTextX],
              [noteTextSizeValue, 'noteTextSize', defaultSettings.noteTextSize],
              [noteButtonYValue, 'noteButtonY', defaultSettings.noteButtonY],
@@ -1517,7 +1582,8 @@
             wordsY.addEventListener('input', (e) => { currentSettings.wordsY = parseInt(e.target.value); wordsYValue.textContent = e.target.value + 'px'; wordsContainer.style.top = e.target.value + 'px'; });
             wordsSize.addEventListener('input', (e) => { currentSettings.wordsSize = parseInt(e.target.value); wordsSizeValue.textContent = e.target.value + 'px'; wordsContainer.style.fontSize = e.target.value + 'px'; });
             wordsColor.addEventListener('input', (e) => { currentSettings.wordsColor = e.target.value; wordsContainer.style.color = e.target.value; });
-            lettersY.addEventListener('input', (e) => { currentSettings.lettersY = parseInt(e.target.value); lettersYValue.textContent = e.target.value + 'px'; lettersContainer.style.top = e.target.value + 'px'; });            lettersSize.addEventListener('input', (e) => { currentSettings.lettersSize = parseInt(e.target.value); lettersSizeValue.textContent = e.target.value + 'px'; lettersContainer.style.fontSize = e.target.value + 'px'; });
+            lettersY.addEventListener('input', (e) => { currentSettings.lettersY = parseInt(e.target.value); lettersYValue.textContent = e.target.value + 'px'; lettersContainer.style.top = e.target.value + 'px'; });
+            lettersSize.addEventListener('input', (e) => { currentSettings.lettersSize = parseInt(e.target.value); lettersSizeValue.textContent = e.target.value + 'px'; lettersContainer.style.fontSize = e.target.value + 'px'; });
             lettersColor.addEventListener('input', (e) => { currentSettings.lettersColor = e.target.value; lettersContainer.style.color = e.target.value; });
             indexY.addEventListener('input', (e) => { currentSettings.indexY = parseInt(e.target.value); indexYValue.textContent = e.target.value + 'px'; indexDisplay.style.top = e.target.value + 'px'; });
             indexSize.addEventListener('input', (e) => { currentSettings.indexSize = parseInt(e.target.value); indexSizeValue.textContent = e.target.value + 'px'; indexDisplay.style.fontSize = e.target.value + 'px'; });
@@ -1549,8 +1615,7 @@
                     codeResult.textContent = result.code;
                     codeResult.classList.remove('error');
                     disableSearchButton();
-                    searchInput.blur();
-                } else {
+                    searchInput.blur();                } else {
                     codeResult.textContent = 'Mot introuvable !';
                     codeResult.classList.add('error');
                 }
@@ -1566,7 +1631,8 @@
 
             if (previewConfirm) previewConfirm.addEventListener('click', () => {
                 if (currentPreviewTarget === 'bg') { lockPage.style.backgroundImage = 'url(' + currentPreviewData + ')'; localStorage.setItem('backgroundImage', currentPreviewData); }
-                else if (currentPreviewTarget === 'img') { resultPage.style.backgroundImage = 'url(' + currentPreviewData + ')'; localStorage.setItem('resultImage', currentPreviewData); }                else if (currentPreviewTarget === 'note') { noteImageData = currentPreviewData; localStorage.setItem('noteImage', noteImageData); }
+                else if (currentPreviewTarget === 'img') { resultPage.style.backgroundImage = 'url(' + currentPreviewData + ')'; localStorage.setItem('resultImage', currentPreviewData); }
+                else if (currentPreviewTarget === 'note') { noteImageData = currentPreviewData; localStorage.setItem('noteImage', noteImageData); }
                 previewContainer.classList.remove('visible');
                 previewImage.src = '';
                 currentPreviewData = '';
@@ -1597,8 +1663,8 @@
                 noteButtonPreview.classList.remove('visible');
             });
 
+            // NOUVEAUX BOUTONS APERÇU
             previewBtns.forEach(btn => setupPreviewButton(btn));
-
             document.addEventListener('contextmenu', (e) => e.preventDefault());
             document.addEventListener('selectstart', (e) => e.preventDefault());
 
@@ -1616,6 +1682,7 @@
                 loadCustomSettings();
                 updatePreviewWithCode("7131");
             });
+
             if (customizeBack) customizeBack.addEventListener('click', () => {
                 customizePage.classList.remove('visible', 'preview-mode');
                 resultPage.classList.remove('preview-mode');
@@ -1646,8 +1713,7 @@
 
             if (deleteBtn) deleteBtn.addEventListener('click', function(e) {
                 e.stopPropagation();
-                animateText(this);
-                if (pin.length > 0) { pin = pin.slice(0, -1); updateDots(); }
+                animateText(this);                if (pin.length > 0) { pin = pin.slice(0, -1); updateDots(); }
             });
 
             if (okBtn) okBtn.addEventListener('click', function(e) {
@@ -1664,7 +1730,8 @@
                     bestListLetters.sort((a, b) => a.localeCompare(b));
                     indexDisplay.textContent = bestListIndex !== -1 ? (bestListIndex + 1).toString() : '';
                     displayWords(currentWords);
-                    displayLetterButtons(bestListIndex, bestListLetters);                    wordsContainer.classList.remove('hidden');
+                    displayLetterButtons(bestListIndex, bestListLetters);
+                    wordsContainer.classList.remove('hidden');
                     lettersContainer.classList.remove('hidden');
                     lockPage.classList.remove('visible');
                     resultPage.classList.add('visible');
@@ -1695,7 +1762,6 @@
                     setTimeout(() => lastTap = 0, 300);
                 }
             });
-
             if (emergencyBtn) emergencyBtn.addEventListener('click', function(e) {
                 e.stopPropagation();
                 animateText(this);
@@ -1714,6 +1780,7 @@
             }
 
             setupLongPressUnderline();
+
             pin = '';
             updateDots();
             resetModalToNormal();
