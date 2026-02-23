@@ -16,6 +16,7 @@
     <link rel="manifest" href="manifest.json">
     
     <style>
+        /* === RESET & BASE === */
         * {
             margin: 0;
             padding: 0;
@@ -28,9 +29,12 @@
             height: 100vh;
             overflow: hidden;
             color: white;
+            /* ✅ OPTIMISATION: Force le rendu GPU */
+            transform: translateZ(0);
+            backface-visibility: hidden;
         }
 
-        /* ANIMATIONS D'OUVERTURE */
+        /* === ANIMATIONS (IDENTIQUES) === */
         @keyframes soulignement {
             0% { width: 0; opacity: 0; }
             50% { width: 100%; opacity: 1; }
@@ -43,11 +47,22 @@
             100% { text-shadow: 0 0 5px #FFD700, 0 0 10px #FFD700, 0 0 15px #FFD700; }
         }
 
-        @keyframes apparitionBouton {
-            0% { opacity: 0; transform: translateY(30px); }
+        @keyframes apparitionBouton {            0% { opacity: 0; transform: translateY(30px); }
             100% { opacity: 1; transform: translateY(0); }
         }
 
+        @keyframes ripple {
+            0% { transform: scale(0, 0) translate(-50%, -50%); opacity: 0.5; }
+            100% { transform: scale(20, 20) translate(-50%, -50%); opacity: 0; }
+        }
+
+        @keyframes circleWave {
+            0% { opacity: 0.9; transform: scale(0.5); }
+            70% { opacity: 0.5; transform: scale(1.3); }
+            100% { opacity: 0; transform: scale(1.6); }
+        }
+
+        /* === TITRE & BOUTONS ACCUEIL === */
         .app-title {
             font-family: 'Georgia', 'Times New Roman', serif;
             font-size: 68px;
@@ -61,6 +76,8 @@
             text-transform: uppercase;
             padding-bottom: 15px;
             animation: scintillement 2s ease-in-out infinite;
+            /* ✅ OPTIMISATION: GPU hint */
+            will-change: text-shadow;
         }
 
         .app-title::after {
@@ -79,8 +96,7 @@
         .home-btn {
             width: 320px;
             height: 65px;
-            background: white;
-            color: black;
+            background: white;            color: black;
             border: none;
             border-radius: 15px;
             font-size: 24px;
@@ -95,6 +111,8 @@
             opacity: 0;
             transform: translateY(30px);
             animation: apparitionBouton 0.5s ease-out forwards;
+            /* ✅ OPTIMISATION: GPU hint */
+            will-change: transform, opacity;
         }
 
         #btn-perform { animation-delay: 0.2s; }
@@ -125,15 +143,9 @@
             animation: ripple 0.4s ease-out;
         }
 
-        @keyframes ripple {
-            0% { transform: scale(0, 0) translate(-50%, -50%); opacity: 0.5; }
-            100% { transform: scale(20, 20) translate(-50%, -50%); opacity: 0; }
-        }
-
-        /* PAGE D'ACCUEIL */
+        /* === PAGE D'ACCUEIL === */
         #home-page {
-            position: absolute;
-            inset: 0;
+            position: absolute;            inset: 0;
             background: black;
             display: flex;
             flex-direction: column;
@@ -142,13 +154,16 @@
             padding-bottom: 15vh;
             z-index: 20;
             transition: transform 0.3s ease-out;
+            /* ✅ OPTIMISATION: GPU acceleration */
+            transform: translateZ(0);
+            backface-visibility: hidden;
         }
 
         #home-page.hidden {
             transform: translateY(-100%);
         }
 
-        /* PAGE PARAMÈTRES */
+        /* === PAGE PARAMÈTRES === */
         #settings-page {
             position: absolute;
             inset: 0;
@@ -162,6 +177,9 @@
             opacity: 0;
             transition: visibility 0.3s, opacity 0.3s;
             padding: 20px;
+            /* ✅ OPTIMISATION: GPU acceleration */
+            transform: translateZ(0);
+            backface-visibility: hidden;
         }
 
         #settings-page.visible {
@@ -177,7 +195,6 @@
             text-transform: uppercase;
             letter-spacing: 4px;
         }
-
         .settings-btn {
             width: 320px;
             height: 65px;
@@ -190,6 +207,8 @@
             cursor: pointer;
             margin: 10px 0;
             transition: background 0.2s, transform 0.1s;
+            /* ✅ OPTIMISATION: GPU hint */
+            will-change: transform;
         }
 
         .settings-btn:active {
@@ -216,13 +235,14 @@
             border-radius: 15px;
             border: 3px solid #FFD700;
             margin-bottom: 15px;
+            /* ✅ OPTIMISATION: GPU hint */
+            will-change: transform;
         }
 
         .preview-buttons {
             display: flex;
             gap: 20px;
         }
-
         .preview-confirm, .preview-cancel {
             width: 120px;
             height: 50px;
@@ -231,6 +251,8 @@
             font-size: 18px;
             font-weight: 600;
             cursor: pointer;
+            /* ✅ OPTIMISATION: GPU hint */
+            will-change: transform;
         }
 
         .preview-confirm {
@@ -260,7 +282,7 @@
             background: #888;
         }
 
-        /* PAGE DE PERSONNALISATION */
+        /* === PAGE DE PERSONNALISATION === */
         #customize-page {
             position: absolute;
             inset: 0;
@@ -268,11 +290,13 @@
             z-index: 40;
             visibility: hidden;
             opacity: 0;
-            transition: visibility 0.3s, opacity 0.3s, background 0.2s ease, backdrop-filter 0.2s ease;
+            transition: visibility 0.3s, opacity 0.3s;
             overflow-y: auto;
-            overflow-x: hidden;
-            padding: 20px;
+            overflow-x: hidden;            padding: 20px;
             color: white;
+            /* ✅ OPTIMISATION: GPU acceleration + pas d'animation sur backdrop-filter */
+            transform: translateZ(0);
+            backface-visibility: hidden;
         }
 
         #customize-page.visible {
@@ -317,8 +341,7 @@
 
         #customize-page.dragging-slider .slider-item {
             position: relative;
-            z-index: 9999;
-        }
+            z-index: 9999;        }
 
         #customize-page.dragging-slider .slider-item label {
             opacity: 0 !important;
@@ -339,7 +362,8 @@
         .test-code-section,
         .customize-header,
         .customize-actions {
-            transition: opacity 0.2s ease, background 0.2s ease, backdrop-filter 0.2s ease;
+            transition: opacity 0.2s ease;
+            /* ✅ OPTIMISATION: Pas d'animation sur background/backdrop-filter */
         }
 
         /* Mode preview - l'écran de résultat est visible en arrière-plan */
@@ -366,8 +390,7 @@
 
         .customize-back-btn {
             width: 40px;
-            height: 40px;
-            background: #333;
+            height: 40px;            background: #333;
             border: none;
             border-radius: 50%;
             color: white;
@@ -378,6 +401,8 @@
             justify-content: center;
             margin-right: 15px;
             transition: background 0.2s, transform 0.1s;
+            /* ✅ OPTIMISATION: GPU hint */
+            will-change: transform;
         }
 
         .customize-back-btn:active {
@@ -403,6 +428,8 @@
             backdrop-filter: blur(5px);
             border: 1px solid #444;
             text-align: center;
+            /* ✅ OPTIMISATION: Contain pour isoler le repaint */
+            contain: layout style paint;
         }
 
         .test-code-title {
@@ -412,8 +439,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 10px;
-        }
+            gap: 10px;        }
 
         .code-input-group {
             display: flex;
@@ -455,13 +481,14 @@
             z-index: 41;
             backdrop-filter: blur(5px);
             border: 1px solid #444;
+            /* ✅ OPTIMISATION: Contain pour isoler le repaint */
+            contain: layout style paint;
         }
 
         .control-header {
             display: flex;
             align-items: center;
-            justify-content: space-between;
-            margin-bottom: 20px;
+            justify-content: space-between;            margin-bottom: 20px;
             border-bottom: 1px solid #444;
             padding-bottom: 10px;
         }
@@ -485,6 +512,8 @@
             gap: 5px;
             transition: background 0.2s, transform 0.1s;
             -webkit-tap-highlight-color: transparent;
+            /* ✅ OPTIMISATION: GPU hint */
+            will-change: transform;
         }
 
         .preview-btn:active {
@@ -508,9 +537,8 @@
             width: 100%;
             height: 6px;
             background: #444;
-            border-radius: 3px;
-            -webkit-appearance: none;
-            pointer-events: none; /* Seul le cercle est cliquable */
+            border-radius: 3px;            -webkit-appearance: none;
+            pointer-events: none;
         }
 
         .slider-item input[type="range"]::-webkit-slider-thumb {
@@ -522,7 +550,9 @@
             cursor: pointer;
             border: 2px solid white;
             box-shadow: 0 2px 6px rgba(0,0,0,0.3);
-            pointer-events: auto; /* Seul le cercle est cliquable */
+            pointer-events: auto;
+            /* ✅ OPTIMISATION: GPU hint */
+            will-change: transform;
         }
 
         .color-item {
@@ -553,8 +583,9 @@
             border: 1px solid #FFD700;
             cursor: pointer;
             transition: background 0.2s;
+            /* ✅ OPTIMISATION: GPU hint */
+            will-change: transform;
         }
-
         .value-badge:active {
             background: #444;
         }
@@ -579,6 +610,8 @@
             font-weight: 600;
             cursor: pointer;
             transition: transform 0.1s, opacity 0.2s;
+            /* ✅ OPTIMISATION: GPU hint */
+            will-change: transform;
         }
 
         .customize-reset {
@@ -592,6 +625,8 @@
             font-weight: 600;
             cursor: pointer;
             transition: transform 0.1s, opacity 0.2s;
+            /* ✅ OPTIMISATION: GPU hint */
+            will-change: transform;
         }
 
         .customize-save:active, .customize-reset:active {
@@ -599,9 +634,8 @@
             opacity: 0.9;
         }
 
-        /* PAGE DE LOCK */
-        #lock-page {
-            position: absolute;
+        /* === PAGE DE LOCK === */
+        #lock-page {            position: absolute;
             inset: 0;
             z-index: 10;
             visibility: hidden;
@@ -611,6 +645,9 @@
             flex-direction: column;
             justify-content: flex-end;
             background: url('background.jpg') no-repeat center center/cover;
+            /* ✅ OPTIMISATION: GPU acceleration */
+            transform: translateZ(0);
+            backface-visibility: hidden;
         }
 
         #lock-page.visible {
@@ -624,6 +661,7 @@
             background: rgba(0, 0, 0, 0.3);
             z-index: 1;
             backdrop-filter: blur(3px);
+            pointer-events: none;
         }
 
         .lock-content {
@@ -646,10 +684,11 @@
             width: 14px;
             height: 14px;
             border-radius: 50%;
-            background: white;
-            opacity: 0.35;
+            background: white;            opacity: 0.35;
             box-shadow: 0 2px 6px rgba(0,0,0,0.3);
             transition: opacity 0.2s, transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            /* ✅ OPTIMISATION: GPU hint */
+            will-change: transform, opacity;
         }
 
         .dot.active {
@@ -685,6 +724,8 @@
             position: relative;
             border: 1px solid rgba(255,255,255,0.1);
             color: white;
+            /* ✅ OPTIMISATION: GPU hint */
+            will-change: transform;
         }
 
         .key:active, .delete-btn:active, .ok:active {
@@ -692,8 +733,7 @@
             transform: scale(0.97);
         }
 
-        .delete-btn {
-            font-size: 34px;
+        .delete-btn {            font-size: 34px;
         }
 
         .ok {
@@ -714,12 +754,6 @@
 
         .active::after, .active-text::after {
             animation: circleWave 0.4s ease-out forwards;
-        }
-
-        @keyframes circleWave {
-            0% { opacity: 0.9; transform: scale(0.5); }
-            70% { opacity: 0.5; transform: scale(1.3); }
-            100% { opacity: 0; transform: scale(1.6); }
         }
 
         .bottom-row {
@@ -748,8 +782,9 @@
             background: rgba(0,0,0,0.2);
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255,255,255,0.15);
-            transition: 0.2s;
-            width: fit-content;
+            transition: 0.2s;            width: fit-content;
+            /* ✅ OPTIMISATION: GPU hint */
+            will-change: transform;
         }
 
         .emergency:active {
@@ -757,7 +792,7 @@
             transform: scale(0.96);
         }
 
-        /* PAGE IMAGE (RÉSULTATS) */
+        /* === PAGE IMAGE (RÉSULTATS) === */
         #result-page {
             position: absolute;
             inset: 0;
@@ -771,6 +806,9 @@
             align-items: center;
             justify-content: flex-start;
             cursor: pointer;
+            /* ✅ OPTIMISATION: GPU acceleration */
+            transform: translateZ(0);
+            backface-visibility: hidden;
         }
 
         #result-page.visible {
@@ -783,6 +821,7 @@
             inset: 0;
             background: rgba(0, 0, 0, 0.2);
             z-index: 31;
+            pointer-events: none;
         }
 
         .words-container {
@@ -792,13 +831,14 @@
             width: 100%;
             z-index: 32;
             color: white;
-            font-size: 18px;
-            display: flex;
+            font-size: 18px;            display: flex;
             flex-direction: column;
             gap: 15px;
             text-align: center;
             box-sizing: border-box;
             transition: all 0.1s ease;
+            /* ✅ OPTIMISATION: GPU hint */
+            will-change: transform, opacity;
         }
 
         .words-container.hidden {
@@ -824,6 +864,8 @@
             white-space: nowrap;
             cursor: pointer;
             display: inline-block;
+            /* ✅ OPTIMISATION: GPU hint */
+            will-change: transform;
         }
 
         .letters-container {
@@ -838,9 +880,10 @@
             padding: 0 20px;
             display: flex;
             flex-wrap: wrap;
-            justify-content: center;
-            gap: 40px;
+            justify-content: center;            gap: 40px;
             transition: all 0.1s ease;
+            /* ✅ OPTIMISATION: GPU hint */
+            will-change: transform, opacity;
         }
 
         .letters-container.hidden {
@@ -854,6 +897,8 @@
             font-size: inherit;
             display: inline-block;
             text-transform: uppercase;
+            /* ✅ OPTIMISATION: GPU hint */
+            will-change: transform;
         }
 
         .letter-btn.selected {
@@ -880,10 +925,11 @@
             cursor: pointer;
             user-select: none;
             transition: all 0.1s ease;
+            /* ✅ OPTIMISATION: GPU hint */
+            will-change: transform;
         }
 
-        /* Bouton Note (bleu) */
-        .note-button {
+        /* Bouton Note (bleu) */        .note-button {
             position: absolute;
             width: 30px;
             height: 30px;
@@ -898,6 +944,8 @@
             transform: translateX(-50%);
             top: 520px;
             display: none;
+            /* ✅ OPTIMISATION: GPU hint */
+            will-change: transform;
         }
 
         .note-button.active {
@@ -930,8 +978,7 @@
             height: 100%;
             object-fit: cover;
             position: absolute;
-            top: 0;
-            left: 0;
+            top: 0;            left: 0;
             z-index: 201;
         }
 
@@ -977,11 +1024,10 @@
             top: 265px;
         }
 
-        /* MODAL LISTE */
+        /* === MODAL LISTE === */
         #list-modal {
             position: absolute;
-            top: 50%;
-            left: 50%;
+            top: 50%;            left: 50%;
             transform: translate(-50%, -50%);
             width: 380px;
             background: white;
@@ -994,6 +1040,8 @@
             transition: top 0.2s ease-out, transform 0.2s ease-out;
             max-height: 90vh;
             overflow-y: auto;
+            /* ✅ OPTIMISATION: GPU hint */
+            will-change: transform;
         }
 
         #list-modal.visible { 
@@ -1028,8 +1076,7 @@
             font-size: 20px;
             text-align: center;
             background: #e3f2fd;
-            color: #1976d2;
-            font-weight: bold;
+            color: #1976d2;            font-weight: bold;
             min-height: 60px;
             display: flex;
             align-items: center;
@@ -1055,6 +1102,8 @@
             font-weight: 600;
             margin-bottom: 0;
             transition: background 0.3s, opacity 0.3s, transform 0.1s;
+            /* ✅ OPTIMISATION: GPU hint */
+            will-change: transform;
         }
 
         #search-btn:active {
@@ -1076,7 +1125,6 @@
         }
 
         #modal-overlay.visible { display: block; }
-
         .hidden-file-input {
             display: none;
         }
@@ -1126,8 +1174,7 @@
 
         <!-- Section TESTER UN CODE -->
         <div class="test-code-section">
-            <div class="test-code-title">
-                <span>🎯 TESTER UN CODE</span>
+            <div class="test-code-title">                <span>🎯 TESTER UN CODE</span>
             </div>
             
             <div class="code-input-group">
@@ -1176,8 +1223,7 @@
             </div>
 
             <div class="slider-item">
-                <label>Taille police <span class="value-badge" id="letters-size-value" data-default="20">20px</span></label>
-                <input type="range" id="letters-size" min="10" max="40" value="20" step="1">
+                <label>Taille police <span class="value-badge" id="letters-size-value" data-default="20">20px</span></label>                <input type="range" id="letters-size" min="10" max="40" value="20" step="1">
             </div>
 
             <div class="color-item">
@@ -1226,8 +1272,7 @@
                 <button class="preview-btn" id="preview-note-text-btn">👁️ Aperçu</button>
             </div>
             
-            <div class="slider-item">
-                <label>Position Y <span class="value-badge" id="note-text-y-value" data-default="265">265px</span></label>
+            <div class="slider-item">                <label>Position Y <span class="value-badge" id="note-text-y-value" data-default="265">265px</span></label>
                 <input type="range" id="note-text-y" min="0" max="1000" value="265" step="1">
             </div>
 
@@ -1276,8 +1321,7 @@
 
             <div class="slider-item">
                 <label>Décalage X <span class="value-badge" id="note-button-x-value" data-default="43">43px</span></label>
-                <input type="range" id="note-button-x" min="-300" max="300" value="43" step="1">
-            </div>
+                <input type="range" id="note-button-x" min="-300" max="300" value="43" step="1">            </div>
         </div>
 
         <!-- Boutons Sauvegarder et Réinitialiser -->
@@ -1326,8 +1370,7 @@
         <div class="letters-container" id="letters-container"></div>
         <div class="index-display" id="index-display"></div>
         
-        <!-- Bouton Note (bleu) -->
-        <div class="note-button" id="note-button"></div>
+        <!-- Bouton Note (bleu) -->        <div class="note-button" id="note-button"></div>
     </div>
 
     <!-- Overlay image Note -->
@@ -1376,8 +1419,7 @@
             // Boutons paramètres
             const importBgBtn = document.getElementById('import-bg-btn');
             const importImgBtn = document.getElementById('import-img-btn');
-            const importNoteBtn = document.getElementById('import-note-btn');
-            const customizeBtn = document.getElementById('customize-btn');
+            const importNoteBtn = document.getElementById('import-note-btn');            const customizeBtn = document.getElementById('customize-btn');
             const settingsBack = document.getElementById('settings-back');
             
             // Boutons personnalisation
@@ -1426,8 +1468,7 @@
             const wordsYValue = document.getElementById('words-y-value');
             const wordsSizeValue = document.getElementById('words-size-value');
             const wordsLineHeightValue = document.getElementById('words-line-height-value');
-            const lettersYValue = document.getElementById('letters-y-value');
-            const lettersSizeValue = document.getElementById('letters-size-value');
+            const lettersYValue = document.getElementById('letters-y-value');            const lettersSizeValue = document.getElementById('letters-size-value');
             const lettersSpacingValue = document.getElementById('letters-spacing-value');
             const indexYValue = document.getElementById('index-y-value');
             const indexSizeValue = document.getElementById('index-size-value');
@@ -1476,8 +1517,7 @@
                 { code: "9141", word: "Accordéon" },
                 { code: "6131", word: "Agenda" },
                 { code: "6141", word: "Agneau" },
-                { code: "9141", word: "Agrafeuse" },
-                { code: "5121", word: "Aigle" },
+                { code: "9141", word: "Agrafeuse" },                { code: "5121", word: "Aigle" },
                 { code: "8121", word: "Aiguille" },
                 { code: "3121", word: "Ail" },
                 { code: "4121", word: "Aile" }
@@ -1526,8 +1566,7 @@
             let letterLists = [];
             let bestListIndex = -1;
             let bestListLetters = [];
-            let selectedLetter = '';
-            let lastTap = 0;
+            let selectedLetter = '';            let lastTap = 0;
             let isPreviewMode = false;
             let lastSearchWord = '';
             let isSearchDisabled = false;
@@ -1576,7 +1615,6 @@
                 if (noteButtonSizeValue) noteButtonSizeValue.textContent = settings.noteButtonSize + 'px';
                 if (noteButtonXValue) noteButtonXValue.textContent = settings.noteButtonX + 'px';
             }
-
             function updateSliders(settings) {
                 // Existants
                 if (wordsY) wordsY.value = settings.wordsY;
@@ -1626,7 +1664,6 @@
                     indexDisplay.style.color = settings.indexColor;
                     indexDisplay.style.transform = `translateX(calc(-50% + ${settings.indexX}px))`;
                 }
-
                 // Appliquer aux nouveaux éléments Note Texte
                 if (noteImageText) {
                     noteImageText.style.top = settings.noteTextY + 'px';
@@ -1676,8 +1713,7 @@
                         else if (setting === 'lettersColor' && lettersContainer) lettersContainer.style.color = defaultValue;
                         else if (setting === 'lettersSpacing' && lettersContainer) lettersContainer.style.gap = defaultValue + 'px';
                     }
-                    else if (setting.includes('index')) {
-                        if (setting === 'indexY' && indexDisplay) indexDisplay.style.top = defaultValue + 'px';
+                    else if (setting.includes('index')) {                        if (setting === 'indexY' && indexDisplay) indexDisplay.style.top = defaultValue + 'px';
                         else if (setting === 'indexSize' && indexDisplay) indexDisplay.style.fontSize = defaultValue + 'px';
                         else if (setting === 'indexColor' && indexDisplay) indexDisplay.style.color = defaultValue;
                         else if (setting === 'indexX' && indexDisplay) indexDisplay.style.transform = `translateX(calc(-50% + ${defaultValue}px))`;
@@ -1726,8 +1762,7 @@
                 if (!wordsContainer.classList.contains('hidden')) {
                     wordsContainer.classList.add('hidden');
                     lettersContainer.classList.add('hidden');
-                    selectedLetter = '';
-                }
+                    selectedLetter = '';                }
             }
 
             // ===== FONCTIONS POUR LES APERÇUS =====
@@ -1776,8 +1811,7 @@
                 });
                 
                 btn.addEventListener('touchcancel', (e) => {
-                    e.preventDefault();
-                    hidePreview();
+                    e.preventDefault();                    hidePreview();
                 });
                 
                 btn.addEventListener('mousedown', (e) => {
@@ -1826,8 +1860,7 @@
                 searchInput.value = '';
                 codeResult.textContent = '';
                 codeResult.classList.remove('error');
-                enableSearchButton();
-                modal.classList.remove('keyboard-open');
+                enableSearchButton();                modal.classList.remove('keyboard-open');
             }
 
             function searchWord(wordToFind) {
@@ -1876,8 +1909,7 @@
                         bestIndex = i;
                     }
                 }
-                return bestIndex;
-            }
+                return bestIndex;            }
 
             function displayWords(words) {
                 wordsContainer.innerHTML = '';
@@ -1926,8 +1958,7 @@
                 if (index === -1 || letters.length === 0) return;
                 const sortedLetters = [...letters].sort((a, b) => a.localeCompare(b));
                 for (let i = 0; i < sortedLetters.length; i++) {
-                    const letter = sortedLetters[i];
-                    const letterSpan = document.createElement('span');
+                    const letter = sortedLetters[i];                    const letterSpan = document.createElement('span');
                     letterSpan.className = 'letter-btn';
                     if (selectedLetter === letter) letterSpan.classList.add('selected');
                     letterSpan.textContent = letter.toUpperCase();
@@ -1951,7 +1982,7 @@
                     if (i < sortedLetters.length - 1) {
                         const spacer = document.createElement('span');
                         spacer.className = 'separator';
-                        spacer.innerHTML = '&nbsp;&nbsp;&nbsp;&nbsp;';
+                        spacer.innerHTML = '    ';
                         lettersContainer.appendChild(spacer);
                     }
                 }
@@ -1977,7 +2008,6 @@
                     lettersContainer.classList.remove('hidden');
                 }
             }
-
             function loadCustomSettings() {
                 const saved = localStorage.getItem('customSettings');
                 if (saved) {
@@ -2026,8 +2056,7 @@
             }
 
             if (wordsSize) {
-                wordsSize.addEventListener('input', (e) => {
-                    currentSettings.wordsSize = parseInt(e.target.value);
+                wordsSize.addEventListener('input', (e) => {                    currentSettings.wordsSize = parseInt(e.target.value);
                     wordsSizeValue.textContent = currentSettings.wordsSize + 'px';
                     wordsContainer.style.fontSize = currentSettings.wordsSize + 'px';
                 });
@@ -2076,8 +2105,7 @@
                     currentSettings.lettersSpacing = parseInt(e.target.value);
                     lettersSpacingValue.textContent = currentSettings.lettersSpacing + 'px';
                     lettersContainer.style.gap = currentSettings.lettersSpacing + 'px';
-                });
-            }
+                });            }
 
             if (indexY) {
                 indexY.addEventListener('input', (e) => {
@@ -2126,7 +2154,6 @@
                     if (noteImageText) noteImageText.style.left = currentSettings.noteTextX + 'px';
                 });
             }
-
             if (noteTextSize) {
                 noteTextSize.addEventListener('input', (e) => {
                     currentSettings.noteTextSize = parseInt(e.target.value);
@@ -2176,8 +2203,7 @@
             }
 
             if (noteButtonColor) {
-                noteButtonColor.addEventListener('input', (e) => {
-                    currentSettings.noteButtonColor = e.target.value;
+                noteButtonColor.addEventListener('input', (e) => {                    currentSettings.noteButtonColor = e.target.value;
                     if (noteButton) noteButton.style.background = currentSettings.noteButtonColor;
                     if (noteButtonPreview) noteButtonPreview.style.background = currentSettings.noteButtonColor;
                 });
@@ -2226,8 +2252,7 @@
             if (searchInput) {
                 searchInput.addEventListener('input', () => {
                     enableSearchButton();
-                    codeResult.textContent = '';
-                    codeResult.classList.remove('error');
+                    codeResult.textContent = '';                    codeResult.classList.remove('error');
                 });
 
                 searchInput.addEventListener('focus', () => {
@@ -2276,8 +2301,7 @@
                             currentPreviewData = event.target.result;
                             previewImage.src = currentPreviewData;
                             previewContainer.classList.add('visible');
-                            
-                            if (targetElement === lockPage) {
+                                                        if (targetElement === lockPage) {
                                 currentPreviewTarget = 'bg';
                             } else if (targetElement === resultPage) {
                                 currentPreviewTarget = 'img';
@@ -2326,8 +2350,7 @@
                     }
                     
                     previewContainer.classList.remove('visible');
-                    previewImage.src = '';
-                    currentPreviewData = '';
+                    previewImage.src = '';                    currentPreviewData = '';
                     currentPreviewTarget = '';
                     
                     bgFileInput.value = '';
@@ -2376,7 +2399,6 @@
                 noteImageText.addEventListener('blur', () => {
                     noteImageText.setAttribute('contenteditable', 'false');
                 });
-
                 noteImageText.addEventListener('dblclick', (e) => {
                     e.stopPropagation();
                 });
@@ -2426,7 +2448,6 @@
                     modal.classList.remove('keyboard-open');
                 });
             }
-
             if (btnSettings) {
                 btnSettings.addEventListener('click', () => {
                     homePage.classList.add('hidden');
@@ -2476,8 +2497,7 @@
 
             if (customizeBack) {
                 customizeBack.addEventListener('click', () => {
-                    customizePage.classList.remove('visible', 'preview-mode');
-                    resultPage.classList.remove('preview-mode');
+                    customizePage.classList.remove('visible', 'preview-mode');                    resultPage.classList.remove('preview-mode');
                     settingsPage.classList.add('visible');
                     isPreviewMode = false;
                     
@@ -2526,8 +2546,7 @@
                         pin = pin.slice(0, -1);
                         updateDots();
                     }
-                });
-            }
+                });            }
 
             if (okBtn) {
                 okBtn.addEventListener('click', function(e) {
@@ -2576,8 +2595,7 @@
                 indexDisplay.addEventListener('click', function(e) {
                     e.stopPropagation();
                     if (wordsContainer.classList.contains('hidden')) {
-                        wordsContainer.classList.remove('hidden');
-                        lettersContainer.classList.remove('hidden');
+                        wordsContainer.classList.remove('hidden');                        lettersContainer.classList.remove('hidden');
                     } else {
                         wordsContainer.classList.add('hidden');
                         lettersContainer.classList.add('hidden');
@@ -2627,7 +2645,6 @@
                     updateDots();
                 });
             }
-
             // ===== INIT =====
             pin = '';
             updateDots();
@@ -2643,4 +2660,4 @@
         })();
     </script>
 </body>
-    </html>
+</html>
