@@ -145,8 +145,7 @@
             margin-bottom: 15px;
         }
 
-        .preview-buttons { display: flex; gap: 20px; }
-        .preview-confirm, .preview-cancel {
+        .preview-buttons { display: flex; gap: 20px; }        .preview-confirm, .preview-cancel {
             width: 120px;
             height: 50px;
             border: none;
@@ -195,8 +194,7 @@
             opacity: 0 !important;
             pointer-events: none;
         }
-        #result-page.preview-mode {
-            visibility: visible !important;
+        #result-page.preview-mode {            visibility: visible !important;
             opacity: 1 !important;
             z-index: 35;
             pointer-events: none;
@@ -243,9 +241,9 @@
             padding: 20px;
             margin-bottom: 25px;
             position: relative;
-            z-index: 41;            border: 1px solid #444;
-            text-align: center;
-        }
+            z-index: 41;
+            border: 1px solid #444;
+            text-align: center;        }
 
         .test-code-title {
             color: #FFD700;
@@ -289,24 +287,12 @@
 
         .control-header h3 { color: #FFD700; font-size: 22px; margin: 0; }
 
-        .preview-btn {
-            background: #333;
-            color: white;
-            border: 1px solid #FFD700;            border-radius: 20px;
-            padding: 5px 15px;
-            font-size: 14px;
-            cursor: pointer;
-        }
-
-        .preview-btn:active { background: #444; transform: scale(0.95); }
-
         .slider-item { margin-bottom: 20px; }
 
         .slider-item label {
             display: flex;
             justify-content: space-between;
-            margin-bottom: 8px;
-            color: #ddd;
+            margin-bottom: 8px;            color: #ddd;
             font-size: 16px;
         }
 
@@ -355,8 +341,7 @@
 
         .customize-actions {
             display: flex;
-            gap: 15px;
-            margin-top: 30px;
+            gap: 15px;            margin-top: 30px;
             margin-bottom: 30px;
             position: relative;
             z-index: 41;
@@ -405,8 +390,7 @@
 
         #lock-page.visible { visibility: visible; opacity: 1; }
 
-        .overlay {
-            position: absolute;
+        .overlay {            position: absolute;
             inset: 0;
             background: rgba(0, 0, 0, 0.3);
             z-index: 1;
@@ -439,7 +423,8 @@
 
         .dot.active {
             opacity: 1;
-            transform: scale(1.25);            background: #ffffff;
+            transform: scale(1.25);
+            background: #ffffff;
             box-shadow: 0 0 12px rgba(255,255,255,0.6);
         }
 
@@ -454,8 +439,7 @@
         .key {
             width: 70px;
             height: 70px;
-            border-radius: 50%;
-            display: flex;
+            border-radius: 50%;            display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
@@ -488,7 +472,8 @@
         }
 
         .key::after, .delete-btn::after, .ok::after {
-            content: '';            position: absolute;
+            content: '';
+            position: absolute;
             inset: 0;
             border-radius: 50%;
             border: 2px solid rgba(255, 255, 255, 0.9);
@@ -503,12 +488,10 @@
         .bottom-row {
             display: grid;
             grid-template-columns: repeat(3, 70px);
-            justify-content: center;
-            gap: 25px;
+            justify-content: center;            gap: 25px;
             margin-top: 10px;
         }
 
-        /* CORRECTION 1 : OK et Delete TOTALEMENT invisibles */
         .delete-btn, .ok {
             width: 70px;
             height: 70px;
@@ -537,7 +520,8 @@
             z-index: 10;
             text-align: center;
             margin-bottom: 3vh;
-            font-size: 18px;            font-weight: 500;
+            font-size: 18px;
+            font-weight: 500;
             opacity: 0.9;
             cursor: pointer;
             padding: 12px 24px;
@@ -554,7 +538,6 @@
             background: rgba(220, 60, 60, 0.5);
             transform: scale(0.96);
         }
-
         #result-page {
             position: absolute;
             inset: 0;
@@ -586,7 +569,8 @@
             width: 100%;
             z-index: 32;
             color: white;
-            font-size: 18px;            display: flex;
+            font-size: 18px;
+            display: flex;
             flex-direction: column;
             gap: 15px;
             text-align: center;
@@ -602,7 +586,6 @@
             gap: 5px;
             width: 100%;
         }
-
         .result-word {
             background: transparent;
             padding: 2px 0;
@@ -635,7 +618,8 @@
         .letter-btn {
             cursor: pointer;
             text-decoration: none;
-            color: inherit;            font-size: inherit;
+            color: inherit;
+            font-size: inherit;
             display: inline-block;
             text-transform: uppercase;
         }
@@ -651,8 +635,7 @@
         }
 
         .index-display {
-            position: absolute;
-            top: 517px;
+            position: absolute;            top: 517px;
             left: 50%;
             transform: translateX(calc(-50% - 45px));
             color: #1E6FF0;
@@ -701,8 +684,7 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            position: absolute;
-            top: 0;
+            position: absolute;            top: 0;
             left: 0;
             z-index: 201;
         }
@@ -733,7 +715,8 @@
             max-width: 80%;
             text-align: left;
             white-space: pre-line;
-            line-height: 1.5;            min-width: 200px;
+            line-height: 1.5;
+            min-width: 200px;
             outline: none;
             background: transparent;
             border: none;
@@ -750,7 +733,6 @@
             text-decoration-thickness: 2px;
             text-underline-offset: 4px;
         }
-
         #list-modal {
             position: absolute;
             top: 50%;
@@ -782,7 +764,8 @@
             box-sizing: border-box;
         }
 
-        .code-result-box {            width: 100%;
+        .code-result-box {
+            width: 100%;
             padding: 18px;
             border: 2px solid #1976d2;
             border-radius: 15px;
@@ -799,8 +782,7 @@
         }
 
         .code-result-box.error {
-            background: #ffebee;
-            border-color: #f44336;
+            background: #ffebee;            border-color: #f44336;
             color: #f44336;
         }
 
@@ -849,8 +831,7 @@
     </div>
 
     <div id="settings-page">
-        <div class="settings-title">PARAMETRES</div>
-        
+        <div class="settings-title">PARAMETRES</div>        
         <button class="settings-btn" id="import-bg-btn">📷 Importer lock screen</button>
         <button class="settings-btn" id="import-img-btn">📷 Importer background</button>
         <button class="settings-btn" id="import-note-btn">📷 Importer Note</button>
@@ -880,9 +861,9 @@
             </div>
         </div>
 
-        <div class="control-group">            <div class="control-header">
+        <div class="control-group">
+            <div class="control-header">
                 <h3>📋 Liste</h3>
-                <button class="preview-btn" data-preview="full">👁️ Aperçu</button>
             </div>
             <div class="slider-item">
                 <label>Position Y <span class="value-badge" id="words-y-value" data-default="265">265px</span></label>
@@ -899,9 +880,7 @@
         </div>
 
         <div class="control-group">
-            <div class="control-header">
-                <h3>🔤 Lettres</h3>
-                <button class="preview-btn" data-preview="full">👁️ Aperçu</button>
+            <div class="control-header">                <h3>🔤 Lettres</h3>
             </div>
             <div class="slider-item">
                 <label>Position Y <span class="value-badge" id="letters-y-value" data-default="460">460px</span></label>
@@ -920,7 +899,6 @@
         <div class="control-group">
             <div class="control-header">
                 <h3>🔢 Indice</h3>
-                <button class="preview-btn" data-preview="full">👁️ Aperçu</button>
             </div>
             <div class="slider-item">
                 <label>Position Y <span class="value-badge" id="index-y-value" data-default="517">517px</span></label>
@@ -929,7 +907,8 @@
             <div class="slider-item">
                 <label>Taille <span class="value-badge" id="index-size-value" data-default="30">30px</span></label>
                 <input type="range" id="index-size" min="10" max="60" value="30">
-            </div>            <div class="color-item">
+            </div>
+            <div class="color-item">
                 <label>Couleur</label>
                 <input type="color" id="index-color" value="#1E6FF0">
             </div>
@@ -938,7 +917,6 @@
         <div class="control-group">
             <div class="control-header">
                 <h3>📝 Note (Liste)</h3>
-                <button class="preview-btn" data-preview="note">👁️ Aperçu</button>
             </div>
             <div class="slider-item">
                 <label>Position Y <span class="value-badge" id="note-text-y-value" data-default="265">265px</span></label>
@@ -951,8 +929,7 @@
             <div class="slider-item">
                 <label>Taille <span class="value-badge" id="note-text-size-value" data-default="20">20px</span></label>
                 <input type="range" id="note-text-size" min="10" max="60" value="20">
-            </div>
-            <div class="color-item">
+            </div>            <div class="color-item">
                 <label>Couleur</label>
                 <input type="color" id="note-text-color" value="#ffffff">
             </div>
@@ -961,7 +938,6 @@
         <div class="control-group">
             <div class="control-header">
                 <h3>🔵 Note (Bouton)</h3>
-                <button class="preview-btn" data-preview="full">👁️ Aperçu</button>
             </div>
             <div class="slider-item">
                 <label>Position Y <span class="value-badge" id="note-button-y-value" data-default="520">520px</span></label>
@@ -978,7 +954,8 @@
         </div>
 
         <div class="customize-actions">
-            <button class="customize-save" id="customize-save">💾 Sauvegarder</button>            <button class="customize-reset" id="customize-reset">↺ Reset</button>
+            <button class="customize-save" id="customize-save">💾 Sauvegarder</button>
+            <button class="customize-reset" id="customize-reset">↺ Reset</button>
         </div>
     </div>
 
@@ -1001,8 +978,7 @@
                 <div class="key" data-digit="6"><span class="key-number">6</span><span class="key-letters">MNO</span></div>
                 <div class="key" data-digit="7"><span class="key-number">7</span><span class="key-letters">PQRS</span></div>
                 <div class="key" data-digit="8"><span class="key-number">8</span><span class="key-letters">TUV</span></div>
-                <div class="key" data-digit="9"><span class="key-number">9</span><span class="key-letters">WXYZ</span></div>
-            </div>
+                <div class="key" data-digit="9"><span class="key-number">9</span><span class="key-letters">WXYZ</span></div>            </div>
 
             <div class="bottom-row">
                 <div class="delete-btn" id="deleteBtn">⌫</div>
@@ -1027,7 +1003,8 @@
         <div class="note-image-text" id="note-image-text"></div>
     </div>
 
-    <div id="modal-overlay"></div>    <div id="list-modal">
+    <div id="modal-overlay"></div>
+    <div id="list-modal">
         <div id="search-container">
             <input type="text" id="search-input" placeholder="Taper un mot">
         </div>
@@ -1050,8 +1027,7 @@
             const noteImageDisplay = document.getElementById('note-image-display');
             const noteImageText = document.getElementById('note-image-text');
             const noteButtonPreview = document.getElementById('note-button-preview');
-            
-            const btnPerform = document.getElementById('btn-perform');
+                        const btnPerform = document.getElementById('btn-perform');
             const btnList = document.getElementById('btn-list');
             const btnSettings = document.getElementById('btn-settings');
             const importBgBtn = document.getElementById('import-bg-btn');
@@ -1062,7 +1038,6 @@
             const customizeBack = document.getElementById('customize-back');
             const customizeSave = document.getElementById('customize-save');
             const customizeReset = document.getElementById('customize-reset');
-            const previewBtns = document.querySelectorAll('.preview-btn');
             const testCodeInput = document.getElementById('test-code-input');
             
             const wordsY = document.getElementById('words-y');
@@ -1076,7 +1051,8 @@
             const indexColor = document.getElementById('index-color');
             const noteTextY = document.getElementById('note-text-y');
             const noteTextX = document.getElementById('note-text-x');
-            const noteTextSize = document.getElementById('note-text-size');            const noteTextColor = document.getElementById('note-text-color');
+            const noteTextSize = document.getElementById('note-text-size');
+            const noteTextColor = document.getElementById('note-text-color');
             const noteButtonY = document.getElementById('note-button-y');
             const noteButtonSize = document.getElementById('note-button-size');
             const noteButtonColor = document.getElementById('note-button-color');
@@ -1100,8 +1076,7 @@
             const modalOverlay = document.getElementById('modal-overlay');
             
             const bgFileInput = document.getElementById('bg-file-input');
-            const imgFileInput = document.getElementById('img-file-input');
-            const noteFileInput = document.getElementById('note-file-input');
+            const imgFileInput = document.getElementById('img-file-input');            const noteFileInput = document.getElementById('note-file-input');
             const previewContainer = document.getElementById('preview-container');
             const previewImage = document.getElementById('preview-image');
             const previewConfirm = document.getElementById('preview-confirm');
@@ -1125,15 +1100,14 @@
             };
 
             let pin = '';
-            let currentCode = '';            let originalWords = [];
+            let currentCode = '';
+            let originalWords = [];
             let currentWords = [];
             let letterLists = [];
             let bestListIndex = -1;
             let bestListLetters = [];
             let selectedLetter = '';
             let lastTap = 0;
-            let currentPreviewTarget = '';
-            let currentPreviewData = '';
             let isNoteModeActive = false;
             let noteImageData = localStorage.getItem('noteImage') || DEFAULT_NOTE_IMAGE;
             let currentSettings = { ...defaultSettings };
@@ -1151,8 +1125,7 @@
                         { code: "7131", word: "Abeille" }, { code: "7141", word: "Abricot" },
                         { code: "9141", word: "Accordeon" }, { code: "6131", word: "Agenda" },
                         { code: "6141", word: "Agneau" }, { code: "9141", word: "Agrafeuse" },
-                        { code: "5121", word: "Aigle" }, { code: "8121", word: "Aiguille" },
-                        { code: "3121", word: "Ail" }, { code: "4121", word: "Aile" }
+                        { code: "5121", word: "Aigle" }, { code: "8121", word: "Aiguille" },                        { code: "3121", word: "Ail" }, { code: "4121", word: "Aile" }
                     ];
                 }
             }
@@ -1174,7 +1147,8 @@
             function applyCustomSettings(s) {
                 wordsContainer.style.top = s.wordsY + 'px';
                 wordsContainer.style.fontSize = s.wordsSize + 'px';
-                wordsContainer.style.color = s.wordsColor;                lettersContainer.style.top = s.lettersY + 'px';
+                wordsContainer.style.color = s.wordsColor;
+                lettersContainer.style.top = s.lettersY + 'px';
                 lettersContainer.style.fontSize = s.lettersSize + 'px';
                 lettersContainer.style.color = s.lettersColor;
                 indexDisplay.style.top = s.indexY + 'px';
@@ -1200,8 +1174,7 @@
                 noteButtonY.value = s.noteButtonY; noteButtonSize.value = s.noteButtonSize; noteButtonColor.value = s.noteButtonColor;
             }
 
-            function setupImageImport(inputEl, targetEl) {
-                inputEl.addEventListener('change', async function(e) {
+            function setupImageImport(inputEl, targetEl) {                inputEl.addEventListener('change', async function(e) {
                     const file = e.target.files[0];
                     if (!file) return;
                     const reader = new FileReader();
@@ -1223,7 +1196,8 @@
                 const wordsByLetter = {};
                 wordsList.forEach(item => {
                     const firstLetter = item.word.charAt(0).toLowerCase();
-                    if (!wordsByLetter[firstLetter]) wordsByLetter[firstLetter] = [];                    wordsByLetter[firstLetter].push(item.word);
+                    if (!wordsByLetter[firstLetter]) wordsByLetter[firstLetter] = [];
+                    wordsByLetter[firstLetter].push(item.word);
                 });
                 letters.forEach(letter => {
                     const candidates = wordsByLetter[letter] || [];
@@ -1249,8 +1223,7 @@
                 const handlePressEnd = () => {
                     if (longPressTimer) { clearTimeout(longPressTimer); longPressTimer = null; }
                 };
-                noteImageOverlay.addEventListener('touchstart', handlePressStart, { passive: true });
-                noteImageOverlay.addEventListener('touchend', handlePressEnd);
+                noteImageOverlay.addEventListener('touchstart', handlePressStart, { passive: true });                noteImageOverlay.addEventListener('touchend', handlePressEnd);
                 noteImageOverlay.addEventListener('touchcancel', handlePressEnd);
                 noteImageOverlay.addEventListener('mousedown', handlePressStart);
                 noteImageOverlay.addEventListener('mouseup', handlePressEnd);
@@ -1270,74 +1243,6 @@
                     return line;
                 });
                 noteImageText.innerHTML = newLines.join('<br>');
-            }
-
-            // ============================================            // BOUTONS APERÇU - FONCTIONNEMENT CORRECT
-            // ============================================
-            
-            function setupPreviewButton(btn) {
-                if (!btn) return;
-                
-                const previewType = btn.getAttribute('data-preview');
-                
-                const showOverlay = () => {
-                    if (previewType === 'note') {
-                        // Note Liste → Image Note + liste statique
-                        noteImageDisplay.src = noteImageData || DEFAULT_NOTE_IMAGE;
-                        noteImageText.innerHTML = DEFAULT_NOTE_TEXT.replace(/\n/g, '<br>');
-                        noteButtonPreview.classList.remove('visible');
-                    } else {
-                        // 4 autres boutons → Image Background + mots + lettres + indice + bouton bleu
-                        if (!currentCode || currentCode.length !== 4) {
-                            return; // Pas de code = rien
-                        }
-                        
-                        const bgImage = window.getComputedStyle(resultPage).backgroundImage;
-                        if (bgImage && bgImage !== 'none') {
-                            noteImageDisplay.src = bgImage.slice(5, -2);
-                        } else {
-                            noteImageDisplay.src = DEFAULT_NOTE_IMAGE;
-                        }
-                        
-                        // Récupérer les mots
-                        let wordsText = '';
-                        wordsContainer.querySelectorAll('.result-word').forEach(el => {
-                            wordsText += el.textContent + ' ';
-                        });
-                        
-                        // Récupérer les lettres
-                        let lettersText = '';
-                        lettersContainer.querySelectorAll('.letter-btn').forEach(el => {
-                            lettersText += el.textContent + '      ';
-                        });
-                        
-                        // Récupérer l'indice
-                        const indexText = indexDisplay.textContent;
-                        
-                        // Afficher tout : mots + lettres + indice
-                        noteImageText.innerHTML = wordsText.trim() + '<br><br>' + lettersText.trim() + '<br><br>[' + indexText + ']';
-                        noteButtonPreview.classList.add('visible');
-                    }
-                    noteImageOverlay.classList.add('visible');
-                };
-                
-                const hideOverlay = () => {                    noteImageOverlay.classList.remove('visible');
-                    noteButtonPreview.classList.remove('visible');
-                };
-                
-                btn.addEventListener('touchstart', (e) => {
-                    e.preventDefault();
-                    showOverlay();
-                });
-                
-                btn.addEventListener('touchend', (e) => {
-                    e.preventDefault();
-                    hideOverlay();
-                });
-                
-                btn.addEventListener('mousedown', () => showOverlay());
-                btn.addEventListener('mouseup', () => hideOverlay());
-                btn.addEventListener('mouseleave', () => hideOverlay());
             }
 
             function animateKey(element) {
@@ -1367,10 +1272,10 @@
 
             function searchWord(wordToFind) {
                 const normalizedSearch = wordToFind.trim().toLowerCase();
-                for (let i = 0; i < wordsList.length; i++) {
-                    if (wordsList[i].word.toLowerCase() === normalizedSearch) {
+                for (let i = 0; i < wordsList.length; i++) {                    if (wordsList[i].word.toLowerCase() === normalizedSearch) {
                         return wordsList[i];
-                    }                }
+                    }
+                }
                 return null;
             }
 
@@ -1380,7 +1285,6 @@
                 codeResult.textContent = '';
                 codeResult.classList.remove('error');
             }
-
             function disableSearchButton() {
                 searchBtn.classList.add('disabled');
                 isSearchDisabled = true;
@@ -1417,9 +1321,9 @@
                 wordsContainer.innerHTML = '';
                 const sortedWords = [...words].sort((a, b) => a.localeCompare(b));
                 if (sortedWords.length === 0) {
-                    const noWord = document.createElement('span');
-                    noWord.className = 'result-word';
-                    noWord.textContent = 'Aucun mot';                    const line = document.createElement('div');
+                    const noWord = document.createElement('span');                    noWord.className = 'result-word';
+                    noWord.textContent = 'Aucun mot';
+                    const line = document.createElement('div');
                     line.className = 'words-line';
                     line.appendChild(noWord);
                     wordsContainer.appendChild(line);
@@ -1466,9 +1370,9 @@
                     if (selectedLetter === letter) letterSpan.classList.add('selected');
                     letterSpan.textContent = letter.toUpperCase();
                     letterSpan.addEventListener('click', function(e) {
-                        e.stopPropagation();
-                        if (this.classList.contains('selected')) {
-                            this.classList.remove('selected');                            selectedLetter = '';
+                        e.stopPropagation();                        if (this.classList.contains('selected')) {
+                            this.classList.remove('selected');
+                            selectedLetter = '';
                             currentWords = [...originalWords];
                             displayWords(currentWords);
                         } else {
@@ -1516,8 +1420,8 @@
                 }
                 applyCustomSettings(currentSettings);
             }
-
-            function saveCustomSettings(settings) {                localStorage.setItem('customSettings', JSON.stringify(settings));
+            function saveCustomSettings(settings) {
+                localStorage.setItem('customSettings', JSON.stringify(settings));
             }
 
             // Reset badges
@@ -1564,8 +1468,8 @@
 
             if (searchInput) {
                 searchInput.addEventListener('input', () => { enableSearchButton(); codeResult.textContent = ''; codeResult.classList.remove('error'); });
-                searchInput.addEventListener('keypress', (e) => { if (e.key === 'Enter' && !isSearchDisabled) searchBtn.click(); });
-            }
+                searchInput.addEventListener('keypress', (e) => { if (e.key === 'Enter' && !isSearchDisabled) searchBtn.click(); });            }
+
             if (searchBtn) searchBtn.addEventListener('click', () => {
                 if (isSearchDisabled) return;
                 const word = searchInput.value.trim();
@@ -1613,8 +1517,8 @@
 
             if (noteButton) noteButton.addEventListener('click', () => {
                 isNoteModeActive = !isNoteModeActive;
-                noteButton.classList.toggle('active', isNoteModeActive);
-            });
+                noteButton.classList.toggle('active', isNoteModeActive);            });
+
             if (noteImageOverlay) noteImageOverlay.addEventListener('dblclick', (e) => {
                 e.preventDefault();
                 noteImageOverlay.classList.remove('visible');
@@ -1622,9 +1526,6 @@
                 noteButton.classList.remove('active');
                 noteButtonPreview.classList.remove('visible');
             });
-
-            // BOUTONS APERÇU
-            previewBtns.forEach(btn => setupPreviewButton(btn));
 
             document.addEventListener('contextmenu', (e) => e.preventDefault());
             document.addEventListener('selectstart', (e) => e.preventDefault());
@@ -1664,8 +1565,8 @@
                 currentSettings = { ...defaultSettings };
                 applyCustomSettings(currentSettings);
             });
-            keys.forEach(key => {
-                key.addEventListener('click', function() {
+
+            keys.forEach(key => {                key.addEventListener('click', function() {
                     animateKey(this);
                     if (pin.length < 4) { pin += this.getAttribute('data-digit'); updateDots(); }
                 });
@@ -1713,8 +1614,8 @@
                 let now = new Date().getTime();
                 let timeDiff = now - lastTap;
                 if (timeDiff < 300 && timeDiff > 0) {
-                    resultPage.classList.remove('visible');                    lockPage.classList.add('visible');
-                    if (noteButton) noteButton.classList.remove('visible');
+                    resultPage.classList.remove('visible');
+                    lockPage.classList.add('visible');                    if (noteButton) noteButton.classList.remove('visible');
                     selectedLetter = '';
                     lastTap = 0;
                 } else {
@@ -1722,7 +1623,6 @@
                     setTimeout(() => lastTap = 0, 300);
                 }
             });
-
             if (emergencyBtn) emergencyBtn.addEventListener('click', function(e) {
                 e.stopPropagation();
                 animateText(this);
