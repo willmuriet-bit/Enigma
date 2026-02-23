@@ -2,12 +2,14 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <base href="/Enigma/">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>ENIGMA</title>
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="theme-color" content="#000000">
-    <link rel="manifest" href="/Enigma/manifest.json">
+    <link rel="manifest" href="manifest.json">
+    
+    <!-- ✅ CORRECTION 1/5 : Ajout base href pour GitHub Pages -->
+    <base href="/Enigma/">
     
     <style>
         * {
@@ -45,9 +47,9 @@
             font-size: 68px;
             font-weight: bold;
             color: #FFD700;
-            letter-spacing: 6px;
-            margin-bottom: 100px;
-            position: relative;            top: -40px;
+            letter-spacing: 6px;            margin-bottom: 100px;
+            position: relative;
+            top: -40px;
             text-transform: uppercase;
             animation: scintillement 2s ease-in-out infinite;
         }
@@ -94,9 +96,9 @@
             background: black;
             display: flex;
             flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            z-index: 25;            visibility: hidden;
+            align-items: center;            justify-content: center;
+            z-index: 25;
+            visibility: hidden;
             opacity: 0;
             transition: visibility 0.3s, opacity 0.3s;
             padding: 20px;
@@ -143,8 +145,8 @@
             object-fit: cover;
             border-radius: 15px;
             border: 3px solid #FFD700;
-            margin-bottom: 15px;
-        }
+            margin-bottom: 15px;        }
+
         .preview-buttons { display: flex; gap: 20px; }
         .preview-confirm, .preview-cancel {
             width: 120px;
@@ -188,12 +190,19 @@
 
         #customize-page.visible { visibility: visible; opacity: 1; }
 
+        #customize-page.dragging-slider .control-group,
+        #customize-page.dragging-slider .test-code-section,
+        #customize-page.dragging-slider .customize-header,
+        #customize-page.dragging-slider .customize-actions {
+            opacity: 0 !important;            pointer-events: none;
+        }
         #result-page.preview-mode {
             visibility: visible !important;
             opacity: 1 !important;
             z-index: 35;
             pointer-events: none;
         }
+
         #customize-page.preview-mode { background: rgba(0, 0, 0, 0.85); }
 
         .customize-header {
@@ -234,8 +243,7 @@
             border-radius: 15px;
             padding: 20px;
             margin-bottom: 25px;
-            position: relative;
-            z-index: 41;
+            position: relative;            z-index: 41;
             border: 1px solid #444;
             text-align: center;
         }
@@ -243,7 +251,8 @@
         .test-code-title {
             color: #FFD700;
             font-size: 22px;
-            margin-bottom: 15px;        }
+            margin-bottom: 15px;
+        }
 
         #test-code-input {
             width: 200px;
@@ -283,8 +292,7 @@
 
         .preview-btn {
             background: #333;
-            color: white;
-            border: 1px solid #FFD700;
+            color: white;            border: 1px solid #FFD700;
             border-radius: 20px;
             padding: 5px 15px;
             font-size: 14px;
@@ -292,6 +300,7 @@
         }
 
         .preview-btn:active { background: #444; transform: scale(0.95); }
+
         .slider-item { margin-bottom: 20px; }
 
         .slider-item label {
@@ -308,6 +317,7 @@
             background: #444;
             border-radius: 3px;
             -webkit-appearance: none;
+            pointer-events: none;
         }
 
         .slider-item input[type="range"]::-webkit-slider-thumb {
@@ -318,6 +328,7 @@
             border-radius: 50%;
             cursor: pointer;
             border: 2px solid white;
+            pointer-events: auto;
         }
 
         .color-item { margin-bottom: 20px; }
@@ -330,9 +341,7 @@
             border-radius: 10px;
             background: #333;
             cursor: pointer;
-        }
-
-        .value-badge {
+        }        .value-badge {
             background: #333;
             padding: 3px 10px;
             border-radius: 15px;
@@ -341,6 +350,7 @@
             border: 1px solid #FFD700;
             cursor: pointer;
         }
+
         .value-badge:active { background: #444; }
 
         .customize-actions {
@@ -380,9 +390,7 @@
             transform: scale(0.98);
             opacity: 0.9;
         }
-
-        #lock-page {
-            position: absolute;
+        #lock-page {            position: absolute;
             inset: 0;
             z-index: 10;
             visibility: hidden;
@@ -390,7 +398,8 @@
             transition: visibility 0.3s, opacity 0.3s;
             display: flex;
             flex-direction: column;
-            justify-content: flex-end;            background: #111;
+            justify-content: flex-end;
+            background: url('background.jpg') no-repeat center center/cover;
         }
 
         #lock-page.visible { visibility: visible; opacity: 1; }
@@ -430,8 +439,7 @@
         .dot.active {
             opacity: 1;
             transform: scale(1.25);
-            background: #ffffff;
-            box-shadow: 0 0 12px rgba(255,255,255,0.6);
+            background: #ffffff;            box-shadow: 0 0 12px rgba(255,255,255,0.6);
         }
 
         .keypad {
@@ -439,7 +447,8 @@
             grid-template-columns: repeat(3, 70px);
             justify-content: center;
             gap: 20px 25px;
-            margin-bottom: 15px;        }
+            margin-bottom: 15px;
+        }
 
         .key {
             width: 70px;
@@ -479,8 +488,7 @@
 
         .key::after, .delete-btn::after, .ok::after {
             content: '';
-            position: absolute;
-            inset: 0;
+            position: absolute;            inset: 0;
             border-radius: 50%;
             border: 2px solid rgba(255, 255, 255, 0.9);
             opacity: 0;
@@ -488,7 +496,8 @@
         }
 
         .active::after, .active-text::after {
-            animation: circleWave 0.4s ease-out forwards;        }
+            animation: circleWave 0.4s ease-out forwards;
+        }
 
         .bottom-row {
             display: grid;
@@ -528,8 +537,7 @@
             margin-bottom: 3vh;
             font-size: 18px;
             font-weight: 500;
-            opacity: 0.9;
-            cursor: pointer;
+            opacity: 0.9;            cursor: pointer;
             padding: 12px 24px;
             display: inline-block;
             border-radius: 40px;
@@ -537,7 +545,8 @@
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255,255,255,0.15);
             transition: 0.2s;
-            width: fit-content;        }
+            width: fit-content;
+        }
 
         .emergency:active {
             background: rgba(220, 60, 60, 0.5);
@@ -551,7 +560,7 @@
             visibility: hidden;
             opacity: 0;
             transition: visibility 0.3s, opacity 0.3s;
-            background: #222;
+            background: url('image.jpg') no-repeat center center/cover;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -577,8 +586,7 @@
             color: white;
             font-size: 18px;
             display: flex;
-            flex-direction: column;
-            gap: 15px;
+            flex-direction: column;            gap: 15px;
             text-align: center;
             box-sizing: border-box;
         }
@@ -586,7 +594,8 @@
         .words-container.hidden { display: none; }
 
         .words-line {
-            display: flex;            flex-wrap: wrap;
+            display: flex;
+            flex-wrap: wrap;
             justify-content: center;
             gap: 5px;
             width: 100%;
@@ -626,8 +635,7 @@
             text-decoration: none;
             color: inherit;
             font-size: inherit;
-            display: inline-block;
-            text-transform: uppercase;
+            display: inline-block;            text-transform: uppercase;
         }
 
         .letter-btn.selected { text-decoration: underline; }
@@ -635,7 +643,8 @@
         .separator {
             color: inherit;
             font-size: inherit;
-            display: inline-block;            width: 40px;
+            display: inline-block;
+            width: 40px;
             text-align: center;
         }
 
@@ -674,16 +683,15 @@
         }
 
         .note-button.visible { display: block; }
-
         .note-image-overlay {
-            position: fixed;
-            inset: 0;
+            position: fixed;            inset: 0;
             background: black;
             z-index: 200;
             display: none;
             justify-content: center;
             align-items: center;
         }
+
         .note-image-overlay.visible { display: flex; }
 
         .note-image-display {
@@ -725,8 +733,7 @@
             line-height: 1.5;
             min-width: 200px;
             outline: none;
-            background: transparent;
-            border: none;
+            background: transparent;            border: none;
             padding: 0;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
             left: 20px;
@@ -734,6 +741,7 @@
         }
 
         .note-word-first-letter { text-decoration: none; }
+
         .note-word-first-letter.underlined {
             text-decoration: underline;
             text-decoration-thickness: 2px;
@@ -774,15 +782,15 @@
         .code-result-box {
             width: 100%;
             padding: 18px;
-            border: 2px solid #1976d2;
-            border-radius: 15px;
+            border: 2px solid #1976d2;            border-radius: 15px;
             font-size: 20px;
             text-align: center;
             background: #e3f2fd;
             color: #1976d2;
             font-weight: bold;
             min-height: 60px;
-            display: flex;            align-items: center;
+            display: flex;
+            align-items: center;
             justify-content: center;
             margin-bottom: 15px;
         }
@@ -820,18 +828,17 @@
             z-index: 90;
             display: none;
         }
-
         #modal-overlay.visible { display: block; }
 
         .hidden-file-input { display: none; }
-    </style>
-</head>
+    </style></head>
 <body>
     <input type="file" id="bg-file-input" class="hidden-file-input" accept="image/*">
     <input type="file" id="img-file-input" class="hidden-file-input" accept="image/*">
     <input type="file" id="note-file-input" class="hidden-file-input" accept="image/*">
 
-    <div id="home-page">        <div class="app-title">ENIGMA</div>
+    <div id="home-page">
+        <div class="app-title">ENIGMA</div>
         <button class="home-btn" id="btn-perform">PERFORMER</button>
         <button class="home-btn" id="btn-list">LISTE DES MOTS</button>
         <button class="home-btn" id="btn-settings">PARAMETRES</button>
@@ -839,10 +846,12 @@
 
     <div id="settings-page">
         <div class="settings-title">PARAMETRES</div>
+        
         <button class="settings-btn" id="import-bg-btn">📷 Importer lock screen</button>
         <button class="settings-btn" id="import-img-btn">📷 Importer background</button>
         <button class="settings-btn" id="import-note-btn">📷 Importer Note</button>
         <button class="settings-btn" id="customize-btn">🎨 Personnaliser l'affichage</button>
+        
         <div class="preview-container" id="preview-container">
             <img class="preview-image" id="preview-image" src="" alt="">
             <div class="preview-buttons">
@@ -850,6 +859,7 @@
                 <button class="preview-cancel" id="preview-cancel">Annuler</button>
             </div>
         </div>
+        
         <button class="back-btn" id="settings-back">← Retour</button>
     </div>
 
@@ -858,16 +868,19 @@
             <button class="customize-back-btn" id="customize-back">←</button>
             <span class="customize-title">PERSONNALISER</span>
         </div>
+
         <div class="test-code-section">
             <div class="test-code-title">🎯 TESTER UN CODE</div>
-            <input type="tel" id="test-code-input" placeholder="Code" maxlength="4" inputmode="numeric">
+            <div class="code-input-group">
+                <input type="tel" id="test-code-input" placeholder="Code" maxlength="4" inputmode="numeric">
+            </div>
         </div>
+
         <div class="control-group">
             <div class="control-header">
                 <h3>📋 Liste</h3>
                 <button class="preview-btn" data-preview="full">👁️ Aperçu</button>
-            </div>
-            <div class="slider-item">
+            </div>            <div class="slider-item">
                 <label>Position Y <span class="value-badge" id="words-y-value" data-default="265">265px</span></label>
                 <input type="range" id="words-y" min="0" max="800" value="265">
             </div>
@@ -880,7 +893,9 @@
                 <input type="color" id="words-color" value="#ffffff">
             </div>
         </div>
-        <div class="control-group">            <div class="control-header">
+
+        <div class="control-group">
+            <div class="control-header">
                 <h3>🔤 Lettres</h3>
                 <button class="preview-btn" data-preview="full">👁️ Aperçu</button>
             </div>
@@ -897,6 +912,7 @@
                 <input type="color" id="letters-color" value="#ffffff">
             </div>
         </div>
+
         <div class="control-group">
             <div class="control-header">
                 <h3>🔢 Indice</h3>
@@ -913,8 +929,8 @@
             <div class="color-item">
                 <label>Couleur</label>
                 <input type="color" id="index-color" value="#1E6FF0">
-            </div>
-        </div>
+            </div>        </div>
+
         <div class="control-group">
             <div class="control-header">
                 <h3>📝 Note (Liste)</h3>
@@ -929,13 +945,15 @@
                 <input type="range" id="note-text-x" min="0" max="500" value="20">
             </div>
             <div class="slider-item">
-                <label>Taille <span class="value-badge" id="note-text-size-value" data-default="20">20px</span></label>                <input type="range" id="note-text-size" min="10" max="60" value="20">
+                <label>Taille <span class="value-badge" id="note-text-size-value" data-default="20">20px</span></label>
+                <input type="range" id="note-text-size" min="10" max="60" value="20">
             </div>
             <div class="color-item">
                 <label>Couleur</label>
                 <input type="color" id="note-text-color" value="#ffffff">
             </div>
         </div>
+
         <div class="control-group">
             <div class="control-header">
                 <h3>🔵 Note (Bouton)</h3>
@@ -954,12 +972,12 @@
                 <input type="color" id="note-button-color" value="#1877F2">
             </div>
         </div>
+
         <div class="customize-actions">
             <button class="customize-save" id="customize-save">💾 Sauvegarder</button>
             <button class="customize-reset" id="customize-reset">↺ Reset</button>
         </div>
     </div>
-
     <div id="lock-page">
         <div class="overlay"></div>
         <div class="lock-content">
@@ -969,6 +987,7 @@
                 <div class="dot"></div>
                 <div class="dot"></div>
             </div>
+
             <div class="keypad">
                 <div class="key" data-digit="1"><span class="key-number">1</span></div>
                 <div class="key" data-digit="2"><span class="key-number">2</span><span class="key-letters">ABC</span></div>
@@ -978,7 +997,9 @@
                 <div class="key" data-digit="6"><span class="key-number">6</span><span class="key-letters">MNO</span></div>
                 <div class="key" data-digit="7"><span class="key-number">7</span><span class="key-letters">PQRS</span></div>
                 <div class="key" data-digit="8"><span class="key-number">8</span><span class="key-letters">TUV</span></div>
-                <div class="key" data-digit="9"><span class="key-number">9</span><span class="key-letters">WXYZ</span></div>            </div>
+                <div class="key" data-digit="9"><span class="key-number">9</span><span class="key-letters">WXYZ</span></div>
+            </div>
+
             <div class="bottom-row">
                 <div class="delete-btn" id="deleteBtn">⌫</div>
                 <div class="key" data-digit="0"><span class="key-number">0</span></div>
@@ -1006,638 +1027,517 @@
     <div id="list-modal">
         <div id="search-container">
             <input type="text" id="search-input" placeholder="Taper un mot">
-        </div>
-        <div class="code-result-box" id="codeResult"></div>
+        </div>        <div class="code-result-box" id="codeResult"></div>
         <button id="search-btn">Rechercher</button>
     </div>
 
     <script>
-    (function() {
-        // ✅ CORRECTION GITHUB PAGES
-        const BASE_PATH = window.location.pathname.includes('/Enigma/') ? '/Enigma/' : '/';
-        
-        // Tous les sélecteurs DOM
-        const homePage = document.getElementById('home-page');
-        const settingsPage = document.getElementById('settings-page');
-        const customizePage = document.getElementById('customize-page');
-        const lockPage = document.getElementById('lock-page');
-        const resultPage = document.getElementById('result-page');
-        const wordsContainer = document.getElementById('words-container');
-        const lettersContainer = document.getElementById('letters-container');
-        const indexDisplay = document.getElementById('index-display');
-        const noteButton = document.getElementById('note-button');
-        const noteImageOverlay = document.getElementById('note-image-overlay');
-        const noteImageDisplay = document.getElementById('note-image-display');        const noteImageText = document.getElementById('note-image-text');
-        const noteButtonPreview = document.getElementById('note-button-preview');
-        const btnPerform = document.getElementById('btn-perform');
-        const btnList = document.getElementById('btn-list');
-        const btnSettings = document.getElementById('btn-settings');
-        const importBgBtn = document.getElementById('import-bg-btn');
-        const importImgBtn = document.getElementById('import-img-btn');
-        const importNoteBtn = document.getElementById('import-note-btn');
-        const customizeBtn = document.getElementById('customize-btn');
-        const settingsBack = document.getElementById('settings-back');
-        const customizeBack = document.getElementById('customize-back');
-        const customizeSave = document.getElementById('customize-save');
-        const customizeReset = document.getElementById('customize-reset');
-        const previewBtns = document.querySelectorAll('.preview-btn');
-        const testCodeInput = document.getElementById('test-code-input');
-        const wordsY = document.getElementById('words-y');
-        const wordsSize = document.getElementById('words-size');
-        const wordsColor = document.getElementById('words-color');
-        const lettersY = document.getElementById('letters-y');
-        const lettersSize = document.getElementById('letters-size');
-        const lettersColor = document.getElementById('letters-color');
-        const indexY = document.getElementById('index-y');
-        const indexSize = document.getElementById('index-size');
-        const indexColor = document.getElementById('index-color');
-        const noteTextY = document.getElementById('note-text-y');
-        const noteTextX = document.getElementById('note-text-x');
-        const noteTextSize = document.getElementById('note-text-size');
-        const noteTextColor = document.getElementById('note-text-color');
-        const noteButtonY = document.getElementById('note-button-y');
-        const noteButtonSize = document.getElementById('note-button-size');
-        const noteButtonColor = document.getElementById('note-button-color');
-        const wordsYValue = document.getElementById('words-y-value');
-        const wordsSizeValue = document.getElementById('words-size-value');
-        const lettersYValue = document.getElementById('letters-y-value');
-        const lettersSizeValue = document.getElementById('letters-size-value');
-        const indexYValue = document.getElementById('index-y-value');
-        const indexSizeValue = document.getElementById('index-size-value');
-        const noteTextYValue = document.getElementById('note-text-y-value');
-        const noteTextXValue = document.getElementById('note-text-x-value');
-        const noteTextSizeValue = document.getElementById('note-text-size-value');
-        const noteButtonYValue = document.getElementById('note-button-y-value');
-        const noteButtonSizeValue = document.getElementById('note-button-size-value');
-        const searchInput = document.getElementById('search-input');
-        const searchBtn = document.getElementById('search-btn');
-        const codeResult = document.getElementById('codeResult');
-        const modal = document.getElementById('list-modal');
-        const modalOverlay = document.getElementById('modal-overlay');
-        const bgFileInput = document.getElementById('bg-file-input');
-        const imgFileInput = document.getElementById('img-file-input');
-        const noteFileInput = document.getElementById('note-file-input');        const previewContainer = document.getElementById('preview-container');
-        const previewImage = document.getElementById('preview-image');
-        const previewConfirm = document.getElementById('preview-confirm');
-        const previewCancel = document.getElementById('preview-cancel');
-        const keys = document.querySelectorAll('#lock-page .key');
-        const dots = document.querySelectorAll('#lock-page .dot');
-        const deleteBtn = document.getElementById('deleteBtn');
-        const okBtn = document.getElementById('okBtn');
-        const emergencyBtn = document.getElementById('emergencyBtn');
+        (function() {
+            // ✅ CORRECTION 2/5 : Variable BASE_PATH pour GitHub Pages
+            const BASE_PATH = window.location.pathname.includes('/Enigma/') ? '/Enigma/' : '/';
+            
+            const homePage = document.getElementById('home-page');
+            const settingsPage = document.getElementById('settings-page');
+            const customizePage = document.getElementById('customize-page');
+            const lockPage = document.getElementById('lock-page');
+            const resultPage = document.getElementById('result-page');
+            const wordsContainer = document.getElementById('words-container');
+            const lettersContainer = document.getElementById('letters-container');
+            const indexDisplay = document.getElementById('index-display');
+            const noteButton = document.getElementById('note-button');
+            const noteImageOverlay = document.getElementById('note-image-overlay');
+            const noteImageDisplay = document.getElementById('note-image-display');
+            const noteImageText = document.getElementById('note-image-text');
+            const noteButtonPreview = document.getElementById('note-button-preview');
+            
+            const btnPerform = document.getElementById('btn-perform');
+            const btnList = document.getElementById('btn-list');
+            const btnSettings = document.getElementById('btn-settings');
+            const importBgBtn = document.getElementById('import-bg-btn');
+            const importImgBtn = document.getElementById('import-img-btn');
+            const importNoteBtn = document.getElementById('import-note-btn');
+            const customizeBtn = document.getElementById('customize-btn');
+            const settingsBack = document.getElementById('settings-back');
+            const customizeBack = document.getElementById('customize-back');
+            const customizeSave = document.getElementById('customize-save');
+            const customizeReset = document.getElementById('customize-reset');
+            const previewBtns = document.querySelectorAll('.preview-btn');
+            const testCodeInput = document.getElementById('test-code-input');
+            
+            const wordsY = document.getElementById('words-y');
+            const wordsSize = document.getElementById('words-size');
+            const wordsColor = document.getElementById('words-color');
+            const lettersY = document.getElementById('letters-y');
+            const lettersSize = document.getElementById('letters-size');
+            const lettersColor = document.getElementById('letters-color');
+            const indexY = document.getElementById('index-y');
+            const indexSize = document.getElementById('index-size');
+            const indexColor = document.getElementById('index-color');
+            const noteTextY = document.getElementById('note-text-y');
+            const noteTextX = document.getElementById('note-text-x');
+            const noteTextSize = document.getElementById('note-text-size');
+            const noteTextColor = document.getElementById('note-text-color');            const noteButtonY = document.getElementById('note-button-y');
+            const noteButtonSize = document.getElementById('note-button-size');
+            const noteButtonColor = document.getElementById('note-button-color');
+            
+            const wordsYValue = document.getElementById('words-y-value');
+            const wordsSizeValue = document.getElementById('words-size-value');
+            const lettersYValue = document.getElementById('letters-y-value');
+            const lettersSizeValue = document.getElementById('letters-size-value');
+            const indexYValue = document.getElementById('index-y-value');
+            const indexSizeValue = document.getElementById('index-size-value');
+            const noteTextYValue = document.getElementById('note-text-y-value');
+            const noteTextXValue = document.getElementById('note-text-x-value');
+            const noteTextSizeValue = document.getElementById('note-text-size-value');
+            const noteButtonYValue = document.getElementById('note-button-y-value');
+            const noteButtonSizeValue = document.getElementById('note-button-size-value');
+            
+            const searchInput = document.getElementById('search-input');
+            const searchBtn = document.getElementById('search-btn');
+            const codeResult = document.getElementById('codeResult');
+            const modal = document.getElementById('list-modal');
+            const modalOverlay = document.getElementById('modal-overlay');
+            
+            const bgFileInput = document.getElementById('bg-file-input');
+            const imgFileInput = document.getElementById('img-file-input');
+            const noteFileInput = document.getElementById('note-file-input');
+            const previewContainer = document.getElementById('preview-container');
+            const previewImage = document.getElementById('preview-image');
+            const previewConfirm = document.getElementById('preview-confirm');
+            const previewCancel = document.getElementById('preview-cancel');
+            const keys = document.querySelectorAll('#lock-page .key');
+            const dots = document.querySelectorAll('#lock-page .dot');
+            const deleteBtn = document.getElementById('deleteBtn');
+            const okBtn = document.getElementById('okBtn');
+            const emergencyBtn = document.getElementById('emergencyBtn');
 
-        // Variables
-        let wordsList = [];
-        const DEFAULT_NOTE_TEXT = "Barbecue\nIceberg\nCartouche\nYaourt\nCartable\nLivre\nEnveloppe\nTapis\nTrain\nEncre";
-        const DEFAULT_NOTE_IMAGE = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="500" height="1000"%3E%3Crect fill="%23222" width="100%25" height="100%25"/%3E%3C/svg%3E';
-        const defaultSettings = {
-            wordsY: 265, wordsSize: 18, wordsColor: '#ffffff',
-            lettersY: 460, lettersSize: 20, lettersColor: '#ffffff',
-            indexY: 517, indexSize: 30, indexColor: '#1E6FF0',
-            noteTextY: 265, noteTextX: 20, noteTextSize: 20, noteTextColor: '#ffffff',
-            noteButtonY: 520, noteButtonSize: 30, noteButtonColor: '#1877F2'
-        };
-        let pin = '';
-        let currentCode = '';
-        let originalWords = [];
-        let currentWords = [];
-        let letterLists = [];
-        let bestListIndex = -1;
-        let bestListLetters = [];
-        let selectedLetter = '';
-        let lastTap = 0;
-        let currentPreviewTarget = '';
-        let currentPreviewData = '';
-        let isNoteModeActive = false;
-        let noteImageData = localStorage.getItem('noteImage') || DEFAULT_NOTE_IMAGE;
-        let currentSettings = { ...defaultSettings };
-        let isNoteUnderlineActive = false;
-        let longPressTimer = null;
-        let isSearchDisabled = false;
+            let wordsList = [];
+            const DEFAULT_NOTE_TEXT = "Barbecue\nIceberg\nCartouche\nYaourt\nCartable\nLivre\nEnveloppe\nTapis\nTrain\nEncre";
+            const DEFAULT_NOTE_IMAGE = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="500" height="1000"%3E%3Crect fill="%23222" width="100%25" height="100%25"/%3E%3C/svg%3E';
 
-        // Charger la liste des mots
-        async function loadWordsList() {
-            try {
-                const response = await fetch(BASE_PATH + 'words.json');
-                if (!response.ok) throw new Error();
-                wordsList = await response.json();
-                console.log('[ENIGMA] words.json chargé');
-            } catch (e) {
-                console.warn('[ENIGMA] words.json non trouvé, fallback activé');
-                wordsList = [
-                    { code: "7131", word: "Abeille" }, { code: "7141", word: "Abricot" },                    { code: "9141", word: "Accordeon" }, { code: "6131", word: "Agenda" },
-                    { code: "6141", word: "Agneau" }, { code: "9141", word: "Agrafeuse" },
-                    { code: "5121", word: "Aigle" }, { code: "8121", word: "Aiguille" },
-                    { code: "3121", word: "Ail" }, { code: "4121", word: "Aile" }
-                ];
-            }
-        }
-
-        // Mettre à jour les valeurs affichées
-        function updateDisplayValues(s) {
-            wordsYValue.textContent = s.wordsY + 'px';
-            wordsSizeValue.textContent = s.wordsSize + 'px';
-            lettersYValue.textContent = s.lettersY + 'px';
-            lettersSizeValue.textContent = s.lettersSize + 'px';
-            indexYValue.textContent = s.indexY + 'px';
-            indexSizeValue.textContent = s.indexSize + 'px';
-            noteTextYValue.textContent = s.noteTextY + 'px';
-            noteTextXValue.textContent = s.noteTextX + 'px';
-            noteTextSizeValue.textContent = s.noteTextSize + 'px';
-            noteButtonYValue.textContent = s.noteButtonY + 'px';
-            noteButtonSizeValue.textContent = s.noteButtonSize + 'px';
-        }
-
-        // Appliquer les paramètres personnalisés
-        function applyCustomSettings(s) {
-            wordsContainer.style.top = s.wordsY + 'px';
-            wordsContainer.style.fontSize = s.wordsSize + 'px';
-            wordsContainer.style.color = s.wordsColor;
-            lettersContainer.style.top = s.lettersY + 'px';
-            lettersContainer.style.fontSize = s.lettersSize + 'px';
-            lettersContainer.style.color = s.lettersColor;
-            indexDisplay.style.top = s.indexY + 'px';
-            indexDisplay.style.fontSize = s.indexSize + 'px';
-            indexDisplay.style.color = s.indexColor;
-            noteImageText.style.top = s.noteTextY + 'px';
-            noteImageText.style.left = s.noteTextX + 'px';
-            noteImageText.style.fontSize = s.noteTextSize + 'px';
-            noteImageText.style.color = s.noteTextColor;
-            noteButton.style.top = s.noteButtonY + 'px';
-            noteButton.style.width = s.noteButtonSize + 'px';
-            noteButton.style.height = s.noteButtonSize + 'px';
-            noteButton.style.background = s.noteButtonColor;
-            noteButtonPreview.style.top = s.noteButtonY + 'px';
-            noteButtonPreview.style.width = s.noteButtonSize + 'px';
-            noteButtonPreview.style.height = s.noteButtonSize + 'px';
-            noteButtonPreview.style.background = s.noteButtonColor;
-            updateDisplayValues(s);
-            wordsY.value = s.wordsY;
-            wordsSize.value = s.wordsSize;
-            wordsColor.value = s.wordsColor;            lettersY.value = s.lettersY;
-            lettersSize.value = s.lettersSize;
-            lettersColor.value = s.lettersColor;
-            indexY.value = s.indexY;
-            indexSize.value = s.indexSize;
-            indexColor.value = s.indexColor;
-            noteTextY.value = s.noteTextY;
-            noteTextX.value = s.noteTextX;
-            noteTextSize.value = s.noteTextSize;
-            noteTextColor.value = s.noteTextColor;
-            noteButtonY.value = s.noteButtonY;
-            noteButtonSize.value = s.noteButtonSize;
-            noteButtonColor.value = s.noteButtonColor;
-        }
-
-        // Setup import d'images
-        function setupImageImport(inputEl, targetEl) {
-            inputEl.addEventListener('change', function(e) {
-                const file = e.target.files[0];
-                if (!file) return;
-                const reader = new FileReader();
-                reader.onload = function(event) {
-                    currentPreviewData = event.target.result;
-                    previewImage.src = currentPreviewData;
-                    previewContainer.classList.add('visible');
-                    if (targetEl === lockPage) currentPreviewTarget = 'bg';
-                    else if (targetEl === resultPage) currentPreviewTarget = 'img';
-                    else currentPreviewTarget = 'note';
-                };
-                reader.readAsDataURL(file);
-            });
-        }
-
-        // Générer liste de notes dynamique
-        function generateNoteList(clickedWord) {
-            const letters = clickedWord.toLowerCase().split('');
-            const result = [];
-            const wordsByLetter = {};
-            wordsList.forEach(item => {
-                const firstLetter = item.word.charAt(0).toLowerCase();
-                if (!wordsByLetter[firstLetter]) wordsByLetter[firstLetter] = [];
-                wordsByLetter[firstLetter].push(item.word);
-            });
-            letters.forEach(letter => {
-                const candidates = wordsByLetter[letter] || [];
-                const filtered = candidates.filter(w => w.toLowerCase() !== clickedWord.toLowerCase());
-                if (filtered.length > 0) {
-                    const randomWord = filtered[Math.floor(Math.random() * filtered.length)];
-                    result.push(randomWord.charAt(0).toUpperCase() + randomWord.slice(1));
-                } else {                    result.push(letter.toUpperCase());
-                }
-            });
-            return result.join('\n');
-        }
-
-        // Setup appui long pour souligner
-        function setupLongPressUnderline() {
-            const handlePressStart = () => {
-                longPressTimer = setTimeout(() => {
-                    isNoteUnderlineActive = !isNoteUnderlineActive;
-                    updateNoteUnderline();
-                    if (navigator.vibrate) navigator.vibrate(50);
-                }, 1000);
+            const defaultSettings = {
+                wordsY: 265, wordsSize: 18, wordsColor: '#ffffff',
+                lettersY: 460, lettersSize: 20, lettersColor: '#ffffff',
+                indexY: 517, indexSize: 30, indexColor: '#1E6FF0',
+                noteTextY: 265, noteTextX: 20, noteTextSize: 20, noteTextColor: '#ffffff',
+                noteButtonY: 520, noteButtonSize: 30, noteButtonColor: '#1877F2'
             };
-            const handlePressEnd = () => {
-                if (longPressTimer) { clearTimeout(longPressTimer); longPressTimer = null; }
-            };
-            noteImageOverlay.addEventListener('touchstart', handlePressStart, { passive: true });
-            noteImageOverlay.addEventListener('touchend', handlePressEnd);
-            noteImageOverlay.addEventListener('touchcancel', handlePressEnd);
-            noteImageOverlay.addEventListener('mousedown', handlePressStart);
-            noteImageOverlay.addEventListener('mouseup', handlePressEnd);
-            noteImageOverlay.addEventListener('mouseleave', handlePressEnd);
-        }
 
-        // Mettre à jour soulignement
-        function updateNoteUnderline() {
-            const text = noteImageText.innerHTML;
-            const lines = text.split('<br>');
-            const newLines = lines.map(line => {
-                if (line.length > 0) {
-                    const firstChar = line.charAt(0);
-                    const rest = line.slice(1);
-                    const className = isNoteUnderlineActive ? 'note-word-first-letter underlined' : 'note-word-first-letter';
-                    return '<span class="' + className + '">' + firstChar + '</span>' + rest;
-                }
-                return line;
-            });
-            noteImageText.innerHTML = newLines.join('<br>');
-        }
+            let pin = '';
+            let currentCode = '';
+            let originalWords = [];            let currentWords = [];
+            let letterLists = [];
+            let bestListIndex = -1;
+            let bestListLetters = [];
+            let selectedLetter = '';
+            let lastTap = 0;
+            let currentPreviewTarget = '';
+            let currentPreviewData = '';
+            let isNoteModeActive = false;
+            let noteImageData = localStorage.getItem('noteImage') || DEFAULT_NOTE_IMAGE;
+            let currentSettings = { ...defaultSettings };
+            let isNoteUnderlineActive = false;
+            let longPressTimer = null;
+            let isSearchDisabled = false;
 
-        // Afficher aperçu complet
-        function showFullPreview() {
-            const bgImage = window.getComputedStyle(resultPage).backgroundImage;
-            if (bgImage && bgImage !== 'none') {
-                noteImageDisplay.src = bgImage.slice(5, -2);
-            } else {
-                noteImageDisplay.src = DEFAULT_NOTE_IMAGE;
-            }            noteImageText.innerHTML = wordsContainer.innerHTML + '<br><br>' + lettersContainer.innerHTML;
-            noteButtonPreview.classList.add('visible');
-            noteImageOverlay.classList.add('visible');
-        }
-
-        // Afficher aperçu note
-        function showNotePreview() {
-            noteImageDisplay.src = noteImageData || DEFAULT_NOTE_IMAGE;
-            noteImageText.innerHTML = DEFAULT_NOTE_TEXT.replace(/\n/g, '<br>');
-            noteButtonPreview.classList.remove('visible');
-            noteImageOverlay.classList.add('visible');
-        }
-
-        // Cacher aperçu
-        function hidePreview() {
-            noteImageOverlay.classList.remove('visible');
-            noteButtonPreview.classList.remove('visible');
-        }
-
-        // Setup bouton aperçu
-        function setupPreviewButton(btn) {
-            if (!btn) return;
-            const previewType = btn.getAttribute('data-preview');
-            const showPreview = () => {
-                if (previewType === 'note') showNotePreview();
-                else showFullPreview();
-            };
-            btn.addEventListener('contextmenu', (e) => e.preventDefault());
-            btn.addEventListener('touchstart', (e) => { e.preventDefault(); showPreview(); }, { passive: false });
-            btn.addEventListener('touchend', (e) => { e.preventDefault(); hidePreview(); });
-            btn.addEventListener('touchcancel', (e) => { e.preventDefault(); hidePreview(); });
-            btn.addEventListener('mousedown', (e) => { e.preventDefault(); showPreview(); });
-            btn.addEventListener('mouseup', (e) => { e.preventDefault(); hidePreview(); });
-            btn.addEventListener('mouseleave', () => hidePreview());
-        }
-
-        // Animations
-        function animateKey(element) {
-            if (!element) return;
-            element.classList.add('active');
-            setTimeout(() => element.classList.remove('active'), 350);
-        }
-
-        function animateText(element) {
-            if (!element) return;
-            element.classList.add('active-text');
-            setTimeout(() => element.classList.remove('active-text'), 350);
-        }
-
-        function updateDots() {            for (let i = 0; i < dots.length; i++) {
-                dots[i].classList.toggle('active', i < pin.length);
-            }
-        }
-
-        function resetModalToNormal() {
-            searchInput.value = '';
-            codeResult.textContent = '';
-            codeResult.classList.remove('error');
-            enableSearchButton();
-        }
-
-        function searchWord(wordToFind) {
-            const normalizedSearch = wordToFind.trim().toLowerCase();
-            for (let i = 0; i < wordsList.length; i++) {
-                if (wordsList[i].word.toLowerCase() === normalizedSearch) {
-                    return wordsList[i];
+            async function loadWordsList() {
+                try {
+                    // ✅ CORRECTION 3/5 : Utiliser BASE_PATH pour fetch
+                    const response = await fetch(BASE_PATH + 'words.json');
+                    if (!response.ok) throw new Error();
+                    wordsList = await response.json();
+                } catch (e) {
+                    wordsList = [
+                        { code: "7131", word: "Abeille" }, { code: "7141", word: "Abricot" },
+                        { code: "9141", word: "Accordeon" }, { code: "6131", word: "Agenda" },
+                        { code: "6141", word: "Agneau" }, { code: "9141", word: "Agrafeuse" },
+                        { code: "5121", word: "Aigle" }, { code: "8121", word: "Aiguille" },
+                        { code: "3121", word: "Ail" }, { code: "4121", word: "Aile" }
+                    ];
                 }
             }
-            return null;
-        }
 
-        function enableSearchButton() {
-            searchBtn.classList.remove('disabled');
-            isSearchDisabled = false;
-            codeResult.textContent = '';
-            codeResult.classList.remove('error');
-        }
-
-        function disableSearchButton() {
-            searchBtn.classList.add('disabled');
-            isSearchDisabled = true;
-        }
-
-        function calculateLetterLists(words) {
-            if (words.length === 0) return [];
-            const firstDigit = parseInt(currentCode[0]);
-            const lists = [];
-            for (let pos = 0; pos < firstDigit; pos++) lists[pos] = [];
-            for (let i = 0; i < words.length; i++) {
-                const word = words[i];
-                for (let pos = 0; pos < word.length && pos < firstDigit; pos++) {
-                    const letter = word[pos];
-                    if (!lists[pos].includes(letter)) lists[pos].push(letter);
-                }
+            function updateDisplayValues(s) {
+                wordsYValue.textContent = s.wordsY + 'px';
+                wordsSizeValue.textContent = s.wordsSize + 'px';
+                lettersYValue.textContent = s.lettersY + 'px';
+                lettersSizeValue.textContent = s.lettersSize + 'px';
+                indexYValue.textContent = s.indexY + 'px';
+                indexSizeValue.textContent = s.indexSize + 'px';
+                noteTextYValue.textContent = s.noteTextY + 'px';
+                noteTextXValue.textContent = s.noteTextX + 'px';
+                noteTextSizeValue.textContent = s.noteTextSize + 'px';
+                noteButtonYValue.textContent = s.noteButtonY + 'px';
+                noteButtonSizeValue.textContent = s.noteButtonSize + 'px';
             }
-            for (let pos = 0; pos < lists.length; pos++) lists[pos].sort((a, b) => a.localeCompare(b));
-            return lists;
-        }
-        function findBestList(lists) {
-            let maxSize = -1, bestIndex = -1;
-            for (let i = 0; i < lists.length; i++) {
-                if (lists[i].length > maxSize) {
-                    maxSize = lists[i].length;
-                    bestIndex = i;
-                }
-            }
-            return bestIndex;
-        }
 
-        function displayWords(words) {
-            wordsContainer.innerHTML = '';
-            const sortedWords = [...words].sort((a, b) => a.localeCompare(b));
-            if (sortedWords.length === 0) {
-                const noWord = document.createElement('span');
-                noWord.className = 'result-word';
-                noWord.textContent = 'Aucun mot';
-                const line = document.createElement('div');
-                line.className = 'words-line';
-                line.appendChild(noWord);
-                wordsContainer.appendChild(line);
-                return;
+            function applyCustomSettings(s) {
+                wordsContainer.style.top = s.wordsY + 'px';
+                wordsContainer.style.fontSize = s.wordsSize + 'px';
+                wordsContainer.style.color = s.wordsColor;                lettersContainer.style.top = s.lettersY + 'px';
+                lettersContainer.style.fontSize = s.lettersSize + 'px';
+                lettersContainer.style.color = s.lettersColor;
+                indexDisplay.style.top = s.indexY + 'px';
+                indexDisplay.style.fontSize = s.indexSize + 'px';
+                indexDisplay.style.color = s.indexColor;
+                noteImageText.style.top = s.noteTextY + 'px';
+                noteImageText.style.left = s.noteTextX + 'px';
+                noteImageText.style.fontSize = s.noteTextSize + 'px';
+                noteImageText.style.color = s.noteTextColor;
+                noteButton.style.top = s.noteButtonY + 'px';
+                noteButton.style.width = s.noteButtonSize + 'px';
+                noteButton.style.height = s.noteButtonSize + 'px';
+                noteButton.style.background = s.noteButtonColor;
+                noteButtonPreview.style.top = s.noteButtonY + 'px';
+                noteButtonPreview.style.width = s.noteButtonSize + 'px';
+                noteButtonPreview.style.height = s.noteButtonSize + 'px';
+                noteButtonPreview.style.background = s.noteButtonColor;
+                updateDisplayValues(s);
+                wordsY.value = s.wordsY; wordsSize.value = s.wordsSize; wordsColor.value = s.wordsColor;
+                lettersY.value = s.lettersY; lettersSize.value = s.lettersSize; lettersColor.value = s.lettersColor;
+                indexY.value = s.indexY; indexSize.value = s.indexSize; indexColor.value = s.indexColor;
+                noteTextY.value = s.noteTextY; noteTextX.value = s.noteTextX; noteTextSize.value = s.noteTextSize; noteTextColor.value = s.noteTextColor;
+                noteButtonY.value = s.noteButtonY; noteButtonSize.value = s.noteButtonSize; noteButtonColor.value = s.noteButtonColor;
             }
-            let currentLine = document.createElement('div');
-            currentLine.className = 'words-line';
-            for (let i = 0; i < sortedWords.length; i++) {
-                const word = sortedWords[i];
-                const wordSpan = document.createElement('span');
-                wordSpan.className = 'result-word';
-                wordSpan.textContent = word;
-                wordSpan.addEventListener('click', function(e) {
-                    e.stopPropagation();
-                    if (isNoteModeActive && noteImageData) {
-                        const dynamicList = generateNoteList(word);
-                        noteImageDisplay.src = noteImageData;
-                        noteImageText.innerHTML = dynamicList.replace(/\n/g, '<br>');
-                        noteButtonPreview.classList.remove('visible');
-                        noteImageOverlay.classList.add('visible');
+
+            function setupImageImport(inputEl, targetEl) {
+                inputEl.addEventListener('change', async function(e) {
+                    const file = e.target.files[0];
+                    if (!file) return;
+                    const reader = new FileReader();
+                    reader.onload = function(event) {
+                        currentPreviewData = event.target.result;
+                        previewImage.src = currentPreviewData;
+                        previewContainer.classList.add('visible');
+                        if (targetEl === lockPage) currentPreviewTarget = 'bg';
+                        else if (targetEl === resultPage) currentPreviewTarget = 'img';
+                        else currentPreviewTarget = 'note';
+                    };
+                    reader.readAsDataURL(file);
+                });
+            }
+
+            function generateNoteList(clickedWord) {
+                const letters = clickedWord.toLowerCase().split('');
+                const result = [];
+                const wordsByLetter = {};
+                wordsList.forEach(item => {
+                    const firstLetter = item.word.charAt(0).toLowerCase();
+                    if (!wordsByLetter[firstLetter]) wordsByLetter[firstLetter] = [];                    wordsByLetter[firstLetter].push(item.word);
+                });
+                letters.forEach(letter => {
+                    const candidates = wordsByLetter[letter] || [];
+                    const filtered = candidates.filter(w => w.toLowerCase() !== clickedWord.toLowerCase());
+                    if (filtered.length > 0) {
+                        const randomWord = filtered[Math.floor(Math.random() * filtered.length)];
+                        result.push(randomWord.charAt(0).toUpperCase() + randomWord.slice(1));
+                    } else {
+                        result.push(letter.toUpperCase());
+                    }
+                });
+                return result.join('\n');
+            }
+
+            function setupLongPressUnderline() {
+                const handlePressStart = () => {
+                    longPressTimer = setTimeout(() => {
+                        isNoteUnderlineActive = !isNoteUnderlineActive;
                         updateNoteUnderline();
-                    } else {
-                        window.open('https://www.google.com/search?tbm=isch&q=' + encodeURIComponent(this.textContent), '_blank');
-                    }
-                });
-                currentLine.appendChild(wordSpan);
-                if (i < sortedWords.length - 1) {
-                    const space = document.createElement('span');
-                    space.textContent = ' ';
-                    currentLine.appendChild(space);
-                }            }
-            wordsContainer.appendChild(currentLine);
-        }
+                        if (navigator.vibrate) navigator.vibrate(50);
+                    }, 1000);
+                };
+                const handlePressEnd = () => {
+                    if (longPressTimer) { clearTimeout(longPressTimer); longPressTimer = null; }
+                };
+                noteImageOverlay.addEventListener('touchstart', handlePressStart, { passive: true });
+                noteImageOverlay.addEventListener('touchend', handlePressEnd);
+                noteImageOverlay.addEventListener('touchcancel', handlePressEnd);
+                noteImageOverlay.addEventListener('mousedown', handlePressStart);
+                noteImageOverlay.addEventListener('mouseup', handlePressEnd);
+                noteImageOverlay.addEventListener('mouseleave', handlePressEnd);
+            }
 
-        function displayLetterButtons(index, letters) {
-            lettersContainer.innerHTML = '';
-            if (index === -1 || letters.length === 0) return;
-            const sortedLetters = [...letters].sort((a, b) => a.localeCompare(b));
-            for (let i = 0; i < sortedLetters.length; i++) {
-                const letter = sortedLetters[i];
-                const letterSpan = document.createElement('span');
-                letterSpan.className = 'letter-btn';
-                if (selectedLetter === letter) letterSpan.classList.add('selected');
-                letterSpan.textContent = letter.toUpperCase();
-                letterSpan.addEventListener('click', function(e) {
-                    e.stopPropagation();
-                    if (this.classList.contains('selected')) {
-                        this.classList.remove('selected');
-                        selectedLetter = '';
-                        currentWords = [...originalWords];
-                        displayWords(currentWords);
-                    } else {
-                        document.querySelectorAll('.letter-btn.selected').forEach(el => el.classList.remove('selected'));
-                        this.classList.add('selected');
-                        selectedLetter = letter;
-                        const pos = bestListIndex;
-                        currentWords = originalWords.filter(word => word.length > pos && word[pos] === letter);
-                        displayWords(currentWords);
+            function updateNoteUnderline() {
+                const text = noteImageText.innerHTML;
+                const lines = text.split('<br>');
+                const newLines = lines.map(line => {
+                    if (line.length > 0) {
+                        const firstChar = line.charAt(0);
+                        const rest = line.slice(1);
+                        const className = isNoteUnderlineActive ? 'note-word-first-letter underlined' : 'note-word-first-letter';
+                        return '<span class="' + className + '">' + firstChar + '</span>' + rest;
                     }
+                    return line;
                 });
-                lettersContainer.appendChild(letterSpan);
-                if (i < sortedLetters.length - 1) {
-                    const spacer = document.createElement('span');
-                    spacer.className = 'separator';
-                    spacer.innerHTML = '    ';
-                    lettersContainer.appendChild(spacer);
+                noteImageText.innerHTML = newLines.join('<br>');
+            }
+
+            function showFullPreview() {                const bgImage = window.getComputedStyle(resultPage).backgroundImage;
+                if (bgImage && bgImage !== 'none') {
+                    noteImageDisplay.src = bgImage.slice(5, -2);
+                } else {
+                    noteImageDisplay.src = DEFAULT_NOTE_IMAGE;
+                }
+                noteImageText.innerHTML = wordsContainer.innerHTML + '<br><br>' + lettersContainer.innerHTML;
+                noteButtonPreview.classList.add('visible');
+                noteImageOverlay.classList.add('visible');
+            }
+
+            function showNotePreview() {
+                noteImageDisplay.src = noteImageData || DEFAULT_NOTE_IMAGE;
+                noteImageText.innerHTML = DEFAULT_NOTE_TEXT.replace(/\n/g, '<br>');
+                noteButtonPreview.classList.remove('visible');
+                noteImageOverlay.classList.add('visible');
+            }
+
+            function hidePreview() {
+                noteImageOverlay.classList.remove('visible');
+                noteButtonPreview.classList.remove('visible');
+            }
+
+            function setupPreviewButton(btn) {
+                if (!btn) return;
+                const previewType = btn.getAttribute('data-preview');
+                const showPreview = () => {
+                    if (previewType === 'note') showNotePreview();
+                    else showFullPreview();
+                };
+                btn.addEventListener('contextmenu', (e) => e.preventDefault());
+                btn.addEventListener('touchstart', (e) => { e.preventDefault(); showPreview(); }, { passive: false });
+                btn.addEventListener('touchend', (e) => { e.preventDefault(); hidePreview(); });
+                btn.addEventListener('touchcancel', (e) => { e.preventDefault(); hidePreview(); });
+                btn.addEventListener('mousedown', (e) => { e.preventDefault(); showPreview(); });
+                btn.addEventListener('mouseup', (e) => { e.preventDefault(); hidePreview(); });
+                btn.addEventListener('mouseleave', () => hidePreview());
+            }
+
+            function animateKey(element) {
+                if (!element) return;
+                element.classList.add('active');
+                setTimeout(() => element.classList.remove('active'), 350);
+            }
+
+            function animateText(element) {
+                if (!element) return;
+                element.classList.add('active-text');
+                setTimeout(() => element.classList.remove('active-text'), 350);
+            }
+            function updateDots() {
+                for (let i = 0; i < dots.length; i++) {
+                    dots[i].classList.toggle('active', i < pin.length);
                 }
             }
-        }
 
-        function updatePreviewWithCode(code) {
-            if (code.length === 4) {
-                currentCode = code;
-                originalWords = wordsList.filter(w => w.code === code).map(w => w.word);
-                originalWords.sort((a, b) => a.localeCompare(b));
-                currentWords = [...originalWords];
-                letterLists = calculateLetterLists(originalWords);
-                bestListIndex = findBestList(letterLists);
-                bestListLetters = bestListIndex !== -1 ? letterLists[bestListIndex] : [];
-                bestListLetters.sort((a, b) => a.localeCompare(b));                indexDisplay.textContent = bestListIndex !== -1 ? (bestListIndex + 1).toString() : '';
-                displayWords(currentWords);
-                displayLetterButtons(bestListIndex, bestListLetters);
-                wordsContainer.classList.remove('hidden');
-                lettersContainer.classList.remove('hidden');
+            function resetModalToNormal() {
+                searchInput.value = '';
+                codeResult.textContent = '';
+                codeResult.classList.remove('error');
+                enableSearchButton();
             }
-        }
 
-        function loadCustomSettings() {
-            const saved = localStorage.getItem('customSettings');
-            if (saved) {
-                try { currentSettings = { ...defaultSettings, ...JSON.parse(saved) }; }
-                catch (e) { currentSettings = { ...defaultSettings }; }
+            function searchWord(wordToFind) {
+                const normalizedSearch = wordToFind.trim().toLowerCase();
+                for (let i = 0; i < wordsList.length; i++) {
+                    if (wordsList[i].word.toLowerCase() === normalizedSearch) {
+                        return wordsList[i];
+                    }
+                }
+                return null;
             }
-            applyCustomSettings(currentSettings);
-        }
 
-        function saveCustomSettings(settings) {
-            localStorage.setItem('customSettings', JSON.stringify(settings));
-        }
+            function enableSearchButton() {
+                searchBtn.classList.remove('disabled');
+                isSearchDisabled = false;
+                codeResult.textContent = '';
+                codeResult.classList.remove('error');
+            }
 
-        // Reset badges
-        const badgeConfigs = [
-            [wordsYValue, 'wordsY', defaultSettings.wordsY],
-            [wordsSizeValue, 'wordsSize', defaultSettings.wordsSize],
-            [lettersYValue, 'lettersY', defaultSettings.lettersY],
-            [lettersSizeValue, 'lettersSize', defaultSettings.lettersSize],
-            [indexYValue, 'indexY', defaultSettings.indexY],
-            [indexSizeValue, 'indexSize', defaultSettings.indexSize],
-            [noteTextYValue, 'noteTextY', defaultSettings.noteTextY],
-            [noteTextXValue, 'noteTextX', defaultSettings.noteTextX],
-            [noteTextSizeValue, 'noteTextSize', defaultSettings.noteTextSize],
-            [noteButtonYValue, 'noteButtonY', defaultSettings.noteButtonY],
-            [noteButtonSizeValue, 'noteButtonSize', defaultSettings.noteButtonSize]
-        ];
+            function disableSearchButton() {
+                searchBtn.classList.add('disabled');
+                isSearchDisabled = true;
+            }
 
-        badgeConfigs.forEach(([badge, key, def]) => {
-            if (badge) {
-                badge.addEventListener('click', () => {
+            function calculateLetterLists(words) {
+                if (words.length === 0) return [];
+                const firstDigit = parseInt(currentCode[0]);
+                const lists = [];
+                for (let pos = 0; pos < firstDigit; pos++) lists[pos] = [];
+                for (let i = 0; i < words.length; i++) {
+                    const word = words[i];
+                    for (let pos = 0; pos < word.length && pos < firstDigit; pos++) {
+                        const letter = word[pos];
+                        if (!lists[pos].includes(letter)) lists[pos].push(letter);
+                    }
+                }
+                for (let pos = 0; pos < lists.length; pos++) lists[pos].sort((a, b) => a.localeCompare(b));
+                return lists;            }
+
+            function findBestList(lists) {
+                let maxSize = -1, bestIndex = -1;
+                for (let i = 0; i < lists.length; i++) {
+                    if (lists[i].length > maxSize) {
+                        maxSize = lists[i].length;
+                        bestIndex = i;
+                    }
+                }
+                return bestIndex;
+            }
+
+            function displayWords(words) {
+                wordsContainer.innerHTML = '';
+                const sortedWords = [...words].sort((a, b) => a.localeCompare(b));
+                if (sortedWords.length === 0) {
+                    const noWord = document.createElement('span');
+                    noWord.className = 'result-word';
+                    noWord.textContent = 'Aucun mot';
+                    const line = document.createElement('div');
+                    line.className = 'words-line';
+                    line.appendChild(noWord);
+                    wordsContainer.appendChild(line);
+                    return;
+                }
+                let currentLine = document.createElement('div');
+                currentLine.className = 'words-line';
+                for (let i = 0; i < sortedWords.length; i++) {
+                    const word = sortedWords[i];
+                    const wordSpan = document.createElement('span');
+                    wordSpan.className = 'result-word';
+                    wordSpan.textContent = word;
+                    wordSpan.addEventListener('click', function(e) {
+                        e.stopPropagation();
+                        if (isNoteModeActive && noteImageData) {
+                            const dynamicList = generateNoteList(word);
+                            noteImageDisplay.src = noteImageData;
+                            noteImageText.innerHTML = dynamicList.replace(/\n/g, '<br>');
+                            noteButtonPreview.classList.remove('visible');
+                            noteImageOverlay.classList.add('visible');
+                            updateNoteUnderline();
+                        } else {
+                            window.open('https://www.google.com/search?tbm=isch&q=' + encodeURIComponent(this.textContent), '_blank');
+                        }
+                    });
+                    currentLine.appendChild(wordSpan);
+                    if (i < sortedWords.length - 1) {
+                        const space = document.createElement('span');
+                        space.textContent = ' ';                        currentLine.appendChild(space);
+                    }
+                }
+                wordsContainer.appendChild(currentLine);
+            }
+
+            function displayLetterButtons(index, letters) {
+                lettersContainer.innerHTML = '';
+                if (index === -1 || letters.length === 0) return;
+                const sortedLetters = [...letters].sort((a, b) => a.localeCompare(b));
+                for (let i = 0; i < sortedLetters.length; i++) {
+                    const letter = sortedLetters[i];
+                    const letterSpan = document.createElement('span');
+                    letterSpan.className = 'letter-btn';
+                    if (selectedLetter === letter) letterSpan.classList.add('selected');
+                    letterSpan.textContent = letter.toUpperCase();
+                    letterSpan.addEventListener('click', function(e) {
+                        e.stopPropagation();
+                        if (this.classList.contains('selected')) {
+                            this.classList.remove('selected');
+                            selectedLetter = '';
+                            currentWords = [...originalWords];
+                            displayWords(currentWords);
+                        } else {
+                            document.querySelectorAll('.letter-btn.selected').forEach(el => el.classList.remove('selected'));
+                            this.classList.add('selected');
+                            selectedLetter = letter;
+                            const pos = bestListIndex;
+                            currentWords = originalWords.filter(word => word.length > pos && word[pos] === letter);
+                            displayWords(currentWords);
+                        }
+                    });
+                    lettersContainer.appendChild(letterSpan);
+                    if (i < sortedLetters.length - 1) {
+                        const spacer = document.createElement('span');
+                        spacer.className = 'separator';
+                        spacer.innerHTML = '    ';
+                        lettersContainer.appendChild(spacer);
+                    }
+                }
+            }
+
+            function updatePreviewWithCode(code) {
+                if (code.length === 4) {
+                    currentCode = code;
+                    originalWords = wordsList.filter(w => w.code === code).map(w => w.word);
+                    originalWords.sort((a, b) => a.localeCompare(b));
+                    currentWords = [...originalWords];
+                    letterLists = calculateLetterLists(originalWords);
+                    bestListIndex = findBestList(letterLists);                    bestListLetters = bestListIndex !== -1 ? letterLists[bestListIndex] : [];
+                    bestListLetters.sort((a, b) => a.localeCompare(b));
+                    indexDisplay.textContent = bestListIndex !== -1 ? (bestListIndex + 1).toString() : '';
+                    displayWords(currentWords);
+                    displayLetterButtons(bestListIndex, bestListLetters);
+                    wordsContainer.classList.remove('hidden');
+                    lettersContainer.classList.remove('hidden');
+                }
+            }
+
+            function loadCustomSettings() {
+                const saved = localStorage.getItem('customSettings');
+                if (saved) {
+                    try { currentSettings = { ...defaultSettings, ...JSON.parse(saved) }; }
+                    catch (e) { currentSettings = { ...defaultSettings }; }
+                }
+                applyCustomSettings(currentSettings);
+            }
+
+            function saveCustomSettings(settings) {
+                localStorage.setItem('customSettings', JSON.stringify(settings));
+            }
+
+            // Reset badges
+            [[wordsYValue, 'wordsY', defaultSettings.wordsY],
+             [wordsSizeValue, 'wordsSize', defaultSettings.wordsSize],
+             [lettersYValue, 'lettersY', defaultSettings.lettersY],
+             [lettersSizeValue, 'lettersSize', defaultSettings.lettersSize],
+             [indexYValue, 'indexY', defaultSettings.indexY],
+             [indexSizeValue, 'indexSize', defaultSettings.indexSize],
+             [noteTextYValue, 'noteTextY', defaultSettings.noteTextY],
+             [noteTextXValue, 'noteTextX', defaultSettings.noteTextX],
+             [noteTextSizeValue, 'noteTextSize', defaultSettings.noteTextSize],
+             [noteButtonYValue, 'noteButtonY', defaultSettings.noteButtonY],
+             [noteButtonSizeValue, 'noteButtonSize', defaultSettings.noteButtonSize]
+            ].forEach(([badge, key, def]) => {
+                if (badge) badge.addEventListener('click', () => {
                     currentSettings[key] = def;
                     applyCustomSettings(currentSettings);
                 });
+            });
+
+            // Sliders
+            wordsY.addEventListener('input', (e) => { currentSettings.wordsY = parseInt(e.target.value); wordsYValue.textContent = e.target.value + 'px'; wordsContainer.style.top = e.target.value + 'px'; });
+            wordsSize.addEventListener('input', (e) => { currentSettings.wordsSize = parseInt(e.target.value); wordsSizeValue.textContent = e.target.value + 'px'; wordsContainer.style.fontSize = e.target.value + 'px'; });
+            wordsColor.addEventListener('input', (e) => { currentSettings.wordsColor = e.target.value; wordsContainer.style.color = e.target.value; });
+            lettersY.addEventListener('input', (e) => { currentSettings.lettersY = parseInt(e.target.value); lettersYValue.textContent = e.target.value + 'px'; lettersContainer.style.top = e.target.value + 'px'; });
+            lettersSize.addEventListener('input', (e) => { currentSettings.lettersSize = parseInt(e.target.value); lettersSizeValue.textContent = e.target.value + 'px'; lettersContainer.style.fontSize = e.target.value + 'px'; });
+            lettersColor.addEventListener('input', (e) => { currentSettings.lettersColor = e.target.value; lettersContainer.style.color = e.target.value; });
+            indexY.addEventListener('input', (e) => { currentSettings.indexY = parseInt(e.target.value); indexYValue.textContent = e.target.value + 'px'; indexDisplay.style.top = e.target.value + 'px'; });            indexSize.addEventListener('input', (e) => { currentSettings.indexSize = parseInt(e.target.value); indexSizeValue.textContent = e.target.value + 'px'; indexDisplay.style.fontSize = e.target.value + 'px'; });
+            indexColor.addEventListener('input', (e) => { currentSettings.indexColor = e.target.value; indexDisplay.style.color = e.target.value; });
+            noteTextY.addEventListener('input', (e) => { currentSettings.noteTextY = parseInt(e.target.value); noteTextYValue.textContent = e.target.value + 'px'; noteImageText.style.top = e.target.value + 'px'; });
+            noteTextX.addEventListener('input', (e) => { currentSettings.noteTextX = parseInt(e.target.value); noteTextXValue.textContent = e.target.value + 'px'; noteImageText.style.left = e.target.value + 'px'; });
+            noteTextSize.addEventListener('input', (e) => { currentSettings.noteTextSize = parseInt(e.target.value); noteTextSizeValue.textContent = e.target.value + 'px'; noteImageText.style.fontSize = e.target.value + 'px'; });
+            noteTextColor.addEventListener('input', (e) => { currentSettings.noteTextColor = e.target.value; noteImageText.style.color = e.target.value; });
+            noteButtonY.addEventListener('input', (e) => { currentSettings.noteButtonY = parseInt(e.target.value); noteButtonYValue.textContent = e.target.value + 'px'; noteButton.style.top = e.target.value + 'px'; noteButtonPreview.style.top = e.target.value + 'px'; });
+            noteButtonSize.addEventListener('input', (e) => { currentSettings.noteButtonSize = parseInt(e.target.value); noteButtonSizeValue.textContent = e.target.value + 'px'; noteButton.style.width = e.target.value + 'px'; noteButton.style.height = e.target.value + 'px'; noteButtonPreview.style.width = e.target.value + 'px'; noteButtonPreview.style.height = e.target.value + 'px'; });
+            noteButtonColor.addEventListener('input', (e) => { currentSettings.noteButtonColor = e.target.value; noteButton.style.background = e.target.value; noteButtonPreview.style.background = e.target.value; });
+
+            if (testCodeInput) testCodeInput.addEventListener('input', (e) => {
+                const code = e.target.value.trim();
+                if (code.length === 4 && /^\d+$/.test(code)) updatePreviewWithCode(code);
+            });
+
+            if (searchInput) {
+                searchInput.addEventListener('input', () => { enableSearchButton(); codeResult.textContent = ''; codeResult.classList.remove('error'); });
+                searchInput.addEventListener('keypress', (e) => { if (e.key === 'Enter' && !isSearchDisabled) searchBtn.click(); });
             }
-        });
 
-        // Sliders - Liste
-        wordsY.addEventListener('input', (e) => {
-            currentSettings.wordsY = parseInt(e.target.value);
-            wordsYValue.textContent = e.target.value + 'px';
-            wordsContainer.style.top = e.target.value + 'px';        });
-
-        wordsSize.addEventListener('input', (e) => {
-            currentSettings.wordsSize = parseInt(e.target.value);
-            wordsSizeValue.textContent = e.target.value + 'px';
-            wordsContainer.style.fontSize = e.target.value + 'px';
-        });
-
-        wordsColor.addEventListener('input', (e) => {
-            currentSettings.wordsColor = e.target.value;
-            wordsContainer.style.color = e.target.value;
-        });
-
-        // Sliders - Lettres
-        lettersY.addEventListener('input', (e) => {
-            currentSettings.lettersY = parseInt(e.target.value);
-            lettersYValue.textContent = e.target.value + 'px';
-            lettersContainer.style.top = e.target.value + 'px';
-        });
-
-        lettersSize.addEventListener('input', (e) => {
-            currentSettings.lettersSize = parseInt(e.target.value);
-            lettersSizeValue.textContent = e.target.value + 'px';
-            lettersContainer.style.fontSize = e.target.value + 'px';
-        });
-
-        lettersColor.addEventListener('input', (e) => {
-            currentSettings.lettersColor = e.target.value;
-            lettersContainer.style.color = e.target.value;
-        });
-
-        // Sliders - Indice
-        indexY.addEventListener('input', (e) => {
-            currentSettings.indexY = parseInt(e.target.value);
-            indexYValue.textContent = e.target.value + 'px';
-            indexDisplay.style.top = e.target.value + 'px';
-        });
-
-        indexSize.addEventListener('input', (e) => {
-            currentSettings.indexSize = parseInt(e.target.value);
-            indexSizeValue.textContent = e.target.value + 'px';
-            indexDisplay.style.fontSize = e.target.value + 'px';
-        });
-
-        indexColor.addEventListener('input', (e) => {
-            currentSettings.indexColor = e.target.value;
-            indexDisplay.style.color = e.target.value;
-        });
-
-        // Sliders - Note Texte        noteTextY.addEventListener('input', (e) => {
-            currentSettings.noteTextY = parseInt(e.target.value);
-            noteTextYValue.textContent = e.target.value + 'px';
-            noteImageText.style.top = e.target.value + 'px';
-        });
-
-        noteTextX.addEventListener('input', (e) => {
-            currentSettings.noteTextX = parseInt(e.target.value);
-            noteTextXValue.textContent = e.target.value + 'px';
-            noteImageText.style.left = e.target.value + 'px';
-        });
-
-        noteTextSize.addEventListener('input', (e) => {
-            currentSettings.noteTextSize = parseInt(e.target.value);
-            noteTextSizeValue.textContent = e.target.value + 'px';
-            noteImageText.style.fontSize = e.target.value + 'px';
-        });
-
-        noteTextColor.addEventListener('input', (e) => {
-            currentSettings.noteTextColor = e.target.value;
-            noteImageText.style.color = e.target.value;
-        });
-
-        // Sliders - Note Bouton
-        noteButtonY.addEventListener('input', (e) => {
-            currentSettings.noteButtonY = parseInt(e.target.value);
-            noteButtonYValue.textContent = e.target.value + 'px';
-            noteButton.style.top = e.target.value + 'px';
-            noteButtonPreview.style.top = e.target.value + 'px';
-        });
-
-        noteButtonSize.addEventListener('input', (e) => {
-            currentSettings.noteButtonSize = parseInt(e.target.value);
-            noteButtonSizeValue.textContent = e.target.value + 'px';
-            noteButton.style.width = e.target.value + 'px';
-            noteButton.style.height = e.target.value + 'px';
-            noteButtonPreview.style.width = e.target.value + 'px';
-            noteButtonPreview.style.height = e.target.value + 'px';
-        });
-
-        noteButtonColor.addEventListener('input', (e) => {
-            currentSettings.noteButtonColor = e.target.value;
-            noteButton.style.background = e.target.value;
-            noteButtonPreview.style.background = e.target.value;
-        });
-
-        // Test code input
-        if (testCodeInput) {
-            testCodeInput.addEventListener('input', (e) => {
-                const code = e.target.value.trim();                if (code.length === 4 && /^\d+$/.test(code)) {
-                    updatePreviewWithCode(code);
-                }
-            });
-        }
-
-        // Search input
-        if (searchInput) {
-            searchInput.addEventListener('input', () => {
-                enableSearchButton();
-                codeResult.textContent = '';
-                codeResult.classList.remove('error');
-            });
-            searchInput.addEventListener('keypress', (e) => {
-                if (e.key === 'Enter' && !isSearchDisabled) {
-                    searchBtn.click();
-                }
-            });
-        }
-
-        // Search button
-        if (searchBtn) {
-            searchBtn.addEventListener('click', () => {
+            if (searchBtn) searchBtn.addEventListener('click', () => {
                 if (isSearchDisabled) return;
                 const word = searchInput.value.trim();
                 if (word === '') return;
@@ -1652,29 +1552,27 @@
                     codeResult.classList.add('error');
                 }
             });
-        }
 
-        // Image imports
-        setupImageImport(bgFileInput, lockPage);
-        setupImageImport(imgFileInput, resultPage);
-        setupImageImport(noteFileInput, null);
+            setupImageImport(bgFileInput, lockPage);
+            setupImageImport(imgFileInput, resultPage);
+            setupImageImport(noteFileInput, null);
 
-        if (importBgBtn) importBgBtn.addEventListener('click', () => bgFileInput.click());
-        if (importImgBtn) importImgBtn.addEventListener('click', () => imgFileInput.click());
-        if (importNoteBtn) importNoteBtn.addEventListener('click', () => noteFileInput.click());
+            if (importBgBtn) importBgBtn.addEventListener('click', () => bgFileInput.click());
+            if (importImgBtn) importImgBtn.addEventListener('click', () => imgFileInput.click());
+            if (importNoteBtn) importNoteBtn.addEventListener('click', () => noteFileInput.click());
 
-        // Preview confirm
-        if (previewConfirm) {            previewConfirm.addEventListener('click', () => {
-                if (currentPreviewTarget === 'bg') {
-                    lockPage.style.backgroundImage = 'url(' + currentPreviewData + ')';
-                    localStorage.setItem('backgroundImage', currentPreviewData);
-                } else if (currentPreviewTarget === 'img') {
-                    resultPage.style.backgroundImage = 'url(' + currentPreviewData + ')';
-                    localStorage.setItem('resultImage', currentPreviewData);
-                } else if (currentPreviewTarget === 'note') {
-                    noteImageData = currentPreviewData;
-                    localStorage.setItem('noteImage', noteImageData);
-                }
+            if (previewConfirm) previewConfirm.addEventListener('click', () => {
+                if (currentPreviewTarget === 'bg') { lockPage.style.backgroundImage = 'url(' + currentPreviewData + ')'; localStorage.setItem('backgroundImage', currentPreviewData); }
+                else if (currentPreviewTarget === 'img') { resultPage.style.backgroundImage = 'url(' + currentPreviewData + ')'; localStorage.setItem('resultImage', currentPreviewData); }
+                else if (currentPreviewTarget === 'note') { noteImageData = currentPreviewData; localStorage.setItem('noteImage', noteImageData); }
+                previewContainer.classList.remove('visible');
+                previewImage.src = '';                currentPreviewData = '';
+                bgFileInput.value = '';
+                imgFileInput.value = '';
+                noteFileInput.value = '';
+            });
+
+            if (previewCancel) previewCancel.addEventListener('click', () => {
                 previewContainer.classList.remove('visible');
                 previewImage.src = '';
                 currentPreviewData = '';
@@ -1682,92 +1580,32 @@
                 imgFileInput.value = '';
                 noteFileInput.value = '';
             });
-        }
 
-        // Preview cancel
-        if (previewCancel) {
-            previewCancel.addEventListener('click', () => {
-                previewContainer.classList.remove('visible');
-                previewImage.src = '';
-                currentPreviewData = '';
-                bgFileInput.value = '';
-                imgFileInput.value = '';
-                noteFileInput.value = '';
-            });
-        }
-
-        // Note button
-        if (noteButton) {
-            noteButton.addEventListener('click', () => {
+            if (noteButton) noteButton.addEventListener('click', () => {
                 isNoteModeActive = !isNoteModeActive;
                 noteButton.classList.toggle('active', isNoteModeActive);
             });
-        }
 
-        // Note overlay dblclick
-        if (noteImageOverlay) {
-            noteImageOverlay.addEventListener('dblclick', (e) => {
+            if (noteImageOverlay) noteImageOverlay.addEventListener('dblclick', (e) => {
                 e.preventDefault();
                 noteImageOverlay.classList.remove('visible');
                 isNoteModeActive = false;
                 noteButton.classList.remove('active');
                 noteButtonPreview.classList.remove('visible');
             });
-        }
-        // Preview buttons
-        previewBtns.forEach(btn => setupPreviewButton(btn));
 
-        // Context menu disable
-        document.addEventListener('contextmenu', (e) => e.preventDefault());
-        document.addEventListener('selectstart', (e) => e.preventDefault());
+            previewBtns.forEach(btn => setupPreviewButton(btn));
 
-        // Navigation buttons
-        if (btnPerform) {
-            btnPerform.addEventListener('click', () => {
-                homePage.classList.add('hidden');
-                lockPage.classList.add('visible');
-                pin = '';
-                updateDots();
-            });
-        }
+            document.addEventListener('contextmenu', (e) => e.preventDefault());
+            document.addEventListener('selectstart', (e) => e.preventDefault());
 
-        if (btnList) {
-            btnList.addEventListener('click', () => {
-                resetModalToNormal();
-                modal.classList.add('visible');
-                modalOverlay.classList.add('visible');
-            });
-        }
+            if (btnPerform) btnPerform.addEventListener('click', () => { homePage.classList.add('hidden'); lockPage.classList.add('visible'); pin = ''; updateDots(); });
+            if (btnList) btnList.addEventListener('click', () => { resetModalToNormal(); modal.classList.add('visible'); modalOverlay.classList.add('visible'); });
+            if (btnSettings) btnSettings.addEventListener('click', () => { homePage.classList.add('hidden'); settingsPage.classList.add('visible'); });
+            if (settingsBack) settingsBack.addEventListener('click', () => { settingsPage.classList.remove('visible'); homePage.classList.remove('hidden'); previewContainer.classList.remove('visible'); bgFileInput.value = ''; imgFileInput.value = ''; noteFileInput.value = ''; });
+            if (modalOverlay) modalOverlay.addEventListener('click', () => { modal.classList.remove('visible'); modalOverlay.classList.remove('visible'); searchInput.blur(); resetModalToNormal(); });
 
-        if (btnSettings) {
-            btnSettings.addEventListener('click', () => {
-                homePage.classList.add('hidden');
-                settingsPage.classList.add('visible');
-            });
-        }
-
-        if (settingsBack) {
-            settingsBack.addEventListener('click', () => {
-                settingsPage.classList.remove('visible');
-                homePage.classList.remove('hidden');
-                previewContainer.classList.remove('visible');
-                bgFileInput.value = '';
-                imgFileInput.value = '';
-                noteFileInput.value = '';
-            });
-        }
-
-        if (modalOverlay) {
-            modalOverlay.addEventListener('click', () => {
-                modal.classList.remove('visible');
-                modalOverlay.classList.remove('visible');
-                searchInput.blur();
-                resetModalToNormal();            });
-        }
-
-        // Customize buttons
-        if (customizeBtn) {
-            customizeBtn.addEventListener('click', () => {
+            if (customizeBtn) customizeBtn.addEventListener('click', () => {
                 settingsPage.classList.remove('visible');
                 customizePage.classList.add('visible', 'preview-mode');
                 resultPage.classList.add('preview-mode');
@@ -1775,60 +1613,40 @@
                 loadCustomSettings();
                 updatePreviewWithCode("7131");
             });
-        }
-
-        if (customizeBack) {
-            customizeBack.addEventListener('click', () => {
+            if (customizeBack) customizeBack.addEventListener('click', () => {
                 customizePage.classList.remove('visible', 'preview-mode');
-                resultPage.classList.remove('preview-mode');
-                settingsPage.classList.add('visible');
+                resultPage.classList.remove('preview-mode');                settingsPage.classList.add('visible');
                 if (noteButton) noteButton.classList.remove('visible');
                 loadCustomSettings();
             });
-        }
 
-        if (customizeSave) {
-            customizeSave.addEventListener('click', () => {
+            if (customizeSave) customizeSave.addEventListener('click', () => {
                 saveCustomSettings(currentSettings);
                 customizePage.classList.remove('visible', 'preview-mode');
                 resultPage.classList.remove('preview-mode');
                 settingsPage.classList.add('visible');
                 if (noteButton) noteButton.classList.remove('visible');
             });
-        }
 
-        if (customizeReset) {
-            customizeReset.addEventListener('click', () => {
+            if (customizeReset) customizeReset.addEventListener('click', () => {
                 currentSettings = { ...defaultSettings };
                 applyCustomSettings(currentSettings);
             });
-        }
 
-        // Keypad
-        keys.forEach(key => {
-            key.addEventListener('click', function() {
-                animateKey(this);
-                if (pin.length < 4) {
-                    pin += this.getAttribute('data-digit');
-                    updateDots();
-                }            });
-        });
+            keys.forEach(key => {
+                key.addEventListener('click', function() {
+                    animateKey(this);
+                    if (pin.length < 4) { pin += this.getAttribute('data-digit'); updateDots(); }
+                });
+            });
 
-        // Delete button
-        if (deleteBtn) {
-            deleteBtn.addEventListener('click', function(e) {
+            if (deleteBtn) deleteBtn.addEventListener('click', function(e) {
                 e.stopPropagation();
                 animateText(this);
-                if (pin.length > 0) {
-                    pin = pin.slice(0, -1);
-                    updateDots();
-                }
+                if (pin.length > 0) { pin = pin.slice(0, -1); updateDots(); }
             });
-        }
 
-        // OK button
-        if (okBtn) {
-            okBtn.addEventListener('click', function(e) {
+            if (okBtn) okBtn.addEventListener('click', function(e) {
                 e.stopPropagation();
                 animateText(this);
                 if (pin.length === 4) {
@@ -1846,29 +1664,20 @@
                     wordsContainer.classList.remove('hidden');
                     lettersContainer.classList.remove('hidden');
                     lockPage.classList.remove('visible');
-                    resultPage.classList.add('visible');
-                    if (noteButton) noteButton.classList.add('visible');
+                    resultPage.classList.add('visible');                    if (noteButton) noteButton.classList.add('visible');
                     pin = '';
                     updateDots();
                 }
             });
-        }
 
-        // Index display toggle
-        if (indexDisplay) {
-            indexDisplay.addEventListener('click', function(e) {
+            if (indexDisplay) indexDisplay.addEventListener('click', function(e) {
                 e.stopPropagation();
                 wordsContainer.classList.toggle('hidden');
                 lettersContainer.classList.toggle('hidden');
-            });        }
+            });
 
-        // Result page double tap
-        if (resultPage) {
-            resultPage.addEventListener('click', function(e) {
-                if (e.target.classList.contains('result-word') || 
-                    e.target.classList.contains('letter-btn') || 
-                    e.target === indexDisplay || 
-                    e.target === noteButton) return;
+            if (resultPage) resultPage.addEventListener('click', function(e) {
+                if (e.target.classList.contains('result-word') || e.target.classList.contains('letter-btn') || e.target === indexDisplay || e.target === noteButton) return;
                 let now = new Date().getTime();
                 let timeDiff = now - lastTap;
                 if (timeDiff < 300 && timeDiff > 0) {
@@ -1882,11 +1691,8 @@
                     setTimeout(() => lastTap = 0, 300);
                 }
             });
-        }
 
-        // Emergency button
-        if (emergencyBtn) {
-            emergencyBtn.addEventListener('click', function(e) {
+            if (emergencyBtn) emergencyBtn.addEventListener('click', function(e) {
                 e.stopPropagation();
                 animateText(this);
                 lockPage.classList.remove('visible');
@@ -1894,31 +1700,23 @@
                 pin = '';
                 updateDots();
             });
-        }
 
-        // Service Worker (optionnel - peut causer des problèmes)
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', async () => {
-                try {
-                    await navigator.serviceWorker.register(BASE_PATH + 'sw.js', { scope: BASE_PATH });
-                    console.log('[SW] Enregistré');
-                } catch (error) {
-                    console.log('[SW] Non enregistré (normal en dev)');
-                }
-            });
-        }
+            // ✅ CORRECTION 4/5 : Service Worker avec BASE_PATH
+            if ('serviceWorker' in navigator) {
+                window.addEventListener('load', async () => {
+                    try {
+                        await navigator.serviceWorker.register(BASE_PATH + 'sw.js', { scope: BASE_PATH });
+                    } catch (error) { console.error('SW error:', error); }
+                });
+            }
 
-        // Initialisation
-        setupLongPressUnderline();        pin = '';
-        updateDots();
-        resetModalToNormal();
-        if (noteImageText) {
-            noteImageText.innerHTML = DEFAULT_NOTE_TEXT.replace(/\n/g, '<br>');
-        }
-        loadCustomSettings();
-        loadWordsList();
-        console.log('[ENIGMA] ✅ Application initialisée');
-    })();
+            setupLongPressUnderline();
+            pin = '';
+            updateDots();
+            resetModalToNormal();            if (noteImageText) noteImageText.innerHTML = DEFAULT_NOTE_TEXT.replace(/\n/g, '<br>');
+            loadCustomSettings();
+            loadWordsList();
+        })();
     </script>
 </body>
 </html>
