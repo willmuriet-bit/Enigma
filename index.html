@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>TEST - Note Mode</title>
+    <title>TEST - Note Mode (Corrigé)</title>
     
     <style>
         * {
@@ -18,6 +18,13 @@
             height: 100vh;
             overflow: hidden;
             color: white;
+        }
+
+        /* ANIMATIONS */
+        @keyframes scintillement {
+            0% { text-shadow: 0 0 5px #FFD700, 0 0 10px #FFD700; }
+            50% { text-shadow: 0 0 20px #FFD700, 0 0 30px #FFD700; }
+            100% { text-shadow: 0 0 5px #FFD700, 0 0 10px #FFD700; }
         }
 
         /* PAGE PARAMÈTRES */
@@ -40,6 +47,7 @@
             font-weight: bold;
             text-transform: uppercase;
             letter-spacing: 4px;
+            animation: scintillement 2s ease-in-out infinite;
         }
 
         .settings-btn {
@@ -53,11 +61,12 @@
             font-weight: 600;
             cursor: pointer;
             margin: 10px 0;
-            transition: background 0.2s;
+            transition: background 0.2s, transform 0.1s;
         }
 
         .settings-btn:active {
             background: #555;
+            transform: scale(0.98);
         }
 
         .preview-container {
@@ -129,10 +138,54 @@
             overflow-y: auto;
             padding: 20px;
             color: white;
+            transition: background 0.2s ease, backdrop-filter 0.2s ease;
         }
 
         #customize-page.visible {
             display: block;
+        }
+
+        /* Effet de transparence quand on manipule un curseur */
+        #customize-page.dragging-slider {
+            background: transparent !important;
+            backdrop-filter: none !important;
+            pointer-events: none;
+        }
+
+        #customize-page.dragging-slider .control-group,
+        #customize-page.dragging-slider .customize-header,
+        #customize-page.dragging-slider .customize-actions {
+            opacity: 0 !important;
+            transition: opacity 0.1s ease;
+            pointer-events: none;
+        }
+
+        #customize-page.dragging-slider input[type="range"] {
+            opacity: 1 !important;
+            position: relative;
+            z-index: 9999;
+            pointer-events: auto;
+        }
+
+        #customize-page.dragging-slider .value-badge {
+            opacity: 1 !important;
+            position: relative;
+            z-index: 9999;
+            pointer-events: auto;
+            cursor: pointer;
+            background: #FFD700;
+            color: black;
+            font-weight: bold;
+        }
+
+        #customize-page.dragging-slider .slider-item {
+            position: relative;
+            z-index: 9999;
+        }
+
+        #result-page.preview-mode.dragging-active {
+            opacity: 1 !important;
+            z-index: 15;
         }
 
         .customize-header {
@@ -140,6 +193,8 @@
             align-items: center;
             margin-bottom: 30px;
             padding-top: 20px;
+            position: relative;
+            z-index: 21;
         }
 
         .customize-back-btn {
@@ -159,6 +214,7 @@
 
         .customize-back-btn:active {
             background: #555;
+            transform: scale(0.95);
         }
 
         .customize-title {
@@ -174,6 +230,9 @@
             padding: 20px;
             margin-bottom: 25px;
             border: 1px solid #444;
+            position: relative;
+            z-index: 21;
+            transition: opacity 0.2s ease;
         }
 
         .control-header {
@@ -196,11 +255,12 @@
             color: white;
             border: 1px solid #FFD700;
             border-radius: 20px;
-            padding: 5px 15px;
+            padding: 8px 20px;
             font-size: 14px;
             cursor: pointer;
             user-select: none;
             -webkit-tap-highlight-color: transparent;
+            transition: background 0.2s;
         }
 
         .preview-btn:active {
@@ -235,6 +295,7 @@
             border-radius: 50%;
             cursor: pointer;
             border: 2px solid white;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.3);
         }
 
         .color-item {
@@ -264,6 +325,7 @@
             color: #FFD700;
             border: 1px solid #FFD700;
             cursor: pointer;
+            transition: background 0.2s;
         }
 
         .value-badge:active {
@@ -275,6 +337,8 @@
             gap: 15px;
             margin-top: 30px;
             margin-bottom: 30px;
+            position: relative;
+            z-index: 21;
         }
 
         .customize-save {
@@ -364,6 +428,7 @@
             color: inherit;
             cursor: pointer;
             display: inline-block;
+            transition: background 0.2s;
         }
 
         .result-word:active {
@@ -411,7 +476,7 @@
             top: 265px;
             line-height: 15px;
             display: none;
-            white-space: pre-line; /* Permet les retours à la ligne */
+            white-space: pre-line;
         }
 
         /* Image Note (plein écran) */
@@ -423,7 +488,6 @@
             display: none;
             justify-content: center;
             align-items: center;
-            flex-direction: column;
         }
 
         .note-image-overlay.visible {
@@ -440,29 +504,38 @@
             z-index: 101;
         }
 
+        /* Bouton Note dans l'overlay (pour l'aperçu) */
+        .note-button-preview {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: #1877F2;
+            border: 2px solid white;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            z-index: 103;
+            left: calc(50% + 43px);
+            transform: translateX(-50%);
+            top: 520px;
+            pointer-events: none;
+        }
+
         .note-image-text {
             position: relative;
             z-index: 102;
             color: white;
             font-size: 24px;
-            padding: 20px 40px;
-            background: rgba(0,0,0,0.6);
-            border-radius: 50px;
-            border: 2px solid #FFD700;
             max-width: 80%;
             text-align: center;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
             cursor: text;
-            white-space: pre-line; /* Permet les retours à la ligne */
+            white-space: pre-line;
             line-height: 1.5;
             min-width: 200px;
             outline: none;
-        }
-
-        .note-image-text[contenteditable="true"] {
-            background: rgba(0,0,0,0.8);
-            border-color: #FFD700;
-            box-shadow: 0 0 20px #FFD700;
+            background: transparent;
+            border: none;
+            padding: 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
         }
 
         .hidden-file-input {
@@ -508,12 +581,12 @@
             </div>
             
             <div class="slider-item">
-                <label>Position Y <span class="value-badge" id="note-text-y-value">265px</span></label>
+                <label>Position Y <span class="value-badge" id="note-text-y-value" data-default="265">265px</span></label>
                 <input type="range" id="note-text-y" min="0" max="800" value="265" step="1">
             </div>
 
             <div class="slider-item">
-                <label>Taille police <span class="value-badge" id="note-text-size-value">20px</span></label>
+                <label>Taille police <span class="value-badge" id="note-text-size-value" data-default="20">20px</span></label>
                 <input type="range" id="note-text-size" min="10" max="60" value="20" step="1">
             </div>
 
@@ -523,7 +596,7 @@
             </div>
 
             <div class="slider-item">
-                <label>Espacement <span class="value-badge" id="note-text-spacing-value">15px</span></label>
+                <label>Espacement <span class="value-badge" id="note-text-spacing-value" data-default="15">15px</span></label>
                 <input type="range" id="note-text-spacing" min="0" max="50" value="15" step="1">
             </div>
         </div>
@@ -536,17 +609,17 @@
             </div>
             
             <div class="slider-item">
-                <label>Position Y <span class="value-badge" id="note-button-y-value">520px</span></label>
+                <label>Position Y <span class="value-badge" id="note-button-y-value" data-default="520">520px</span></label>
                 <input type="range" id="note-button-y" min="0" max="800" value="520" step="1">
             </div>
 
             <div class="slider-item">
-                <label>Taille <span class="value-badge" id="note-button-size-value">30px</span></label>
+                <label>Taille <span class="value-badge" id="note-button-size-value" data-default="30">30px</span></label>
                 <input type="range" id="note-button-size" min="5" max="80" value="30" step="1">
             </div>
 
             <div class="slider-item">
-                <label>Décalage X <span class="value-badge" id="note-button-x-value">43px</span></label>
+                <label>Décalage X <span class="value-badge" id="note-button-x-value" data-default="43">43px</span></label>
                 <input type="range" id="note-button-x" min="-200" max="200" value="43" step="1">
             </div>
         </div>
@@ -583,6 +656,8 @@
     <!-- Overlay image Note -->
     <div class="note-image-overlay" id="note-image-overlay">
         <img class="note-image-display" id="note-image-display" src="" alt="Note">
+        <!-- Bouton pour l'aperçu (caché par défaut) -->
+        <div class="note-button-preview" id="note-button-preview"></div>
         <div class="note-image-text" id="note-image-text" contenteditable="false">Aggrafeuse<br>Velot<br>Ilot<br>Orange<br>Nuage</div>
     </div>
 
@@ -611,6 +686,7 @@
             const noteImageOverlay = document.getElementById('note-image-overlay');
             const noteImageDisplay = document.getElementById('note-image-display');
             const noteImageText = document.getElementById('note-image-text');
+            const noteButtonPreview = document.getElementById('note-button-preview');
             const wordsContainer = document.getElementById('words-container');
             
             // Inputs personnalisation Note Texte
@@ -658,27 +734,85 @@
             let noteImageData = localStorage.getItem('noteImage') || '';
             let isNoteModeActive = false;
             let currentPreviewTarget = '';
-            let previewTimeout = null;
 
-            // ===== FONCTIONS =====
+            // ===== FONCTIONS DE DRAGGING =====
+            function startDragging() {
+                customizePage.classList.add('dragging-slider');
+                resultPage.classList.add('dragging-active');
+            }
+
+            function stopDragging() {
+                customizePage.classList.remove('dragging-slider');
+                resultPage.classList.remove('dragging-active');
+            }
+
+            // ===== FONCTIONS DE RÉINITIALISATION =====
+            function resetToDefault(valueElement, setting, defaultValue) {
+                return function() {
+                    currentSettings[setting] = defaultValue;
+                    
+                    // Mettre à jour l'affichage
+                    if (setting === 'noteTextY') {
+                        noteText.style.top = defaultValue + 'px';
+                        noteImageText.style.top = defaultValue + 'px';
+                    }
+                    else if (setting === 'noteTextSize') {
+                        noteText.style.fontSize = defaultValue + 'px';
+                        noteImageText.style.fontSize = defaultValue + 'px';
+                    }
+                    else if (setting === 'noteTextColor') {
+                        noteText.style.color = defaultValue;
+                        noteImageText.style.color = defaultValue;
+                    }
+                    else if (setting === 'noteTextSpacing') {
+                        noteText.style.lineHeight = defaultValue + 'px';
+                        noteImageText.style.lineHeight = defaultValue + 'px';
+                    }
+                    else if (setting === 'noteButtonY') {
+                        noteButton.style.top = defaultValue + 'px';
+                        noteButtonPreview.style.top = defaultValue + 'px';
+                    }
+                    else if (setting === 'noteButtonSize') {
+                        noteButton.style.width = defaultValue + 'px';
+                        noteButton.style.height = defaultValue + 'px';
+                        noteButtonPreview.style.width = defaultValue + 'px';
+                        noteButtonPreview.style.height = defaultValue + 'px';
+                    }
+                    else if (setting === 'noteButtonX') {
+                        noteButton.style.left = `calc(50% + ${defaultValue}px)`;
+                        noteButtonPreview.style.left = `calc(50% + ${defaultValue}px)`;
+                    }
+                    
+                    updateDisplayValues(currentSettings);
+                    updateSliders(currentSettings);
+                };
+            }
+
+            // ===== APPLICATION DES RÉGLAGES =====
             function applyCustomSettings(settings) {
-                // Appliquer au texte Note
+                // Appliquer au texte Note (page résultat)
                 noteText.style.top = settings.noteTextY + 'px';
                 noteText.style.fontSize = settings.noteTextSize + 'px';
                 noteText.style.color = settings.noteTextColor;
                 noteText.style.lineHeight = settings.noteTextSpacing + 'px';
                 
-                // Appliquer au texte dans l'overlay (pour l'aperçu)
+                // Appliquer au texte dans l'overlay (image Note)
                 noteImageText.style.top = settings.noteTextY + 'px';
                 noteImageText.style.fontSize = settings.noteTextSize + 'px';
                 noteImageText.style.color = settings.noteTextColor;
                 noteImageText.style.lineHeight = settings.noteTextSpacing + 'px';
                 
-                // Appliquer au bouton Note
+                // Appliquer au bouton Note (page résultat)
                 noteButton.style.top = settings.noteButtonY + 'px';
                 noteButton.style.width = settings.noteButtonSize + 'px';
                 noteButton.style.height = settings.noteButtonSize + 'px';
                 noteButton.style.left = `calc(50% + ${settings.noteButtonX}px)`;
+                
+                // Appliquer au bouton preview (dans l'overlay)
+                noteButtonPreview.style.top = settings.noteButtonY + 'px';
+                noteButtonPreview.style.width = settings.noteButtonSize + 'px';
+                noteButtonPreview.style.height = settings.noteButtonSize + 'px';
+                noteButtonPreview.style.left = `calc(50% + ${settings.noteButtonX}px)`;
 
                 // Mettre à jour les valeurs affichées
                 updateDisplayValues(settings);
@@ -725,38 +859,59 @@
                 isNoteModeActive = false;
                 noteButton.classList.remove('active');
                 // Remettre le texte par défaut
-                noteImageText.textContent = DEFAULT_NOTE_TEXT;
+                noteImageText.innerHTML = DEFAULT_NOTE_TEXT.replace(/\n/g, '<br>');
                 noteImageText.setAttribute('contenteditable', 'false');
+                // Cacher le bouton preview
+                noteButtonPreview.style.display = 'none';
             }
+
+            // ===== ÉVÉNEMENTS CURSEURS AVEC DRAGGING =====
+            const allSliders = [
+                noteTextY, noteTextSize, noteTextSpacing,
+                noteButtonY, noteButtonSize, noteButtonX
+            ];
+
+            allSliders.forEach(slider => {
+                if (slider) {
+                    slider.addEventListener('touchstart', startDragging);
+                    slider.addEventListener('touchend', stopDragging);
+                    slider.addEventListener('touchcancel', stopDragging);
+                }
+            });
 
             // ===== ÉVÉNEMENTS CURSEURS =====
             noteTextY.addEventListener('input', (e) => {
                 currentSettings.noteTextY = parseInt(e.target.value);
                 noteTextYValue.textContent = currentSettings.noteTextY + 'px';
                 noteText.style.top = currentSettings.noteTextY + 'px';
+                noteImageText.style.top = currentSettings.noteTextY + 'px';
             });
 
             noteTextSize.addEventListener('input', (e) => {
                 currentSettings.noteTextSize = parseInt(e.target.value);
                 noteTextSizeValue.textContent = currentSettings.noteTextSize + 'px';
                 noteText.style.fontSize = currentSettings.noteTextSize + 'px';
+                noteImageText.style.fontSize = currentSettings.noteTextSize + 'px';
             });
 
             noteTextColor.addEventListener('input', (e) => {
                 currentSettings.noteTextColor = e.target.value;
                 noteText.style.color = currentSettings.noteTextColor;
+                noteImageText.style.color = currentSettings.noteTextColor;
             });
 
             noteTextSpacing.addEventListener('input', (e) => {
                 currentSettings.noteTextSpacing = parseInt(e.target.value);
                 noteTextSpacingValue.textContent = currentSettings.noteTextSpacing + 'px';
                 noteText.style.lineHeight = currentSettings.noteTextSpacing + 'px';
+                noteImageText.style.lineHeight = currentSettings.noteTextSpacing + 'px';
             });
 
             noteButtonY.addEventListener('input', (e) => {
                 currentSettings.noteButtonY = parseInt(e.target.value);
                 noteButtonYValue.textContent = currentSettings.noteButtonY + 'px';
                 noteButton.style.top = currentSettings.noteButtonY + 'px';
+                noteButtonPreview.style.top = currentSettings.noteButtonY + 'px';
             });
 
             noteButtonSize.addEventListener('input', (e) => {
@@ -764,13 +919,24 @@
                 noteButtonSizeValue.textContent = currentSettings.noteButtonSize + 'px';
                 noteButton.style.width = currentSettings.noteButtonSize + 'px';
                 noteButton.style.height = currentSettings.noteButtonSize + 'px';
+                noteButtonPreview.style.width = currentSettings.noteButtonSize + 'px';
+                noteButtonPreview.style.height = currentSettings.noteButtonSize + 'px';
             });
 
             noteButtonX.addEventListener('input', (e) => {
                 currentSettings.noteButtonX = parseInt(e.target.value);
                 noteButtonXValue.textContent = currentSettings.noteButtonX + 'px';
                 noteButton.style.left = `calc(50% + ${currentSettings.noteButtonX}px)`;
+                noteButtonPreview.style.left = `calc(50% + ${currentSettings.noteButtonX}px)`;
             });
+
+            // ===== RÉINITIALISATION PAR BADGE =====
+            noteTextYValue.addEventListener('click', resetToDefault(noteTextYValue, 'noteTextY', defaultSettings.noteTextY));
+            noteTextSizeValue.addEventListener('click', resetToDefault(noteTextSizeValue, 'noteTextSize', defaultSettings.noteTextSize));
+            noteTextSpacingValue.addEventListener('click', resetToDefault(noteTextSpacingValue, 'noteTextSpacing', defaultSettings.noteTextSpacing));
+            noteButtonYValue.addEventListener('click', resetToDefault(noteButtonYValue, 'noteButtonY', defaultSettings.noteButtonY));
+            noteButtonSizeValue.addEventListener('click', resetToDefault(noteButtonSizeValue, 'noteButtonSize', defaultSettings.noteButtonSize));
+            noteButtonXValue.addEventListener('click', resetToDefault(noteButtonXValue, 'noteButtonX', defaultSettings.noteButtonX));
 
             // ===== IMPORT IMAGE NOTE =====
             importNoteBtn.addEventListener('click', () => {
@@ -820,8 +986,9 @@
                 if (isNoteModeActive && noteImageData) {
                     // Mode Note activé : afficher l'image Note avec le texte par défaut
                     noteImageDisplay.src = noteImageData;
-                    noteImageText.textContent = DEFAULT_NOTE_TEXT;
+                    noteImageText.innerHTML = DEFAULT_NOTE_TEXT.replace(/\n/g, '<br>');
                     noteImageText.setAttribute('contenteditable', 'false');
+                    noteButtonPreview.style.display = 'none'; // Cacher le bouton preview
                     noteImageOverlay.classList.add('visible');
                 } else {
                     // Mode normal : recherche Google Images
@@ -853,21 +1020,23 @@
                 e.stopPropagation();
             });
 
-            // ===== BOUTONS PREVIEW (avec appui long) =====
+            // ===== BOUTONS PREVIEW =====
             function showPreview(targetType) {
                 if (targetType === 'note-text' && noteImageData) {
                     // Aperçu Note (Liste) : image NOTE + texte
                     noteImageDisplay.src = noteImageData;
-                    noteImageText.textContent = DEFAULT_NOTE_TEXT;
+                    noteImageText.innerHTML = DEFAULT_NOTE_TEXT.replace(/\n/g, '<br>');
                     noteImageText.setAttribute('contenteditable', 'false');
+                    noteButtonPreview.style.display = 'none'; // Cacher le bouton
                     noteImageOverlay.classList.add('visible');
                 } else if (targetType === 'note-button') {
                     // Aperçu Note (Bouton) : image BACKGROUND + bouton
                     const bgImage = window.getComputedStyle(resultPage).backgroundImage;
                     if (bgImage && bgImage !== 'none') {
                         noteImageDisplay.src = bgImage.slice(5, -2);
-                        noteImageText.textContent = ''; // Pas de texte
+                        noteImageText.innerHTML = ''; // Pas de texte
                         noteImageText.setAttribute('contenteditable', 'false');
+                        noteButtonPreview.style.display = 'block'; // Afficher le bouton
                         noteImageOverlay.classList.add('visible');
                     }
                 }
@@ -875,9 +1044,10 @@
 
             function hidePreview() {
                 noteImageOverlay.classList.remove('visible');
+                noteButtonPreview.style.display = 'none';
             }
 
-            // Gestion des événements tactiles et souris pour les boutons preview
+            // Gestion des événements pour les boutons preview
             function setupPreviewButton(btn, targetType) {
                 // Pour mobile (touch)
                 btn.addEventListener('touchstart', (e) => {
@@ -930,6 +1100,8 @@
                 settingsPage.style.display = 'none';
                 resultPage.classList.add('visible');
                 loadCustomSettings();
+                // Cacher le texte note par défaut
+                noteText.style.display = 'none';
             });
 
             customizeSave.addEventListener('click', () => {
@@ -957,6 +1129,7 @@
             // Initialiser le texte Note
             noteText.innerHTML = DEFAULT_NOTE_TEXT.replace(/\n/g, '<br>');
             noteImageText.innerHTML = DEFAULT_NOTE_TEXT.replace(/\n/g, '<br>');
+            noteButtonPreview.style.display = 'none';
         })();
     </script>
 </body>
