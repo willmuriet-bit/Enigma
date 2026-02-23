@@ -1140,7 +1140,6 @@
             let isNoteUnderlineActive = false;
             let longPressTimer = null;
             let isSearchDisabled = false;
-            let previewLongPressTimer = null;
 
             async function loadWordsList() {
                 try {
@@ -1174,8 +1173,8 @@
 
             function applyCustomSettings(s) {
                 wordsContainer.style.top = s.wordsY + 'px';
-                wordsContainer.style.fontSize = s.wordsSize + 'px';                wordsContainer.style.color = s.wordsColor;
-                lettersContainer.style.top = s.lettersY + 'px';
+                wordsContainer.style.fontSize = s.wordsSize + 'px';
+                wordsContainer.style.color = s.wordsColor;                lettersContainer.style.top = s.lettersY + 'px';
                 lettersContainer.style.fontSize = s.lettersSize + 'px';
                 lettersContainer.style.color = s.lettersColor;
                 indexDisplay.style.top = s.indexY + 'px';
@@ -1223,8 +1222,8 @@
                 const result = [];
                 const wordsByLetter = {};
                 wordsList.forEach(item => {
-                    const firstLetter = item.word.charAt(0).toLowerCase();                    if (!wordsByLetter[firstLetter]) wordsByLetter[firstLetter] = [];
-                    wordsByLetter[firstLetter].push(item.word);
+                    const firstLetter = item.word.charAt(0).toLowerCase();
+                    if (!wordsByLetter[firstLetter]) wordsByLetter[firstLetter] = [];                    wordsByLetter[firstLetter].push(item.word);
                 });
                 letters.forEach(letter => {
                     const candidates = wordsByLetter[letter] || [];
@@ -1272,111 +1271,73 @@
                 });
                 noteImageText.innerHTML = newLines.join('<br>');
             }
-            // ============================================
-            // NOUVEAUX BOUTONS APERÇU - FONCTIONNEMENT
+
+            // ============================================            // BOUTONS APERÇU - FONCTIONNEMENT CORRECT
             // ============================================
             
-            // Affiche la page de résultats COMPLÈTE (pour les 4 boutons)
-            function showFullPreviewOverlay() {
-                // Vérifier si un code a été entré
-                if (!currentCode || currentCode.length !== 4) {
-                    return; // Rien ne s'affiche si pas de code
-                }
-                
-                const bgImage = window.getComputedStyle(resultPage).backgroundImage;
-                if (bgImage && bgImage !== 'none') {
-                    noteImageDisplay.src = bgImage.slice(5, -2);
-                } else {
-                    noteImageDisplay.src = DEFAULT_NOTE_IMAGE;
-                }
-                
-                // Afficher TOUS les éléments (mots + lettres + indice + bouton)
-                noteImageText.innerHTML = wordsContainer.innerHTML + '<br><br>' + lettersContainer.innerHTML;
-                noteButtonPreview.classList.add('visible');
-                noteImageOverlay.classList.add('visible');
-            }
-
-            // Affiche la liste statique sur l'image Note (pour le 5ème bouton)
-            function showNotePreviewOverlay() {
-                noteImageDisplay.src = noteImageData || DEFAULT_NOTE_IMAGE;
-                noteImageText.innerHTML = DEFAULT_NOTE_TEXT.replace(/\n/g, '<br>');
-                noteButtonPreview.classList.remove('visible');
-                noteImageOverlay.classList.add('visible');
-            }
-
-            function hidePreviewOverlay() {
-                noteImageOverlay.classList.remove('visible');
-                noteButtonPreview.classList.remove('visible');
-            }
-
-            // Setup des boutons Aperçu avec appui maintenu
             function setupPreviewButton(btn) {
                 if (!btn) return;
                 
                 const previewType = btn.getAttribute('data-preview');
                 
-                const showPreview = () => {
+                const showOverlay = () => {
                     if (previewType === 'note') {
-                        showNotePreviewOverlay();
+                        // Note Liste → Image Note + liste statique
+                        noteImageDisplay.src = noteImageData || DEFAULT_NOTE_IMAGE;
+                        noteImageText.innerHTML = DEFAULT_NOTE_TEXT.replace(/\n/g, '<br>');
+                        noteButtonPreview.classList.remove('visible');
                     } else {
-                        showFullPreviewOverlay();
+                        // 4 autres boutons → Image Background + mots + lettres + indice + bouton bleu
+                        if (!currentCode || currentCode.length !== 4) {
+                            return; // Pas de code = rien
+                        }
+                        
+                        const bgImage = window.getComputedStyle(resultPage).backgroundImage;
+                        if (bgImage && bgImage !== 'none') {
+                            noteImageDisplay.src = bgImage.slice(5, -2);
+                        } else {
+                            noteImageDisplay.src = DEFAULT_NOTE_IMAGE;
+                        }
+                        
+                        // Récupérer les mots
+                        let wordsText = '';
+                        wordsContainer.querySelectorAll('.result-word').forEach(el => {
+                            wordsText += el.textContent + ' ';
+                        });
+                        
+                        // Récupérer les lettres
+                        let lettersText = '';
+                        lettersContainer.querySelectorAll('.letter-btn').forEach(el => {
+                            lettersText += el.textContent + '      ';
+                        });
+                        
+                        // Récupérer l'indice
+                        const indexText = indexDisplay.textContent;
+                        
+                        // Afficher tout : mots + lettres + indice
+                        noteImageText.innerHTML = wordsText.trim() + '<br><br>' + lettersText.trim() + '<br><br>[' + indexText + ']';
+                        noteButtonPreview.classList.add('visible');
                     }
-                };                
-                const hidePreview = () => {
-                    hidePreviewOverlay();
+                    noteImageOverlay.classList.add('visible');
                 };
                 
-                // Appui maintenu = affiche l'overlay
+                const hideOverlay = () => {                    noteImageOverlay.classList.remove('visible');
+                    noteButtonPreview.classList.remove('visible');
+                };
+                
                 btn.addEventListener('touchstart', (e) => {
                     e.preventDefault();
-                    previewLongPressTimer = setTimeout(() => {
-                        showPreview();
-                        if (navigator.vibrate) navigator.vibrate(30);
-                    }, 50);
-                }, { passive: false });
+                    showOverlay();
+                });
                 
-                // Relâchement = ferme l'overlay
                 btn.addEventListener('touchend', (e) => {
                     e.preventDefault();
-                    if (previewLongPressTimer) {
-                        clearTimeout(previewLongPressTimer);
-                        previewLongPressTimer = null;
-                    }
-                    hidePreview();
+                    hideOverlay();
                 });
                 
-                btn.addEventListener('touchcancel', (e) => {
-                    e.preventDefault();
-                    if (previewLongPressTimer) {
-                        clearTimeout(previewLongPressTimer);
-                        previewLongPressTimer = null;
-                    }
-                    hidePreview();
-                });
-                
-                // Support souris pour PC
-                btn.addEventListener('mousedown', (e) => {
-                    e.preventDefault();
-                    previewLongPressTimer = setTimeout(() => {
-                        showPreview();
-                    }, 50);
-                });
-                
-                btn.addEventListener('mouseup', (e) => {
-                    e.preventDefault();
-                    if (previewLongPressTimer) {
-                        clearTimeout(previewLongPressTimer);
-                        previewLongPressTimer = null;
-                    }
-                    hidePreview();
-                });
-                                btn.addEventListener('mouseleave', () => {
-                    if (previewLongPressTimer) {
-                        clearTimeout(previewLongPressTimer);
-                        previewLongPressTimer = null;
-                    }
-                    hidePreview();
-                });
+                btn.addEventListener('mousedown', () => showOverlay());
+                btn.addEventListener('mouseup', () => hideOverlay());
+                btn.addEventListener('mouseleave', () => hideOverlay());
             }
 
             function animateKey(element) {
@@ -1409,8 +1370,7 @@
                 for (let i = 0; i < wordsList.length; i++) {
                     if (wordsList[i].word.toLowerCase() === normalizedSearch) {
                         return wordsList[i];
-                    }
-                }
+                    }                }
                 return null;
             }
 
@@ -1420,6 +1380,7 @@
                 codeResult.textContent = '';
                 codeResult.classList.remove('error');
             }
+
             function disableSearchButton() {
                 searchBtn.classList.add('disabled');
                 isSearchDisabled = true;
@@ -1458,8 +1419,7 @@
                 if (sortedWords.length === 0) {
                     const noWord = document.createElement('span');
                     noWord.className = 'result-word';
-                    noWord.textContent = 'Aucun mot';
-                    const line = document.createElement('div');
+                    noWord.textContent = 'Aucun mot';                    const line = document.createElement('div');
                     line.className = 'words-line';
                     line.appendChild(noWord);
                     wordsContainer.appendChild(line);
@@ -1468,7 +1428,8 @@
                 let currentLine = document.createElement('div');
                 currentLine.className = 'words-line';
                 for (let i = 0; i < sortedWords.length; i++) {
-                    const word = sortedWords[i];                    const wordSpan = document.createElement('span');
+                    const word = sortedWords[i];
+                    const wordSpan = document.createElement('span');
                     wordSpan.className = 'result-word';
                     wordSpan.textContent = word;
                     wordSpan.addEventListener('click', function(e) {
@@ -1507,8 +1468,7 @@
                     letterSpan.addEventListener('click', function(e) {
                         e.stopPropagation();
                         if (this.classList.contains('selected')) {
-                            this.classList.remove('selected');
-                            selectedLetter = '';
+                            this.classList.remove('selected');                            selectedLetter = '';
                             currentWords = [...originalWords];
                             displayWords(currentWords);
                         } else {
@@ -1517,7 +1477,8 @@
                             selectedLetter = letter;
                             const pos = bestListIndex;
                             currentWords = originalWords.filter(word => word.length > pos && word[pos] === letter);
-                            displayWords(currentWords);                        }
+                            displayWords(currentWords);
+                        }
                     });
                     lettersContainer.appendChild(letterSpan);
                     if (i < sortedLetters.length - 1) {
@@ -1556,8 +1517,7 @@
                 applyCustomSettings(currentSettings);
             }
 
-            function saveCustomSettings(settings) {
-                localStorage.setItem('customSettings', JSON.stringify(settings));
+            function saveCustomSettings(settings) {                localStorage.setItem('customSettings', JSON.stringify(settings));
             }
 
             // Reset badges
@@ -1566,7 +1526,8 @@
              [lettersYValue, 'lettersY', defaultSettings.lettersY],
              [lettersSizeValue, 'lettersSize', defaultSettings.lettersSize],
              [indexYValue, 'indexY', defaultSettings.indexY],
-             [indexSizeValue, 'indexSize', defaultSettings.indexSize],             [noteTextYValue, 'noteTextY', defaultSettings.noteTextY],
+             [indexSizeValue, 'indexSize', defaultSettings.indexSize],
+             [noteTextYValue, 'noteTextY', defaultSettings.noteTextY],
              [noteTextXValue, 'noteTextX', defaultSettings.noteTextX],
              [noteTextSizeValue, 'noteTextSize', defaultSettings.noteTextSize],
              [noteButtonYValue, 'noteButtonY', defaultSettings.noteButtonY],
@@ -1605,7 +1566,6 @@
                 searchInput.addEventListener('input', () => { enableSearchButton(); codeResult.textContent = ''; codeResult.classList.remove('error'); });
                 searchInput.addEventListener('keypress', (e) => { if (e.key === 'Enter' && !isSearchDisabled) searchBtn.click(); });
             }
-
             if (searchBtn) searchBtn.addEventListener('click', () => {
                 if (isSearchDisabled) return;
                 const word = searchInput.value.trim();
@@ -1615,7 +1575,8 @@
                     codeResult.textContent = result.code;
                     codeResult.classList.remove('error');
                     disableSearchButton();
-                    searchInput.blur();                } else {
+                    searchInput.blur();
+                } else {
                     codeResult.textContent = 'Mot introuvable !';
                     codeResult.classList.add('error');
                 }
@@ -1654,7 +1615,6 @@
                 isNoteModeActive = !isNoteModeActive;
                 noteButton.classList.toggle('active', isNoteModeActive);
             });
-
             if (noteImageOverlay) noteImageOverlay.addEventListener('dblclick', (e) => {
                 e.preventDefault();
                 noteImageOverlay.classList.remove('visible');
@@ -1663,8 +1623,9 @@
                 noteButtonPreview.classList.remove('visible');
             });
 
-            // NOUVEAUX BOUTONS APERÇU
+            // BOUTONS APERÇU
             previewBtns.forEach(btn => setupPreviewButton(btn));
+
             document.addEventListener('contextmenu', (e) => e.preventDefault());
             document.addEventListener('selectstart', (e) => e.preventDefault());
 
@@ -1703,7 +1664,6 @@
                 currentSettings = { ...defaultSettings };
                 applyCustomSettings(currentSettings);
             });
-
             keys.forEach(key => {
                 key.addEventListener('click', function() {
                     animateKey(this);
@@ -1713,7 +1673,8 @@
 
             if (deleteBtn) deleteBtn.addEventListener('click', function(e) {
                 e.stopPropagation();
-                animateText(this);                if (pin.length > 0) { pin = pin.slice(0, -1); updateDots(); }
+                animateText(this);
+                if (pin.length > 0) { pin = pin.slice(0, -1); updateDots(); }
             });
 
             if (okBtn) okBtn.addEventListener('click', function(e) {
@@ -1752,8 +1713,7 @@
                 let now = new Date().getTime();
                 let timeDiff = now - lastTap;
                 if (timeDiff < 300 && timeDiff > 0) {
-                    resultPage.classList.remove('visible');
-                    lockPage.classList.add('visible');
+                    resultPage.classList.remove('visible');                    lockPage.classList.add('visible');
                     if (noteButton) noteButton.classList.remove('visible');
                     selectedLetter = '';
                     lastTap = 0;
@@ -1762,6 +1722,7 @@
                     setTimeout(() => lastTap = 0, 300);
                 }
             });
+
             if (emergencyBtn) emergencyBtn.addEventListener('click', function(e) {
                 e.stopPropagation();
                 animateText(this);
