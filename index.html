@@ -48,6 +48,12 @@
             0% { opacity: 0; transform: translateY(30px); }
             100% { opacity: 1; transform: translateY(0); }
         }
+        @keyframes circleWave {
+            0% { opacity: 0.9; transform: scale(0.5); }
+            70% { opacity: 0.5; transform: scale(1.3); }
+            100% { opacity: 0; transform: scale(1.6); }
+        }
+
         .app-title {
             font-family: 'Georgia', 'Times New Roman', serif;
             font-size: 68px;
@@ -90,12 +96,12 @@
             box-shadow: 0 4px 15px rgba(255, 255, 255, 0.2);
             transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
             position: relative;
-            overflow: hidden;
-            margin: 12px 0;
+            overflow: hidden;            margin: 12px 0;
             opacity: 0;
             transform: translateY(30px);
             animation: apparitionBouton 0.5s ease-out forwards;
         }
+
         #btn-perform { animation-delay: 0.2s; }
         #btn-list { animation-delay: 0.4s; }
         #btn-settings { animation-delay: 0.6s; }
@@ -139,13 +145,13 @@
         }
 
         #settings-page.visible {
-            visibility: visible;
-            opacity: 1;
+            visibility: visible;            opacity: 1;
         }
 
         .settings-title {
             font-size: 48px;
-            color: #FFD700;            margin-bottom: 50px;
+            color: #FFD700;
+            margin-bottom: 50px;
             font-weight: bold;
             text-transform: uppercase;
             letter-spacing: 4px;
@@ -188,13 +194,13 @@
             object-fit: cover;
             border-radius: 15px;
             border: 3px solid #FFD700;
-            margin-bottom: 15px;
-        }
+            margin-bottom: 15px;        }
 
         .preview-buttons {
             display: flex;
             gap: 20px;
         }
+
         .preview-confirm, .preview-cancel {
             width: 120px;
             height: 50px;
@@ -237,13 +243,13 @@
             inset: 0;
             background: rgba(0, 0, 0, 0.95);
             z-index: 40;
-            visibility: hidden;
-            opacity: 0;
+            visibility: hidden;            opacity: 0;
             transition: visibility 0.3s, opacity 0.3s;
             overflow-y: auto;
             overflow-x: hidden;
             padding: 20px;
-            color: white;        }
+            color: white;
+        }
 
         #customize-page.visible {
             visibility: visible;
@@ -286,13 +292,13 @@
             background: rgba(0, 0, 0, 0.85);
         }
 
-        .customize-header {
-            display: flex;
+        .customize-header {            display: flex;
             align-items: center;
             margin-bottom: 30px;
             padding-top: 20px;
             position: relative;
-            z-index: 41;        }
+            z-index: 41;
+        }
 
         .customize-back-btn {
             width: 40px;
@@ -335,13 +341,13 @@
 
         .test-code-title {
             color: #FFD700;
-            font-size: 22px;
-            margin-bottom: 15px;
+            font-size: 22px;            margin-bottom: 15px;
         }
 
         .code-input-group {
             display: flex;
-            justify-content: center;            margin-bottom: 15px;
+            justify-content: center;
+            margin-bottom: 15px;
             width: 100%;
         }
 
@@ -384,13 +390,13 @@
         }
 
         .control-header h3 {
-            color: #FFD700;
-            font-size: 22px;
+            color: #FFD700;            font-size: 22px;
             margin: 0;
         }
 
         .preview-btn {
-            background: #333;            color: white;
+            background: #333;
+            color: white;
             border: 1px solid #FFD700;
             border-radius: 20px;
             padding: 5px 15px;
@@ -433,13 +439,13 @@
             border-radius: 50%;
             cursor: pointer;
             border: 2px solid white;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.3);
-            pointer-events: auto;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.3);            pointer-events: auto;
         }
 
         .color-item {
             margin-bottom: 20px;
         }
+
         .color-item label {
             display: block;
             margin-bottom: 8px;
@@ -482,13 +488,13 @@
         .customize-save {
             flex: 1.2;
             height: 55px;
-            background: #4CAF50;
-            border: none;
+            background: #4CAF50;            border: none;
             border-radius: 15px;
             color: white;
             font-size: 20px;
             font-weight: 600;
-            cursor: pointer;            transition: transform 0.1s, opacity 0.2s;
+            cursor: pointer;
+            transition: transform 0.1s, opacity 0.2s;
         }
 
         .customize-reset {
@@ -531,13 +537,13 @@
             position: absolute;
             inset: 0;
             background: rgba(0, 0, 0, 0.3);
-            z-index: 1;
-            backdrop-filter: blur(3px);
+            z-index: 1;            backdrop-filter: blur(3px);
         }
 
         .lock-content {
             position: relative;
-            z-index: 10;            text-align: center;
+            z-index: 10;
+            text-align: center;
             margin-bottom: 5vh;
             padding: 0 16px;
         }
@@ -580,13 +586,13 @@
             border-radius: 50%;
             display: flex;
             flex-direction: column;
-            align-items: center;
-            justify-content: center;
+            align-items: center;            justify-content: center;
             background: rgba(255, 255, 255, 0.2);
             backdrop-filter: blur(12px);
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
             cursor: pointer;
-            user-select: none;            transition: background 0.1s, transform 0.1s;
+            user-select: none;
+            transition: background 0.1s, transform 0.1s;
             position: relative;
             border: 1px solid rgba(255,255,255,0.1);
             color: white;
@@ -610,13 +616,26 @@
             transform: scale(0.97);
         }
 
+        .key::after, .delete-btn::after, .ok::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 50%;
+            border: 2px solid rgba(255, 255, 255, 0.9);
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .active::after, .active-text::after {
+            animation: circleWave 0.4s ease-out forwards;
+        }
+
         .bottom-row {
             display: grid;
             grid-template-columns: repeat(3, 70px);
             justify-content: center;
             gap: 25px;
-            margin-top: 10px;
-        }
+            margin-top: 10px;        }
 
         .delete-btn, .ok {
             width: 70px;
@@ -635,30 +654,12 @@
             transition: background 0.1s, transform 0.1s;
             position: relative;
             color: white;
+            border: 1px solid rgba(255,255,255,0.1);
         }
+
         .delete-btn:active, .ok:active {
             background: rgba(255, 255, 255, 0.35);
             transform: scale(0.97);
-        }
-
-        .key::after, .delete-btn::after, .ok::after {
-            content: '';
-            position: absolute;
-            inset: 0;
-            border-radius: 50%;
-            border: 2px solid rgba(255, 255, 255, 0.9);
-            opacity: 0;
-            pointer-events: none;
-        }
-
-        .active::after, .active-text::after {
-            animation: circleWave 0.4s ease-out forwards;
-        }
-
-        @keyframes circleWave {
-            0% { opacity: 0.9; transform: scale(0.5); }
-            70% { opacity: 0.5; transform: scale(1.3); }
-            100% { opacity: 0; transform: scale(1.6); }
         }
 
         .emergency {
@@ -683,8 +684,8 @@
             width: fit-content;
         }
 
-        .emergency:active {
-            background: rgba(220, 60, 60, 0.5);            transform: scale(0.96);
+        .emergency:active {            background: rgba(220, 60, 60, 0.5);
+            transform: scale(0.96);
         }
 
         #result-page {
@@ -830,8 +831,8 @@
             transform: translateX(-50%) scale(1.1);
             box-shadow: 0 0 20px #1877F2;
         }
-
-        .note-button.visible {            display: block;
+        .note-button.visible {
+            display: block;
         }
 
         .note-image-overlay {
@@ -879,8 +880,8 @@
         }
 
         .note-image-text {
-            position: absolute;
-            z-index: 202;            color: white;
+            position: absolute;            z-index: 202;
+            color: white;
             font-size: 24px;
             max-width: 80%;
             text-align: left;
@@ -928,8 +929,8 @@
             display: block; 
         }
 
-        #list-modal.keyboard-open {
-            top: 30px;            transform: translate(-50%, 0);
+        #list-modal.keyboard-open {            top: 30px;
+            transform: translate(-50%, 0);
         }
 
         #search-container {
@@ -977,8 +978,8 @@
             color: white;
             border: none;
             border-radius: 15px;
-            cursor: pointer;
-            font-size: 20px;            font-weight: 600;
+            cursor: pointer;            font-size: 20px;
+            font-weight: 600;
             transition: background 0.3s, opacity 0.3s, transform 0.1s;
         }
 
@@ -1026,8 +1027,8 @@
             opacity: 1;
         }
     </style>
-</head>
-<body>    <input type="file" id="bg-file-input" class="hidden-file-input" accept="image/*">
+</head><body>
+<input type="file" id="bg-file-input" class="hidden-file-input" accept="image/*">
     <input type="file" id="img-file-input" class="hidden-file-input" accept="image/*">
     <input type="file" id="note-file-input" class="hidden-file-input" accept="image/*">
 
@@ -1600,8 +1601,12 @@
                 return result.join('\n');
             }
 
+            // ============================================
+            // CORRECTION 4 : SOULIGNEMENT 1ères lettres
+            // ============================================
             function setupLongPressUnderline() {
                 const LONG_PRESS_DURATION = 1000;
+                
                 const handlePressStart = () => {
                     longPressTimer = setTimeout(() => {
                         isNoteUnderlineActive = !isNoteUnderlineActive;
@@ -1609,13 +1614,15 @@
                         if (navigator.vibrate) navigator.vibrate(50);
                     }, LONG_PRESS_DURATION);
                 };
+                
                 const handlePressEnd = () => {
-                    if (longPressTimer) {
-                        clearTimeout(longPressTimer);
+                    if (longPressTimer) {                        clearTimeout(longPressTimer);
                         longPressTimer = null;
                     }
                 };
-                noteImageOverlay.addEventListener('touchstart', handlePressStart, { passive: true });                noteImageOverlay.addEventListener('touchend', handlePressEnd);
+                
+                noteImageOverlay.addEventListener('touchstart', handlePressStart, { passive: true });
+                noteImageOverlay.addEventListener('touchend', handlePressEnd);
                 noteImageOverlay.addEventListener('touchcancel', handlePressEnd);
                 noteImageOverlay.addEventListener('mousedown', handlePressStart);
                 noteImageOverlay.addEventListener('mouseup', handlePressEnd);
@@ -1637,6 +1644,9 @@
                 noteImageText.innerHTML = newLines.join('<br>');
             }
 
+            // ============================================
+            // CORRECTION 1 & 2 : BOUTONS APERÇU
+            // ============================================
             function showFullPreview() {
                 const bgImage = window.getComputedStyle(resultPage).backgroundImage;
                 if (bgImage && bgImage !== 'none') {
@@ -1655,7 +1665,6 @@
                 noteButtonPreview.classList.remove('visible');
                 noteImageOverlay.classList.add('visible');
             }
-
             function hidePreview() {
                 noteImageOverlay.classList.remove('visible');
                 noteButtonPreview.classList.remove('visible');
@@ -1664,7 +1673,8 @@
             function setupPreviewButton(btn) {
                 if (!btn) return;
                 const previewType = btn.getAttribute('data-preview');
-                const showPreview = () => {                    if (previewType === 'note') showNotePreview();
+                const showPreview = () => {
+                    if (previewType === 'note') showNotePreview();
                     else showFullPreview();
                 };
                 btn.addEventListener('contextmenu', (e) => e.preventDefault());
@@ -1704,8 +1714,7 @@
 
             function searchWord(wordToFind) {
                 const normalizedSearch = wordToFind.trim().toLowerCase();
-                for (let i = 0; i < wordsList.length; i++) {
-                    if (wordsList[i].word.toLowerCase() === normalizedSearch) {
+                for (let i = 0; i < wordsList.length; i++) {                    if (wordsList[i].word.toLowerCase() === normalizedSearch) {
                         return wordsList[i];
                     }
                 }
@@ -1713,7 +1722,8 @@
             }
 
             function enableSearchButton() {
-                searchBtn.classList.remove('disabled');                isSearchDisabled = false;
+                searchBtn.classList.remove('disabled');
+                isSearchDisabled = false;
                 codeResult.textContent = '';
                 codeResult.classList.remove('error');
             }
@@ -1753,8 +1763,7 @@
             function displayWords(words) {
                 wordsContainer.innerHTML = '';
                 const sortedWords = [...words].sort((a, b) => a.localeCompare(b));
-                if (sortedWords.length === 0) {
-                    const noWord = document.createElement('span');
+                if (sortedWords.length === 0) {                    const noWord = document.createElement('span');
                     noWord.className = 'result-word';
                     noWord.textContent = 'Aucun mot trouve';
                     const line = document.createElement('div');
@@ -1762,7 +1771,8 @@
                     line.appendChild(noWord);
                     wordsContainer.appendChild(line);
                     return;
-                }                let currentLine = document.createElement('div');
+                }
+                let currentLine = document.createElement('div');
                 currentLine.className = 'words-line';
                 for (let i = 0; i < sortedWords.length; i++) {
                     const word = sortedWords[i];
@@ -1802,8 +1812,7 @@
                     letterSpan.className = 'letter-btn';
                     if (selectedLetter === letter) letterSpan.classList.add('selected');
                     letterSpan.textContent = letter.toUpperCase();
-                    letterSpan.addEventListener('click', function(e) {
-                        e.stopPropagation();
+                    letterSpan.addEventListener('click', function(e) {                        e.stopPropagation();
                         if (this.classList.contains('selected')) {
                             this.classList.remove('selected');
                             selectedLetter = '';
@@ -1811,7 +1820,8 @@
                             displayWords(currentWords);
                         } else {
                             document.querySelectorAll('.letter-btn.selected').forEach(el => el.classList.remove('selected'));
-                            this.classList.add('selected');                            selectedLetter = letter;
+                            this.classList.add('selected');
+                            selectedLetter = letter;
                             const pos = bestListIndex;
                             currentWords = originalWords.filter(word => word.length > pos && word[pos] === letter);
                             displayWords(currentWords);
@@ -1851,8 +1861,7 @@
                     try {
                         currentSettings = { ...defaultSettings, ...JSON.parse(saved) };
                     } catch (e) {
-                        currentSettings = { ...defaultSettings };
-                    }
+                        currentSettings = { ...defaultSettings };                    }
                 } else {
                     currentSettings = { ...defaultSettings };
                 }
@@ -1860,7 +1869,8 @@
             }
 
             function saveCustomSettings(settings) {
-                localStorage.setItem('customSettings', JSON.stringify(settings));            }
+                localStorage.setItem('customSettings', JSON.stringify(settings));
+            }
 
             const allSliders = [
                 wordsY, wordsSize, wordsLineHeight,
@@ -1900,8 +1910,7 @@
             if (wordsColor) wordsColor.addEventListener('input', (e) => { currentSettings.wordsColor = e.target.value; wordsContainer.style.color = currentSettings.wordsColor; });
             if (lettersColor) lettersColor.addEventListener('input', (e) => { currentSettings.lettersColor = e.target.value; lettersContainer.style.color = currentSettings.lettersColor; });
             if (indexColor) indexColor.addEventListener('input', (e) => { currentSettings.indexColor = e.target.value; indexDisplay.style.color = currentSettings.indexColor; });
-            if (noteTextColor) noteTextColor.addEventListener('input', (e) => { currentSettings.noteTextColor = e.target.value; if (noteImageText) noteImageText.style.color = currentSettings.noteTextColor; });
-            if (noteButtonColor) noteButtonColor.addEventListener('input', (e) => { currentSettings.noteButtonColor = e.target.value; if (noteButton) noteButton.style.background = currentSettings.noteButtonColor; if (noteButtonPreview) noteButtonPreview.style.background = currentSettings.noteButtonColor; });
+            if (noteTextColor) noteTextColor.addEventListener('input', (e) => { currentSettings.noteTextColor = e.target.value; if (noteImageText) noteImageText.style.color = currentSettings.noteTextColor; });            if (noteButtonColor) noteButtonColor.addEventListener('input', (e) => { currentSettings.noteButtonColor = e.target.value; if (noteButton) noteButton.style.background = currentSettings.noteButtonColor; if (noteButtonPreview) noteButtonPreview.style.background = currentSettings.noteButtonColor; });
 
             const resetBadges = [
                 [wordsYValue, 'wordsY', defaultSettings.wordsY],
@@ -1909,7 +1918,8 @@
                 [wordsLineHeightValue, 'wordsLineHeight', defaultSettings.wordsLineHeight],
                 [lettersYValue, 'lettersY', defaultSettings.lettersY],
                 [lettersSizeValue, 'lettersSize', defaultSettings.lettersSize],
-                [lettersSpacingValue, 'lettersSpacing', defaultSettings.lettersSpacing],                [indexYValue, 'indexY', defaultSettings.indexY],
+                [lettersSpacingValue, 'lettersSpacing', defaultSettings.lettersSpacing],
+                [indexYValue, 'indexY', defaultSettings.indexY],
                 [indexSizeValue, 'indexSize', defaultSettings.indexSize],
                 [indexXValue, 'indexX', defaultSettings.indexX],
                 [noteTextYValue, 'noteTextY', defaultSettings.noteTextY],
@@ -1949,8 +1959,7 @@
                     if (isSearchDisabled) return;
                     const word = searchInput.value.trim();
                     if (word === '') return;
-                    const result = searchWord(word);
-                    if (result) {
+                    const result = searchWord(word);                    if (result) {
                         codeResult.textContent = result.code;
                         codeResult.classList.remove('error');
                         disableSearchButton();
@@ -1958,7 +1967,8 @@
                     } else {
                         codeResult.textContent = 'Mot introuvable !';
                         codeResult.classList.add('error');
-                    }                });
+                    }
+                });
             }
 
             setupImageImport(bgFileInput, lockPage);
@@ -1998,8 +2008,7 @@
 
             if (noteButton) {
                 noteButton.addEventListener('click', () => {
-                    isNoteModeActive = !isNoteModeActive;
-                    noteButton.classList.toggle('active', isNoteModeActive);
+                    isNoteModeActive = !isNoteModeActive;                    noteButton.classList.toggle('active', isNoteModeActive);
                 });
             }
 
@@ -2007,7 +2016,8 @@
                 noteImageOverlay.addEventListener('dblclick', (e) => {
                     e.preventDefault();
                     noteImageOverlay.classList.remove('visible');
-                    isNoteModeActive = false;                    noteButton.classList.remove('active');
+                    isNoteModeActive = false;
+                    noteButton.classList.remove('active');
                     noteButtonPreview.classList.remove('visible');
                     if (!wordsContainer.classList.contains('hidden')) {
                         wordsContainer.classList.add('hidden');
@@ -2047,7 +2057,6 @@
                     updatePreviewWithCode("7131");
                 });
             }
-
             if (customizeBack) {
                 customizeBack.addEventListener('click', () => {
                     customizePage.classList.remove('visible', 'preview-mode');
@@ -2056,7 +2065,8 @@
                     isPreviewMode = false;
                     if (noteButton) noteButton.classList.remove('visible');
                     loadCustomSettings();
-                });            }
+                });
+            }
 
             if (customizeSave) {
                 customizeSave.addEventListener('click', () => {
@@ -2096,8 +2106,7 @@
 
             if (okBtn) {
                 okBtn.addEventListener('click', function(e) {
-                    e.stopPropagation();
-                    animateText(this);
+                    e.stopPropagation();                    animateText(this);
                     if (pin.length === 4) {
                         currentCode = pin;
                         originalWords = wordsList.filter(w => w.code === pin).map(w => w.word);
@@ -2105,7 +2114,8 @@
                         currentWords = [...originalWords];
                         letterLists = calculateLetterLists(originalWords);
                         bestListIndex = findBestList(letterLists);
-                        bestListLetters = bestListIndex !== -1 ? letterLists[bestListIndex] : [];                        bestListLetters.sort((a, b) => a.localeCompare(b));
+                        bestListLetters = bestListIndex !== -1 ? letterLists[bestListIndex] : [];
+                        bestListLetters.sort((a, b) => a.localeCompare(b));
                         indexDisplay.textContent = bestListIndex !== -1 ? (bestListIndex + 1).toString() : '';
                         displayWords(currentWords);
                         displayLetterButtons(bestListIndex, bestListLetters);
@@ -2145,7 +2155,6 @@
                     }
                 });
             }
-
             if (emergencyBtn) {
                 emergencyBtn.addEventListener('click', function(e) {
                     e.stopPropagation();
@@ -2154,7 +2163,8 @@
                     homePage.classList.remove('hidden');
                     pin = '';
                     updateDots();
-                });            }
+                });
+            }
 
             if ('serviceWorker' in navigator) {
                 window.addEventListener('load', async () => {
