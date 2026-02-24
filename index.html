@@ -222,6 +222,27 @@
             letter-spacing: 2px;
         }
 
+        /* ✅ MODIFICATION 3 & 4 : NOUVEAUX BOUTONS BACK ET NOTE */
+        .customize-new-btn {
+            width: 320px;
+            height: 120px;
+            background: #222;
+            color: #FFD700;
+            border: 2px solid #FFD700;
+            border-radius: 20px;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            margin: 20px auto;
+            display: block;
+            transition: all 0.3s;
+        }
+
+        .customize-new-btn:active { 
+            background: #FFD700; 
+            color: black; 
+            transform: scale(0.98); 
+        }
         .test-code-section {
             background: #222;
             border-radius: 15px;
@@ -243,7 +264,8 @@
             width: 200px;
             height: 55px;
             background: #333;
-            border: 2px solid #444;            border-radius: 15px;
+            border: 2px solid #444;
+            border-radius: 15px;
             color: white;
             font-size: 18px;
             font-weight: bold;
@@ -271,7 +293,6 @@
             border-bottom: 1px solid #444;
             padding-bottom: 10px;
         }
-
         .control-header h3 { color: #FFD700; font-size: 22px; margin: 0; }
 
         .preview-btn {
@@ -292,7 +313,8 @@
             display: flex;
             justify-content: space-between;
             margin-bottom: 8px;
-            color: #ddd;            font-size: 16px;
+            color: #ddd;
+            font-size: 16px;
         }
 
         .slider-item input[type="range"] {
@@ -319,8 +341,7 @@
         .color-item input[type="color"] {
             width: 100%;
             height: 45px;
-            border: 2px solid #444;
-            border-radius: 10px;
+            border: 2px solid #444;            border-radius: 10px;
             background: #333;
             cursor: pointer;
         }
@@ -341,7 +362,8 @@
             display: flex;
             gap: 15px;
             margin-top: 30px;
-            margin-bottom: 30px;            position: relative;
+            margin-bottom: 30px;
+            position: relative;
             z-index: 41;
         }
 
@@ -368,7 +390,6 @@
             font-weight: 600;
             cursor: pointer;
         }
-
         .customize-save:active, .customize-reset:active {
             transform: scale(0.98);
             opacity: 0.9;
@@ -390,7 +411,8 @@
         #lock-page.visible { visibility: visible; opacity: 1; }
 
         .overlay {
-            position: absolute;            inset: 0;
+            position: absolute;
+            inset: 0;
             background: rgba(0, 0, 0, 0.3);
             z-index: 1;
             backdrop-filter: blur(3px);
@@ -417,8 +439,7 @@
             border-radius: 50%;
             background: white;
             opacity: 0.35;
-            transition: opacity 0.2s, transform 0.2s;
-        }
+            transition: opacity 0.2s, transform 0.2s;        }
 
         .dot.active {
             opacity: 1;
@@ -439,7 +460,8 @@
             width: 70px;
             height: 70px;
             border-radius: 50%;
-            display: flex;            flex-direction: column;
+            display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
             background: rgba(255, 255, 255, 0.2);
@@ -466,8 +488,7 @@
         }
 
         .key:active {
-            background: rgba(255, 255, 255, 0.35);
-            transform: scale(0.97);
+            background: rgba(255, 255, 255, 0.35);            transform: scale(0.97);
         }
 
         .key::after, .delete-btn::after, .ok::after {
@@ -488,7 +509,8 @@
             display: grid;
             grid-template-columns: repeat(3, 70px);
             justify-content: center;
-            gap: 25px;            margin-top: 10px;
+            gap: 25px;
+            margin-top: 10px;
         }
 
         .delete-btn, .ok {
@@ -514,8 +536,8 @@
             transform: scale(0.97);
         }
 
-        .emergency {
-            position: relative;
+        /* ✅ MODIFICATION 1 : BOUTON URGENCE CENTRÉ HORIZONTALEMENT */
+        .emergency {            position: relative;
             z-index: 10;
             text-align: center;
             margin-bottom: 3vh;
@@ -524,7 +546,9 @@
             opacity: 0.9;
             cursor: pointer;
             padding: 12px 24px;
-            display: inline-block;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
             border-radius: 40px;
             background: rgba(0,0,0,0.2);
             backdrop-filter: blur(10px);
@@ -537,6 +561,7 @@
             background: rgba(220, 60, 60, 0.5);
             transform: scale(0.96);
         }
+
         #result-page {
             position: absolute;
             inset: 0;
@@ -561,8 +586,7 @@
             z-index: 31;
         }
 
-        .words-container {
-            position: absolute;
+        .words-container {            position: absolute;
             top: 265px;
             left: 0;
             width: 100%;
@@ -586,7 +610,8 @@
             width: 100%;
         }
 
-        .result-word {            background: transparent;
+        .result-word {
+            background: transparent;
             padding: 2px 0;
             border: none;
             font-size: inherit;
@@ -611,7 +636,6 @@
             justify-content: center;
             gap: 40px;
         }
-
         .letters-container.hidden { display: none; }
 
         .letter-btn {
@@ -635,7 +659,8 @@
 
         .index-display {
             position: absolute;
-            top: 517px;            left: 50%;
+            top: 517px;
+            left: 50%;
             transform: translateX(-50%);
             color: #1E6FF0;
             font-size: 30px;
@@ -659,7 +684,6 @@
             top: 520px;
             display: none;
         }
-
         .note-button.active {
             background: #0a5cbf;
             transform: translateX(-50%) scale(1.1);
@@ -684,7 +708,8 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            position: absolute;            top: 0;
+            position: absolute;
+            top: 0;
             left: 0;
             z-index: 201;
         }
@@ -708,8 +733,7 @@
         .note-button-preview.visible { display: block; }
 
         .note-image-text {
-            position: absolute;
-            z-index: 202;
+            position: absolute;            z-index: 202;
             color: white;
             font-size: 24px;
             max-width: 80%;
@@ -733,6 +757,8 @@
             text-decoration-thickness: 2px;
             text-underline-offset: 4px;
         }
+
+        /* ✅ MODIFICATION 2 : MODAL LISTE DES MOTS */
         #list-modal {
             position: absolute;
             top: 50%;
@@ -748,9 +774,15 @@
             box-shadow: 0 20px 40px rgba(0,0,0,0.4);
             max-height: 90vh;
             overflow-y: auto;
+            transition: top 0.3s ease;
         }
 
         #list-modal.visible { display: block; }
+
+        /* Quand le clavier apparaît, la modal est à 20% du haut */
+        #list-modal.keyboard-visible {
+            top: 20%;
+            transform: translate(-50%, -50%);        }
 
         #search-container { width: 100%; margin-bottom: 15px; }
 
@@ -782,7 +814,8 @@
         }
 
         .code-result-box.error {
-            background: #ffebee;            border-color: #f44336;
+            background: #ffebee;
+            border-color: #f44336;
             color: #f44336;
         }
 
@@ -799,7 +832,6 @@
         }
 
         #search-btn:active { transform: scale(0.98); }
-
         #search-btn.disabled {
             background: #999;
             opacity: 0.6;
@@ -831,7 +863,8 @@
         <button class="home-btn" id="btn-settings">PARAMETRES</button>
     </div>
 
-    <div id="settings-page">        <div class="settings-title">PARAMETRES</div>
+    <div id="settings-page">
+        <div class="settings-title">PARAMETRES</div>
         
         <button class="settings-btn" id="import-bg-btn">📷 Importer lock screen</button>
         <button class="settings-btn" id="import-img-btn">📷 Importer background</button>
@@ -848,124 +881,15 @@
         
         <button class="back-btn" id="settings-back">← Retour</button>
     </div>
-
     <div id="customize-page">
         <div class="customize-header">
             <button class="customize-back-btn" id="customize-back">←</button>
             <span class="customize-title">PERSONNALISER</span>
         </div>
 
-        <div class="test-code-section">
-            <div class="test-code-title">🎯 TESTER UN CODE</div>
-            <input type="tel" id="test-code-input" placeholder="Code" maxlength="4" inputmode="numeric">
-        </div>
-
-        <!-- 📋 LISTE -->
-        <div class="control-group">
-            <div class="control-header">
-                <h3>📋 Liste</h3>
-                <button class="preview-btn" data-preview="full">👁️ Aperçu</button>
-            </div>
-            <div class="slider-item">
-                <label>Position Y <span class="value-badge" id="words-y-value" data-default="265">265px</span></label>
-                <input type="range" id="words-y" min="0" max="800" value="265">
-            </div>
-            <div class="slider-item">
-                <label>Taille <span class="value-badge" id="words-size-value" data-default="18">18px</span></label>
-                <input type="range" id="words-size" min="10" max="40" value="18">
-            </div>
-            <div class="color-item">
-                <label>Couleur</label>
-                <input type="color" id="words-color" value="#ffffff">
-            </div>
-        </div>
-
-        <!-- 🔤 LETTRES -->        <div class="control-group">
-            <div class="control-header">
-                <h3>🔤 Lettres</h3>
-                <button class="preview-btn" data-preview="full">👁️ Aperçu</button>
-            </div>
-            <div class="slider-item">
-                <label>Position Y <span class="value-badge" id="letters-y-value" data-default="460">460px</span></label>
-                <input type="range" id="letters-y" min="0" max="800" value="460">
-            </div>
-            <div class="slider-item">
-                <label>Taille <span class="value-badge" id="letters-size-value" data-default="20">20px</span></label>
-                <input type="range" id="letters-size" min="10" max="40" value="20">
-            </div>
-            <div class="color-item">
-                <label>Couleur</label>
-                <input type="color" id="letters-color" value="#ffffff">
-            </div>
-        </div>
-
-        <!-- 🔢 INDICE -->
-        <div class="control-group">
-            <div class="control-header">
-                <h3>🔢 Indice</h3>
-                <button class="preview-btn" data-preview="full">👁️ Aperçu</button>
-            </div>
-            <div class="slider-item">
-                <label>Position Y <span class="value-badge" id="index-y-value" data-default="517">517px</span></label>
-                <input type="range" id="index-y" min="0" max="800" value="517">
-            </div>
-            <div class="slider-item">
-                <label>Taille <span class="value-badge" id="index-size-value" data-default="30">30px</span></label>
-                <input type="range" id="index-size" min="10" max="60" value="30">
-            </div>
-            <div class="color-item">
-                <label>Couleur</label>
-                <input type="color" id="index-color" value="#1E6FF0">
-            </div>
-        </div>
-
-        <!-- 📝 NOTE (LISTE) -->
-        <div class="control-group">
-            <div class="control-header">
-                <h3>📝 Note (Liste)</h3>
-                <button class="preview-btn" data-preview="note">👁️ Aperçu</button>
-            </div>
-            <div class="slider-item">
-                <label>Position Y <span class="value-badge" id="note-text-y-value" data-default="265">265px</span></label>
-                <input type="range" id="note-text-y" min="0" max="1000" value="265">
-            </div>
-            <div class="slider-item">                <label>Position X <span class="value-badge" id="note-text-x-value" data-default="20">20px</span></label>
-                <input type="range" id="note-text-x" min="0" max="500" value="20">
-            </div>
-            <div class="slider-item">
-                <label>Taille <span class="value-badge" id="note-text-size-value" data-default="20">20px</span></label>
-                <input type="range" id="note-text-size" min="10" max="60" value="20">
-            </div>
-            <div class="color-item">
-                <label>Couleur</label>
-                <input type="color" id="note-text-color" value="#ffffff">
-            </div>
-        </div>
-
-        <!-- 🔵 NOTE (BOUTON) -->
-        <div class="control-group">
-            <div class="control-header">
-                <h3>🔵 Note (Bouton)</h3>
-                <button class="preview-btn" data-preview="full">👁️ Aperçu</button>
-            </div>
-            <div class="slider-item">
-                <label>Position Y <span class="value-badge" id="note-button-y-value" data-default="520">520px</span></label>
-                <input type="range" id="note-button-y" min="0" max="1000" value="520">
-            </div>
-            <div class="slider-item">
-                <label>Taille <span class="value-badge" id="note-button-size-value" data-default="30">30px</span></label>
-                <input type="range" id="note-button-size" min="5" max="150" value="30">
-            </div>
-            <div class="color-item">
-                <label>Couleur</label>
-                <input type="color" id="note-button-color" value="#1877F2">
-            </div>
-        </div>
-
-        <div class="customize-actions">
-            <button class="customize-save" id="customize-save">💾 Sauvegarder</button>
-            <button class="customize-reset" id="customize-reset">↺ Reset</button>
-        </div>
+        <!-- ✅ MODIFICATION 3 & 4 : NOUVEAUX BOUTONS (remplace l'ancien contenu) -->
+        <button class="customize-new-btn" id="customize-back-btn">📱 Back</button>
+        <button class="customize-new-btn" id="customize-note-btn">📝 Note</button>
     </div>
 
     <div id="lock-page">
@@ -978,7 +902,8 @@
                 <div class="dot"></div>
             </div>
             <div class="keypad">
-                <div class="key" data-digit="1"><span class="key-number">1</span></div>                <div class="key" data-digit="2"><span class="key-number">2</span><span class="key-letters">ABC</span></div>
+                <div class="key" data-digit="1"><span class="key-number">1</span></div>
+                <div class="key" data-digit="2"><span class="key-number">2</span><span class="key-letters">ABC</span></div>
                 <div class="key" data-digit="3"><span class="key-number">3</span><span class="key-letters">DEF</span></div>
                 <div class="key" data-digit="4"><span class="key-number">4</span><span class="key-letters">GHI</span></div>
                 <div class="key" data-digit="5"><span class="key-number">5</span><span class="key-letters">JKL</span></div>
@@ -1004,8 +929,7 @@
         <div class="note-button" id="note-button"></div>
     </div>
 
-    <div class="note-image-overlay" id="note-image-overlay">
-        <img class="note-image-display" id="note-image-display" src="" alt="">
+    <div class="note-image-overlay" id="note-image-overlay">        <img class="note-image-display" id="note-image-display" src="" alt="">
         <div class="note-button-preview" id="note-button-preview"></div>
         <div class="note-image-text" id="note-image-text"></div>
     </div>
@@ -1027,7 +951,8 @@
         const settingsPage = document.getElementById('settings-page');
         const customizePage = document.getElementById('customize-page');
         const lockPage = document.getElementById('lock-page');
-        const resultPage = document.getElementById('result-page');        const wordsContainer = document.getElementById('words-container');
+        const resultPage = document.getElementById('result-page');
+        const wordsContainer = document.getElementById('words-container');
         const lettersContainer = document.getElementById('letters-container');
         const indexDisplay = document.getElementById('index-display');
         const noteButton = document.getElementById('note-button');
@@ -1049,8 +974,11 @@
         const previewBtns = document.querySelectorAll('.preview-btn');
         const testCodeInput = document.getElementById('test-code-input');
         
-        const wordsY = document.getElementById('words-y');
-        const wordsSize = document.getElementById('words-size');
+        // ✅ NOUVEAUX BOUTONS BACK ET NOTE
+        const customizeBackBtn = document.getElementById('customize-back-btn');
+        const customizeNoteBtn = document.getElementById('customize-note-btn');
+        
+        const wordsY = document.getElementById('words-y');        const wordsSize = document.getElementById('words-size');
         const wordsColor = document.getElementById('words-color');
         const lettersY = document.getElementById('letters-y');
         const lettersSize = document.getElementById('letters-size');
@@ -1076,7 +1004,8 @@
         const noteTextXValue = document.getElementById('note-text-x-value');
         const noteTextSizeValue = document.getElementById('note-text-size-value');
         const noteButtonYValue = document.getElementById('note-button-y-value');
-        const noteButtonSizeValue = document.getElementById('note-button-size-value');        
+        const noteButtonSizeValue = document.getElementById('note-button-size-value');
+        
         const searchInput = document.getElementById('search-input');
         const searchBtn = document.getElementById('search-btn');
         const codeResult = document.getElementById('codeResult');
@@ -1099,7 +1028,6 @@
         let wordsList = [];
         const DEFAULT_NOTE_TEXT = "Barbecue\nIceberg\nCartouche\nYaourt\nCartable\nLivre\nEnveloppe\nTapis\nTrain\nEncre";
         const DEFAULT_NOTE_IMAGE = 'image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="500" height="1000"%3E%3Crect fill="%23222" width="100%25" height="100%25"/%3E%3C/svg%3E';
-
         const defaultSettings = {
             wordsY: 265, wordsSize: 18, wordsColor: '#ffffff',
             lettersY: 460, lettersSize: 20, lettersColor: '#ffffff',
@@ -1125,6 +1053,7 @@
         let isNoteUnderlineActive = false;
         let longPressTimer = null;
         let isSearchDisabled = false;
+
         async function loadWordsList() {
             try {
                 const response = await fetch(BASE_PATH + 'words.json');
@@ -1147,8 +1076,7 @@
             lettersYValue.textContent = s.lettersY + 'px';
             lettersSizeValue.textContent = s.lettersSize + 'px';
             indexYValue.textContent = s.indexY + 'px';
-            indexSizeValue.textContent = s.indexSize + 'px';
-            noteTextYValue.textContent = s.noteTextY + 'px';
+            indexSizeValue.textContent = s.indexSize + 'px';            noteTextYValue.textContent = s.noteTextY + 'px';
             noteTextXValue.textContent = s.noteTextX + 'px';
             noteTextSizeValue.textContent = s.noteTextSize + 'px';
             noteButtonYValue.textContent = s.noteButtonY + 'px';
@@ -1174,7 +1102,8 @@
             noteButton.style.height = s.noteButtonSize + 'px';
             noteButton.style.background = s.noteButtonColor;
             noteButtonPreview.style.top = s.noteButtonY + 'px';
-            noteButtonPreview.style.width = s.noteButtonSize + 'px';            noteButtonPreview.style.height = s.noteButtonSize + 'px';
+            noteButtonPreview.style.width = s.noteButtonSize + 'px';
+            noteButtonPreview.style.height = s.noteButtonSize + 'px';
             noteButtonPreview.style.background = s.noteButtonColor;
             updateDisplayValues(s);
             wordsY.value = s.wordsY; wordsSize.value = s.wordsSize; wordsColor.value = s.wordsColor;
@@ -1196,8 +1125,7 @@
                     if (targetEl === lockPage) currentPreviewTarget = 'bg';
                     else if (targetEl === resultPage) currentPreviewTarget = 'img';
                     else currentPreviewTarget = 'note';
-                };
-                reader.readAsDataURL(file);
+                };                reader.readAsDataURL(file);
             });
         }
 
@@ -1223,7 +1151,8 @@
             return result.join('\n');
         }
 
-        function setupLongPressUnderline() {            const handlePressStart = () => {
+        function setupLongPressUnderline() {
+            const handlePressStart = () => {
                 longPressTimer = setTimeout(() => {
                     isNoteUnderlineActive = !isNoteUnderlineActive;
                     updateNoteUnderline();
@@ -1245,8 +1174,7 @@
             const text = noteImageText.innerHTML;
             const lines = text.split('<br>');
             const newLines = lines.map(line => {
-                if (line.length > 0) {
-                    const firstChar = line.charAt(0);
+                if (line.length > 0) {                    const firstChar = line.charAt(0);
                     const rest = line.slice(1);
                     const className = isNoteUnderlineActive ? 'note-word-first-letter underlined' : 'note-word-first-letter';
                     return '<span class="' + className + '">' + firstChar + '</span>' + rest;
@@ -1272,7 +1200,8 @@
             noteImageDisplay.src = noteImageData || DEFAULT_NOTE_IMAGE;
             noteImageText.innerHTML = DEFAULT_NOTE_TEXT.replace(/\n/g, '<br>');
             noteButtonPreview.classList.remove('visible');
-            noteImageOverlay.classList.add('visible');        }
+            noteImageOverlay.classList.add('visible');
+        }
 
         function hidePreview() {
             noteImageOverlay.classList.remove('visible');
@@ -1294,7 +1223,6 @@
             btn.addEventListener('mouseup', (e) => { e.preventDefault(); hidePreview(); });
             btn.addEventListener('mouseleave', () => hidePreview());
         }
-
         function animateKey(element) {
             if (!element) return;
             element.classList.add('active');
@@ -1321,7 +1249,8 @@
         }
 
         function searchWord(wordToFind) {
-            const normalizedSearch = wordToFind.trim().toLowerCase();            for (let i = 0; i < wordsList.length; i++) {
+            const normalizedSearch = wordToFind.trim().toLowerCase();
+            for (let i = 0; i < wordsList.length; i++) {
                 if (wordsList[i].word.toLowerCase() === normalizedSearch) {
                     return wordsList[i];
                 }
@@ -1343,8 +1272,7 @@
 
         function calculateLetterLists(words) {
             if (words.length === 0) return [];
-            const firstDigit = parseInt(currentCode[0]);
-            const lists = [];
+            const firstDigit = parseInt(currentCode[0]);            const lists = [];
             for (let pos = 0; pos < firstDigit; pos++) lists[pos] = [];
             for (let i = 0; i < words.length; i++) {
                 const word = words[i];
@@ -1370,7 +1298,8 @@
 
         function displayWords(words) {
             wordsContainer.innerHTML = '';
-            const sortedWords = [...words].sort((a, b) => a.localeCompare(b));            if (sortedWords.length === 0) {
+            const sortedWords = [...words].sort((a, b) => a.localeCompare(b));
+            if (sortedWords.length === 0) {
                 const noWord = document.createElement('span');
                 noWord.className = 'result-word';
                 noWord.textContent = 'Aucun mot';
@@ -1392,8 +1321,7 @@
                     if (isNoteModeActive && noteImageData) {
                         const dynamicList = generateNoteList(word);
                         noteImageDisplay.src = noteImageData;
-                        noteImageText.innerHTML = dynamicList.replace(/\n/g, '<br>');
-                        noteButtonPreview.classList.remove('visible');
+                        noteImageText.innerHTML = dynamicList.replace(/\n/g, '<br>');                        noteButtonPreview.classList.remove('visible');
                         noteImageOverlay.classList.add('visible');
                         updateNoteUnderline();
                     } else {
@@ -1419,7 +1347,8 @@
                 const letterSpan = document.createElement('span');
                 letterSpan.className = 'letter-btn';
                 if (selectedLetter === letter) letterSpan.classList.add('selected');
-                letterSpan.textContent = letter.toUpperCase();                letterSpan.addEventListener('click', function(e) {
+                letterSpan.textContent = letter.toUpperCase();
+                letterSpan.addEventListener('click', function(e) {
                     e.stopPropagation();
                     if (this.classList.contains('selected')) {
                         this.classList.remove('selected');
@@ -1441,8 +1370,7 @@
                     spacer.className = 'separator';
                     spacer.innerHTML = '    ';
                     lettersContainer.appendChild(spacer);
-                }
-            }
+                }            }
         }
 
         function updatePreviewWithCode(code) {
@@ -1468,7 +1396,8 @@
             if (saved) {
                 try { currentSettings = { ...defaultSettings, ...JSON.parse(saved) }; }
                 catch (e) { currentSettings = { ...defaultSettings }; }
-            }            applyCustomSettings(currentSettings);
+            }
+            applyCustomSettings(currentSettings);
         }
 
         function saveCustomSettings(settings) {
@@ -1490,8 +1419,7 @@
         ];
 
         badgeConfigs.forEach(([badge, key, def, slider]) => {
-            if (badge) {
-                badge.addEventListener('click', () => {
+            if (badge) {                badge.addEventListener('click', () => {
                     currentSettings[key] = def;
                     slider.value = def;
                     applyCustomSettings(currentSettings);
@@ -1517,7 +1445,8 @@
         noteButtonColor.addEventListener('input', (e) => { currentSettings.noteButtonColor = e.target.value; noteButton.style.background = e.target.value; noteButtonPreview.style.background = e.target.value; });
 
         if (testCodeInput) testCodeInput.addEventListener('input', (e) => {
-            const code = e.target.value.trim();            if (code.length === 4 && /^\d+$/.test(code)) updatePreviewWithCode(code);
+            const code = e.target.value.trim();
+            if (code.length === 4 && /^\d+$/.test(code)) updatePreviewWithCode(code);
         });
 
         if (searchInput) {
@@ -1540,7 +1469,6 @@
                 codeResult.classList.add('error');
             }
         });
-
         setupImageImport(bgFileInput, lockPage);
         setupImageImport(imgFileInput, resultPage);
         setupImageImport(noteFileInput, null);
@@ -1566,7 +1494,8 @@
             previewImage.src = '';
             currentPreviewData = '';
             bgFileInput.value = '';
-            imgFileInput.value = '';            noteFileInput.value = '';
+            imgFileInput.value = '';
+            noteFileInput.value = '';
         });
 
         if (noteButton) noteButton.addEventListener('click', () => {
@@ -1588,34 +1517,29 @@
         document.addEventListener('selectstart', (e) => e.preventDefault());
 
         if (btnPerform) btnPerform.addEventListener('click', () => { homePage.classList.add('hidden'); lockPage.classList.add('visible'); pin = ''; updateDots(); });
-        if (btnList) btnList.addEventListener('click', () => { resetModalToNormal(); modal.classList.add('visible'); modalOverlay.classList.add('visible'); });
-        if (btnSettings) btnSettings.addEventListener('click', () => { homePage.classList.add('hidden'); settingsPage.classList.add('visible'); });
+        if (btnList) btnList.addEventListener('click', () => { resetModalToNormal(); modal.classList.add('visible'); modalOverlay.classList.add('visible'); });        if (btnSettings) btnSettings.addEventListener('click', () => { homePage.classList.add('hidden'); settingsPage.classList.add('visible'); });
         if (settingsBack) settingsBack.addEventListener('click', () => { settingsPage.classList.remove('visible'); homePage.classList.remove('hidden'); previewContainer.classList.remove('visible'); bgFileInput.value = ''; imgFileInput.value = ''; noteFileInput.value = ''; });
         if (modalOverlay) modalOverlay.addEventListener('click', () => { modal.classList.remove('visible'); modalOverlay.classList.remove('visible'); searchInput.blur(); resetModalToNormal(); });
 
         if (customizeBtn) customizeBtn.addEventListener('click', () => {
             settingsPage.classList.remove('visible');
             customizePage.classList.add('visible');
-            loadCustomSettings();
-            updatePreviewWithCode("7131");
         });
 
         if (customizeBack) customizeBack.addEventListener('click', () => {
             customizePage.classList.remove('visible');
             settingsPage.classList.add('visible');
-            loadCustomSettings();
         });
 
-        if (customizeSave) customizeSave.addEventListener('click', () => {
-            saveCustomSettings(currentSettings);
-            customizePage.classList.remove('visible');
-            settingsPage.classList.add('visible');
+        // ✅ NOUVEAUX BOUTONS BACK ET NOTE (ne font rien pour l'instant)
+        if (customizeBackBtn) customizeBackBtn.addEventListener('click', () => {
+            console.log('Bouton Back cliqué - à implémenter');
         });
 
-        if (customizeReset) customizeReset.addEventListener('click', () => {
-            currentSettings = { ...defaultSettings };
-            applyCustomSettings(currentSettings);
+        if (customizeNoteBtn) customizeNoteBtn.addEventListener('click', () => {
+            console.log('Bouton Note cliqué - à implémenter');
         });
+
         keys.forEach(key => {
             key.addEventListener('click', function() {
                 animateKey(this);
@@ -1642,8 +1566,7 @@
                 bestListLetters = bestListIndex !== -1 ? letterLists[bestListIndex] : [];
                 bestListLetters.sort((a, b) => a.localeCompare(b));
                 indexDisplay.textContent = bestListIndex !== -1 ? (bestListIndex + 1).toString() : '';
-                displayWords(currentWords);
-                displayLetterButtons(bestListIndex, bestListLetters);
+                displayWords(currentWords);                displayLetterButtons(bestListIndex, bestListLetters);
                 wordsContainer.classList.remove('hidden');
                 lettersContainer.classList.remove('hidden');
                 lockPage.classList.remove('visible');
@@ -1664,7 +1587,8 @@
             if (e.target.classList.contains('result-word') || e.target.classList.contains('letter-btn') || e.target === indexDisplay || e.target === noteButton) return;
             let now = new Date().getTime();
             let timeDiff = now - lastTap;
-            if (timeDiff < 300 && timeDiff > 0) {                resultPage.classList.remove('visible');
+            if (timeDiff < 300 && timeDiff > 0) {
+                resultPage.classList.remove('visible');
                 lockPage.classList.add('visible');
                 if (noteButton) noteButton.classList.remove('visible');
                 selectedLetter = '';
@@ -1691,7 +1615,6 @@
                 } catch (error) { console.error('SW error:', error); }
             });
         }
-
         setupLongPressUnderline();
         pin = '';
         updateDots();
