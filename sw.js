@@ -1,56 +1,45 @@
-const CACHE_NAME = 'enigma-cache-v1';
-const BASE_PATH = '/Enigma/';
-
-const STATIC_ASSETS = [
-  BASE_PATH,
-  BASE_PATH + 'index.html',
-  BASE_PATH + 'manifest.json',
-  BASE_PATH + 'words.json',
-  BASE_PATH + 'sw.js'
+const CACHE_NAME = 'enigma-v1';
+const ASSETS_TO_CACHE = [
+    './',
+    './index.html',
+    './manifest.json',
+    './words.json',
+    './icon-192.png'
 ];
 
 self.addEventListener('install', (event) => {
-  event.waitUntil(
-    caches.open(CACHE_NAME)
-      .then((cache) => cache.addAll(STATIC_ASSETS))
-      .then(() => self.skipWaiting())
-      .catch((err) => console.warn('[SW] Cache initial:', err))
-  );
+    event.waitUntil(
+        caches.open(CACHE_NAME)
+            .then((cache) => cache.addAll(ASSETS_TO_CACHE))
+            .then(() => self.skipWaiting())
+    );
 });
 
 self.addEventListener('activate', (event) => {
-  event.waitUntil(
-    caches.keys().then((cacheNames) => 
-      Promise.all(cacheNames.filter((name) => name !== CACHE_NAME && name.startsWith('enigma-cache-')).map((name) => caches.delete(name)))
-    ).then(() => self.clients.claim())
-  );
+    event.waitUntil(
+        caches.keys().then((cacheNames) => {
+            return Promise.all(
+                cacheNames
+                    .filter((name) => name !== CACHE_NAME)
+                    .map((name) => caches.delete(name))
+            );
+        }).then(() => self.clients.claim())
+    );
 });
 
 self.addEventListener('fetch', (event) => {
-  const { request } = event;
-  if (request.method !== 'GET') return;
-  
-  if (/\.(html|css|js|json|png|jpg|jpeg|svg|webp|ico)$/i.test(new URL(request.url).pathname)) {
+    if (event.request.method !== 'GET') return;
+    
     event.respondWith(
-      caches.match(request).then((cached) => {
-        if (cached) {
-          fetch(request).then((fresh) => {
-            if (fresh && fresh.ok) caches.open(CACHE_NAME).then((cache) => cache.put(request, fresh.clone()));
-          }).catch(() => {});
-          return cached;
-        }
-        return fetch(request).then((response) => {
-          if (response && response.ok) caches.open(CACHE_NAME).then((cache) => cache.put(request, response.clone()));
-          return response;
-        }).catch(() => request.destination === 'document' ? caches.match(BASE_PATH + 'index.html') : null);
-      })
+        caches.match(event.request)
+            .then((cachedResponse) => {
+                if (cachedResponse) return cachedResponse;
+                return fetch(event.request);
+            })
+            .catch(() => {
+                if (event.request.headers.get('accept') && event.request.headers.get('accept').includes('text/html')) {
+                    return caches.match('./index.html');
+                }
+            })
     );
-    return;
-  }
-  
-  event.respondWith(fetch(request).catch(() => new Response('', { status: 503 })));
-});
-
-self.addEventListener('message', (event) => {
-  if (event.data && event.data.type === 'SKIP_WAITING') self.skipWaiting();
 });
