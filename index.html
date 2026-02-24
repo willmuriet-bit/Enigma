@@ -302,24 +302,27 @@
             font-size: 16px;
         }
 
+        /* ✅ CHANGEMENT 1 : La piste (track) n'est PAS cliquable */
         .slider-item input[type="range"] {
             width: 100%;
             height: 6px;
             background: #444;
             border-radius: 3px;
             -webkit-appearance: none;
-            cursor: pointer;
+            pointer-events: none; /* ← La piste ne répond PAS aux clics */
         }
 
+        /* ✅ Mais le curseur (thumb) OUI */
         .slider-item input[type="range"]::-webkit-slider-thumb {
             -webkit-appearance: none;
-            width: 28px;
-            height: 28px;
+            width: 32px;
+            height: 32px;
             background: #FFD700;
             border-radius: 50%;
             cursor: grab;
             border: 2px solid white;
             box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+            pointer-events: auto; /* ← Le curseur répond AUX clics */
         }
 
         .slider-item input[type="range"]::-webkit-slider-thumb:active {
@@ -338,10 +341,10 @@
             background: #333;
             cursor: pointer;
         }
-
         .value-badge {
             background: #333;
-            padding: 3px 10px;            border-radius: 15px;
+            padding: 3px 10px;
+            border-radius: 15px;
             font-size: 14px;
             color: #FFD700;
             border: 1px solid #FFD700;
@@ -371,6 +374,7 @@
             cursor: pointer;
         }
 
+        /* ✅ CHANGEMENT 5 : "Reset" → "Reinitialiser" */
         .customize-reset {
             flex: 1;
             height: 55px;
@@ -387,10 +391,10 @@
             transform: scale(0.98);
             opacity: 0.9;
         }
-
         #lock-page {
             position: absolute;
-            inset: 0;            z-index: 10;
+            inset: 0;
+            z-index: 10;
             visibility: hidden;
             opacity: 0;
             transition: visibility 0.3s, opacity 0.3s;
@@ -435,11 +439,11 @@
         }
 
         .dot.active {
-            opacity: 1;
-            transform: scale(1.25);
+            opacity: 1;            transform: scale(1.25);
             background: #ffffff;
             box-shadow: 0 0 12px rgba(255,255,255,0.6);
         }
+
         .keypad {
             display: grid;
             grid-template-columns: repeat(3, 70px);
@@ -484,11 +488,11 @@
             transform: scale(0.97);
         }
 
-        .key::after, .delete-btn::after, .ok::after {
-            content: '';
+        .key::after, .delete-btn::after, .ok::after {            content: '';
             position: absolute;
             inset: 0;
-            border-radius: 50%;            border: 2px solid rgba(255, 255, 255, 0.9);
+            border-radius: 50%;
+            border: 2px solid rgba(255, 255, 255, 0.9);
             opacity: 0;
             pointer-events: none;
         }
@@ -528,16 +532,19 @@
             transform: scale(0.97);
         }
 
+        /* ✅ CHANGEMENT 6 : Bouton urgence centré horizontalement seulement */
         .emergency {
             position: relative;
             z-index: 10;
             text-align: center;
-            margin-bottom: 3vh;
-            font-size: 18px;
+            margin-bottom: 3vh;            font-size: 18px;
             font-weight: 500;
             opacity: 0.9;
             cursor: pointer;
-            padding: 12px 24px;            display: inline-block;
+            padding: 12px 24px;
+            display: block; /* ← block pour centrage horizontal */
+            margin-left: auto;
+            margin-right: auto;
             border-radius: 40px;
             background: rgba(0,0,0,0.2);
             backdrop-filter: blur(10px);
@@ -579,14 +586,14 @@
             position: absolute;
             top: 265px;
             left: 0;
-            width: 100%;
-            z-index: 32;
+            width: 100%;            z-index: 32;
             color: white;
             font-size: 18px;
             display: flex;
             flex-direction: column;
             gap: 15px;
-            text-align: center;            box-sizing: border-box;
+            text-align: center;
+            box-sizing: border-box;
         }
 
         .words-container.hidden { display: none; }
@@ -628,13 +635,13 @@
         .letters-container.hidden { display: none; }
 
         .letter-btn {
-            cursor: pointer;
-            text-decoration: none;
+            cursor: pointer;            text-decoration: none;
             color: inherit;
             font-size: inherit;
             display: inline-block;
             text-transform: uppercase;
         }
+
         .letter-btn.selected { text-decoration: underline; }
 
         .separator {
@@ -678,13 +685,13 @@
             transform: translateX(-50%) scale(1.1);
             box-shadow: 0 0 20px #1877F2;
         }
-
         .note-button.visible { display: block; }
 
         .note-image-overlay {
             position: fixed;
             inset: 0;
-            background: black;            z-index: 200;
+            background: black;
+            z-index: 200;
             display: none;
             justify-content: center;
             align-items: center;
@@ -726,14 +733,14 @@
             color: white;
             font-size: 24px;
             max-width: 80%;
-            text-align: left;
-            white-space: pre-line;
+            text-align: left;            white-space: pre-line;
             line-height: 1.5;
             min-width: 200px;
             outline: none;
             background: transparent;
             border: none;
-            padding: 0;            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            padding: 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
             left: 20px;
             top: 265px;
         }
@@ -761,16 +768,21 @@
             box-shadow: 0 20px 40px rgba(0,0,0,0.4);
             max-height: 90vh;
             overflow-y: auto;
+            /* ✅ CHANGEMENT 7 : Transition pour animation clavier */
+            transition: transform 0.3s ease;
         }
 
         #list-modal.visible { display: block; }
+
+        #list-modal.keyboard-visible {
+            transform: translate(-50%, -70%); /* ← Monte quand clavier apparaît */
+        }
 
         #search-container { width: 100%; margin-bottom: 15px; }
 
         #search-input {
             width: 100%;
-            padding: 18px;
-            border: 2px solid #ddd;
+            padding: 18px;            border: 2px solid #ddd;
             border-radius: 15px;
             font-size: 18px;
             height: 60px;
@@ -782,7 +794,8 @@
             padding: 18px;
             border: 2px solid #1976d2;
             border-radius: 15px;
-            font-size: 20px;            text-align: center;
+            font-size: 20px;
+            text-align: center;
             background: #e3f2fd;
             color: #1976d2;
             font-weight: bold;
@@ -818,7 +831,6 @@
             opacity: 0.6;
             pointer-events: none;
         }
-
         #modal-overlay {
             position: absolute;
             inset: 0;
@@ -831,7 +843,8 @@
 
         .hidden-file-input { display: none; }
     </style>
-</head><body>
+</head>
+<body>
     <input type="file" id="bg-file-input" class="hidden-file-input" accept="image/*">
     <input type="file" id="img-file-input" class="hidden-file-input" accept="image/*">
     <input type="file" id="note-file-input" class="hidden-file-input" accept="image/*">
@@ -867,7 +880,6 @@
             <button class="customize-back-btn" id="customize-back">←</button>
             <span class="customize-title">PERSONNALISER</span>
         </div>
-
         <div class="test-code-section">
             <div class="test-code-title">🎯 TESTER UN CODE</div>
             <input type="tel" id="test-code-input" placeholder="Code" maxlength="4" inputmode="numeric">
@@ -880,7 +892,8 @@
                 <button class="preview-btn" data-preview="full">👁️ Aperçu</button>
             </div>
             <div class="slider-item">
-                <label>Position Y <span class="value-badge" id="words-y-value" data-default="265">265px</span></label>                <input type="range" id="words-y" min="0" max="800" value="265" class="slider-with-preview" data-preview-type="full">
+                <label>Position Y <span class="value-badge" id="words-y-value" data-default="265">265px</span></label>
+                <input type="range" id="words-y" min="0" max="800" value="265" class="slider-with-preview" data-preview-type="full">
             </div>
             <div class="slider-item">
                 <label>Taille <span class="value-badge" id="words-size-value" data-default="18">18px</span></label>
@@ -916,8 +929,7 @@
             </div>
             <div class="color-item">
                 <label>Couleur</label>
-                <input type="color" id="letters-color" value="#ffffff">
-            </div>
+                <input type="color" id="letters-color" value="#ffffff">            </div>
         </div>
 
         <!-- 🔢 INDICE -->
@@ -929,7 +941,8 @@
             <div class="slider-item">
                 <label>Position Y <span class="value-badge" id="index-y-value" data-default="517">517px</span></label>
                 <input type="range" id="index-y" min="0" max="800" value="517" class="slider-with-preview" data-preview-type="full">
-            </div>            <div class="slider-item">
+            </div>
+            <div class="slider-item">
                 <label>Taille <span class="value-badge" id="index-size-value" data-default="30">30px</span></label>
                 <input type="range" id="index-size" min="10" max="60" value="30" class="slider-with-preview" data-preview-type="full">
             </div>
@@ -965,8 +978,7 @@
                 <label>Espace entre les lignes <span class="value-badge" id="note-text-gap-value" data-default="25">25px</span></label>
                 <input type="range" id="note-text-gap" min="5" max="50" value="25" class="slider-with-preview" data-preview-type="note">
             </div>
-            <div class="color-item">
-                <label>Couleur</label>
+            <div class="color-item">                <label>Couleur</label>
                 <input type="color" id="note-text-color" value="#ffffff">
             </div>
         </div>
@@ -978,7 +990,8 @@
                 <button class="preview-btn" data-preview="full">👁️ Aperçu</button>
             </div>
             <div class="slider-item">
-                <label>Position Y <span class="value-badge" id="note-button-y-value" data-default="520">520px</span></label>                <input type="range" id="note-button-y" min="0" max="1000" value="520" class="slider-with-preview" data-preview-type="full">
+                <label>Position Y <span class="value-badge" id="note-button-y-value" data-default="520">520px</span></label>
+                <input type="range" id="note-button-y" min="0" max="1000" value="520" class="slider-with-preview" data-preview-type="full">
             </div>
             <div class="slider-item">
                 <label>Taille <span class="value-badge" id="note-button-size-value" data-default="30">30px</span></label>
@@ -996,7 +1009,7 @@
 
         <div class="customize-actions">
             <button class="customize-save" id="customize-save">💾 Sauvegarder</button>
-            <button class="customize-reset" id="customize-reset">↺ Reset</button>
+            <button class="customize-reset" id="customize-reset">↺ Reinitialiser</button>
         </div>
     </div>
 
@@ -1014,8 +1027,7 @@
                 <div class="key" data-digit="2"><span class="key-number">2</span><span class="key-letters">ABC</span></div>
                 <div class="key" data-digit="3"><span class="key-number">3</span><span class="key-letters">DEF</span></div>
                 <div class="key" data-digit="4"><span class="key-number">4</span><span class="key-letters">GHI</span></div>
-                <div class="key" data-digit="5"><span class="key-number">5</span><span class="key-letters">JKL</span></div>
-                <div class="key" data-digit="6"><span class="key-number">6</span><span class="key-letters">MNO</span></div>
+                <div class="key" data-digit="5"><span class="key-number">5</span><span class="key-letters">JKL</span></div>                <div class="key" data-digit="6"><span class="key-number">6</span><span class="key-letters">MNO</span></div>
                 <div class="key" data-digit="7"><span class="key-number">7</span><span class="key-letters">PQRS</span></div>
                 <div class="key" data-digit="8"><span class="key-number">8</span><span class="key-letters">TUV</span></div>
                 <div class="key" data-digit="9"><span class="key-number">9</span><span class="key-letters">WXYZ</span></div>
@@ -1028,6 +1040,7 @@
         </div>
         <div class="emergency" id="emergencyBtn">📞 Appel d'urgence</div>
     </div>
+
     <div id="result-page">
         <div class="result-overlay"></div>
         <div class="words-container" id="words-container"></div>
@@ -1063,8 +1076,7 @@
         const resultPage = document.getElementById('result-page');
         const wordsContainer = document.getElementById('words-container');
         const lettersContainer = document.getElementById('letters-container');
-        const indexDisplay = document.getElementById('index-display');
-        const noteButton = document.getElementById('note-button');
+        const indexDisplay = document.getElementById('index-display');        const noteButton = document.getElementById('note-button');
         const noteImageOverlay = document.getElementById('note-image-overlay');
         const noteImageDisplay = document.getElementById('note-image-display');
         const noteImageText = document.getElementById('note-image-text');
@@ -1076,7 +1088,8 @@
         const importImgBtn = document.getElementById('import-img-btn');
         const importNoteBtn = document.getElementById('import-note-btn');
         const customizeBtn = document.getElementById('customize-btn');
-        const settingsBack = document.getElementById('settings-back');        const customizeBack = document.getElementById('customize-back');
+        const settingsBack = document.getElementById('settings-back');
+        const customizeBack = document.getElementById('customize-back');
         const customizeSave = document.getElementById('customize-save');
         const customizeReset = document.getElementById('customize-reset');
         const previewBtns = document.querySelectorAll('.preview-btn');
@@ -1112,8 +1125,7 @@
         const lettersYValue = document.getElementById('letters-y-value');
         const lettersSizeValue = document.getElementById('letters-size-value');
         const lettersSpacingValue = document.getElementById('letters-spacing-value');
-        const indexYValue = document.getElementById('index-y-value');
-        const indexSizeValue = document.getElementById('index-size-value');
+        const indexYValue = document.getElementById('index-y-value');        const indexSizeValue = document.getElementById('index-size-value');
         const indexXValue = document.getElementById('index-x-value');
         const noteTextYValue = document.getElementById('note-text-y-value');
         const noteTextXValue = document.getElementById('note-text-x-value');
@@ -1125,7 +1137,8 @@
         
         // Modal & Search
         const searchInput = document.getElementById('search-input');
-        const searchBtn = document.getElementById('search-btn');        const codeResult = document.getElementById('codeResult');
+        const searchBtn = document.getElementById('search-btn');
+        const codeResult = document.getElementById('codeResult');
         const modal = document.getElementById('list-modal');
         const modalOverlay = document.getElementById('modal-overlay');
         
@@ -1148,7 +1161,7 @@
         // Variables
         let wordsList = [];
         const DEFAULT_NOTE_TEXT = "Barbecue\nIceberg\nCartouche\nYaourt\nCartable\nLivre\nEnveloppe\nTapis\nTrain\nEncre";
-        const DEFAULT_NOTE_IMAGE = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="500" height="1000"%3E%3Crect fill="%23222" width="100%25" height="100%25"/%3E%3C/svg%3E';
+        const DEFAULT_NOTE_IMAGE = 'image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="500" height="1000"%3E%3Crect fill="%23222" width="100%25" height="100%25"/%3E%3C/svg%3E';
         
         const defaultSettings = {
             wordsY: 265, wordsSize: 18, wordsGap: 15, wordsColor: '#ffffff',
@@ -1161,8 +1174,7 @@
         let pin = '';
         let currentCode = '';
         let originalWords = [];
-        let currentWords = [];
-        let letterLists = [];
+        let currentWords = [];        let letterLists = [];
         let bestListIndex = -1;
         let bestListLetters = [];
         let selectedLetter = '';
@@ -1174,7 +1186,7 @@
         let currentSettings = { ...defaultSettings };
         let isNoteUnderlineActive = false;
         let longPressTimer = null;
-        let isSearchDisabled = false;        let sliderPreviewTimer = null;
+        let isSearchDisabled = false;
         let isSliderPreviewActive = false;
 
         // Charger words.json
@@ -1211,8 +1223,7 @@
             noteTextXValue.textContent = s.noteTextX + 'px';
             noteTextSizeValue.textContent = s.noteTextSize + 'px';
             noteTextGapValue.textContent = s.noteTextGap + 'px';
-            noteButtonYValue.textContent = s.noteButtonY + 'px';
-            noteButtonSizeValue.textContent = s.noteButtonSize + 'px';
+            noteButtonYValue.textContent = s.noteButtonY + 'px';            noteButtonSizeValue.textContent = s.noteButtonSize + 'px';
             noteButtonXValue.textContent = s.noteButtonX + 'px';
         }
 
@@ -1223,7 +1234,8 @@
             wordsContainer.style.color = s.wordsColor;
             wordsContainer.style.gap = s.wordsGap + 'px';
             
-            lettersContainer.style.top = s.lettersY + 'px';            lettersContainer.style.fontSize = s.lettersSize + 'px';
+            lettersContainer.style.top = s.lettersY + 'px';
+            lettersContainer.style.fontSize = s.lettersSize + 'px';
             lettersContainer.style.color = s.lettersColor;
             lettersContainer.style.gap = s.lettersSpacing + 'px';
             
@@ -1260,8 +1272,7 @@
             lettersSize.value = s.lettersSize;
             lettersSpacing.value = s.lettersSpacing;
             lettersColor.value = s.lettersColor;
-            indexY.value = s.indexY;
-            indexSize.value = s.indexSize;
+            indexY.value = s.indexY;            indexSize.value = s.indexSize;
             indexX.value = s.indexX;
             indexColor.value = s.indexColor;
             noteTextY.value = s.noteTextY;
@@ -1272,7 +1283,8 @@
             noteButtonY.value = s.noteButtonY;
             noteButtonSize.value = s.noteButtonSize;
             noteButtonX.value = s.noteButtonX;
-            noteButtonColor.value = s.noteButtonColor;        }
+            noteButtonColor.value = s.noteButtonColor;
+        }
 
         // Setup import images
         function setupImageImport(inputEl, targetEl) {
@@ -1309,8 +1321,7 @@
                     const randomWord = filtered[Math.floor(Math.random() * filtered.length)];
                     result.push(randomWord.charAt(0).toUpperCase() + randomWord.slice(1));
                 } else {
-                    result.push(letter.toUpperCase());
-                }
+                    result.push(letter.toUpperCase());                }
             });
             return result.join('\n');
         }
@@ -1321,7 +1332,8 @@
                 longPressTimer = setTimeout(() => {
                     isNoteUnderlineActive = !isNoteUnderlineActive;
                     updateNoteUnderline();
-                    if (navigator.vibrate) navigator.vibrate(50);                }, 1000);
+                    if (navigator.vibrate) navigator.vibrate(50);
+                }, 1000);
             };
             const handlePressEnd = () => {
                 if (longPressTimer) { clearTimeout(longPressTimer); longPressTimer = null; }
@@ -1350,7 +1362,7 @@
             noteImageText.innerHTML = newLines.join('<br>');
         }
 
-        // Afficher aperçu complet
+        // ✅ CHANGEMENT 4 : Afficher l'indice dans l'aperçu
         function showFullPreview() {
             const bgImage = window.getComputedStyle(resultPage).backgroundImage;
             if (bgImage && bgImage !== 'none') {
@@ -1358,26 +1370,24 @@
             } else {
                 noteImageDisplay.src = DEFAULT_NOTE_IMAGE;
             }
-            noteImageText.innerHTML = wordsContainer.innerHTML + '<br><br>' + lettersContainer.innerHTML;
+            // ✅ Affiche mots + lettres + INDICE            noteImageText.innerHTML = wordsContainer.innerHTML + '<br><br>' + lettersContainer.innerHTML + '<br><br><span style="color:#1E6FF0;font-size:30px;font-weight:bold;">' + indexDisplay.textContent + '</span>';
             noteButtonPreview.classList.add('visible');
             noteImageOverlay.classList.add('visible');
         }
 
-        // Afficher aperçu note
         function showNotePreview() {
             noteImageDisplay.src = noteImageData || DEFAULT_NOTE_IMAGE;
             noteImageText.innerHTML = DEFAULT_NOTE_TEXT.replace(/\n/g, '<br>');
             noteButtonPreview.classList.remove('visible');
             noteImageOverlay.classList.add('visible');
         }
-        // Cacher aperçu
+
         function hidePreview() {
             noteImageOverlay.classList.remove('visible');
             noteButtonPreview.classList.remove('visible');
             isSliderPreviewActive = false;
         }
 
-        // Setup boutons aperçu
         function setupPreviewButton(btn) {
             if (!btn) return;
             const previewType = btn.getAttribute('data-preview');
@@ -1394,56 +1404,40 @@
             btn.addEventListener('mouseleave', () => hidePreview());
         }
 
-        // ✅ LONG PRESS SUR POINT JAUNE DES SLIDERS
-        function setupSliderLongPress() {
+        // ✅ CHANGEMENT 1 & 2 & 3 : Slider - seul le curseur est interactif + preview immédiate
+        function setupSliderInteraction() {
             const sliders = document.querySelectorAll('.slider-with-preview');
             
             sliders.forEach(slider => {
-                let isPressed = false;
                 let previewType = slider.getAttribute('data-preview-type');
                 
-                const startPress = (e) => {
-                    // Vérifier que c'est bien le thumb (point jaune)
-                    const rect = slider.getBoundingClientRect();
-                    const clientX = e.touches ? e.touches[0].clientX : e.clientX;
-                    const thumbPosition = (slider.value - slider.min) / (slider.max - slider.min) * rect.width;
-                    
-                    // Tolérance de 30px autour du thumb
-                    if (Math.abs(clientX - (rect.left + thumbPosition)) < 30) {
-                        isPressed = true;
-                        sliderPreviewTimer = setTimeout(() => {
-                            isSliderPreviewActive = true;
-                            if (previewType === 'note') showNotePreview();
-                            else showFullPreview();
-                        }, 500);
-                    }
+                const startPreview = (e) => {
+                    e.preventDefault();
+                    isSliderPreviewActive = true;
+                    if (previewType === 'note') showNotePreview();
+                    else showFullPreview();
                 };
                 
-                const endPress = () => {                    isPressed = false;
-                    if (sliderPreviewTimer) {
-                        clearTimeout(sliderPreviewTimer);
-                        sliderPreviewTimer = null;
-                    }
+                const endPreview = () => {
+                    isSliderPreviewActive = false;                    hidePreview();
+                };
+                
+                const movePreview = () => {
                     if (isSliderPreviewActive) {
-                        hidePreview();
-                    }
-                };
-                
-                const movePress = () => {
-                    if (isPressed && isSliderPreviewActive) {
                         if (previewType === 'note') showNotePreview();
                         else showFullPreview();
                     }
                 };
                 
-                slider.addEventListener('touchstart', startPress, { passive: true });
-                slider.addEventListener('touchend', endPress);
-                slider.addEventListener('touchcancel', endPress);
-                slider.addEventListener('touchmove', movePress, { passive: true });
-                slider.addEventListener('mousedown', startPress);
-                slider.addEventListener('mouseup', endPress);
-                slider.addEventListener('mouseleave', endPress);
-                slider.addEventListener('mousemove', movePress);
+                // ✅ Uniquement sur le curseur (thumb) - pas sur la piste
+                slider.addEventListener('touchstart', startPreview, { passive: false });
+                slider.addEventListener('touchend', endPreview);
+                slider.addEventListener('touchcancel', endPreview);
+                slider.addEventListener('touchmove', (e) => { e.preventDefault(); movePreview(); }, { passive: false });
+                slider.addEventListener('mousedown', startPreview);
+                slider.addEventListener('mouseup', endPreview);
+                slider.addEventListener('mouseleave', endPreview);
+                slider.addEventListener('mousemove', movePreview);
             });
         }
 
@@ -1468,13 +1462,13 @@
 
         function resetModalToNormal() {
             searchInput.value = '';
-            codeResult.textContent = '';            codeResult.classList.remove('error');
+            codeResult.textContent = '';
+            codeResult.classList.remove('error');
             enableSearchButton();
         }
 
         function searchWord(wordToFind) {
-            const normalizedSearch = wordToFind.trim().toLowerCase();
-            for (let i = 0; i < wordsList.length; i++) {
+            const normalizedSearch = wordToFind.trim().toLowerCase();            for (let i = 0; i < wordsList.length; i++) {
                 if (wordsList[i].word.toLowerCase() === normalizedSearch) {
                     return wordsList[i];
                 }
@@ -1517,13 +1511,13 @@
                     maxSize = lists[i].length;
                     bestIndex = i;
                 }
-            }            return bestIndex;
+            }
+            return bestIndex;
         }
 
         function displayWords(words) {
             wordsContainer.innerHTML = '';
-            const sortedWords = [...words].sort((a, b) => a.localeCompare(b));
-            if (sortedWords.length === 0) {
+            const sortedWords = [...words].sort((a, b) => a.localeCompare(b));            if (sortedWords.length === 0) {
                 const noWord = document.createElement('span');
                 noWord.className = 'result-word';
                 noWord.textContent = 'Aucun mot';
@@ -1566,13 +1560,13 @@
         function displayLetterButtons(index, letters) {
             lettersContainer.innerHTML = '';
             if (index === -1 || letters.length === 0) return;
-            const sortedLetters = [...letters].sort((a, b) => a.localeCompare(b));            for (let i = 0; i < sortedLetters.length; i++) {
+            const sortedLetters = [...letters].sort((a, b) => a.localeCompare(b));
+            for (let i = 0; i < sortedLetters.length; i++) {
                 const letter = sortedLetters[i];
                 const letterSpan = document.createElement('span');
                 letterSpan.className = 'letter-btn';
                 if (selectedLetter === letter) letterSpan.classList.add('selected');
-                letterSpan.textContent = letter.toUpperCase();
-                letterSpan.addEventListener('click', function(e) {
+                letterSpan.textContent = letter.toUpperCase();                letterSpan.addEventListener('click', function(e) {
                     e.stopPropagation();
                     if (this.classList.contains('selected')) {
                         this.classList.remove('selected');
@@ -1615,20 +1609,20 @@
                 lettersContainer.classList.remove('hidden');
             }
         }
+
         function loadCustomSettings() {
             const saved = localStorage.getItem('customSettings');
             if (saved) {
                 try { currentSettings = { ...defaultSettings, ...JSON.parse(saved) }; }
                 catch (e) { currentSettings = { ...defaultSettings }; }
-            }
-            applyCustomSettings(currentSettings);
+            }            applyCustomSettings(currentSettings);
         }
 
         function saveCustomSettings(settings) {
             localStorage.setItem('customSettings', JSON.stringify(settings));
         }
 
-        // ✅ 16 BADGES CLIQUABLES (RESET)
+        // 16 BADGES CLIQUABLES (RESET)
         const badgeConfigs = [
             [wordsYValue, 'wordsY', defaultSettings.wordsY, wordsY],
             [wordsSizeValue, 'wordsSize', defaultSettings.wordsSize, wordsSize],
@@ -1658,19 +1652,19 @@
             }
         });
 
-        // ✅ SLIDERS - MISE À JOUR EN TEMPS RÉEL
+        // SLIDERS - MISE À JOUR EN TEMPS RÉEL
         wordsY.addEventListener('input', (e) => { currentSettings.wordsY = parseInt(e.target.value); wordsYValue.textContent = e.target.value + 'px'; wordsContainer.style.top = e.target.value + 'px'; });
         wordsSize.addEventListener('input', (e) => { currentSettings.wordsSize = parseInt(e.target.value); wordsSizeValue.textContent = e.target.value + 'px'; wordsContainer.style.fontSize = e.target.value + 'px'; });
         wordsGap.addEventListener('input', (e) => { currentSettings.wordsGap = parseInt(e.target.value); wordsGapValue.textContent = e.target.value + 'px'; wordsContainer.style.gap = e.target.value + 'px'; });
         wordsColor.addEventListener('input', (e) => { currentSettings.wordsColor = e.target.value; wordsContainer.style.color = e.target.value; });
 
-        lettersY.addEventListener('input', (e) => { currentSettings.lettersY = parseInt(e.target.value); lettersYValue.textContent = e.target.value + 'px'; lettersContainer.style.top = e.target.value + 'px'; });        lettersSize.addEventListener('input', (e) => { currentSettings.lettersSize = parseInt(e.target.value); lettersSizeValue.textContent = e.target.value + 'px'; lettersContainer.style.fontSize = e.target.value + 'px'; });
+        lettersY.addEventListener('input', (e) => { currentSettings.lettersY = parseInt(e.target.value); lettersYValue.textContent = e.target.value + 'px'; lettersContainer.style.top = e.target.value + 'px'; });
+        lettersSize.addEventListener('input', (e) => { currentSettings.lettersSize = parseInt(e.target.value); lettersSizeValue.textContent = e.target.value + 'px'; lettersContainer.style.fontSize = e.target.value + 'px'; });
         lettersSpacing.addEventListener('input', (e) => { currentSettings.lettersSpacing = parseInt(e.target.value); lettersSpacingValue.textContent = e.target.value + 'px'; lettersContainer.style.gap = e.target.value + 'px'; });
         lettersColor.addEventListener('input', (e) => { currentSettings.lettersColor = e.target.value; lettersContainer.style.color = e.target.value; });
 
         indexY.addEventListener('input', (e) => { currentSettings.indexY = parseInt(e.target.value); indexYValue.textContent = e.target.value + 'px'; indexDisplay.style.top = e.target.value + 'px'; });
-        indexSize.addEventListener('input', (e) => { currentSettings.indexSize = parseInt(e.target.value); indexSizeValue.textContent = e.target.value + 'px'; indexDisplay.style.fontSize = e.target.value + 'px'; });
-        indexX.addEventListener('input', (e) => { currentSettings.indexX = parseInt(e.target.value); indexXValue.textContent = e.target.value + 'px'; indexDisplay.style.transform = 'translateX(calc(-50% + ' + e.target.value + 'px))'; });
+        indexSize.addEventListener('input', (e) => { currentSettings.indexSize = parseInt(e.target.value); indexSizeValue.textContent = e.target.value + 'px'; indexDisplay.style.fontSize = e.target.value + 'px'; });        indexX.addEventListener('input', (e) => { currentSettings.indexX = parseInt(e.target.value); indexXValue.textContent = e.target.value + 'px'; indexDisplay.style.transform = 'translateX(calc(-50% + ' + e.target.value + 'px))'; });
         indexColor.addEventListener('input', (e) => { currentSettings.indexColor = e.target.value; indexDisplay.style.color = e.target.value; });
 
         noteTextY.addEventListener('input', (e) => { currentSettings.noteTextY = parseInt(e.target.value); noteTextYValue.textContent = e.target.value + 'px'; noteImageText.style.top = e.target.value + 'px'; });
@@ -1712,8 +1706,16 @@
             }
         });
 
+        // ✅ CHANGEMENT 7 : Modal remonte quand clavier apparaît
+        searchInput.addEventListener('focus', () => {
+            modal.classList.add('keyboard-visible');
+        });
+        searchInput.addEventListener('blur', () => {
+            modal.classList.remove('keyboard-visible');
+        });
         // Image imports
-        setupImageImport(bgFileInput, lockPage);        setupImageImport(imgFileInput, resultPage);
+        setupImageImport(bgFileInput, lockPage);
+        setupImageImport(imgFileInput, resultPage);
         setupImageImport(noteFileInput, null);
 
         if (importBgBtn) importBgBtn.addEventListener('click', () => bgFileInput.click());
@@ -1755,14 +1757,14 @@
         });
 
         previewBtns.forEach(btn => setupPreviewButton(btn));
-        setupSliderLongPress();
+        setupSliderInteraction();
 
         document.addEventListener('contextmenu', (e) => e.preventDefault());
         document.addEventListener('selectstart', (e) => e.preventDefault());
 
-        if (btnPerform) btnPerform.addEventListener('click', () => { homePage.classList.add('hidden'); lockPage.classList.add('visible'); pin = ''; updateDots(); });
-        if (btnList) btnList.addEventListener('click', () => { resetModalToNormal(); modal.classList.add('visible'); modalOverlay.classList.add('visible'); });
-        if (btnSettings) btnSettings.addEventListener('click', () => { homePage.classList.add('hidden'); settingsPage.classList.add('visible'); });        if (settingsBack) settingsBack.addEventListener('click', () => { settingsPage.classList.remove('visible'); homePage.classList.remove('hidden'); previewContainer.classList.remove('visible'); bgFileInput.value = ''; imgFileInput.value = ''; noteFileInput.value = ''; });
+        if (btnPerform) btnPerform.addEventListener('click', () => { homePage.classList.add('hidden'); lockPage.classList.add('visible'); pin = ''; updateDots(); });        if (btnList) btnList.addEventListener('click', () => { resetModalToNormal(); modal.classList.add('visible'); modalOverlay.classList.add('visible'); });
+        if (btnSettings) btnSettings.addEventListener('click', () => { homePage.classList.add('hidden'); settingsPage.classList.add('visible'); });
+        if (settingsBack) settingsBack.addEventListener('click', () => { settingsPage.classList.remove('visible'); homePage.classList.remove('hidden'); previewContainer.classList.remove('visible'); bgFileInput.value = ''; imgFileInput.value = ''; noteFileInput.value = ''; });
         if (modalOverlay) modalOverlay.addEventListener('click', () => { modal.classList.remove('visible'); modalOverlay.classList.remove('visible'); searchInput.blur(); resetModalToNormal(); });
 
         if (customizeBtn) customizeBtn.addEventListener('click', () => {
@@ -1809,9 +1811,9 @@
         });
 
         if (okBtn) okBtn.addEventListener('click', function(e) {
-            e.stopPropagation();
-            animateText(this);
-            if (pin.length === 4) {                currentCode = pin;
+            e.stopPropagation();            animateText(this);
+            if (pin.length === 4) {
+                currentCode = pin;
                 originalWords = wordsList.filter(w => w.code === pin).map(w => w.word);
                 originalWords.sort((a, b) => a.localeCompare(b));
                 currentWords = [...originalWords];
@@ -1858,9 +1860,9 @@
             e.stopPropagation();
             animateText(this);
             lockPage.classList.remove('visible');
-            homePage.classList.remove('hidden');
-            pin = '';
-            updateDots();        });
+            homePage.classList.remove('hidden');            pin = '';
+            updateDots();
+        });
 
         // Service Worker
         if ('serviceWorker' in navigator) {
