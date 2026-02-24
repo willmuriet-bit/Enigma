@@ -3,363 +3,124 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>ENIGMA</title>
+    <title>ENIGMA - Personnalisation temps réel</title>
     <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="ENIGMA">
+    <meta name="mobile-web-app-capable" content="yes">
     <meta name="theme-color" content="#000000">
+    <link rel="apple-touch-icon" href="icon-192.png">
     <link rel="manifest" href="manifest.json">
-    <base href="/Enigma/">
     
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: system-ui, -apple-system, sans-serif;
-            -webkit-tap-highlight-color: transparent;
-            user-select: none;
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif; -webkit-tap-highlight-color: transparent; }
+        body { height: 100vh; overflow: hidden; color: white; }
+
+        @keyframes soulignement { 0% { width: 0; opacity: 0; } 50% { width: 100%; opacity: 1; } 100% { width: 100%; opacity: 0.7; } }
+        @keyframes scintillement { 0% { text-shadow: 0 0 5px #FFD700, 0 0 10px #FFD700, 0 0 15px #FFD700; } 50% { text-shadow: 0 0 20px #FFD700, 0 0 30px #FFD700, 0 0 40px #FFD700; } 100% { text-shadow: 0 0 5px #FFD700, 0 0 10px #FFD700, 0 0 15px #FFD700; } }
+        @keyframes apparitionBouton { 0% { opacity: 0; transform: translateY(30px); } 100% { opacity: 1; transform: translateY(0); } }
+        @keyframes ripple { 0% { transform: scale(0, 0) translate(-50%, -50%); opacity: 0.5; } 100% { transform: scale(20, 20) translate(-50%, -50%); opacity: 0; } }
+        @keyframes circleWave { 0% { opacity: 0.9; transform: scale(0.5); } 70% { opacity: 0.5; transform: scale(1.3); } 100% { opacity: 0; transform: scale(1.6); } }
+        @keyframes auraPulse {
+            0% { box-shadow: 0 0 5px currentColor, 0 0 10px currentColor, 0 0 15px currentColor; }
+            50% { box-shadow: 0 0 15px currentColor, 0 0 25px currentColor, 0 0 35px currentColor; }
+            100% { box-shadow: 0 0 5px currentColor, 0 0 10px currentColor, 0 0 15px currentColor; }
         }
 
-        body {
-            height: 100vh;
-            overflow: hidden;
-            color: white;
-        }
+        .app-title { font-family: 'Georgia', 'Times New Roman', serif; font-size: 68px; font-weight: bold; color: #FFD700; text-shadow: 0 0 15px rgba(255, 215, 0, 0.7), 0 0 30px rgba(255, 215, 0, 0.4); letter-spacing: 6px; margin-bottom: 100px; position: relative; top: -40px; text-transform: uppercase; padding-bottom: 15px; animation: scintillement 2s ease-in-out infinite; }
+        .app-title::after { content: ''; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 0; height: 3px; background: #FFD700; box-shadow: 0 0 10px #FFD700; animation: soulignement 1.5s ease-out forwards; }
 
-        @keyframes scintillement {
-            0%, 100% { text-shadow: 0 0 5px #FFD700, 0 0 10px #FFD700; }
-            50% { text-shadow: 0 0 20px #FFD700, 0 0 30px #FFD700; }
-        }
+        .home-btn { width: 320px; height: 65px; background: white; color: black; border: none; border-radius: 15px; font-size: 24px; font-weight: 600; letter-spacing: 1px; cursor: pointer; box-shadow: 0 4px 15px rgba(255, 255, 255, 0.2); transition: transform 0.2s, box-shadow 0.2s, background 0.2s; position: relative; overflow: hidden; margin: 12px 0; opacity: 0; transform: translateY(30px); animation: apparitionBouton 0.5s ease-out forwards; }
+        #btn-perform { animation-delay: 0.2s; } #btn-list { animation-delay: 0.4s; } #btn-settings { animation-delay: 0.6s; }
+        .home-btn::after { content: ''; position: absolute; top: 50%; left: 50%; width: 5px; height: 5px; background: rgba(0, 0, 0, 0.3); opacity: 0; border-radius: 100%; transform: scale(1, 1) translate(-50%, -50%); transform-origin: 50% 50%; }
+        .home-btn:active { transform: scale(0.95); box-shadow: 0 2px 10px rgba(255, 255, 255, 0.4); background: #f0f0f0; }
+        .home-btn:active::after { animation: ripple 0.4s ease-out; }
 
-        @keyframes apparitionBouton {
-            0% { opacity: 0; transform: translateY(30px); }
-            100% { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes circleWave {
-            0% { opacity: 0.9; transform: scale(0.5); }
-            100% { opacity: 0; transform: scale(1.6); }
-        }
-
-        .app-title {
-            font-family: 'Georgia', serif;
-            font-size: 68px;
-            font-weight: bold;
-            color: #FFD700;
-            letter-spacing: 6px;
-            margin-bottom: 100px;
-            position: relative;            top: -40px;
-            text-transform: uppercase;
-            animation: scintillement 2s ease-in-out infinite;
-        }
-
-        .home-btn {
-            width: 320px;
-            height: 65px;
-            background: white;
-            color: black;
-            border: none;
-            border-radius: 15px;
-            font-size: 24px;
-            font-weight: 600;
-            cursor: pointer;
-            margin: 12px 0;
-            opacity: 0;
-            animation: apparitionBouton 0.5s ease-out forwards;
-        }
-
-        #btn-perform { animation-delay: 0.2s; }
-        #btn-list { animation-delay: 0.4s; }
-        #btn-settings { animation-delay: 0.6s; }
-
-        .home-btn:active { transform: scale(0.95); background: #f0f0f0; }
-
-        #home-page {
-            position: absolute;
-            inset: 0;
-            background: black;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-end;
-            align-items: center;
-            padding-bottom: 15vh;
-            z-index: 20;
-            transition: transform 0.3s ease-out;
-        }
-
+        #home-page { position: absolute; inset: 0; background: black; display: flex; flex-direction: column; justify-content: flex-end; align-items: center; padding-bottom: 15vh; z-index: 20; transition: transform 0.3s ease-out; }
         #home-page.hidden { transform: translateY(-100%); }
 
-        #settings-page {
-            position: absolute;
-            inset: 0;
-            background: black;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            z-index: 25;            visibility: hidden;
-            opacity: 0;
-            transition: visibility 0.3s, opacity 0.3s;
-            padding: 20px;
-        }
-
+        #settings-page { position: absolute; inset: 0; background: black; display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 25; visibility: hidden; opacity: 0; transition: visibility 0.3s, opacity 0.3s; padding: 20px; }
         #settings-page.visible { visibility: visible; opacity: 1; }
 
-        .settings-title {
-            font-size: 48px;
-            color: #FFD700;
-            margin-bottom: 50px;
-            font-weight: bold;
-            text-transform: uppercase;
-        }
+        .settings-title { font-size: 48px; color: #FFD700; margin-bottom: 50px; font-weight: bold; text-transform: uppercase; letter-spacing: 4px; }
+        .settings-btn { width: 320px; height: 65px; background: #333; color: white; border: none; border-radius: 15px; font-size: 22px; font-weight: 600; cursor: pointer; margin: 10px 0; transition: background 0.2s; }
+        .settings-btn:active { background: #555; }
 
-        .settings-btn {
-            width: 320px;
-            height: 65px;
-            background: #333;
-            color: white;
-            border: none;
-            border-radius: 15px;
-            font-size: 22px;
-            font-weight: 600;
-            cursor: pointer;
-            margin: 10px 0;
-        }
-
-        .settings-btn:active { background: #555; transform: scale(0.98); }
-
-        .preview-container {
-            width: 320px;
-            margin: 20px 0;
-            display: none;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .preview-container.visible { display: flex; }
-
-        .preview-image {
-            width: 200px;
-            height: 200px;
-            object-fit: cover;
-            border-radius: 15px;
-            border: 3px solid #FFD700;
-            margin-bottom: 15px;
-        }
+        .preview-container { width: 320px; margin: 20px 0; display: none; flex-direction: column; align-items: center; }
+        .preview-container.visible { display: flex; }        .preview-image { width: 200px; height: 200px; object-fit: cover; border-radius: 15px; border: 3px solid #FFD700; margin-bottom: 15px; }
         .preview-buttons { display: flex; gap: 20px; }
-        .preview-confirm, .preview-cancel {
-            width: 120px;
-            height: 50px;
-            border: none;
-            border-radius: 10px;
-            font-size: 18px;
-            font-weight: 600;
-            cursor: pointer;
-        }
-
+        .preview-confirm, .preview-cancel { width: 120px; height: 50px; border: none; border-radius: 10px; font-size: 18px; font-weight: 600; cursor: pointer; }
         .preview-confirm { background: #4CAF50; color: white; }
         .preview-cancel { background: #f44336; color: white; }
-
-        .back-btn {
-            width: 320px;
-            height: 50px;
-            background: #666;
-            color: white;
-            border: none;
-            border-radius: 10px;
-            font-size: 18px;
-            cursor: pointer;
-            margin-top: 30px;
-        }
-
+        .back-btn { width: 320px; height: 50px; background: #666; color: white; border: none; border-radius: 10px; font-size: 18px; cursor: pointer; margin-top: 30px; }
         .back-btn:active { background: #888; }
 
-        #customize-page {
-            position: absolute;
-            inset: 0;
-            background: black;
-            z-index: 40;
-            visibility: hidden;
-            opacity: 0;
-            transition: visibility 0.3s, opacity 0.3s;
-            overflow: hidden;
-            color: white;
-        }
-
+        #customize-page { position: absolute; inset: 0; background: rgba(0, 0, 0, 0.95); z-index: 40; visibility: hidden; opacity: 0; transition: visibility 0.3s, opacity 0.3s; overflow-y: auto; padding: 20px; color: white; }
         #customize-page.visible { visibility: visible; opacity: 1; }
+        #customize-page.dragging-slider { background: transparent !important; pointer-events: none; }
+        #customize-page.dragging-slider .control-group, #customize-page.dragging-slider .test-code-section, #customize-page.dragging-slider .customize-header, #customize-page.dragging-slider .customize-actions { opacity: 0 !important; pointer-events: none; }
+        #customize-page.dragging-slider input[type="range"] { opacity: 1 !important; position: relative; z-index: 9999; pointer-events: auto; }
+        #customize-page.dragging-slider .value-badge { opacity: 1 !important; position: relative; z-index: 9999; pointer-events: auto; cursor: pointer; background: #FFD700; color: black; font-weight: bold; }
+        #customize-page.dragging-slider .slider-item { position: relative; z-index: 9999; }
+        #customize-page.dragging-slider .slider-item label { opacity: 0 !important; }
+        #result-page.preview-mode { visibility: visible !important; opacity: 1 !important; z-index: 35; pointer-events: none; }
+        #customize-page.preview-mode { background: rgba(0, 0, 0, 0.85); }
 
-        .customize-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 15px 20px;
-            position: relative;
-            z-index: 41;
+        .customize-header { display: flex; align-items: center; margin-bottom: 30px; padding-top: 20px; }
+        .customize-back-btn { width: 40px; height: 40px; background: #333; border: none; border-radius: 50%; color: white; font-size: 24px; cursor: pointer; margin-right: 15px; }
+        .customize-back-btn:active { background: #555; }
+        .customize-title { font-size: 32px; color: #FFD700; font-weight: bold; }
+
+        .test-code-section { background: #222; border-radius: 15px; padding: 20px; margin-bottom: 25px; border: 1px solid #444; text-align: center; }
+        .test-code-title { color: #FFD700; font-size: 22px; margin-bottom: 15px; }
+        #test-code-input { width: 200px; height: 55px; background: #333; border: 2px solid #444; border-radius: 15px; color: white; font-size: 18px; text-align: center; letter-spacing: 4px; }
+        #test-code-input:focus { border-color: #FFD700; outline: none; }
+
+        .control-group { background: #222; border-radius: 15px; padding: 20px; margin-bottom: 25px; border: 1px solid #444; }
+        .control-header { display: flex; justify-content: space-between; margin-bottom: 20px; border-bottom: 1px solid #444; padding-bottom: 10px; }
+        .control-header h3 { color: #FFD700; font-size: 22px; margin: 0; }
+        .preview-btn { background: #333; color: white; border: 1px solid #FFD700; border-radius: 20px; padding: 5px 15px; font-size: 14px; cursor: pointer; }
+        .slider-item { margin-bottom: 20px; }
+        .slider-item label { display: flex; justify-content: space-between; margin-bottom: 8px; color: #ddd; }
+        
+        .slider-item input[type="range"] {
+            width: 100%;
+            height: 6px;
+            background: #444;
+            border-radius: 3px;
+            -webkit-appearance: none;
+            pointer-events: none;
         }
-        .customize-back-btn {
-            width: 40px;
-            height: 40px;
-            background: #333;
-            border: none;
-            border-radius: 50%;
-            color: white;
-            font-size: 24px;
+        
+        .slider-item input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 20px;
+            height: 20px;
+            background: #FFD700;            border-radius: 50%;
             cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            border: 2px solid white;
+            pointer-events: auto;
         }
-
-        .customize-back-btn:active { background: #555; transform: scale(0.95); }
-
-        .customize-title {
-            font-size: 28px;
-            color: #FFD700;
-            font-weight: bold;
-        }
-
-        /* ✅ BOUTONS BACK ET NOTE - DESIGN COMME L'IMAGE */
-        .customize-mode-btn {
-            width: 90%;
-            max-width: 400px;
-            height: 80px;
-            background: white;
-            color: #333;
-            border: none;
-            border-radius: 20px;
-            font-size: 28px;
-            font-weight: bold;
-            cursor: pointer;
-            margin: 20px auto;
-            display: block;
-            box-shadow: 0 4px 15px rgba(255,255,255,0.1);
-            transition: all 0.3s;
-        }
-
-        .customize-mode-btn:active { 
-            transform: scale(0.98);
-            box-shadow: 0 2px 8px rgba(255,255,255,0.05);
-        }
-
-        /* ✅ CHAMP TEST CODE */
-        .test-code-container {
-            position: absolute;
-            top: 80px;            left: 50%;
-            transform: translateX(-50%);
-            z-index: 42;
-            display: none;
-        }
-
-        .test-code-container.visible {
-            display: block;
-        }
-
-        #test-code-input {
-            width: 150px;
-            height: 45px;
-            background: rgba(255,255,255,0.1);
-            border: 2px solid #FFD700;
-            border-radius: 10px;
-            color: white;
-            font-size: 20px;
-            font-weight: bold;
-            text-align: center;
-            letter-spacing: 4px;
-        }
-
-        #test-code-input:focus { 
-            outline: none; 
-            background: rgba(255,255,255,0.2);
-        }
-
-        /* ✅ PREVIEW AREA */
-        .customize-preview {
-            position: absolute;
-            inset: 0;
-            z-index: 35;
-            overflow: hidden;
-            display: none;
-        }
-
-        .customize-preview.visible {
-            display: block;
-        }
-
-        /* ✅ ÉLÉMENTS SÉLECTIONNABLES */
-        .customizable-element {
-            cursor: pointer;
-            transition: outline 0.2s;
-        }
-
-        .customizable-element.selected {
-            outline: 3px solid #FFD700;
-            outline-offset: 5px;        }
-
-        .customizable-element.selected-double {
-            outline: 3px solid #00FF00;
-            outline-offset: 5px;
-        }
-
-        /* Mode indicator */
-        .mode-indicator {
-            position: absolute;
-            top: 140px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: rgba(0,0,0,0.8);
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-size: 14px;
-            z-index: 43;
-            display: none;
-        }
-
-        .mode-indicator.visible {
-            display: block;
-        }
-
-        .mode-indicator.single {
-            border: 1px solid #FFD700;
-            color: #FFD700;
-        }
-
-        .mode-indicator.double {
-            border: 1px solid #00FF00;
-            color: #00FF00;
-        }
-
-        /* Color picker */
-        .color-picker {
-            position: absolute;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: rgba(0,0,0,0.9);
-            padding: 15px;
-            border-radius: 15px;
-            display: none;
-            z-index: 50;
-            gap: 10px;
-        }
-
-        .color-picker.visible {            display: flex;
-        }
-
-        .color-option {
-            width: 40px;
-            height: 40px;
+        
+        .slider-item input[type="range"]::-moz-range-thumb {
+            width: 20px;
+            height: 20px;
+            background: #FFD700;
             border-radius: 50%;
             cursor: pointer;
-            border: 3px solid white;
+            border: 2px solid white;
+            pointer-events: auto;
         }
+        
+        .color-item { margin-bottom: 20px; }
+        .color-item label { display: block; margin-bottom: 8px; color: #ddd; }
+        .color-item input[type="color"] { width: 100%; height: 45px; border: 2px solid #444; border-radius: 10px; background: #333; }
+        .value-badge { background: #333; padding: 3px 10px; border-radius: 15px; font-size: 14px; color: #FFD700; border: 1px solid #FFD700; cursor: pointer; }
+        .value-badge:active { background: #444; }
 
-        .color-option:active {
-            transform: scale(1.2);
-        }
-
-        /* ✅ SLIDERS CACHÉS */
-        .control-group {
-            display: none;
-        }
+        .customize-actions { display: flex; gap: 15px; margin-top: 30px; margin-bottom: 30px; }
+        .customize-save { flex: 1.2; height: 55px; background: #4CAF50; border: none; border-radius: 15px; color: white; font-size: 20px; font-weight: 600; cursor: pointer; }
+        .customize-reset { flex: 1; height: 55px; background: #f44336; border: none; border-radius: 15px; color: white; font-size: 18px; font-weight: 600; cursor: pointer; }
 
         #lock-page {
             position: absolute;
@@ -371,163 +132,12 @@
             display: flex;
             flex-direction: column;
             justify-content: flex-end;
-            background: #111;
+            background: #1a1a1a;
+            background-size: cover !important;
+            background-position: center !important;
+            background-repeat: no-repeat !important;
         }
-
-        #lock-page.visible { visibility: visible; opacity: 1; }
-
-        .overlay {
-            position: absolute;
-            inset: 0;
-            background: rgba(0, 0, 0, 0.3);
-            z-index: 1;
-            backdrop-filter: blur(3px);
-        }
-
-        .lock-content {
-            position: relative;
-            z-index: 10;
-            text-align: center;
-            margin-bottom: 5vh;
-            padding: 0 16px;
-        }
-        .pin-dots {
-            display: flex;
-            justify-content: center;
-            gap: 16px;
-            margin-bottom: 3vh;
-        }
-
-        .dot {
-            width: 14px;
-            height: 14px;
-            border-radius: 50%;
-            background: white;
-            opacity: 0.35;
-            transition: opacity 0.2s, transform 0.2s;
-        }
-
-        .dot.active {
-            opacity: 1;
-            transform: scale(1.25);
-            background: #ffffff;
-            box-shadow: 0 0 12px rgba(255,255,255,0.6);
-        }
-
-        .keypad {
-            display: grid;
-            grid-template-columns: repeat(3, 70px);
-            justify-content: center;
-            gap: 20px 25px;
-            margin-bottom: 15px;
-        }
-
-        .key {
-            width: 70px;
-            height: 70px;
-            border-radius: 50%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            background: rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(12px);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-            cursor: pointer;
-            transition: background 0.1s, transform 0.1s;
-            position: relative;
-            border: 1px solid rgba(255,255,255,0.1);
-            color: white;
-        }
-        .key-number {
-            font-size: 26px;
-            font-weight: bold;
-            margin-bottom: 1px;
-        }
-
-        .key-letters {
-            font-size: 8px;
-            letter-spacing: 1px;
-            opacity: 0.7;
-            text-transform: uppercase;
-        }
-
-        .key:active {
-            background: rgba(255, 255, 255, 0.35);
-            transform: scale(0.97);
-        }
-
-        .key::after, .delete-btn::after, .ok::after {
-            content: '';
-            position: absolute;
-            inset: 0;
-            border-radius: 50%;
-            border: 2px solid rgba(255, 255, 255, 0.9);
-            opacity: 0;
-            pointer-events: none;
-        }
-
-        .active::after, .active-text::after {
-            animation: circleWave 0.4s ease-out forwards;
-        }
-
-        .bottom-row {
-            display: grid;
-            grid-template-columns: repeat(3, 70px);
-            justify-content: center;
-            gap: 25px;
-            margin-top: 10px;
-        }
-
-        .delete-btn, .ok {
-            width: 70px;
-            height: 70px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 22px;
-            font-weight: bold;
-            background: transparent !important;            box-shadow: none !important;
-            border: none !important;
-            backdrop-filter: none !important;
-            cursor: pointer;
-            color: white;
-            transition: background 0.1s, transform 0.1s;
-        }
-
-        .delete-btn:active, .ok:active {
-            background: rgba(255, 255, 255, 0.1) !important;
-            transform: scale(0.97);
-        }
-
-        /* ✅ MODIFICATION 1 : BOUTON URGENCE CENTRÉ HORIZONTALEMENT */
-        .emergency {
-            position: relative;
-            z-index: 10;
-            text-align: center;
-            margin-bottom: 3vh;
-            font-size: 18px;
-            font-weight: 500;
-            opacity: 0.9;
-            cursor: pointer;
-            padding: 12px 24px;
-            display: block;
-            margin-left: auto;
-            margin-right: auto;
-            border-radius: 40px;
-            background: rgba(0,0,0,0.2);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255,255,255,0.15);
-            transition: 0.2s;
-            width: fit-content;
-        }
-
-        .emergency:active {
-            background: rgba(220, 60, 60, 0.5);
-            transform: scale(0.96);
-        }
-
+        
         #result-page {
             position: absolute;
             inset: 0;
@@ -535,285 +145,114 @@
             visibility: hidden;
             opacity: 0;
             transition: visibility 0.3s, opacity 0.3s;
-            background: #222;
-            display: flex;
-            flex-direction: column;            align-items: center;
-            justify-content: flex-start;
-            cursor: pointer;
-        }
-
-        #result-page.visible { visibility: visible; opacity: 1; }
-
-        .result-overlay {
-            position: absolute;
-            inset: 0;
-            background: rgba(0, 0, 0, 0.2);
-            z-index: 31;
-        }
-
-        .words-container {
-            position: absolute;
-            top: 265px;
-            left: 0;
-            width: 100%;
-            z-index: 32;
-            color: white;
-            font-size: 18px;
+            background: #2a2a2a;            background-size: cover !important;
+            background-position: center !important;
+            background-repeat: no-repeat !important;
             display: flex;
             flex-direction: column;
-            gap: 15px;
-            text-align: center;
-            box-sizing: border-box;
+            align-items: center;
+            cursor: pointer;
         }
 
+        #lock-page.visible { visibility: visible; opacity: 1; }
+        #result-page.visible { visibility: visible; opacity: 1; }
+        
+        .overlay { position: absolute; inset: 0; background: rgba(0, 0, 0, 0.3); }
+        .lock-content { position: relative; z-index: 10; text-align: center; margin-bottom: 5vh; padding: 0 16px; }
+        .pin-dots { display: flex; justify-content: center; gap: 16px; margin-bottom: 3vh; }
+        .dot { width: 14px; height: 14px; border-radius: 50%; background: white; opacity: 0.35; transition: opacity 0.2s, transform 0.2s; }
+        .dot.active { opacity: 1; transform: scale(1.25); }
+        .keypad { display: grid; grid-template-columns: repeat(3, 70px); justify-content: center; gap: 20px 25px; margin-bottom: 15px; }
+        .key { width: 70px; height: 70px; border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center; background: rgba(255, 255, 255, 0.2); backdrop-filter: blur(12px); cursor: pointer; border: 1px solid rgba(255,255,255,0.1); color: white; }
+        .key-number { font-size: 28px; font-weight: 500; }
+        .key-letters { font-size: 10px; color: rgba(255, 255, 255, 0.6); margin-top: 2px; }
+        .key:active { background: rgba(255, 255, 255, 0.35); transform: scale(0.97); }
+        .key::after { content: ''; position: absolute; inset: 0; border-radius: 50%; border: 2px solid rgba(255, 255, 255, 0.9); opacity: 0; pointer-events: none; }
+        .active::after, .active-text::after { animation: circleWave 0.4s ease-out forwards; }
+
+        .bottom-row { display: grid; grid-template-columns: repeat(3, 70px); justify-content: center; gap: 25px; margin-top: 10px; }
+        .delete-btn, .ok { width: 70px; height: 70px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 28px; background: transparent; cursor: pointer; border: none; color: white; }
+        .delete-btn { font-size: 34px; }
+        .ok { font-size: 24px; font-weight: 600; }
+        .delete-btn:active, .ok:active { opacity: 0.7; transform: scale(0.95); }
+
+        .emergency { text-align: center; margin-bottom: 3vh; font-size: 18px; opacity: 0.9; cursor: pointer; padding: 12px 24px; border-radius: 40px; background: rgba(0,0,0,0.2); border: 1px solid rgba(255,255,255,0.15); width: fit-content; margin-left: auto; margin-right: auto; }
+        .emergency:active { background: rgba(220, 60, 60, 0.5); }
+
+        .words-container { position: absolute; top: 265px; width: 100%; z-index: 32; color: white; font-size: 18px; text-align: center; }
         .words-container.hidden { display: none; }
-
-        .words-line {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 5px;
-            width: 100%;
-        }
-
-        .result-word {
-            background: transparent;
-            padding: 2px 0;
-            border: none;
-            font-size: inherit;
-            color: inherit;
-            white-space: nowrap;
-            cursor: pointer;
-            display: inline-block;
-        }
-        .letters-container {
-            position: absolute;
-            top: 460px;
-            left: 0;
-            width: 100%;
-            text-align: center;
-            color: white;
-            font-size: 20px;
-            z-index: 32;
-            padding: 0 20px;
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 40px;
-        }
-
+        .words-line { display: flex; flex-wrap: wrap; justify-content: center; gap: 5px; padding: 0 20px; }
+        .result-word { cursor: pointer; }
+        .letters-container { position: absolute; top: 460px; width: 100%; text-align: center; color: white; font-size: 20px; z-index: 32; padding: 0 20px; display: flex; flex-wrap: wrap; justify-content: center; gap: 40px; }
         .letters-container.hidden { display: none; }
-
-        .letter-btn {
-            cursor: pointer;
-            text-decoration: none;
-            color: inherit;
-            font-size: inherit;
-            display: inline-block;
-            text-transform: uppercase;
-        }
-
+        .letter-btn { cursor: pointer; text-transform: uppercase; }
         .letter-btn.selected { text-decoration: underline; }
-
-        .separator {
-            color: inherit;
-            font-size: inherit;
-            display: inline-block;
-            width: 40px;
-            text-align: center;
-        }
-
+        
         .index-display {
             position: absolute;
             top: 517px;
             left: 50%;
-            transform: translateX(-50%);
+            transform: translateX(calc(-50% - 45px));
             color: #1E6FF0;
-            font-size: 30px;
-            font-weight: bold;
+            font-size: 30px;            font-weight: bold;
             z-index: 33;
             cursor: pointer;
+            transition: box-shadow 0.3s ease;
+        }
+        
+        .index-display.note-mode-active {
+            animation: auraPulse 1.5s ease-in-out infinite;
         }
 
-        .note-button {            position: absolute;
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            background: #1877F2;
-            border: none;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-            cursor: pointer;
-            z-index: 34;
-            left: 50%;
-            transform: translateX(-50%);
-            top: 520px;
-            display: none;
-        }
-
-        .note-button.active {
-            background: #0a5cbf;
-            transform: translateX(-50%) scale(1.1);
-            box-shadow: 0 0 20px #1877F2;
-        }
-
-        .note-button.visible { display: block; }
-
-        .note-image-overlay {
-            position: fixed;
+        #note-page {
+            position: absolute;
             inset: 0;
-            background: black;
-            z-index: 200;
-            display: none;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .note-image-overlay.visible { display: flex; }
-
-        .note-image-display {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            position: absolute;
-            top: 0;
-            left: 0;
-            z-index: 201;
-        }
-
-        .note-button-preview {
-            position: absolute;
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;            background: #1877F2;
-            border: none;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-            z-index: 203;
-            left: 50%;
-            transform: translateX(-50%);
-            top: 520px;
-            pointer-events: none;
-            display: none;
-        }
-
-        .note-button-preview.visible { display: block; }
-
-        .note-image-text {
-            position: absolute;
-            z-index: 202;
-            color: white;
-            font-size: 24px;
-            max-width: 80%;
-            text-align: left;
-            white-space: pre-line;
-            line-height: 1.5;
-            min-width: 200px;
-            outline: none;
-            background: transparent;
-            border: none;
-            padding: 0;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-            left: 20px;
-            top: 265px;
-        }
-
-        .note-word-first-letter { text-decoration: none; }
-
-        .note-word-first-letter.underlined {
-            text-decoration: underline;
-            text-decoration-thickness: 2px;
-            text-underline-offset: 4px;
-        }
-
-        /* ✅ MODIFICATION 2 : MODAL LISTE DES MOTS */
-        #list-modal {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 380px;
-            background: white;
-            border-radius: 30px;
-            padding: 25px;            z-index: 100;
-            display: none;
-            color: black;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
-            max-height: 90vh;
-            overflow-y: auto;
-            transition: top 0.3s ease;
-        }
-
-        #list-modal.visible { display: block; }
-
-        /* Quand le clavier apparaît, la modal est à 20% du haut */
-        #list-modal.keyboard-visible {
-            top: 20%;
-            transform: translate(-50%, -50%);
-        }
-
-        #search-container { width: 100%; margin-bottom: 15px; }
-
-        #search-input {
-            width: 100%;
-            padding: 18px;
-            border: 2px solid #ddd;
-            border-radius: 15px;
-            font-size: 18px;
-            height: 60px;
-            box-sizing: border-box;
-        }
-
-        .code-result-box {
-            width: 100%;
-            padding: 18px;
-            border: 2px solid #1976d2;
-            border-radius: 15px;
-            font-size: 20px;
-            text-align: center;
-            background: #e3f2fd;
-            color: #1976d2;
-            font-weight: bold;
-            min-height: 60px;
+            z-index: 50;
+            visibility: hidden;
+            opacity: 0;
+            transition: visibility 0.3s, opacity 0.3s;
+            background-size: cover !important;
+            background-position: center !important;
+            background-repeat: no-repeat !important;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-bottom: 15px;
         }
-
-        .code-result-box.error {
-            background: #ffebee;
-            border-color: #f44336;
-            color: #f44336;        }
-
-        #search-btn {
-            width: 100%;
-            padding: 18px;
-            background: #4CAF50;
-            color: white;
-            border: none;
-            border-radius: 15px;
-            cursor: pointer;
-            font-size: 20px;
-            font-weight: 600;
+        
+        #note-page.visible {
+            visibility: visible;
+            opacity: 1;
         }
-
-        #search-btn:active { transform: scale(0.98); }
-
-        #search-btn.disabled {
-            background: #999;
-            opacity: 0.6;
-            pointer-events: none;
-        }
-
-        #modal-overlay {
+        
+        .note-overlay {
             position: absolute;
             inset: 0;
-            background: rgba(0,0,0,0.7);
-            z-index: 90;
-            display: none;
+            background: rgba(0, 0, 0, 0.4);
+            z-index: 51;
         }
-
+        
+        .note-text {
+            position: relative;
+            z-index: 52;
+            color: white;
+            font-size: 40px;
+            font-weight: bold;
+            text-align: center;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
+            padding: 20px;
+            max-width: 90%;
+            word-wrap: break-word;
+        }
+        #list-modal { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 380px; background: white; border-radius: 30px; padding: 25px; z-index: 100; display: none; color: black; box-shadow: 0 20px 40px rgba(0,0,0,0.4); transition: top 0.3s ease-out, transform 0.3s ease-out; }
+        #list-modal.visible { display: block; }
+        #list-modal.keyboard-open { top: 30px; transform: translate(-50%, 0); }
+        #search-input { width: 100%; padding: 18px; border: 2px solid #ddd; border-radius: 15px; font-size: 18px; height: 60px; box-sizing: border-box; margin-bottom: 15px; }
+        .code-result-box { width: 100%; padding: 18px; border: 2px solid #1976d2; border-radius: 15px; font-size: 20px; text-align: center; background: #e3f2fd; color: #1976d2; font-weight: bold; min-height: 60px; display: flex; align-items: center; justify-content: center; margin-bottom: 15px; }
+        .code-result-box.error { background: #ffebee; border-color: #f44336; color: #f44336; }
+        #search-btn { width: 100%; padding: 18px; background: #4CAF50; color: white; border: none; border-radius: 15px; cursor: pointer; font-size: 20px; font-weight: 600; }
+        #search-btn.disabled { background: #999; opacity: 0.6; pointer-events: none; }
+        #modal-overlay { position: absolute; inset: 0; background: rgba(0,0,0,0.7); z-index: 90; display: none; }
         #modal-overlay.visible { display: block; }
-
         .hidden-file-input { display: none; }
     </style>
 </head>
@@ -830,20 +269,18 @@
     </div>
 
     <div id="settings-page">
-        <div class="settings-title">PARAMETRES</div>
-                <button class="settings-btn" id="import-bg-btn">📷 Importer lock screen</button>
+        <div class="settings-title">PARAMÈTRES</div>
+        <button class="settings-btn" id="import-bg-btn">📷 Importer lock screen</button>
         <button class="settings-btn" id="import-img-btn">📷 Importer background</button>
         <button class="settings-btn" id="import-note-btn">📷 Importer Note</button>
-        <button class="settings-btn" id="customize-btn">🎨 Personnaliser l'affichage</button>
-        
+        <button class="settings-btn" id="customize-btn">🎨 Personnaliser</button>
         <div class="preview-container" id="preview-container">
-            <img class="preview-image" id="preview-image" src="" alt="">
+            <img class="preview-image" id="preview-image" src="" alt="Aperçu">
             <div class="preview-buttons">
                 <button class="preview-confirm" id="preview-confirm">Confirmer</button>
                 <button class="preview-cancel" id="preview-cancel">Annuler</button>
             </div>
         </div>
-        
         <button class="back-btn" id="settings-back">← Retour</button>
     </div>
 
@@ -852,122 +289,77 @@
             <button class="customize-back-btn" id="customize-back">←</button>
             <span class="customize-title">PERSONNALISER</span>
         </div>
-
-        <!-- ✅ BOUTONS BACK ET NOTE (style comme l'image) -->
-        <button class="customize-mode-btn" id="customize-back-mode">Back</button>
-        <button class="customize-mode-btn" id="customize-note-mode">note</button>
-
-        <!-- ✅ CHAMP TEST CODE -->
-        <div class="test-code-container" id="test-code-container">
-            <input type="tel" id="test-code-input" placeholder="Code" maxlength="4" inputmode="numeric">
-        </div>
-
-        <!-- ✅ MODE INDICATOR -->
-        <div class="mode-indicator" id="mode-indicator"></div>
-
-        <!-- ✅ COLOR PICKER -->
-        <div class="color-picker" id="color-picker">
-            <div class="color-option" style="background: #ffffff" data-color="#ffffff"></div>
-            <div class="color-option" style="background: #FFD700" data-color="#FFD700"></div>
-            <div class="color-option" style="background: #1E6FF0" data-color="#1E6FF0"></div>
-            <div class="color-option" style="background: #1877F2" data-color="#1877F2"></div>
-            <div class="color-option" style="background: #000000" data-color="#000000"></div>
-            <div class="color-option" style="background: #ff0000" data-color="#ff0000"></div>
-            <div class="color-option" style="background: #00ff00" data-color="#00ff00"></div>
-            <div class="color-option" style="background: #0000ff" data-color="#0000ff"></div>
-        </div>
-
-        <!-- ✅ PREVIEW AREA -->
-        <div class="customize-preview" id="customize-preview"></div>
-
-        <!-- ✅ SLIDERS CACHÉS (pour que le JS fonctionne) -->        <div class="control-group">
+        <div class="test-code-section">
+            <div class="test-code-title">🎯 TESTER UN CODE</div>
+            <input type="tel" id="test-code-input" placeholder="Code" maxlength="4">
+        </div>        <div class="control-group">
+            <div class="control-header">
+                <h3>📋 Liste</h3>
+                <button class="preview-btn" id="preview-list-btn">👁️</button>
+            </div>
             <div class="slider-item">
-                <label>Position Y <span class="value-badge" id="words-y-value" data-default="265">265px</span></label>
+                <label>Position Y <span class="value-badge" id="words-y-value">265px</span></label>
                 <input type="range" id="words-y" min="0" max="800" value="265">
             </div>
             <div class="slider-item">
-                <label>Taille <span class="value-badge" id="words-size-value" data-default="18">18px</span></label>
+                <label>Taille <span class="value-badge" id="words-size-value">18px</span></label>
                 <input type="range" id="words-size" min="10" max="40" value="18">
-            </div>
-            <div class="slider-item">
-                <label>Espace <span class="value-badge" id="words-gap-value" data-default="15">15px</span></label>
-                <input type="range" id="words-gap" min="5" max="30" value="15">
             </div>
             <div class="color-item">
                 <label>Couleur</label>
                 <input type="color" id="words-color" value="#ffffff">
             </div>
-        </div>
-
-        <div class="control-group">
             <div class="slider-item">
-                <label>Position Y <span class="value-badge" id="letters-y-value" data-default="460">460px</span></label>
+                <label>Espace lignes <span class="value-badge" id="words-line-height-value">15px</span></label>
+                <input type="range" id="words-line-height" min="5" max="30" value="15">
+            </div>
+        </div>
+        <div class="control-group">
+            <div class="control-header">
+                <h3>🔤 Lettres</h3>
+                <button class="preview-btn" id="preview-letters-btn">👁️</button>
+            </div>
+            <div class="slider-item">
+                <label>Position Y <span class="value-badge" id="letters-y-value">460px</span></label>
                 <input type="range" id="letters-y" min="0" max="800" value="460">
             </div>
             <div class="slider-item">
-                <label>Taille <span class="value-badge" id="letters-size-value" data-default="20">20px</span></label>
+                <label>Taille <span class="value-badge" id="letters-size-value">20px</span></label>
                 <input type="range" id="letters-size" min="10" max="40" value="20">
-            </div>
-            <div class="slider-item">
-                <label>Espace <span class="value-badge" id="letters-spacing-value" data-default="40">40px</span></label>
-                <input type="range" id="letters-spacing" min="10" max="100" value="40">
             </div>
             <div class="color-item">
                 <label>Couleur</label>
                 <input type="color" id="letters-color" value="#ffffff">
             </div>
-        </div>
-
-        <div class="control-group">
             <div class="slider-item">
-                <label>Position Y <span class="value-badge" id="index-y-value" data-default="517">517px</span></label>
+                <label>Espace lettres <span class="value-badge" id="letters-spacing-value">40px</span></label>
+                <input type="range" id="letters-spacing" min="0" max="100" value="40">
+            </div>
+        </div>
+        <div class="control-group">
+            <div class="control-header">
+                <h3>🔢 Indice</h3>
+                <button class="preview-btn" id="preview-index-btn">👁️</button>
+            </div>
+            <div class="slider-item">                <label>Position Y <span class="value-badge" id="index-y-value">517px</span></label>
                 <input type="range" id="index-y" min="0" max="800" value="517">
             </div>
             <div class="slider-item">
-                <label>Taille <span class="value-badge" id="index-size-value" data-default="30">30px</span></label>
+                <label>Taille <span class="value-badge" id="index-size-value">30px</span></label>
                 <input type="range" id="index-size" min="10" max="60" value="30">
             </div>
             <div class="color-item">
                 <label>Couleur</label>
-                <input type="color" id="index-color" value="#1E6FF0">            </div>
-        </div>
-
-        <div class="control-group">
-            <div class="slider-item">
-                <label>Position Y <span class="value-badge" id="note-text-y-value" data-default="265">265px</span></label>
-                <input type="range" id="note-text-y" min="0" max="1000" value="265">
+                <input type="color" id="index-color" value="#1E6FF0">
             </div>
             <div class="slider-item">
-                <label>Position X <span class="value-badge" id="note-text-x-value" data-default="20">20px</span></label>
-                <input type="range" id="note-text-x" min="0" max="500" value="20">
-            </div>
-            <div class="slider-item">
-                <label>Taille <span class="value-badge" id="note-text-size-value" data-default="20">20px</span></label>
-                <input type="range" id="note-text-size" min="10" max="60" value="20">
-            </div>
-            <div class="slider-item">
-                <label>Espace <span class="value-badge" id="note-text-gap-value" data-default="25">25px</span></label>
-                <input type="range" id="note-text-gap" min="10" max="50" value="25">
-            </div>
-            <div class="color-item">
-                <label>Couleur</label>
-                <input type="color" id="note-text-color" value="#ffffff">
+                <label>Décalage X <span class="value-badge" id="index-x-value">-45px</span></label>
+                <input type="range" id="index-x" min="-500" max="500" value="-45">
             </div>
         </div>
-
-        <div class="control-group">
-            <div class="slider-item">
-                <label>Position Y <span class="value-badge" id="note-button-y-value" data-default="520">520px</span></label>
-                <input type="range" id="note-button-y" min="0" max="1000" value="520">
-            </div>
-            <div class="slider-item">
-                <label>Taille <span class="value-badge" id="note-button-size-value" data-default="30">30px</span></label>
-                <input type="range" id="note-button-size" min="5" max="150" value="30">
-            </div>
-            <div class="color-item">
-                <label>Couleur</label>
-                <input type="color" id="note-button-color" value="#1877F2">
-            </div>
+        <div class="customize-actions">
+            <button class="customize-save" id="customize-save">💾 Sauvegarder</button>
+            <button class="customize-reset" id="customize-reset">↺ Reset</button>
         </div>
     </div>
 
@@ -975,24 +367,22 @@
         <div class="overlay"></div>
         <div class="lock-content">
             <div class="pin-dots">
-                <div class="dot"></div>
-                <div class="dot"></div>
-                <div class="dot"></div>
-                <div class="dot"></div>            </div>
+                <div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div>
+            </div>
             <div class="keypad">
-                <div class="key" data-digit="1"><span class="key-number">1</span></div>
-                <div class="key" data-digit="2"><span class="key-number">2</span><span class="key-letters">ABC</span></div>
-                <div class="key" data-digit="3"><span class="key-number">3</span><span class="key-letters">DEF</span></div>
-                <div class="key" data-digit="4"><span class="key-number">4</span><span class="key-letters">GHI</span></div>
-                <div class="key" data-digit="5"><span class="key-number">5</span><span class="key-letters">JKL</span></div>
-                <div class="key" data-digit="6"><span class="key-number">6</span><span class="key-letters">MNO</span></div>
-                <div class="key" data-digit="7"><span class="key-number">7</span><span class="key-letters">PQRS</span></div>
-                <div class="key" data-digit="8"><span class="key-number">8</span><span class="key-letters">TUV</span></div>
-                <div class="key" data-digit="9"><span class="key-number">9</span><span class="key-letters">WXYZ</span></div>
+                <div class="key"><span class="key-number">1</span></div>
+                <div class="key"><span class="key-number">2</span><span class="key-letters">ABC</span></div>
+                <div class="key"><span class="key-number">3</span><span class="key-letters">DEF</span></div>
+                <div class="key"><span class="key-number">4</span><span class="key-letters">GHI</span></div>
+                <div class="key"><span class="key-number">5</span><span class="key-letters">JKL</span></div>
+                <div class="key"><span class="key-number">6</span><span class="key-letters">MNO</span></div>
+                <div class="key"><span class="key-number">7</span><span class="key-letters">PQRS</span></div>
+                <div class="key"><span class="key-number">8</span><span class="key-letters">TUV</span></div>
+                <div class="key"><span class="key-number">9</span><span class="key-letters">WXYZ</span></div>
             </div>
             <div class="bottom-row">
                 <div class="delete-btn" id="deleteBtn">⌫</div>
-                <div class="key" data-digit="0"><span class="key-number">0</span></div>
+                <div class="key"><span class="key-number">0</span></div>
                 <div class="ok" id="okBtn">OK</div>
             </div>
         </div>
@@ -1000,920 +390,630 @@
     </div>
 
     <div id="result-page">
-        <div class="result-overlay"></div>
-        <div class="words-container" id="words-container"></div>
-        <div class="letters-container" id="letters-container"></div>
+        <div class="words-container" id="words-container"></div>        <div class="letters-container" id="letters-container"></div>
         <div class="index-display" id="index-display"></div>
-        <div class="note-button" id="note-button"></div>
     </div>
 
-    <div class="note-image-overlay" id="note-image-overlay">
-        <img class="note-image-display" id="note-image-display" src="" alt="">
-        <div class="note-button-preview" id="note-button-preview"></div>
-        <div class="note-image-text" id="note-image-text"></div>
+    <div id="note-page">
+        <div class="note-overlay"></div>
+        <div class="note-text" id="note-text"></div>
     </div>
 
     <div id="modal-overlay"></div>
     <div id="list-modal">
-        <div id="search-container">
-            <input type="text" id="search-input" placeholder="Taper un mot">
-        </div>
+        <input type="text" id="search-input" placeholder="Taper un mot">
         <div class="code-result-box" id="codeResult"></div>
         <button id="search-btn">Rechercher</button>
     </div>
 
     <script>
-    (function() {
-        const BASE_PATH = window.location.pathname.includes('/Enigma/') ? '/Enigma/' : '/';
+(function() {
+    const homePage = document.getElementById('home-page');
+    const settingsPage = document.getElementById('settings-page');
+    const customizePage = document.getElementById('customize-page');
+    const lockPage = document.getElementById('lock-page');
+    const resultPage = document.getElementById('result-page');
+    const notePage = document.getElementById('note-page');
+    const noteText = document.getElementById('note-text');
+    const wordsContainer = document.getElementById('words-container');
+    const lettersContainer = document.getElementById('letters-container');
+    const indexDisplay = document.getElementById('index-display');
+    const btnPerform = document.getElementById('btn-perform');
+    const btnList = document.getElementById('btn-list');
+    const btnSettings = document.getElementById('btn-settings');
+    const importBgBtn = document.getElementById('import-bg-btn');
+    const importImgBtn = document.getElementById('import-img-btn');
+    const importNoteBtn = document.getElementById('import-note-btn');
+    const customizeBtn = document.getElementById('customize-btn');
+    const settingsBack = document.getElementById('settings-back');
+    const customizeBack = document.getElementById('customize-back');
+    const customizeSave = document.getElementById('customize-save');
+    const customizeReset = document.getElementById('customize-reset');
+    const previewListBtn = document.getElementById('preview-list-btn');
+    const previewLettersBtn = document.getElementById('preview-letters-btn');
+    const previewIndexBtn = document.getElementById('preview-index-btn');
+    const testCodeInput = document.getElementById('test-code-input');
+    const wordsY = document.getElementById('words-y');
+    const wordsSize = document.getElementById('words-size');
+    const wordsColor = document.getElementById('words-color');
+    const wordsLineHeight = document.getElementById('words-line-height');
+    const lettersY = document.getElementById('letters-y');
+    const lettersSize = document.getElementById('letters-size');
+    const lettersColor = document.getElementById('letters-color');    const lettersSpacing = document.getElementById('letters-spacing');
+    const indexY = document.getElementById('index-y');
+    const indexSize = document.getElementById('index-size');
+    const indexColor = document.getElementById('index-color');
+    const indexX = document.getElementById('index-x');
+    const wordsYValue = document.getElementById('words-y-value');
+    const wordsSizeValue = document.getElementById('words-size-value');
+    const wordsLineHeightValue = document.getElementById('words-line-height-value');
+    const lettersYValue = document.getElementById('letters-y-value');
+    const lettersSizeValue = document.getElementById('letters-size-value');
+    const lettersSpacingValue = document.getElementById('letters-spacing-value');
+    const indexYValue = document.getElementById('index-y-value');
+    const indexSizeValue = document.getElementById('index-size-value');
+    const indexXValue = document.getElementById('index-x-value');
+    const searchInput = document.getElementById('search-input');
+    const searchBtn = document.getElementById('search-btn');
+    const codeResult = document.getElementById('codeResult');
+    const modal = document.getElementById('list-modal');
+    const modalOverlay = document.getElementById('modal-overlay');
+    const bgFileInput = document.getElementById('bg-file-input');
+    const imgFileInput = document.getElementById('img-file-input');
+    const noteFileInput = document.getElementById('note-file-input');
+    const previewContainer = document.getElementById('preview-container');
+    const previewImage = document.getElementById('preview-image');
+    const previewConfirm = document.getElementById('preview-confirm');
+    const previewCancel = document.getElementById('preview-cancel');
+    const keys = document.querySelectorAll('#lock-page .key');
+    const dots = document.querySelectorAll('#lock-page .dot');
+    const deleteBtn = document.getElementById('deleteBtn');
+    const okBtn = document.getElementById('okBtn');
+    const emergencyBtn = document.getElementById('emergencyBtn');
+
+    const wordsList = [
+        { code: "7131", word: "Abeille" }, { code: "7141", word: "Abricot" }, { code: "9141", word: "Accordéon" },
+        { code: "6131", word: "Agenda" }, { code: "6141", word: "Agneau" }, { code: "5121", word: "Aigle" },
+        { code: "8121", word: "Aiguille" }, { code: "3121", word: "Ail" }, { code: "4121", word: "Aile" }
+    ];
+
+    const defaultSettings = {
+        wordsY: 265, wordsSize: 18, wordsColor: '#ffffff', wordsLineHeight: 15,
+        lettersY: 460, lettersSize: 20, lettersColor: '#ffffff', lettersSpacing: 40,
+        indexY: 517, indexSize: 30, indexColor: '#1E6FF0', indexX: -45
+    };
+
+    let pin = '', currentCode = '', originalWords = [], currentWords = [];
+    let letterLists = [], bestListIndex = -1, bestListLetters = [];
+    let selectedLetter = '', lastTap = 0, isPreviewMode = false;
+    let isSearchDisabled = false, keyboardVisible = false;
+    let resizeTimeout, blurTimeout, currentPreviewTarget = '', currentPreviewData = '';
+    let currentSettings = { ...defaultSettings };    let noteModeActive = false;
+    let noteLongPressTimer = null;
+    let noteLastTap = 0;
+
+    window.addEventListener('resize', function() {
+        if (window.innerHeight < window.screen.height - 200) {
+            keyboardVisible = true;
+            modal.classList.add('keyboard-open');
+        } else {
+            clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(() => {
+                if (document.activeElement !== searchInput) {
+                    keyboardVisible = false;
+                    modal.classList.remove('keyboard-open');
+                }
+            }, 300);
+        }
+    });
+
+    searchInput.addEventListener('focus', function() { keyboardVisible = true; modal.classList.add('keyboard-open'); });
+    searchInput.addEventListener('blur', function() {
+        clearTimeout(blurTimeout);
+        blurTimeout = setTimeout(() => { keyboardVisible = false; modal.classList.remove('keyboard-open'); }, 300);
+    });
+
+    function searchWord(word) {
+        const normalized = word.trim().toLowerCase();
+        for (let i = 0; i < wordsList.length; i++) {
+            if (wordsList[i].word.toLowerCase() === normalized) return wordsList[i];
+        }
+        return null;
+    }
+
+    function enableSearchButton() { searchBtn.classList.remove('disabled'); isSearchDisabled = false; codeResult.textContent = ''; codeResult.classList.remove('error'); }
+    function disableSearchButton() { searchBtn.classList.add('disabled'); isSearchDisabled = true; }
+
+    function loadCustomSettings() {
+        try { const saved = localStorage.getItem('customSettings'); if (saved) return JSON.parse(saved); } catch(e) {}
+        return { ...defaultSettings };
+    }
+
+    function saveCustomSettings(settings) { try { localStorage.setItem('customSettings', JSON.stringify(settings)); } catch(e) {} }
+
+    function applyCustomSettings(settings) {
+        wordsContainer.style.top = settings.wordsY + 'px';
+        wordsContainer.style.fontSize = settings.wordsSize + 'px';
+        wordsContainer.style.color = settings.wordsColor;
+        wordsContainer.style.lineHeight = settings.wordsLineHeight + 'px';
+        lettersContainer.style.top = settings.lettersY + 'px';
+        lettersContainer.style.fontSize = settings.lettersSize + 'px';        lettersContainer.style.color = settings.lettersColor;
+        lettersContainer.style.gap = settings.lettersSpacing + 'px';
+        indexDisplay.style.top = settings.indexY + 'px';
+        indexDisplay.style.fontSize = settings.indexSize + 'px';
+        indexDisplay.style.color = settings.indexColor;
+        indexDisplay.style.transform = 'translateX(calc(-50% + ' + settings.indexX + 'px))';
         
-        // Sélecteurs DOM
-        const homePage = document.getElementById('home-page');        const settingsPage = document.getElementById('settings-page');
-        const customizePage = document.getElementById('customize-page');
-        const lockPage = document.getElementById('lock-page');
-        const resultPage = document.getElementById('result-page');
-        const wordsContainer = document.getElementById('words-container');
-        const lettersContainer = document.getElementById('letters-container');
-        const indexDisplay = document.getElementById('index-display');
-        const noteButton = document.getElementById('note-button');
-        const noteImageOverlay = document.getElementById('note-image-overlay');
-        const noteImageDisplay = document.getElementById('note-image-display');
-        const noteImageText = document.getElementById('note-image-text');
-        const noteButtonPreview = document.getElementById('note-button-preview');
-        const btnPerform = document.getElementById('btn-perform');
-        const btnList = document.getElementById('btn-list');
-        const btnSettings = document.getElementById('btn-settings');
-        const importBgBtn = document.getElementById('import-bg-btn');
-        const importImgBtn = document.getElementById('import-img-btn');
-        const importNoteBtn = document.getElementById('import-note-btn');
-        const customizeBtn = document.getElementById('customize-btn');
-        const settingsBack = document.getElementById('settings-back');
-        const customizeBack = document.getElementById('customize-back');
-        const customizeBackMode = document.getElementById('customize-back-mode');
-        const customizeNoteMode = document.getElementById('customize-note-mode');
-        const testCodeContainer = document.getElementById('test-code-container');
-        const testCodeInput = document.getElementById('test-code-input');
-        const modeIndicator = document.getElementById('mode-indicator');
-        const colorPicker = document.getElementById('color-picker');
-        const customizePreview = document.getElementById('customize-preview');
-        const previewBtns = document.querySelectorAll('.preview-btn');
+        wordsYValue.textContent = settings.wordsY + 'px';
+        wordsSizeValue.textContent = settings.wordsSize + 'px';
+        wordsLineHeightValue.textContent = settings.wordsLineHeight + 'px';
+        lettersYValue.textContent = settings.lettersY + 'px';
+        lettersSizeValue.textContent = settings.lettersSize + 'px';
+        lettersSpacingValue.textContent = settings.lettersSpacing + 'px';
+        indexYValue.textContent = settings.indexY + 'px';
+        indexSizeValue.textContent = settings.indexSize + 'px';
+        indexXValue.textContent = settings.indexX + 'px';
         
-        const wordsY = document.getElementById('words-y');
-        const wordsSize = document.getElementById('words-size');
-        const wordsGap = document.getElementById('words-gap');
-        const wordsColor = document.getElementById('words-color');
-        const lettersY = document.getElementById('letters-y');
-        const lettersSize = document.getElementById('letters-size');
-        const lettersSpacing = document.getElementById('letters-spacing');
-        const lettersColor = document.getElementById('letters-color');
-        const indexY = document.getElementById('index-y');
-        const indexSize = document.getElementById('index-size');
-        const indexColor = document.getElementById('index-color');
-        const noteTextY = document.getElementById('note-text-y');
-        const noteTextX = document.getElementById('note-text-x');
-        const noteTextSize = document.getElementById('note-text-size');
-        const noteTextGap = document.getElementById('note-text-gap');
-        const noteTextColor = document.getElementById('note-text-color');
-        const noteButtonY = document.getElementById('note-button-y');
-        const noteButtonSize = document.getElementById('note-button-size');
-        const noteButtonColor = document.getElementById('note-button-color');
-                const wordsYValue = document.getElementById('words-y-value');
-        const wordsSizeValue = document.getElementById('words-size-value');
-        const wordsGapValue = document.getElementById('words-gap-value');
-        const lettersYValue = document.getElementById('letters-y-value');
-        const lettersSizeValue = document.getElementById('letters-size-value');
-        const lettersSpacingValue = document.getElementById('letters-spacing-value');
-        const indexYValue = document.getElementById('index-y-value');
-        const indexSizeValue = document.getElementById('index-size-value');
-        const noteTextYValue = document.getElementById('note-text-y-value');
-        const noteTextXValue = document.getElementById('note-text-x-value');
-        const noteTextSizeValue = document.getElementById('note-text-size-value');
-        const noteTextGapValue = document.getElementById('note-text-gap-value');
-        const noteButtonYValue = document.getElementById('note-button-y-value');
-        const noteButtonSizeValue = document.getElementById('note-button-size-value');
+        wordsY.value = settings.wordsY; wordsSize.value = settings.wordsSize; wordsColor.value = settings.wordsColor;
+        wordsLineHeight.value = settings.wordsLineHeight; lettersY.value = settings.lettersY;
+        lettersSize.value = settings.lettersSize; lettersColor.value = settings.lettersColor;
+        lettersSpacing.value = settings.lettersSpacing; indexY.value = settings.indexY;
+        indexSize.value = settings.indexSize; indexColor.value = settings.indexColor;
+        indexX.value = settings.indexX;
+    }
+
+    function updatePreviewWithCode(code) {
+        if (code.length !== 4) return;
+        currentCode = code;
+        originalWords = wordsList.filter(function(w) { return w.code === code; }).map(function(w) { return w.word; });
+        originalWords.sort(function(a, b) { return a.localeCompare(b); });
+        currentWords = originalWords.slice();
         
-        const searchInput = document.getElementById('search-input');
-        const searchBtn = document.getElementById('search-btn');
-        const codeResult = document.getElementById('codeResult');
-        const modal = document.getElementById('list-modal');
-        const modalOverlay = document.getElementById('modal-overlay');
+        var firstDigit = parseInt(code[0]);
+        letterLists = [];
+        for (var pos = 0; pos < firstDigit; pos++) {
+            letterLists[pos] = [];
+            for (var i = 0; i < originalWords.length; i++) {
+                var word = originalWords[i];
+                if (word.length > pos && letterLists[pos].indexOf(word[pos]) === -1) {
+                    letterLists[pos].push(word[pos]);
+                }
+            }
+            letterLists[pos].sort();
+        }
         
-        const bgFileInput = document.getElementById('bg-file-input');
-        const imgFileInput = document.getElementById('img-file-input');
-        const noteFileInput = document.getElementById('note-file-input');
-        const previewContainer = document.getElementById('preview-container');
-        const previewImage = document.getElementById('preview-image');
-        const previewConfirm = document.getElementById('preview-confirm');
-        const previewCancel = document.getElementById('preview-cancel');
-        const keys = document.querySelectorAll('#lock-page .key');
-        const dots = document.querySelectorAll('#lock-page .dot');
-        const deleteBtn = document.getElementById('deleteBtn');
-        const okBtn = document.getElementById('okBtn');
-        const emergencyBtn = document.getElementById('emergencyBtn');
-
-        // Variables
-        let wordsList = [];
-        const DEFAULT_NOTE_TEXT = "Barbecue\nIceberg\nCartouche\nYaourt\nCartable\nLivre\nEnveloppe\nTapis\nTrain\nEncre";
-        const DEFAULT_NOTE_IMAGE = 'image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="500" height="1000"%3E%3Crect fill="%23222" width="100%25" height="100%25"/%3E%3C/svg%3E';
+        bestListIndex = -1;
+        var maxSize = 0;
+        for (var i = 0; i < letterLists.length; i++) {
+            if (letterLists[i].length > maxSize) {
+                maxSize = letterLists[i].length;                bestListIndex = i;
+            }
+        }
+        bestListLetters = bestListIndex !== -1 ? letterLists[bestListIndex] : [];
         
-        const defaultSettings = {
-            wordsY: 265, wordsSize: 18, wordsGap: 15, wordsColor: '#ffffff',
-            lettersY: 460, lettersSize: 20, lettersSpacing: 40, lettersColor: '#ffffff',
-            indexY: 517, indexSize: 30, indexColor: '#1E6FF0',
-            noteButtonY: 520, noteButtonSize: 30, noteButtonColor: '#1877F2',
-            noteTextY: 265, noteTextX: 20, noteTextSize: 20, noteTextGap: 25, noteTextColor: '#ffffff'
-        };
-        
-        let currentSettings = { ...defaultSettings };
-        let currentMode = 'back'; // 'back' ou 'note'
-        let currentElement = null;        let selectionMode = 'single'; // 'single' ou 'double'
-        let noteImageData = localStorage.getItem('noteImage') || DEFAULT_NOTE_IMAGE;
-        let bgImageData = localStorage.getItem('backgroundImage') || '';
-        let lockImageData = localStorage.getItem('lockImage') || '';
-        let pin = '';
-        let currentCode = '';
-        let originalWords = [];
-        let currentWords = [];
-        let letterLists = [];
-        let bestListIndex = -1;
-        let bestListLetters = [];
-        let selectedLetter = '';
-        let lastTap = 0;
-        let isNoteModeActive = false;
-        let isNoteUnderlineActive = false;
-        let longPressTimer = null;
-        let isSearchDisabled = false;
+        indexDisplay.textContent = bestListIndex !== -1 ? (bestListIndex + 1).toString() : '';
+        displayWords(currentWords);
+        displayLetterButtons(bestListIndex, bestListLetters);
+        wordsContainer.classList.remove('hidden');
+        lettersContainer.classList.remove('hidden');
+    }
 
-        // Charger words.json
-        async function loadWordsList() {
-            try {
-                const response = await fetch(BASE_PATH + 'words.json');
-                if (!response.ok) throw new Error();
-                wordsList = await response.json();
-            } catch (e) {
-                wordsList = [
-                    { code: "7131", word: "Abeille" }, { code: "7141", word: "Abricot" },
-                    { code: "9141", word: "Accordeon" }, { code: "6131", word: "Agenda" },
-                    { code: "6141", word: "Agneau" }, { code: "9141", word: "Agrafeuse" },
-                    { code: "5121", word: "Aigle" }, { code: "8121", word: "Aiguille" },
-                    { code: "3121", word: "Ail" }, { code: "4121", word: "Aile" }
-                ];
-            }
+    function displayWords(words) {
+        wordsContainer.innerHTML = '';
+        if (words.length === 0) {
+            wordsContainer.innerHTML = '<div class="words-line">Aucun mot</div>';
+            return;
         }
-
-        // Mettre à jour les valeurs affichées
-        function updateDisplayValues(s) {
-            wordsYValue.textContent = s.wordsY + 'px';
-            wordsSizeValue.textContent = s.wordsSize + 'px';
-            wordsGapValue.textContent = s.wordsGap + 'px';
-            lettersYValue.textContent = s.lettersY + 'px';
-            lettersSizeValue.textContent = s.lettersSize + 'px';
-            lettersSpacingValue.textContent = s.lettersSpacing + 'px';
-            indexYValue.textContent = s.indexY + 'px';
-            indexSizeValue.textContent = s.indexSize + 'px';
-            noteTextYValue.textContent = s.noteTextY + 'px';
-            noteTextXValue.textContent = s.noteTextX + 'px';
-            noteTextSizeValue.textContent = s.noteTextSize + 'px';
-            noteTextGapValue.textContent = s.noteTextGap + 'px';
-            noteButtonYValue.textContent = s.noteButtonY + 'px';            noteButtonSizeValue.textContent = s.noteButtonSize + 'px';
-        }
-
-        // Appliquer les paramètres
-        function applyCustomSettings(s) {
-            wordsContainer.style.top = s.wordsY + 'px';
-            wordsContainer.style.fontSize = s.wordsSize + 'px';
-            wordsContainer.style.color = s.wordsColor;
-            wordsContainer.style.gap = s.wordsGap + 'px';
-            
-            lettersContainer.style.top = s.lettersY + 'px';
-            lettersContainer.style.fontSize = s.lettersSize + 'px';
-            lettersContainer.style.color = s.lettersColor;
-            lettersContainer.style.gap = s.lettersSpacing + 'px';
-            
-            indexDisplay.style.top = s.indexY + 'px';
-            indexDisplay.style.fontSize = s.indexSize + 'px';
-            indexDisplay.style.color = s.indexColor;
-            
-            noteImageText.style.top = s.noteTextY + 'px';
-            noteImageText.style.left = s.noteTextX + 'px';
-            noteImageText.style.fontSize = s.noteTextSize + 'px';
-            noteImageText.style.color = s.noteTextColor;
-            noteImageText.style.lineHeight = s.noteTextGap + 'px';
-            
-            noteButton.style.top = s.noteButtonY + 'px';
-            noteButton.style.width = s.noteButtonSize + 'px';
-            noteButton.style.height = s.noteButtonSize + 'px';
-            noteButton.style.background = s.noteButtonColor;
-            
-            noteButtonPreview.style.top = s.noteButtonY + 'px';
-            noteButtonPreview.style.width = s.noteButtonSize + 'px';
-            noteButtonPreview.style.height = s.noteButtonSize + 'px';
-            noteButtonPreview.style.background = s.noteButtonColor;
-            
-            updateDisplayValues(s);
-            
-            // Mettre à jour les sliders
-            wordsY.value = s.wordsY; wordsSize.value = s.wordsSize; wordsGap.value = s.wordsGap; wordsColor.value = s.wordsColor;
-            lettersY.value = s.lettersY; lettersSize.value = s.lettersSize; lettersSpacing.value = s.lettersSpacing; lettersColor.value = s.lettersColor;
-            indexY.value = s.indexY; indexSize.value = s.indexSize; indexColor.value = s.indexColor;
-            noteTextY.value = s.noteTextY; noteTextX.value = s.noteTextX; noteTextSize.value = s.noteTextSize; noteTextGap.value = s.noteTextGap; noteTextColor.value = s.noteTextColor;
-            noteButtonY.value = s.noteButtonY; noteButtonSize.value = s.noteButtonSize; noteButtonColor.value = s.noteButtonColor;
-        }
-
-        // Afficher la preview selon le mode
-        function updatePreview() {
-            if (currentMode === 'back') {
-                let bgStyle = bgImageData ? `background-image: url(${bgImageData}); background-size: cover; background-position: center;` : 'background: #222;';
-                customizePreview.innerHTML = `                    <div id="preview-result" class="customize-preview-element" style="${bgStyle}; position: absolute; inset: 0;">
-                        <div class="words-container customizable-element" id="preview-words" data-element="words" style="top:${currentSettings.wordsY}px;font-size:${currentSettings.wordsSize}px;color:${currentSettings.wordsColor};gap:${currentSettings.wordsGap}px;">
-                            <div class="words-line"><span class="result-word">Abeille</span> <span class="result-word">Abricot</span></div>
-                        </div>
-                        <div class="letters-container customizable-element" id="preview-letters" data-element="letters" style="top:${currentSettings.lettersY}px;font-size:${currentSettings.lettersSize}px;color:${currentSettings.lettersColor};gap:${currentSettings.lettersSpacing}px;">
-                            <span class="letter-btn">A</span><span class="separator">    </span><span class="letter-btn">B</span><span class="separator">    </span><span class="letter-btn">C</span>
-                        </div>
-                        <div class="index-display customizable-element" id="preview-index" data-element="index" style="top:${currentSettings.indexY}px;font-size:${currentSettings.indexSize}px;color:${currentSettings.indexColor};">1</div>
-                        <div class="note-button customizable-element" id="preview-note-btn" data-element="noteButton" style="top:${currentSettings.noteButtonY}px;width:${currentSettings.noteButtonSize}px;height:${currentSettings.noteButtonSize}px;background:${currentSettings.noteButtonColor};"></div>
-                    </div>
-                `;
-                
-                // Attacher les événements de gestes
-                attachGestureEvents();
-            } else {
-                let noteStyle = noteImageData ? `background-image: url(${noteImageData}); background-size: cover; background-position: center;` : 'background: #222;';
-                customizePreview.innerHTML = `
-                    <div id="preview-note" class="customize-preview-element" style="${noteStyle}; position: absolute; inset: 0;">
-                        <div class="note-image-text customizable-element" id="preview-note-text" data-element="noteText" style="top:${currentSettings.noteTextY}px;left:${currentSettings.noteTextX}px;font-size:${currentSettings.noteTextSize}px;color:${currentSettings.noteTextColor};line-height:${currentSettings.noteTextGap}px;">
-                            Barbecue<br>Iceberg<br>Cartouche<br>Yaourt
-                        </div>
-                    </div>
-                `;
-                
-                // Attacher les événements de gestes
-                attachGestureEvents();
-            }
-        }
-
-        // Attacher les événements de gestes tactiles
-        function attachGestureEvents() {
-            const elements = document.querySelectorAll('.customizable-element');
-            
-            elements.forEach(element => {
-                let lastTouchDistance = null;
-                let startX, startY;
-                let initialTop, initialLeft, initialFontSize, initialGap;
-                let elementKey = element.getAttribute('data-element');
-                
-                // Single tap
-                element.addEventListener('click', (e) => {
-                    if (e.detail === 1) {
-                        selectElement(element, 'single');
-                    }
-                });
-                
-                // Double tap
-                element.addEventListener('dblclick', (e) => {
-                    e.preventDefault();
-                    selectElement(element, 'double');                });
-                
-                // Touch events pour pinch et drag
-                element.addEventListener('touchstart', (e) => {
-                    if (e.touches.length === 2) {
-                        // Pinch
-                        lastTouchDistance = getTouchDistance(e);
-                        const rect = element.getBoundingClientRect();
-                        initialTop = currentSettings[elementKey + 'Y'] || currentSettings[elementKey + 'Top'] || parseInt(element.style.top) || 0;
-                        initialLeft = currentSettings[elementKey + 'X'] || parseInt(element.style.left) || 0;
-                        initialFontSize = currentSettings[elementKey + 'Size'] || parseInt(element.style.fontSize) || 20;
-                        initialGap = currentSettings[elementKey + 'Gap'] || currentSettings[elementKey + 'Spacing'] || parseInt(element.style.gap) || 15;
-                    } else if (e.touches.length === 1) {
-                        // Drag
-                        startX = e.touches[0].clientX;
-                        startY = e.touches[0].clientY;
-                        const rect = element.getBoundingClientRect();
-                        initialTop = currentSettings[elementKey + 'Y'] || currentSettings[elementKey + 'Top'] || parseInt(element.style.top) || 0;
-                        initialLeft = currentSettings[elementKey + 'X'] || parseInt(element.style.left) || 0;
-                    }
-                }, { passive: true });
-                
-                element.addEventListener('touchmove', (e) => {
-                    if (e.touches.length === 2 && lastTouchDistance !== null) {
-                        // Pinch pour taille ou espacement
-                        e.preventDefault();
-                        const currentDistance = getTouchDistance(e);
-                        const scale = currentDistance / lastTouchDistance;
-                        
-                        if (selectionMode === 'single') {
-                            // Taille
-                            const newSize = Math.max(10, Math.min(60, initialFontSize * scale));
-                            updateElementValue(elementKey, 'Size', newSize);
-                        } else {
-                            // Espacement
-                            const newGap = Math.max(5, Math.min(100, initialGap * scale));
-                            if (elementKey === 'letters') {
-                                updateElementValue(elementKey, 'Spacing', newGap);
-                            } else {
-                                updateElementValue(elementKey, 'Gap', newGap);
-                            }
-                        }
-                        
-                        lastTouchDistance = currentDistance;
-                    } else if (e.touches.length === 1 && startX !== undefined) {
-                        // Drag pour position
-                        e.preventDefault();
-                        const dx = e.touches[0].clientX - startX;
-                        const dy = e.touches[0].clientY - startY;
-                                                const newY = initialTop + dy;
-                        const newX = initialLeft + dx;
-                        
-                        updateElementValue(elementKey, 'Y', newY);
-                        if (elementKey === 'noteText' || elementKey === 'noteButton') {
-                            updateElementValue(elementKey, 'X', newX);
-                        }
-                    }
-                }, { passive: false });
-                
-                element.addEventListener('touchend', () => {
-                    lastTouchDistance = null;
-                    startX = undefined;
-                    startY = undefined;
-                });
-            });
-            
-            // Color picker
-            const colorOptions = document.querySelectorAll('.color-option');
-            colorOptions.forEach(option => {
-                option.addEventListener('click', () => {
-                    if (currentElement) {
-                        const color = option.getAttribute('data-color');
-                        const elementKey = currentElement.getAttribute('data-element');
-                        updateElementValue(elementKey, 'Color', color);
-                        colorPicker.classList.remove('visible');
-                    }
-                });
-            });
-        }
-
-        // Obtenir la distance entre deux doigts
-        function getTouchDistance(e) {
-            const dx = e.touches[0].clientX - e.touches[1].clientX;
-            const dy = e.touches[0].clientY - e.touches[1].clientY;
-            return Math.sqrt(dx * dx + dy * dy);
-        }
-
-        // Sélectionner un élément
-        function selectElement(element, mode) {
-            // Désélectionner tous les éléments
-            document.querySelectorAll('.customizable-element').forEach(el => {
-                el.classList.remove('selected', 'selected-double');
-            });
-            
-            // Sélectionner l'élément cliqué
-            currentElement = element;
-            selectionMode = mode;
-            
-            if (mode === 'single') {                element.classList.add('selected');
-                modeIndicator.textContent = '👆 Position/Taille';
-                modeIndicator.className = 'mode-indicator visible single';
-                colorPicker.classList.remove('visible');
-            } else {
-                element.classList.add('selected-double');
-                modeIndicator.textContent = '👆👆 Espacement/Couleur';
-                modeIndicator.className = 'mode-indicator visible double';
-            }
-            
-            const elementKey = element.getAttribute('data-element');
-            
-            // Afficher le color picker en mode double + swipe horizontal
-            if (mode === 'double') {
-                setTimeout(() => {
-                    colorPicker.classList.add('visible');
-                }, 300);
-            }
-        }
-
-        // Mettre à jour la valeur d'un élément
-        function updateElementValue(elementKey, property, value) {
-            const key = elementKey + property;
-            
-            if (currentSettings.hasOwnProperty(key)) {
-                currentSettings[key] = value;
-                
-                // Appliquer les changements
-                if (elementKey === 'words') {
-                    const el = document.getElementById('preview-words');
-                    if (property === 'Y') el.style.top = value + 'px';
-                    else if (property === 'Size') el.style.fontSize = value + 'px';
-                    else if (property === 'Gap') el.style.gap = value + 'px';
-                    else if (property === 'Color') el.style.color = value;
-                } else if (elementKey === 'letters') {
-                    const el = document.getElementById('preview-letters');
-                    if (property === 'Y') el.style.top = value + 'px';
-                    else if (property === 'Size') el.style.fontSize = value + 'px';
-                    else if (property === 'Spacing') el.style.gap = value + 'px';
-                    else if (property === 'Color') el.style.color = value;
-                } else if (elementKey === 'index') {
-                    const el = document.getElementById('preview-index');
-                    if (property === 'Y') el.style.top = value + 'px';
-                    else if (property === 'Size') el.style.fontSize = value + 'px';
-                    else if (property === 'Color') el.style.color = value;
-                } else if (elementKey === 'noteButton') {
-                    const el = document.getElementById('preview-note-btn');
-                    if (property === 'Y') el.style.top = value + 'px';
-                    else if (property === 'Size') { el.style.width = value + 'px'; el.style.height = value + 'px'; }
-                    else if (property === 'Color') el.style.background = value;                } else if (elementKey === 'noteText') {
-                    const el = document.getElementById('preview-note-text');
-                    if (property === 'Y') el.style.top = value + 'px';
-                    else if (property === 'X') el.style.left = value + 'px';
-                    else if (property === 'Size') el.style.fontSize = value + 'px';
-                    else if (property === 'Gap') el.style.lineHeight = value + 'px';
-                    else if (property === 'Color') el.style.color = value;
-                }
-                
-                // Mettre à jour le slider correspondant
-                const slider = document.getElementById(elementKey.toLowerCase() + '-' + property.toLowerCase().replace('spacing', 'spacing').replace('gap', 'gap'));
-                if (slider) {
-                    slider.value = value;
-                }
-                
-                const badge = document.getElementById(elementKey.toLowerCase() + '-' + property.toLowerCase() + '-value');
-                if (badge) {
-                    badge.textContent = Math.round(value) + (property === 'Color' ? '' : 'px');
-                }
-            }
-        }
-
-        // Sauvegarder les paramètres
-        function saveCustomSettings(settings) {
-            localStorage.setItem('customSettings', JSON.stringify(settings));
-        }
-
-        // Setup import images
-        function setupImageImport(inputEl, type) {
-            inputEl.addEventListener('change', function(e) {
-                const file = e.target.files[0];
-                if (!file) return;
-                const reader = new FileReader();
-                reader.onload = function(event) {
-                    const data = event.target.result;
-                    if (type === 'bg') {
-                        bgImageData = data;
-                        localStorage.setItem('backgroundImage', data);
-                    } else if (type === 'lock') {
-                        lockImageData = data;
-                        localStorage.setItem('lockImage', data);
-                    } else {
-                        noteImageData = data;
-                        localStorage.setItem('noteImage', data);
-                    }
-                    previewImage.src = data;
-                    previewContainer.classList.add('visible');
-                };
-                reader.readAsDataURL(file);
-            });        }
-
-        // Autres fonctions originales
-        function generateNoteList(clickedWord) {
-            const letters = clickedWord.toLowerCase().split('');
-            const result = [];
-            const wordsByLetter = {};
-            wordsList.forEach(item => {
-                const firstLetter = item.word.charAt(0).toLowerCase();
-                if (!wordsByLetter[firstLetter]) wordsByLetter[firstLetter] = [];
-                wordsByLetter[firstLetter].push(item.word);
-            });
-            letters.forEach(letter => {
-                const candidates = wordsByLetter[letter] || [];
-                const filtered = candidates.filter(w => w.toLowerCase() !== clickedWord.toLowerCase());
-                if (filtered.length > 0) {
-                    const randomWord = filtered[Math.floor(Math.random() * filtered.length)];
-                    result.push(randomWord.charAt(0).toUpperCase() + randomWord.slice(1));
-                } else {
-                    result.push(letter.toUpperCase());
-                }
-            });
-            return result.join('\n');
-        }
-
-        function setupLongPressUnderline() {
-            const handlePressStart = () => {
-                longPressTimer = setTimeout(() => {
-                    isNoteUnderlineActive = !isNoteUnderlineActive;
-                    updateNoteUnderline();
-                    if (navigator.vibrate) navigator.vibrate(50);
-                }, 1000);
-            };
-            const handlePressEnd = () => {
-                if (longPressTimer) { clearTimeout(longPressTimer); longPressTimer = null; }
-            };
-            noteImageOverlay.addEventListener('touchstart', handlePressStart, { passive: true });
-            noteImageOverlay.addEventListener('touchend', handlePressEnd);
-            noteImageOverlay.addEventListener('touchcancel', handlePressEnd);
-            noteImageOverlay.addEventListener('mousedown', handlePressStart);
-            noteImageOverlay.addEventListener('mouseup', handlePressEnd);
-            noteImageOverlay.addEventListener('mouseleave', handlePressEnd);
-        }
-
-        function updateNoteUnderline() {
-            const text = noteImageText.innerHTML;
-            const lines = text.split('<br>');
-            const newLines = lines.map(line => {
-                if (line.length > 0) {
-                    const firstChar = line.charAt(0);                    const rest = line.slice(1);
-                    const className = isNoteUnderlineActive ? 'note-word-first-letter underlined' : 'note-word-first-letter';
-                    return '<span class="' + className + '">' + firstChar + '</span>' + rest;
-                }
-                return line;
-            });
-            noteImageText.innerHTML = newLines.join('<br>');
-        }
-
-        function animateKey(element) {
-            if (!element) return;
-            element.classList.add('active');
-            setTimeout(() => element.classList.remove('active'), 350);
-        }
-
-        function animateText(element) {
-            if (!element) return;
-            element.classList.add('active-text');
-            setTimeout(() => element.classList.remove('active-text'), 350);
-        }
-
-        function updateDots() {
-            for (let i = 0; i < dots.length; i++) {
-                dots[i].classList.toggle('active', i < pin.length);
-            }
-        }
-
-        function resetModalToNormal() {
-            searchInput.value = '';
-            codeResult.textContent = '';
-            codeResult.classList.remove('error');
-            enableSearchButton();
-        }
-
-        function searchWord(wordToFind) {
-            const normalizedSearch = wordToFind.trim().toLowerCase();
-            for (let i = 0; i < wordsList.length; i++) {
-                if (wordsList[i].word.toLowerCase() === normalizedSearch) {
-                    return wordsList[i];
-                }
-            }
-            return null;
-        }
-
-        function enableSearchButton() {
-            searchBtn.classList.remove('disabled');
-            isSearchDisabled = false;
-            codeResult.textContent = '';
-            codeResult.classList.remove('error');
-        }
-        function disableSearchButton() {
-            searchBtn.classList.add('disabled');
-            isSearchDisabled = true;
-        }
-
-        function calculateLetterLists(words) {
-            if (words.length === 0) return [];
-            const firstDigit = parseInt(currentCode[0]);
-            const lists = [];
-            for (let pos = 0; pos < firstDigit; pos++) lists[pos] = [];
-            for (let i = 0; i < words.length; i++) {
-                const word = words[i];
-                for (let pos = 0; pos < word.length && pos < firstDigit; pos++) {
-                    const letter = word[pos];
-                    if (!lists[pos].includes(letter)) lists[pos].push(letter);
-                }
-            }
-            for (let pos = 0; pos < lists.length; pos++) lists[pos].sort((a, b) => a.localeCompare(b));
-            return lists;
-        }
-
-        function findBestList(lists) {
-            let maxSize = -1, bestIndex = -1;
-            for (let i = 0; i < lists.length; i++) {
-                if (lists[i].length > maxSize) {
-                    maxSize = lists[i].length;
-                    bestIndex = i;
-                }
-            }
-            return bestIndex;
-        }
-
-        function displayWords(words) {
-            wordsContainer.innerHTML = '';
-            const sortedWords = [...words].sort((a, b) => a.localeCompare(b));
-            if (sortedWords.length === 0) {
-                const noWord = document.createElement('span');
-                noWord.className = 'result-word';
-                noWord.textContent = 'Aucun mot';
-                const line = document.createElement('div');
-                line.className = 'words-line';
-                line.appendChild(noWord);
-                wordsContainer.appendChild(line);
-                return;
-            }
-            let currentLine = document.createElement('div');
-            currentLine.className = 'words-line';
-            for (let i = 0; i < sortedWords.length; i++) {
-                const word = sortedWords[i];                const wordSpan = document.createElement('span');
-                wordSpan.className = 'result-word';
-                wordSpan.textContent = word;
-                wordSpan.addEventListener('click', function(e) {
+        var line = document.createElement('div');
+        line.className = 'words-line';
+        for (var i = 0; i < words.length; i++) {
+            var word = words[i];
+            var span = document.createElement('span');
+            span.className = 'result-word';
+            span.textContent = word;
+            (function(w) {
+                span.addEventListener('click', function(e) {
                     e.stopPropagation();
-                    if (isNoteModeActive && noteImageData) {
-                        const dynamicList = generateNoteList(word);
-                        noteImageDisplay.src = noteImageData;
-                        noteImageText.innerHTML = dynamicList.replace(/\n/g, '<br>');
-                        noteButtonPreview.classList.remove('visible');
-                        noteImageOverlay.classList.add('visible');
-                        updateNoteUnderline();
+                    if (noteModeActive) {
+                        openNotePage(w);
                     } else {
-                        window.open('https://www.google.com/search?tbm=isch&q=' + encodeURIComponent(this.textContent), '_blank');
+                        window.open('https://www.google.com/search?tbm=isch&q=' + encodeURIComponent(w), '_blank');
                     }
                 });
-                currentLine.appendChild(wordSpan);
-                if (i < sortedWords.length - 1) {
-                    const space = document.createElement('span');
-                    space.textContent = ' ';
-                    currentLine.appendChild(space);
-                }
-            }
-            wordsContainer.appendChild(currentLine);
+            })(word);
+            line.appendChild(span);
+            if (i < words.length - 1) line.appendChild(document.createTextNode(' '));
         }
+        wordsContainer.appendChild(line);
+    }
 
-        function displayLetterButtons(index, letters) {
-            lettersContainer.innerHTML = '';
-            if (index === -1 || letters.length === 0) return;
-            const sortedLetters = [...letters].sort((a, b) => a.localeCompare(b));
-            for (let i = 0; i < sortedLetters.length; i++) {
-                const letter = sortedLetters[i];
-                const letterSpan = document.createElement('span');
-                letterSpan.className = 'letter-btn';
-                if (selectedLetter === letter) letterSpan.classList.add('selected');
-                letterSpan.textContent = letter.toUpperCase();
-                letterSpan.addEventListener('click', function(e) {
+    function openNotePage(word) {
+        noteText.textContent = word;
+        notePage.classList.add('visible');
+    }
+
+    function displayLetterButtons(index, letters) {
+        lettersContainer.innerHTML = '';
+        if (letters.length === 0) return;
+        for (var i = 0; i < letters.length; i++) {            var letter = letters[i];
+            var span = document.createElement('span');
+            span.className = 'letter-btn' + (selectedLetter === letter ? ' selected' : '');
+            span.textContent = letter.toUpperCase();
+            (function(ltr) {
+                span.addEventListener('click', function(e) {
                     e.stopPropagation();
-                    if (this.classList.contains('selected')) {
-                        this.classList.remove('selected');
+                    if (selectedLetter === ltr) {
                         selectedLetter = '';
-                        currentWords = [...originalWords];
-                        displayWords(currentWords);
+                        currentWords = originalWords.slice();
                     } else {
-                        document.querySelectorAll('.letter-btn.selected').forEach(el => el.classList.remove('selected'));
-                        this.classList.add('selected');
-                        selectedLetter = letter;
-                        const pos = bestListIndex;
-                        currentWords = originalWords.filter(word => word.length > pos && word[pos] === letter);
-                        displayWords(currentWords);                    }
+                        selectedLetter = ltr;
+                        currentWords = originalWords.filter(function(w) { return w[index] === ltr; });
+                    }
+                    var btns = document.querySelectorAll('.letter-btn');
+                    for (var j = 0; j < btns.length; j++) btns[j].classList.remove('selected');
+                    if (selectedLetter) span.classList.add('selected');
+                    displayWords(currentWords);
                 });
-                lettersContainer.appendChild(letterSpan);
-                if (i < sortedLetters.length - 1) {
-                    const spacer = document.createElement('span');
-                    spacer.className = 'separator';
-                    spacer.innerHTML = '    ';
-                    lettersContainer.appendChild(spacer);
-                }
+            })(letter);
+            lettersContainer.appendChild(span);
+            if (i < letters.length - 1) {
+                var spacer = document.createElement('span');
+                spacer.innerHTML = '    ';
+                lettersContainer.appendChild(spacer);
             }
         }
+    }
 
-        function updatePreviewWithCode(code) {
-            if (code.length === 4) {
-                currentCode = code;
-                originalWords = wordsList.filter(w => w.code === code).map(w => w.word);
-                originalWords.sort((a, b) => a.localeCompare(b));
-                currentWords = [...originalWords];
-                letterLists = calculateLetterLists(originalWords);
-                bestListIndex = findBestList(letterLists);
-                bestListLetters = bestListIndex !== -1 ? letterLists[bestListIndex] : [];
-                bestListLetters.sort((a, b) => a.localeCompare(b));
-                indexDisplay.textContent = bestListIndex !== -1 ? (bestListIndex + 1).toString() : '';
-                displayWords(currentWords);
-                displayLetterButtons(bestListIndex, bestListLetters);
-                wordsContainer.classList.remove('hidden');
-                lettersContainer.classList.remove('hidden');
-            }
+    function startDragging() { customizePage.classList.add('dragging-slider'); resultPage.classList.add('dragging-active'); }
+    function stopDragging() { customizePage.classList.remove('dragging-slider'); resultPage.classList.remove('dragging-active'); }
+
+    var allSliders = [wordsY, wordsSize, wordsLineHeight, lettersY, lettersSize, lettersSpacing, indexY, indexSize, indexX];
+    for (var i = 0; i < allSliders.length; i++) {
+        if (allSliders[i]) {
+            allSliders[i].addEventListener('touchstart', startDragging);
+            allSliders[i].addEventListener('touchend', stopDragging);
+            allSliders[i].addEventListener('touchcancel', stopDragging);
         }
+    }
 
-        function loadCustomSettings() {
-            const saved = localStorage.getItem('customSettings');
-            if (saved) {
-                try { currentSettings = { ...defaultSettings, ...JSON.parse(saved) }; }
-                catch (e) { currentSettings = { ...defaultSettings }; }
-            }
-            applyCustomSettings(currentSettings);
+    var previewBtns = [previewListBtn, previewLettersBtn, previewIndexBtn];
+    for (var i = 0; i < previewBtns.length; i++) {
+        if (previewBtns[i]) {
+            previewBtns[i].addEventListener('touchstart', startDragging);
+            previewBtns[i].addEventListener('touchend', stopDragging);
+            previewBtns[i].addEventListener('touchcancel', stopDragging);
         }
+    }
+    function resetToDefault(setting, defaultValue) {
+        return function() {
+            currentSettings[setting] = defaultValue;
+            
+            if (setting === 'wordsY') {
+                wordsContainer.style.top = defaultValue + 'px';
+                wordsYValue.textContent = defaultValue + 'px';
+                wordsY.value = defaultValue;
+            }
+            else if (setting === 'wordsSize') {
+                wordsContainer.style.fontSize = defaultValue + 'px';
+                wordsSizeValue.textContent = defaultValue + 'px';
+                wordsSize.value = defaultValue;
+            }
+            else if (setting === 'wordsLineHeight') {
+                wordsContainer.style.lineHeight = defaultValue + 'px';
+                wordsLineHeightValue.textContent = defaultValue + 'px';
+                wordsLineHeight.value = defaultValue;
+            }
+            else if (setting === 'lettersY') {
+                lettersContainer.style.top = defaultValue + 'px';
+                lettersYValue.textContent = defaultValue + 'px';
+                lettersY.value = defaultValue;
+            }
+            else if (setting === 'lettersSize') {
+                lettersContainer.style.fontSize = defaultValue + 'px';
+                lettersSizeValue.textContent = defaultValue + 'px';
+                lettersSize.value = defaultValue;
+            }
+            else if (setting === 'lettersSpacing') {
+                lettersContainer.style.gap = defaultValue + 'px';
+                lettersSpacingValue.textContent = defaultValue + 'px';
+                lettersSpacing.value = defaultValue;
+            }
+            else if (setting === 'indexY') {
+                indexDisplay.style.top = defaultValue + 'px';
+                indexYValue.textContent = defaultValue + 'px';
+                indexY.value = defaultValue;
+            }
+            else if (setting === 'indexSize') {
+                indexDisplay.style.fontSize = defaultValue + 'px';
+                indexSizeValue.textContent = defaultValue + 'px';
+                indexSize.value = defaultValue;
+            }
+            else if (setting === 'indexX') {
+                indexDisplay.style.transform = 'translateX(calc(-50% + ' + defaultValue + 'px))';
+                indexXValue.textContent = defaultValue + 'px';
+                indexX.value = defaultValue;
+            }
+        };    }
 
-        // Navigation
-        if (btnPerform) btnPerform.addEventListener('click', () => { homePage.classList.add('hidden'); lockPage.classList.add('visible'); pin = ''; updateDots(); });
-        if (btnList) btnList.addEventListener('click', () => { resetModalToNormal(); modal.classList.add('visible'); modalOverlay.classList.add('visible'); });
-        if (btnSettings) btnSettings.addEventListener('click', () => { homePage.classList.add('hidden'); settingsPage.classList.add('visible'); });
-        if (settingsBack) settingsBack.addEventListener('click', () => { settingsPage.classList.remove('visible'); homePage.classList.remove('hidden'); previewContainer.classList.remove('visible'); bgFileInput.value = ''; imgFileInput.value = ''; noteFileInput.value = ''; });
-        if (modalOverlay) modalOverlay.addEventListener('click', () => { modal.classList.remove('visible'); modalOverlay.classList.remove('visible'); searchInput.blur(); resetModalToNormal(); });
+    wordsYValue.addEventListener('click', resetToDefault('wordsY', defaultSettings.wordsY));
+    wordsSizeValue.addEventListener('click', resetToDefault('wordsSize', defaultSettings.wordsSize));
+    wordsLineHeightValue.addEventListener('click', resetToDefault('wordsLineHeight', defaultSettings.wordsLineHeight));
+    lettersYValue.addEventListener('click', resetToDefault('lettersY', defaultSettings.lettersY));
+    lettersSizeValue.addEventListener('click', resetToDefault('lettersSize', defaultSettings.lettersSize));
+    lettersSpacingValue.addEventListener('click', resetToDefault('lettersSpacing', defaultSettings.lettersSpacing));
+    indexYValue.addEventListener('click', resetToDefault('indexY', defaultSettings.indexY));
+    indexSizeValue.addEventListener('click', resetToDefault('indexSize', defaultSettings.indexSize));
+    indexXValue.addEventListener('click', resetToDefault('indexX', defaultSettings.indexX));
 
-        // ✅ MODIFICATION 2 : Modal à 20% quand clavier visible
-        if (searchInput) {
-            searchInput.addEventListener('input', () => { enableSearchButton(); codeResult.textContent = ''; codeResult.classList.remove('error'); });
-            searchInput.addEventListener('keypress', (e) => { if (e.key === 'Enter' && !isSearchDisabled) searchBtn.click(); });            searchInput.addEventListener('focus', () => {
-                setTimeout(() => {
-                    modal.classList.add('keyboard-visible');
-                }, 300);
-            });
-            searchInput.addEventListener('blur', () => {
-                modal.classList.remove('keyboard-visible');
-            });
+    wordsY.addEventListener('input', function(e) { currentSettings.wordsY = parseInt(e.target.value); wordsYValue.textContent = currentSettings.wordsY + 'px'; wordsContainer.style.top = currentSettings.wordsY + 'px'; });
+    wordsSize.addEventListener('input', function(e) { currentSettings.wordsSize = parseInt(e.target.value); wordsSizeValue.textContent = currentSettings.wordsSize + 'px'; wordsContainer.style.fontSize = currentSettings.wordsSize + 'px'; });
+    wordsColor.addEventListener('input', function(e) { currentSettings.wordsColor = e.target.value; wordsContainer.style.color = currentSettings.wordsColor; });
+    wordsLineHeight.addEventListener('input', function(e) { currentSettings.wordsLineHeight = parseInt(e.target.value); wordsLineHeightValue.textContent = currentSettings.wordsLineHeight + 'px'; wordsContainer.style.lineHeight = currentSettings.wordsLineHeight + 'px'; });
+    lettersY.addEventListener('input', function(e) { currentSettings.lettersY = parseInt(e.target.value); lettersYValue.textContent = currentSettings.lettersY + 'px'; lettersContainer.style.top = currentSettings.lettersY + 'px'; });
+    lettersSize.addEventListener('input', function(e) { currentSettings.lettersSize = parseInt(e.target.value); lettersSizeValue.textContent = currentSettings.lettersSize + 'px'; lettersContainer.style.fontSize = currentSettings.lettersSize + 'px'; });
+    lettersColor.addEventListener('input', function(e) { currentSettings.lettersColor = e.target.value; lettersContainer.style.color = currentSettings.lettersColor; });
+    lettersSpacing.addEventListener('input', function(e) { currentSettings.lettersSpacing = parseInt(e.target.value); lettersSpacingValue.textContent = currentSettings.lettersSpacing + 'px'; lettersContainer.style.gap = currentSettings.lettersSpacing + 'px'; });
+    indexY.addEventListener('input', function(e) { currentSettings.indexY = parseInt(e.target.value); indexYValue.textContent = currentSettings.indexY + 'px'; indexDisplay.style.top = currentSettings.indexY + 'px'; });
+    indexSize.addEventListener('input', function(e) { currentSettings.indexSize = parseInt(e.target.value); indexSizeValue.textContent = currentSettings.indexSize + 'px'; indexDisplay.style.fontSize = currentSettings.indexSize + 'px'; });
+    indexColor.addEventListener('input', function(e) { currentSettings.indexColor = e.target.value; indexDisplay.style.color = currentSettings.indexColor; });
+    indexX.addEventListener('input', function(e) { currentSettings.indexX = parseInt(e.target.value); indexXValue.textContent = currentSettings.indexX + 'px'; indexDisplay.style.transform = 'translateX(calc(-50% + ' + currentSettings.indexX + 'px))'; });
+
+    testCodeInput.addEventListener('input', function(e) {
+        var code = e.target.value.trim();
+        if (code.length === 4 && /^\d+$/.test(code)) updatePreviewWithCode(code);
+    });
+
+    searchInput.addEventListener('input', function() { enableSearchButton(); codeResult.textContent = ''; codeResult.classList.remove('error'); });
+
+    searchBtn.addEventListener('click', function() {
+        if (isSearchDisabled) return;
+        var word = searchInput.value.trim();
+        if (!word) return;
+        var result = searchWord(word);
+        if (result) {
+            codeResult.textContent = result.code;
+            codeResult.classList.remove('error');
+            disableSearchButton();
+            searchInput.blur();
+        } else {
+            codeResult.textContent = 'Mot introuvable !';
+            codeResult.classList.add('error');
         }
+    });
 
-        if (searchBtn) searchBtn.addEventListener('click', () => {
-            if (isSearchDisabled) return;
-            const word = searchInput.value.trim();
-            if (word === '') return;
-            const result = searchWord(word);
-            if (result) {
-                codeResult.textContent = result.code;
-                codeResult.classList.remove('error');
-                disableSearchButton();
-                searchInput.blur();
-            } else {
-                codeResult.textContent = 'Mot introuvable !';
-                codeResult.classList.add('error');
-            }
-        });
+    searchInput.addEventListener('keypress', function(e) { if (e.key === 'Enter' && !isSearchDisabled) searchBtn.click(); });
+    btnPerform.addEventListener('click', function() {
+        homePage.classList.add('hidden');
+        lockPage.classList.add('visible');
+        pin = '';
+        updateDots();
+    });
 
-        setupImageImport(bgFileInput, 'bg');
-        setupImageImport(imgFileInput, 'lock');
-        setupImageImport(noteFileInput, 'note');
+    btnList.addEventListener('click', function() {
+        resetModalToNormal();
+        modal.classList.add('visible');
+        modalOverlay.classList.add('visible');
+    });
 
-        if (importBgBtn) importBgBtn.addEventListener('click', () => bgFileInput.click());
-        if (importImgBtn) importImgBtn.addEventListener('click', () => imgFileInput.click());
-        if (importNoteBtn) importNoteBtn.addEventListener('click', () => noteFileInput.click());
+    btnSettings.addEventListener('click', function() {
+        homePage.classList.add('hidden');
+        settingsPage.classList.add('visible');
+    });
 
-        if (previewConfirm) previewConfirm.addEventListener('click', () => {
-            previewContainer.classList.remove('visible');
-            previewImage.src = '';
-            bgFileInput.value = '';
-            imgFileInput.value = '';
-            noteFileInput.value = '';
-        });
+    customizeBtn.addEventListener('click', function() {
+        settingsPage.classList.remove('visible');
+        isPreviewMode = true;
+        customizePage.classList.add('visible', 'preview-mode');
+        resultPage.classList.add('preview-mode');
+        currentSettings = loadCustomSettings();
+        updatePreviewWithCode("7131");
+        applyCustomSettings(currentSettings);
+    });
 
-        if (previewCancel) previewCancel.addEventListener('click', () => {
-            previewContainer.classList.remove('visible');
-            previewImage.src = '';
-            bgFileInput.value = '';
-            imgFileInput.value = '';
-            noteFileInput.value = '';
-        });
-        if (noteButton) noteButton.addEventListener('click', () => {
-            isNoteModeActive = !isNoteModeActive;
-            noteButton.classList.toggle('active', isNoteModeActive);
-        });
+    customizeBack.addEventListener('click', function() {
+        customizePage.classList.remove('visible', 'preview-mode');
+        resultPage.classList.remove('preview-mode');
+        settingsPage.classList.add('visible');
+        isPreviewMode = false;
+        currentSettings = loadCustomSettings();
+        applyCustomSettings(currentSettings);
+    });
 
-        if (noteImageOverlay) noteImageOverlay.addEventListener('dblclick', (e) => {
-            e.preventDefault();
-            noteImageOverlay.classList.remove('visible');
-            isNoteModeActive = false;
-            noteButton.classList.remove('active');
-            noteButtonPreview.classList.remove('visible');
-        });
+    customizeSave.addEventListener('click', function() {
+        saveCustomSettings(currentSettings);
+        customizePage.classList.remove('visible', 'preview-mode');
+        resultPage.classList.remove('preview-mode');
+        settingsPage.classList.add('visible');
+        isPreviewMode = false;
+    });
 
-        document.addEventListener('contextmenu', (e) => e.preventDefault());
-        document.addEventListener('selectstart', (e) => e.preventDefault());
+    customizeReset.addEventListener('click', function() {
+        currentSettings = JSON.parse(JSON.stringify(defaultSettings));
+        applyCustomSettings(currentSettings);
+    });
+    settingsBack.addEventListener('click', function() {
+        settingsPage.classList.remove('visible');
+        homePage.classList.remove('hidden');
+        previewContainer.classList.remove('visible');
+    });
 
-        // ✅ PERSONNALISER - NOUVEAU SYSTÈME
-        if (customizeBtn) customizeBtn.addEventListener('click', () => {
-            homePage.classList.add('hidden');
-            settingsPage.classList.remove('visible');
-            customizePage.classList.add('visible');
-            testCodeContainer.classList.remove('visible');
-            customizePreview.classList.remove('visible');
-            modeIndicator.classList.remove('visible');
-            colorPicker.classList.remove('visible');
-        });
+    modalOverlay.addEventListener('click', function() {
+        modal.classList.remove('visible');
+        modalOverlay.classList.remove('visible');
+        searchInput.blur();
+        keyboardVisible = false;
+        modal.classList.remove('keyboard-open');
+        resetModalToNormal();
+    });
 
-        if (customizeBack) customizeBack.addEventListener('click', () => {
-            customizePage.classList.remove('visible');
-            settingsPage.classList.add('visible');
-            testCodeContainer.classList.remove('visible');
-            customizePreview.classList.remove('visible');
-            modeIndicator.classList.remove('visible');
-            colorPicker.classList.remove('visible');
-        });
+    function updateDots() {
+        for (var i = 0; i < dots.length; i++) {
+            if (i < pin.length) dots[i].classList.add('active');
+            else dots[i].classList.remove('active');
+        }
+    }
 
-        // ✅ BOUTON BACK MODE
-        if (customizeBackMode) customizeBackMode.addEventListener('click', () => {
-            currentMode = 'back';
-            testCodeContainer.classList.add('visible');
-            customizePreview.classList.add('visible');
-            modeIndicator.classList.remove('visible');
-            colorPicker.classList.remove('visible');
-            currentElement = null;
-            updatePreview();
-            updatePreviewWithCode(testCodeInput.value || '7131');
-        });
+    function resetModalToNormal() {
+        searchInput.value = '';
+        codeResult.textContent = '';
+        codeResult.classList.remove('error');
+        enableSearchButton();
+        keyboardVisible = false;
+        modal.classList.remove('keyboard-open');
+    }
 
-        // ✅ BOUTON NOTE MODE
-        if (customizeNoteMode) customizeNoteMode.addEventListener('click', () => {            currentMode = 'note';
-            testCodeContainer.classList.remove('visible');
-            customizePreview.classList.add('visible');
-            modeIndicator.classList.remove('visible');
-            colorPicker.classList.remove('visible');
-            currentElement = null;
-            updatePreview();
-        });
+    function animateKey(element) {
+        if (!element) return;
+        element.classList.add('active');
+        setTimeout(function() { element.classList.remove('active'); }, 350);
+    }
 
-        // ✅ TEST CODE INPUT
-        if (testCodeInput) testCodeInput.addEventListener('input', (e) => {
-            const code = e.target.value.trim();
-            if (code.length === 4 && currentMode === 'back') {
-                updatePreviewWithCode(code);
-            }
-        });
-
-        keys.forEach(key => {
-            key.addEventListener('click', function() {
-                animateKey(this);
-                if (pin.length < 4) { pin += this.getAttribute('data-digit'); updateDots(); }
-            });
-        });
-
-        if (deleteBtn) deleteBtn.addEventListener('click', function(e) {
-            e.stopPropagation();
-            animateText(this);
-            if (pin.length > 0) { pin = pin.slice(0, -1); updateDots(); }
-        });
-
-        if (okBtn) okBtn.addEventListener('click', function(e) {
-            e.stopPropagation();
-            animateText(this);
-            if (pin.length === 4) {
-                currentCode = pin;
-                originalWords = wordsList.filter(w => w.code === pin).map(w => w.word);
-                originalWords.sort((a, b) => a.localeCompare(b));
-                currentWords = [...originalWords];
-                letterLists = calculateLetterLists(originalWords);
-                bestListIndex = findBestList(letterLists);
-                bestListLetters = bestListIndex !== -1 ? letterLists[bestListIndex] : [];
-                bestListLetters.sort((a, b) => a.localeCompare(b));
-                indexDisplay.textContent = bestListIndex !== -1 ? (bestListIndex + 1).toString() : '';
-                displayWords(currentWords);
-                displayLetterButtons(bestListIndex, bestListLetters);
-                wordsContainer.classList.remove('hidden');
-                lettersContainer.classList.remove('hidden');
-                lockPage.classList.remove('visible');
-                resultPage.classList.add('visible');
-                if (noteButton) noteButton.classList.add('visible');                pin = '';
+    for (var i = 0; i < keys.length; i++) {
+        keys[i].addEventListener('click', function() {
+            animateKey(this);
+            if (pin.length < 4) {
+                var numberSpan = this.querySelector('.key-number');
+                pin += numberSpan ? numberSpan.innerText : this.innerText;
                 updateDots();
             }
         });
+    }
 
-        if (indexDisplay) indexDisplay.addEventListener('click', function(e) {
-            e.stopPropagation();
-            wordsContainer.classList.toggle('hidden');
-            lettersContainer.classList.toggle('hidden');
-        });
+    deleteBtn.addEventListener('click', function(e) {
+        e.stopPropagation();        if (deleteBtn.classList) deleteBtn.classList.add('active-text');
+        setTimeout(function() { if (deleteBtn.classList) deleteBtn.classList.remove('active-text'); }, 350);
+        if (pin.length > 0) {
+            pin = pin.slice(0, -1);
+            updateDots();
+        }
+    });
 
-        if (resultPage) resultPage.addEventListener('click', function(e) {
-            if (e.target.classList.contains('result-word') || e.target.classList.contains('letter-btn') || e.target === indexDisplay || e.target === noteButton) return;
-            let now = new Date().getTime();
-            let timeDiff = now - lastTap;
-            if (timeDiff < 300 && timeDiff > 0) {
-                resultPage.classList.remove('visible');
-                lockPage.classList.add('visible');
-                if (noteButton) noteButton.classList.remove('visible');
-                selectedLetter = '';
-                lastTap = 0;
-            } else {
-                lastTap = now;
-                setTimeout(() => lastTap = 0, 300);
-            }
-        });
-
-        if (emergencyBtn) emergencyBtn.addEventListener('click', function(e) {
-            e.stopPropagation();
-            animateText(this);
+    okBtn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        if (okBtn.classList) okBtn.classList.add('active-text');
+        setTimeout(function() { if (okBtn.classList) okBtn.classList.remove('active-text'); }, 350);
+        if (pin.length === 4) {
+            currentCode = pin;
+            updatePreviewWithCode(pin);
             lockPage.classList.remove('visible');
-            homePage.classList.remove('hidden');
+            resultPage.classList.add('visible');
             pin = '';
             updateDots();
-        });
-
-        // Service Worker
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', async () => {
-                try {
-                    await navigator.serviceWorker.register(BASE_PATH + 'sw.js', { scope: BASE_PATH });
-                } catch (error) { console.error('SW error:', error); }
-            });
         }
+    });
 
-        // Initialisation
-        setupLongPressUnderline();
+    emergencyBtn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        if (emergencyBtn.classList) emergencyBtn.classList.add('active-text');
+        setTimeout(function() { if (emergencyBtn.classList) emergencyBtn.classList.remove('active-text'); }, 350);
+        lockPage.classList.remove('visible');
+        homePage.classList.remove('hidden');
         pin = '';
         updateDots();
-        resetModalToNormal();        if (noteImageText) noteImageText.innerHTML = DEFAULT_NOTE_TEXT.replace(/\n/g, '<br>');
-        loadCustomSettings();
-        loadWordsList();
-        console.log('[ENIGMA] ✅ Application initialisée');
-    })();
+    });
+
+    var indexTouchStartTimer = null;
+    
+    indexDisplay.addEventListener('touchstart', function(e) {
+        e.stopPropagation();
+        indexTouchStartTimer = setTimeout(function() {
+            noteModeActive = !noteModeActive;
+            if (noteModeActive) {
+                indexDisplay.classList.add('note-mode-active');
+            } else {
+                indexDisplay.classList.remove('note-mode-active');
+            }
+        }, 1000);
+    });
+    
+    indexDisplay.addEventListener('touchend', function(e) {
+        e.stopPropagation();
+        clearTimeout(indexTouchStartTimer);
+    });    
+    indexDisplay.addEventListener('click', function(e) {
+        e.stopPropagation();
+        wordsContainer.classList.toggle('hidden');
+        lettersContainer.classList.toggle('hidden');
+    });
+
+    notePage.addEventListener('click', function(e) {
+        var now = Date.now();
+        if (now - noteLastTap < 300 && now - noteLastTap > 0) {
+            notePage.classList.remove('visible');
+            noteLastTap = 0;
+        } else {
+            noteLastTap = now;
+        }
+    });
+
+    resultPage.addEventListener('click', function(e) {
+        if (e.target.classList.contains('result-word') || e.target.classList.contains('letter-btn') || e.target === indexDisplay) return;
+        var now = Date.now();
+        if (now - lastTap < 300 && now - lastTap > 0) {
+            resultPage.classList.remove('visible');
+            lockPage.classList.add('visible');
+            selectedLetter = '';
+        }
+        lastTap = now;
+    });
+
+    function setupImageImport(input, target, storageKey) {
+        input.addEventListener('change', function(e) {
+            var file = e.target.files[0];
+            if (file) {
+                var reader = new FileReader();
+                reader.onload = function(event) {
+                    currentPreviewData = event.target.result;
+                    previewImage.src = currentPreviewData;
+                    previewContainer.classList.add('visible');
+                    currentPreviewTarget = target === lockPage ? 'bg' : (target === resultPage ? 'img' : 'note');
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+    }
+
+    try {
+        var savedBg = localStorage.getItem('backgroundImage');
+        if (savedBg) lockPage.style.backgroundImage = 'url(' + savedBg + ')';
+        var savedImg = localStorage.getItem('resultImage');
+        if (savedImg) resultPage.style.backgroundImage = 'url(' + savedImg + ')';
+        var savedNote = localStorage.getItem('noteImage');        if (savedNote) notePage.style.backgroundImage = 'url(' + savedNote + ')';
+    } catch(e) {}
+
+    setupImageImport(bgFileInput, lockPage, 'backgroundImage');
+    setupImageImport(imgFileInput, resultPage, 'resultImage');
+    setupImageImport(noteFileInput, notePage, 'noteImage');
+    
+    importBgBtn.addEventListener('click', function() { bgFileInput.click(); });
+    importImgBtn.addEventListener('click', function() { imgFileInput.click(); });
+    importNoteBtn.addEventListener('click', function() { noteFileInput.click(); });
+
+    previewConfirm.addEventListener('click', function() {
+        if (currentPreviewTarget === 'bg') {
+            lockPage.style.backgroundImage = 'url(' + currentPreviewData + ')';
+            try { localStorage.setItem('backgroundImage', currentPreviewData); } catch(e) {}
+        } else if (currentPreviewTarget === 'img') {
+            resultPage.style.backgroundImage = 'url(' + currentPreviewData + ')';
+            try { localStorage.setItem('resultImage', currentPreviewData); } catch(e) {}
+        } else if (currentPreviewTarget === 'note') {
+            notePage.style.backgroundImage = 'url(' + currentPreviewData + ')';
+            try { localStorage.setItem('noteImage', currentPreviewData); } catch(e) {}
+        }
+        previewContainer.classList.remove('visible');
+        currentPreviewData = '';
+    });
+
+    previewCancel.addEventListener('click', function() {
+        previewContainer.classList.remove('visible');
+        currentPreviewData = '';
+    });
+
+    currentSettings = loadCustomSettings();
+    applyCustomSettings(currentSettings);
+    updateDots();
+    resetModalToNormal();
+})();
     </script>
 </body>
 </html>
