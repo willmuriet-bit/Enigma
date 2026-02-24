@@ -21,10 +21,11 @@
         @keyframes apparitionBouton { 0% { opacity: 0; transform: translateY(30px); } 100% { opacity: 1; transform: translateY(0); } }
         @keyframes ripple { 0% { transform: scale(0, 0) translate(-50%, -50%); opacity: 0.5; } 100% { transform: scale(20, 20) translate(-50%, -50%); opacity: 0; } }
         @keyframes circleWave { 0% { opacity: 0.9; transform: scale(0.5); } 70% { opacity: 0.5; transform: scale(1.3); } 100% { opacity: 0; transform: scale(1.6); } }
+        
         @keyframes auraPulse {
-            0% { box-shadow: 0 0 5px currentColor, 0 0 10px currentColor, 0 0 15px currentColor; }
-            50% { box-shadow: 0 0 15px currentColor, 0 0 25px currentColor, 0 0 35px currentColor; }
-            100% { box-shadow: 0 0 5px currentColor, 0 0 10px currentColor, 0 0 15px currentColor; }
+            0% { text-shadow: 0 0 5px currentColor, 0 0 10px currentColor, 0 0 15px currentColor; }
+            50% { text-shadow: 0 0 20px currentColor, 0 0 30px currentColor, 0 0 40px currentColor; }
+            100% { text-shadow: 0 0 5px currentColor, 0 0 10px currentColor, 0 0 15px currentColor; }
         }
 
         .app-title { font-family: 'Georgia', 'Times New Roman', serif; font-size: 68px; font-weight: bold; color: #FFD700; text-shadow: 0 0 15px rgba(255, 215, 0, 0.7), 0 0 30px rgba(255, 215, 0, 0.4); letter-spacing: 6px; margin-bottom: 100px; position: relative; top: -40px; text-transform: uppercase; padding-bottom: 15px; animation: scintillement 2s ease-in-out infinite; }
@@ -46,8 +47,8 @@
         .settings-btn { width: 320px; height: 65px; background: #333; color: white; border: none; border-radius: 15px; font-size: 22px; font-weight: 600; cursor: pointer; margin: 10px 0; transition: background 0.2s; }
         .settings-btn:active { background: #555; }
 
-        .preview-container { width: 320px; margin: 20px 0; display: none; flex-direction: column; align-items: center; }
-        .preview-container.visible { display: flex; }        .preview-image { width: 200px; height: 200px; object-fit: cover; border-radius: 15px; border: 3px solid #FFD700; margin-bottom: 15px; }
+        .preview-container { width: 320px; margin: 20px 0; display: none; flex-direction: column; align-items: center; }        .preview-container.visible { display: flex; }
+        .preview-image { width: 200px; height: 200px; object-fit: cover; border-radius: 15px; border: 3px solid #FFD700; margin-bottom: 15px; }
         .preview-buttons { display: flex; gap: 20px; }
         .preview-confirm, .preview-cancel { width: 120px; height: 50px; border: none; border-radius: 10px; font-size: 18px; font-weight: 600; cursor: pointer; }
         .preview-confirm { background: #4CAF50; color: white; }
@@ -57,14 +58,20 @@
 
         #customize-page { position: absolute; inset: 0; background: rgba(0, 0, 0, 0.95); z-index: 40; visibility: hidden; opacity: 0; transition: visibility 0.3s, opacity 0.3s; overflow-y: auto; padding: 20px; color: white; }
         #customize-page.visible { visibility: visible; opacity: 1; }
-        #customize-page.dragging-slider { background: transparent !important; pointer-events: none; }
-        #customize-page.dragging-slider .control-group, #customize-page.dragging-slider .test-code-section, #customize-page.dragging-slider .customize-header, #customize-page.dragging-slider .customize-actions { opacity: 0 !important; pointer-events: none; }
-        #customize-page.dragging-slider input[type="range"] { opacity: 1 !important; position: relative; z-index: 9999; pointer-events: auto; }
-        #customize-page.dragging-slider .value-badge { opacity: 1 !important; position: relative; z-index: 9999; pointer-events: auto; cursor: pointer; background: #FFD700; color: black; font-weight: bold; }
-        #customize-page.dragging-slider .slider-item { position: relative; z-index: 9999; }
-        #customize-page.dragging-slider .slider-item label { opacity: 0 !important; }
+        
+        #customize-note-page { position: absolute; inset: 0; background: rgba(0, 0, 0, 0.95); z-index: 70; visibility: hidden; opacity: 0; transition: visibility 0.3s, opacity 0.3s; overflow-y: auto; padding: 20px; color: white; }
+        #customize-note-page.visible { visibility: visible; opacity: 1; }
+        
+        #customize-page.dragging-slider, #customize-note-page.dragging-slider { background: transparent !important; pointer-events: none; }
+        #customize-page.dragging-slider .control-group, #customize-page.dragging-slider .test-code-section, #customize-page.dragging-slider .customize-header, #customize-page.dragging-slider .customize-actions,
+        #customize-note-page.dragging-slider .control-group, #customize-note-page.dragging-slider .customize-header, #customize-note-page.dragging-slider .customize-actions { opacity: 0 !important; pointer-events: none; }
+        #customize-page.dragging-slider input[type="range"], #customize-note-page.dragging-slider input[type="range"] { opacity: 1 !important; position: relative; z-index: 9999; pointer-events: auto; }
+        #customize-page.dragging-slider .value-badge, #customize-note-page.dragging-slider .value-badge { opacity: 1 !important; position: relative; z-index: 9999; pointer-events: auto; cursor: pointer; background: #FFD700; color: black; font-weight: bold; }
+        #customize-page.dragging-slider .slider-item, #customize-note-page.dragging-slider .slider-item { position: relative; z-index: 9999; }
+        #customize-page.dragging-slider .slider-item label, #customize-note-page.dragging-slider .slider-item label { opacity: 0 !important; }
+        
         #result-page.preview-mode { visibility: visible !important; opacity: 1 !important; z-index: 35; pointer-events: none; }
-        #customize-page.preview-mode { background: rgba(0, 0, 0, 0.85); }
+        #customize-note-page.preview-mode { background: rgba(0, 0, 0, 0.85); }
 
         .customize-header { display: flex; align-items: center; margin-bottom: 30px; padding-top: 20px; }
         .customize-back-btn { width: 40px; height: 40px; background: #333; border: none; border-radius: 50%; color: white; font-size: 24px; cursor: pointer; margin-right: 15px; }
@@ -89,14 +96,14 @@
             background: #444;
             border-radius: 3px;
             -webkit-appearance: none;
-            pointer-events: none;
-        }
+            pointer-events: none;        }
         
         .slider-item input[type="range"]::-webkit-slider-thumb {
             -webkit-appearance: none;
             width: 20px;
             height: 20px;
-            background: #FFD700;            border-radius: 50%;
+            background: #FFD700;
+            border-radius: 50%;
             cursor: pointer;
             border: 2px solid white;
             pointer-events: auto;
@@ -138,14 +145,14 @@
             background-repeat: no-repeat !important;
         }
         
-        #result-page {
-            position: absolute;
+        #result-page {            position: absolute;
             inset: 0;
             z-index: 30;
             visibility: hidden;
             opacity: 0;
             transition: visibility 0.3s, opacity 0.3s;
-            background: #2a2a2a;            background-size: cover !important;
+            background: #2a2a2a;
+            background-size: cover !important;
             background-position: center !important;
             background-repeat: no-repeat !important;
             display: flex;
@@ -187,17 +194,21 @@
         .letters-container.hidden { display: none; }
         .letter-btn { cursor: pointer; text-transform: uppercase; }
         .letter-btn.selected { text-decoration: underline; }
-        
-        .index-display {
+                .index-display {
             position: absolute;
             top: 517px;
             left: 50%;
             transform: translateX(calc(-50% - 45px));
             color: #1E6FF0;
-            font-size: 30px;            font-weight: bold;
+            font-size: 30px;
+            font-weight: bold;
             z-index: 33;
             cursor: pointer;
-            transition: box-shadow 0.3s ease;
+            transition: text-shadow 0.3s ease;
+            user-select: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
         }
         
         .index-display.note-mode-active {
@@ -232,8 +243,7 @@
         }
         
         .note-text {
-            position: relative;
-            z-index: 52;
+            position: relative;            z-index: 52;
             color: white;
             font-size: 40px;
             font-weight: bold;
@@ -242,7 +252,12 @@
             padding: 20px;
             max-width: 90%;
             word-wrap: break-word;
+            user-select: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
         }
+
         #list-modal { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 380px; background: white; border-radius: 30px; padding: 25px; z-index: 100; display: none; color: black; box-shadow: 0 20px 40px rgba(0,0,0,0.4); transition: top 0.3s ease-out, transform 0.3s ease-out; }
         #list-modal.visible { display: block; }
         #list-modal.keyboard-open { top: 30px; transform: translate(-50%, 0); }
@@ -272,11 +287,12 @@
         <div class="settings-title">PARAMÈTRES</div>
         <button class="settings-btn" id="import-bg-btn">📷 Importer lock screen</button>
         <button class="settings-btn" id="import-img-btn">📷 Importer background</button>
-        <button class="settings-btn" id="import-note-btn">📷 Importer Note</button>
-        <button class="settings-btn" id="customize-btn">🎨 Personnaliser</button>
+        <button class="settings-btn" id="import-note-btn">📷 Importer note</button>
+        <!-- ✅ CORRECTION 2 : Ordre inversé -->
+        <button class="settings-btn" id="customize-btn">🎨 Modifier background</button>
+        <button class="settings-btn" id="modify-note-btn">🎨 Modifier note</button>
         <div class="preview-container" id="preview-container">
-            <img class="preview-image" id="preview-image" src="" alt="Aperçu">
-            <div class="preview-buttons">
+            <img class="preview-image" id="preview-image" src="" alt="Aperçu">            <div class="preview-buttons">
                 <button class="preview-confirm" id="preview-confirm">Confirmer</button>
                 <button class="preview-cancel" id="preview-cancel">Annuler</button>
             </div>
@@ -292,7 +308,8 @@
         <div class="test-code-section">
             <div class="test-code-title">🎯 TESTER UN CODE</div>
             <input type="tel" id="test-code-input" placeholder="Code" maxlength="4">
-        </div>        <div class="control-group">
+        </div>
+        <div class="control-group">
             <div class="control-header">
                 <h3>📋 Liste</h3>
                 <button class="preview-btn" id="preview-list-btn">👁️</button>
@@ -324,8 +341,7 @@
                 <input type="range" id="letters-y" min="0" max="800" value="460">
             </div>
             <div class="slider-item">
-                <label>Taille <span class="value-badge" id="letters-size-value">20px</span></label>
-                <input type="range" id="letters-size" min="10" max="40" value="20">
+                <label>Taille <span class="value-badge" id="letters-size-value">20px</span></label>                <input type="range" id="letters-size" min="10" max="40" value="20">
             </div>
             <div class="color-item">
                 <label>Couleur</label>
@@ -341,7 +357,8 @@
                 <h3>🔢 Indice</h3>
                 <button class="preview-btn" id="preview-index-btn">👁️</button>
             </div>
-            <div class="slider-item">                <label>Position Y <span class="value-badge" id="index-y-value">517px</span></label>
+            <div class="slider-item">
+                <label>Position Y <span class="value-badge" id="index-y-value">517px</span></label>
                 <input type="range" id="index-y" min="0" max="800" value="517">
             </div>
             <div class="slider-item">
@@ -363,6 +380,65 @@
         </div>
     </div>
 
+    <!-- PAGE DE PERSONNALISATION POUR NOTE -->
+    <div id="customize-note-page">
+        <div class="customize-header">
+            <button class="customize-back-btn" id="customize-note-back">←</button>
+            <span class="customize-title">PERSONNALISER NOTE</span>
+        </div>
+        
+        <!-- Les 10 mots affichés sur l'image de fond -->
+        <div class="note-words-container" id="note-words-container" style="position: absolute; top: 262px; left: 50%; transform: translateX(-50%); z-index: 55; color: white; font-size: 18px; text-align: left; line-height: 15px; padding: 20px; max-width: 80%;">
+            <div class="note-word-item">Barbecue</div>
+            <div class="note-word-item">Iceberg</div>            <div class="note-word-item">Cartouche</div>
+            <div class="note-word-item">Yaourt</div>
+            <div class="note-word-item">Cartable</div>
+            <div class="note-word-item">Livre</div>
+            <div class="note-word-item">Enveloppe</div>
+            <div class="note-word-item">Tapis</div>
+            <div class="note-word-item">Train</div>
+            <div class="note-word-item">Encre</div>
+        </div>
+        
+        <div class="control-group" style="position: relative; z-index: 60;">
+            <div class="control-header">
+                <!-- ✅ CORRECTION 4 : Titre changé de "Texte de la Note" à "Note" -->
+                <h3>📝 Note</h3>
+                <!-- ✅ CORRECTION 3 : Bouton "👁️ Aperçu" → "👁️" -->
+                <button class="preview-btn" id="preview-note-btn">👁️</button>
+            </div>
+            
+            <div class="slider-item">
+                <label>Position X <span class="value-badge" id="note-x-value">0px</span></label>
+                <input type="range" id="note-x" min="-500" max="500" value="0">
+            </div>
+            
+            <div class="slider-item">
+                <label>Position Y <span class="value-badge" id="note-y-value">262px</span></label>
+                <input type="range" id="note-y" min="0" max="800" value="262">
+            </div>
+            
+            <div class="slider-item">
+                <label>Taille <span class="value-badge" id="note-size-value">18px</span></label>
+                <input type="range" id="note-size" min="10" max="40" value="18">
+            </div>
+            
+            <div class="color-item">
+                <label>Couleur</label>
+                <input type="color" id="note-color" value="#ffffff">
+            </div>
+            
+            <div class="slider-item">
+                <label>Espace lignes <span class="value-badge" id="note-line-height-value">15px</span></label>
+                <input type="range" id="note-line-height" min="5" max="30" value="15">
+            </div>
+        </div>
+        
+        <div class="customize-actions" style="position: relative; z-index: 60;">
+            <button class="customize-save" id="customize-note-save">💾 Sauvegarder</button>
+            <button class="customize-reset" id="customize-note-reset">↺ Reset</button>
+        </div>
+    </div>
     <div id="lock-page">
         <div class="overlay"></div>
         <div class="lock-content">
@@ -390,7 +466,8 @@
     </div>
 
     <div id="result-page">
-        <div class="words-container" id="words-container"></div>        <div class="letters-container" id="letters-container"></div>
+        <div class="words-container" id="words-container"></div>
+        <div class="letters-container" id="letters-container"></div>
         <div class="index-display" id="index-display"></div>
     </div>
 
@@ -411,8 +488,9 @@
     const homePage = document.getElementById('home-page');
     const settingsPage = document.getElementById('settings-page');
     const customizePage = document.getElementById('customize-page');
-    const lockPage = document.getElementById('lock-page');
+    const customizeNotePage = document.getElementById('customize-note-page');    const lockPage = document.getElementById('lock-page');
     const resultPage = document.getElementById('result-page');
+    const noteWordsContainer = document.getElementById('note-words-container');
     const notePage = document.getElementById('note-page');
     const noteText = document.getElementById('note-text');
     const wordsContainer = document.getElementById('words-container');
@@ -424,14 +502,19 @@
     const importBgBtn = document.getElementById('import-bg-btn');
     const importImgBtn = document.getElementById('import-img-btn');
     const importNoteBtn = document.getElementById('import-note-btn');
+    const modifyNoteBtn = document.getElementById('modify-note-btn');
     const customizeBtn = document.getElementById('customize-btn');
     const settingsBack = document.getElementById('settings-back');
     const customizeBack = document.getElementById('customize-back');
+    const customizeNoteBack = document.getElementById('customize-note-back');
     const customizeSave = document.getElementById('customize-save');
     const customizeReset = document.getElementById('customize-reset');
+    const customizeNoteSave = document.getElementById('customize-note-save');
+    const customizeNoteReset = document.getElementById('customize-note-reset');
     const previewListBtn = document.getElementById('preview-list-btn');
     const previewLettersBtn = document.getElementById('preview-letters-btn');
     const previewIndexBtn = document.getElementById('preview-index-btn');
+    const previewNoteBtn = document.getElementById('preview-note-btn');
     const testCodeInput = document.getElementById('test-code-input');
     const wordsY = document.getElementById('words-y');
     const wordsSize = document.getElementById('words-size');
@@ -439,20 +522,29 @@
     const wordsLineHeight = document.getElementById('words-line-height');
     const lettersY = document.getElementById('letters-y');
     const lettersSize = document.getElementById('letters-size');
-    const lettersColor = document.getElementById('letters-color');    const lettersSpacing = document.getElementById('letters-spacing');
+    const lettersColor = document.getElementById('letters-color');
+    const lettersSpacing = document.getElementById('letters-spacing');
     const indexY = document.getElementById('index-y');
     const indexSize = document.getElementById('index-size');
     const indexColor = document.getElementById('index-color');
     const indexX = document.getElementById('index-x');
+    const noteX = document.getElementById('note-x');
+    const noteY = document.getElementById('note-y');
+    const noteSize = document.getElementById('note-size');
+    const noteColor = document.getElementById('note-color');
+    const noteLineHeight = document.getElementById('note-line-height');
     const wordsYValue = document.getElementById('words-y-value');
     const wordsSizeValue = document.getElementById('words-size-value');
     const wordsLineHeightValue = document.getElementById('words-line-height-value');
     const lettersYValue = document.getElementById('letters-y-value');
-    const lettersSizeValue = document.getElementById('letters-size-value');
-    const lettersSpacingValue = document.getElementById('letters-spacing-value');
+    const lettersSizeValue = document.getElementById('letters-size-value');    const lettersSpacingValue = document.getElementById('letters-spacing-value');
     const indexYValue = document.getElementById('index-y-value');
     const indexSizeValue = document.getElementById('index-size-value');
     const indexXValue = document.getElementById('index-x-value');
+    const noteXValue = document.getElementById('note-x-value');
+    const noteYValue = document.getElementById('note-y-value');
+    const noteSizeValue = document.getElementById('note-size-value');
+    const noteLineHeightValue = document.getElementById('note-line-height-value');
     const searchInput = document.getElementById('search-input');
     const searchBtn = document.getElementById('search-btn');
     const codeResult = document.getElementById('codeResult');
@@ -483,14 +575,24 @@
         indexY: 517, indexSize: 30, indexColor: '#1E6FF0', indexX: -45
     };
 
+    const defaultNoteSettings = {
+        noteX: 0,
+        noteY: 262,
+        noteSize: 18,
+        noteColor: '#ffffff',
+        noteLineHeight: 15
+    };
+
     let pin = '', currentCode = '', originalWords = [], currentWords = [];
     let letterLists = [], bestListIndex = -1, bestListLetters = [];
     let selectedLetter = '', lastTap = 0, isPreviewMode = false;
-    let isSearchDisabled = false, keyboardVisible = false;
-    let resizeTimeout, blurTimeout, currentPreviewTarget = '', currentPreviewData = '';
-    let currentSettings = { ...defaultSettings };    let noteModeActive = false;
-    let noteLongPressTimer = null;
+    let isSearchDisabled = false, keyboardVisible = false;    let resizeTimeout, blurTimeout, currentPreviewTarget = '', currentPreviewData = '';
+    let currentSettings = { ...defaultSettings };
+    let currentNoteSettings = { ...defaultNoteSettings };
+    let noteModeActive = false;
     let noteLastTap = 0;
+    let indexClickCount = 0;
+    let indexClickTimer = null;
 
     window.addEventListener('resize', function() {
         if (window.innerHeight < window.screen.height - 200) {
@@ -531,13 +633,20 @@
 
     function saveCustomSettings(settings) { try { localStorage.setItem('customSettings', JSON.stringify(settings)); } catch(e) {} }
 
+    function loadNoteSettings() {
+        try { const saved = localStorage.getItem('noteSettings'); if (saved) return JSON.parse(saved); } catch(e) {}
+        return { ...defaultNoteSettings };    }
+
+    function saveNoteSettings(settings) { try { localStorage.setItem('noteSettings', JSON.stringify(settings)); } catch(e) {} }
+
     function applyCustomSettings(settings) {
         wordsContainer.style.top = settings.wordsY + 'px';
         wordsContainer.style.fontSize = settings.wordsSize + 'px';
         wordsContainer.style.color = settings.wordsColor;
         wordsContainer.style.lineHeight = settings.wordsLineHeight + 'px';
         lettersContainer.style.top = settings.lettersY + 'px';
-        lettersContainer.style.fontSize = settings.lettersSize + 'px';        lettersContainer.style.color = settings.lettersColor;
+        lettersContainer.style.fontSize = settings.lettersSize + 'px';
+        lettersContainer.style.color = settings.lettersColor;
         lettersContainer.style.gap = settings.lettersSpacing + 'px';
         indexDisplay.style.top = settings.indexY + 'px';
         indexDisplay.style.fontSize = settings.indexSize + 'px';
@@ -560,6 +669,24 @@
         lettersSpacing.value = settings.lettersSpacing; indexY.value = settings.indexY;
         indexSize.value = settings.indexSize; indexColor.value = settings.indexColor;
         indexX.value = settings.indexX;
+    }
+
+    function applyNoteSettings(settings) {
+        noteWordsContainer.style.transform = 'translateX(calc(-50% + ' + settings.noteX + 'px))';
+        noteWordsContainer.style.top = settings.noteY + 'px';
+        noteWordsContainer.style.fontSize = settings.noteSize + 'px';
+        noteWordsContainer.style.color = settings.noteColor;
+        noteWordsContainer.style.lineHeight = settings.noteLineHeight + 'px';
+        
+        noteXValue.textContent = settings.noteX + 'px';
+        noteYValue.textContent = settings.noteY + 'px';
+        noteSizeValue.textContent = settings.noteSize + 'px';
+        noteLineHeightValue.textContent = settings.noteLineHeight + 'px';
+        
+        noteX.value = settings.noteX;
+        noteY.value = settings.noteY;        noteSize.value = settings.noteSize;
+        noteColor.value = settings.noteColor;
+        noteLineHeight.value = settings.noteLineHeight;
     }
 
     function updatePreviewWithCode(code) {
@@ -586,7 +713,8 @@
         var maxSize = 0;
         for (var i = 0; i < letterLists.length; i++) {
             if (letterLists[i].length > maxSize) {
-                maxSize = letterLists[i].length;                bestListIndex = i;
+                maxSize = letterLists[i].length;
+                bestListIndex = i;
             }
         }
         bestListLetters = bestListIndex !== -1 ? letterLists[bestListIndex] : [];
@@ -605,8 +733,7 @@
             return;
         }
         var line = document.createElement('div');
-        line.className = 'words-line';
-        for (var i = 0; i < words.length; i++) {
+        line.className = 'words-line';        for (var i = 0; i < words.length; i++) {
             var word = words[i];
             var span = document.createElement('span');
             span.className = 'result-word';
@@ -635,7 +762,8 @@
     function displayLetterButtons(index, letters) {
         lettersContainer.innerHTML = '';
         if (letters.length === 0) return;
-        for (var i = 0; i < letters.length; i++) {            var letter = letters[i];
+        for (var i = 0; i < letters.length; i++) {
+            var letter = letters[i];
             var span = document.createElement('span');
             span.className = 'letter-btn' + (selectedLetter === letter ? ' selected' : '');
             span.textContent = letter.toUpperCase();
@@ -654,8 +782,7 @@
                     if (selectedLetter) span.classList.add('selected');
                     displayWords(currentWords);
                 });
-            })(letter);
-            lettersContainer.appendChild(span);
+            })(letter);            lettersContainer.appendChild(span);
             if (i < letters.length - 1) {
                 var spacer = document.createElement('span');
                 spacer.innerHTML = '    ';
@@ -664,10 +791,22 @@
         }
     }
 
-    function startDragging() { customizePage.classList.add('dragging-slider'); resultPage.classList.add('dragging-active'); }
-    function stopDragging() { customizePage.classList.remove('dragging-slider'); resultPage.classList.remove('dragging-active'); }
+    function startDragging() { 
+        if (customizePage.classList.contains('visible')) {
+            customizePage.classList.add('dragging-slider'); 
+            resultPage.classList.add('dragging-active');
+        }
+        if (customizeNotePage.classList.contains('visible')) {
+            customizeNotePage.classList.add('dragging-slider');
+        }
+    }
+    function stopDragging() { 
+        customizePage.classList.remove('dragging-slider'); 
+        resultPage.classList.remove('dragging-active');
+        customizeNotePage.classList.remove('dragging-slider');
+    }
 
-    var allSliders = [wordsY, wordsSize, wordsLineHeight, lettersY, lettersSize, lettersSpacing, indexY, indexSize, indexX];
+    var allSliders = [wordsY, wordsSize, wordsLineHeight, lettersY, lettersSize, lettersSpacing, indexY, indexSize, indexX, noteX, noteY, noteSize, noteLineHeight];
     for (var i = 0; i < allSliders.length; i++) {
         if (allSliders[i]) {
             allSliders[i].addEventListener('touchstart', startDragging);
@@ -676,7 +815,7 @@
         }
     }
 
-    var previewBtns = [previewListBtn, previewLettersBtn, previewIndexBtn];
+    var previewBtns = [previewListBtn, previewLettersBtn, previewIndexBtn, previewNoteBtn];
     for (var i = 0; i < previewBtns.length; i++) {
         if (previewBtns[i]) {
             previewBtns[i].addEventListener('touchstart', startDragging);
@@ -684,6 +823,7 @@
             previewBtns[i].addEventListener('touchcancel', stopDragging);
         }
     }
+
     function resetToDefault(setting, defaultValue) {
         return function() {
             currentSettings[setting] = defaultValue;
@@ -691,8 +831,7 @@
             if (setting === 'wordsY') {
                 wordsContainer.style.top = defaultValue + 'px';
                 wordsYValue.textContent = defaultValue + 'px';
-                wordsY.value = defaultValue;
-            }
+                wordsY.value = defaultValue;            }
             else if (setting === 'wordsSize') {
                 wordsContainer.style.fontSize = defaultValue + 'px';
                 wordsSizeValue.textContent = defaultValue + 'px';
@@ -733,7 +872,34 @@
                 indexXValue.textContent = defaultValue + 'px';
                 indexX.value = defaultValue;
             }
-        };    }
+        };
+    }
+
+    function resetNoteToDefault(setting, defaultValue) {
+        return function() {
+            currentNoteSettings[setting] = defaultValue;
+            
+            if (setting === 'noteX') {
+                noteWordsContainer.style.transform = 'translateX(calc(-50% + ' + defaultValue + 'px))';                noteXValue.textContent = defaultValue + 'px';
+                noteX.value = defaultValue;
+            }
+            else if (setting === 'noteY') {
+                noteWordsContainer.style.top = defaultValue + 'px';
+                noteYValue.textContent = defaultValue + 'px';
+                noteY.value = defaultValue;
+            }
+            else if (setting === 'noteSize') {
+                noteWordsContainer.style.fontSize = defaultValue + 'px';
+                noteSizeValue.textContent = defaultValue + 'px';
+                noteSize.value = defaultValue;
+            }
+            else if (setting === 'noteLineHeight') {
+                noteWordsContainer.style.lineHeight = defaultValue + 'px';
+                noteLineHeightValue.textContent = defaultValue + 'px';
+                noteLineHeight.value = defaultValue;
+            }
+        };
+    }
 
     wordsYValue.addEventListener('click', resetToDefault('wordsY', defaultSettings.wordsY));
     wordsSizeValue.addEventListener('click', resetToDefault('wordsSize', defaultSettings.wordsSize));
@@ -744,6 +910,11 @@
     indexYValue.addEventListener('click', resetToDefault('indexY', defaultSettings.indexY));
     indexSizeValue.addEventListener('click', resetToDefault('indexSize', defaultSettings.indexSize));
     indexXValue.addEventListener('click', resetToDefault('indexX', defaultSettings.indexX));
+
+    noteXValue.addEventListener('click', resetNoteToDefault('noteX', defaultNoteSettings.noteX));
+    noteYValue.addEventListener('click', resetNoteToDefault('noteY', defaultNoteSettings.noteY));
+    noteSizeValue.addEventListener('click', resetNoteToDefault('noteSize', defaultNoteSettings.noteSize));
+    noteLineHeightValue.addEventListener('click', resetNoteToDefault('noteLineHeight', defaultNoteSettings.noteLineHeight));
 
     wordsY.addEventListener('input', function(e) { currentSettings.wordsY = parseInt(e.target.value); wordsYValue.textContent = currentSettings.wordsY + 'px'; wordsContainer.style.top = currentSettings.wordsY + 'px'; });
     wordsSize.addEventListener('input', function(e) { currentSettings.wordsSize = parseInt(e.target.value); wordsSizeValue.textContent = currentSettings.wordsSize + 'px'; wordsContainer.style.fontSize = currentSettings.wordsSize + 'px'; });
@@ -757,6 +928,11 @@
     indexSize.addEventListener('input', function(e) { currentSettings.indexSize = parseInt(e.target.value); indexSizeValue.textContent = currentSettings.indexSize + 'px'; indexDisplay.style.fontSize = currentSettings.indexSize + 'px'; });
     indexColor.addEventListener('input', function(e) { currentSettings.indexColor = e.target.value; indexDisplay.style.color = currentSettings.indexColor; });
     indexX.addEventListener('input', function(e) { currentSettings.indexX = parseInt(e.target.value); indexXValue.textContent = currentSettings.indexX + 'px'; indexDisplay.style.transform = 'translateX(calc(-50% + ' + currentSettings.indexX + 'px))'; });
+
+    noteX.addEventListener('input', function(e) { currentNoteSettings.noteX = parseInt(e.target.value); noteXValue.textContent = currentNoteSettings.noteX + 'px'; noteWordsContainer.style.transform = 'translateX(calc(-50% + ' + currentNoteSettings.noteX + 'px))'; });    noteY.addEventListener('input', function(e) { currentNoteSettings.noteY = parseInt(e.target.value); noteYValue.textContent = currentNoteSettings.noteY + 'px'; noteWordsContainer.style.top = currentNoteSettings.noteY + 'px'; });
+    noteSize.addEventListener('input', function(e) { currentNoteSettings.noteSize = parseInt(e.target.value); noteSizeValue.textContent = currentNoteSettings.noteSize + 'px'; noteWordsContainer.style.fontSize = currentNoteSettings.noteSize + 'px'; });
+    noteColor.addEventListener('input', function(e) { currentNoteSettings.noteColor = e.target.value; noteWordsContainer.style.color = currentNoteSettings.noteColor; });
+    noteLineHeight.addEventListener('input', function(e) { currentNoteSettings.noteLineHeight = parseInt(e.target.value); noteLineHeightValue.textContent = currentNoteSettings.noteLineHeight + 'px'; noteWordsContainer.style.lineHeight = currentNoteSettings.noteLineHeight + 'px'; });
 
     testCodeInput.addEventListener('input', function(e) {
         var code = e.target.value.trim();
@@ -782,6 +958,7 @@
     });
 
     searchInput.addEventListener('keypress', function(e) { if (e.key === 'Enter' && !isSearchDisabled) searchBtn.click(); });
+
     btnPerform.addEventListener('click', function() {
         homePage.classList.add('hidden');
         lockPage.classList.add('visible');
@@ -798,6 +975,12 @@
     btnSettings.addEventListener('click', function() {
         homePage.classList.add('hidden');
         settingsPage.classList.add('visible');
+    });
+
+    modifyNoteBtn.addEventListener('click', function() {
+        settingsPage.classList.remove('visible');        customizeNotePage.classList.add('visible');
+        currentNoteSettings = loadNoteSettings();
+        applyNoteSettings(currentNoteSettings);
     });
 
     customizeBtn.addEventListener('click', function() {
@@ -819,6 +1002,13 @@
         applyCustomSettings(currentSettings);
     });
 
+    customizeNoteBack.addEventListener('click', function() {
+        customizeNotePage.classList.remove('visible', 'preview-mode');
+        settingsPage.classList.add('visible');
+        currentNoteSettings = loadNoteSettings();
+        applyNoteSettings(currentNoteSettings);
+    });
+
     customizeSave.addEventListener('click', function() {
         saveCustomSettings(currentSettings);
         customizePage.classList.remove('visible', 'preview-mode');
@@ -827,10 +1017,22 @@
         isPreviewMode = false;
     });
 
+    // ✅ CORRECTION 1 : Sauvegarde des réglages NOTE corrigée
+    customizeNoteSave.addEventListener('click', function() {
+        saveNoteSettings(currentNoteSettings);
+        customizeNotePage.classList.remove('visible', 'preview-mode');
+        settingsPage.classList.add('visible');
+    });
+
     customizeReset.addEventListener('click', function() {
         currentSettings = JSON.parse(JSON.stringify(defaultSettings));
         applyCustomSettings(currentSettings);
     });
+    customizeNoteReset.addEventListener('click', function() {
+        currentNoteSettings = JSON.parse(JSON.stringify(defaultNoteSettings));
+        applyNoteSettings(currentNoteSettings);
+    });
+
     settingsBack.addEventListener('click', function() {
         settingsPage.classList.remove('visible');
         homePage.classList.remove('hidden');
@@ -874,13 +1076,13 @@
             if (pin.length < 4) {
                 var numberSpan = this.querySelector('.key-number');
                 pin += numberSpan ? numberSpan.innerText : this.innerText;
-                updateDots();
-            }
+                updateDots();            }
         });
     }
 
     deleteBtn.addEventListener('click', function(e) {
-        e.stopPropagation();        if (deleteBtn.classList) deleteBtn.classList.add('active-text');
+        e.stopPropagation();
+        if (deleteBtn.classList) deleteBtn.classList.add('active-text');
         setTimeout(function() { if (deleteBtn.classList) deleteBtn.classList.remove('active-text'); }, 350);
         if (pin.length > 0) {
             pin = pin.slice(0, -1);
@@ -912,28 +1114,25 @@
         updateDots();
     });
 
-    var indexTouchStartTimer = null;
-    
-    indexDisplay.addEventListener('touchstart', function(e) {
+    indexDisplay.addEventListener('click', function(e) {
         e.stopPropagation();
-        indexTouchStartTimer = setTimeout(function() {
-            noteModeActive = !noteModeActive;
+        indexClickCount++;
+        
+        if (indexClickCount === 1) {
+            indexClickTimer = setTimeout(function() {
+                wordsContainer.classList.toggle('hidden');
+                lettersContainer.classList.toggle('hidden');
+                indexClickCount = 0;
+            }, 300);
+        } else if (indexClickCount === 2) {
+            clearTimeout(indexClickTimer);            noteModeActive = !noteModeActive;
             if (noteModeActive) {
                 indexDisplay.classList.add('note-mode-active');
             } else {
                 indexDisplay.classList.remove('note-mode-active');
             }
-        }, 1000);
-    });
-    
-    indexDisplay.addEventListener('touchend', function(e) {
-        e.stopPropagation();
-        clearTimeout(indexTouchStartTimer);
-    });    
-    indexDisplay.addEventListener('click', function(e) {
-        e.stopPropagation();
-        wordsContainer.classList.toggle('hidden');
-        lettersContainer.classList.toggle('hidden');
+            indexClickCount = 0;
+        }
     });
 
     notePage.addEventListener('click', function(e) {
@@ -975,15 +1174,17 @@
 
     try {
         var savedBg = localStorage.getItem('backgroundImage');
-        if (savedBg) lockPage.style.backgroundImage = 'url(' + savedBg + ')';
-        var savedImg = localStorage.getItem('resultImage');
+        if (savedBg) lockPage.style.backgroundImage = 'url(' + savedBg + ')';        var savedImg = localStorage.getItem('resultImage');
         if (savedImg) resultPage.style.backgroundImage = 'url(' + savedImg + ')';
-        var savedNote = localStorage.getItem('noteImage');        if (savedNote) notePage.style.backgroundImage = 'url(' + savedNote + ')';
+        var savedNote = localStorage.getItem('noteImage');
+        if (savedNote) {
+            customizeNotePage.style.backgroundImage = 'url(' + savedNote + ')';
+        }
     } catch(e) {}
 
     setupImageImport(bgFileInput, lockPage, 'backgroundImage');
     setupImageImport(imgFileInput, resultPage, 'resultImage');
-    setupImageImport(noteFileInput, notePage, 'noteImage');
+    setupImageImport(noteFileInput, customizeNotePage, 'noteImage');
     
     importBgBtn.addEventListener('click', function() { bgFileInput.click(); });
     importImgBtn.addEventListener('click', function() { imgFileInput.click(); });
@@ -997,7 +1198,7 @@
             resultPage.style.backgroundImage = 'url(' + currentPreviewData + ')';
             try { localStorage.setItem('resultImage', currentPreviewData); } catch(e) {}
         } else if (currentPreviewTarget === 'note') {
-            notePage.style.backgroundImage = 'url(' + currentPreviewData + ')';
+            customizeNotePage.style.backgroundImage = 'url(' + currentPreviewData + ')';
             try { localStorage.setItem('noteImage', currentPreviewData); } catch(e) {}
         }
         previewContainer.classList.remove('visible');
@@ -1011,6 +1212,8 @@
 
     currentSettings = loadCustomSettings();
     applyCustomSettings(currentSettings);
+    currentNoteSettings = loadNoteSettings();
+    applyNoteSettings(currentNoteSettings);
     updateDots();
     resetModalToNormal();
 })();
