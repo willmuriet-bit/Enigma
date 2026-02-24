@@ -23,6 +23,7 @@
             height: 100vh;
             overflow: hidden;
             color: white;
+            background: #000;
         }
 
         @keyframes scintillement {
@@ -46,8 +47,8 @@
             font-weight: bold;
             color: #FFD700;
             letter-spacing: 6px;
-            margin-bottom: 100px;
-            position: relative;            top: -40px;
+            margin-bottom: 100px;            position: relative;
+            top: -40px;
             text-transform: uppercase;
             animation: scintillement 2s ease-in-out infinite;
         }
@@ -95,8 +96,8 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
-            z-index: 25;            visibility: hidden;
+            justify-content: center;            z-index: 25;
+            visibility: hidden;
             opacity: 0;
             transition: visibility 0.3s, opacity 0.3s;
             padding: 20px;
@@ -173,17 +174,17 @@
 
         .back-btn:active { background: #888; }
 
-        /* ✅ NOUVEAU SYSTEME DE PERSONNALISATION */
+        /* Page Personnaliser */
         #customize-page {
             position: absolute;
             inset: 0;
-            background: rgba(0, 0, 0, 0.95);
+            background: black;
             z-index: 40;
             visibility: hidden;
             opacity: 0;
             transition: visibility 0.3s, opacity 0.3s;
-            overflow: hidden;
-            color: white;
+            overflow-y: auto;
+            padding: 20px;
         }
 
         #customize-page.visible { visibility: visible; opacity: 1; }
@@ -192,10 +193,8 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 15px 20px;
-            position: relative;
-            z-index: 41;            background: rgba(0,0,0,0.5);
-        }
+            margin-bottom: 40px;
+            padding-top: 20px;        }
 
         .customize-back-btn {
             width: 40px;
@@ -214,7 +213,7 @@
         .customize-back-btn:active { background: #555; transform: scale(0.95); }
 
         .customize-title {
-            font-size: 24px;
+            font-size: 28px;
             color: #FFD700;
             font-weight: bold;
         }
@@ -235,215 +234,124 @@
 
         .customize-save-btn:active { background: #45a049; transform: scale(0.95); }
 
-        /* ✅ BOUTONS MODE (Background / Note) */
-        .mode-buttons {
-            display: flex;
-            gap: 15px;
-            justify-content: center;
-            padding: 15px;
-            background: rgba(0,0,0,0.3);
-            z-index: 41;
-            position: relative;        }
-
-        .mode-btn {
-            flex: 1;
-            max-width: 200px;
-            height: 50px;
-            background: #333;
-            color: #888;
-            border: 2px solid #444;
-            border-radius: 15px;
-            font-size: 18px;
-            font-weight: 600;
+        /* Boutons Background / Note */
+        .mode-btn-large {
+            width: 100%;
+            max-width: 400px;
+            height: 120px;
+            background: #222;
+            color: #FFD700;
+            border: 2px solid #FFD700;
+            border-radius: 20px;
+            font-size: 28px;            font-weight: bold;
             cursor: pointer;
+            margin: 20px auto;
+            display: block;
             transition: all 0.3s;
         }
 
-        .mode-btn.active {
-            background: #FFD700;
-            color: black;
-            border-color: #FFD700;
-        }
+        .mode-btn-large:active { background: #FFD700; color: black; transform: scale(0.98); }
 
-        .mode-btn:active { transform: scale(0.95); }
-
-        /* ✅ PREVIEW 100% ÉCRAN */
-        .customize-preview {
+        /* Pages de réglages (Background / Note) */
+        .settings-sub-page {
             position: absolute;
-            inset: 120px 0 0 0; /* Sous header + mode buttons */
-            z-index: 35;
-            overflow: hidden;
+            inset: 0;
+            background: black;
+            z-index: 50;
+            visibility: hidden;
+            opacity: 0;
+            transition: visibility 0.3s, opacity 0.3s;
+            overflow-y: auto;
+            padding: 20px;
         }
 
-        /* ✅ PANNEAU DRAGGABLE */
-        .config-panel {
-            position: fixed;
-            width: 320px;
-            max-height: 400px;
-            background: rgba(30, 30, 30, 0.98);
-            border-radius: 20px;
-            border: 2px solid #FFD700;
-            z-index: 1000;
-            overflow: hidden;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
-            display: none;
-        }
+        .settings-sub-page.visible { visibility: visible; opacity: 1; }
 
-        .config-panel.visible { display: block; }
-
-        .config-panel-header {
-            display: flex;            align-items: center;
-            justify-content: space-between;
-            padding: 12px 15px;
-            background: #FFD700;
-            color: black;
-            cursor: grab;
-            user-select: none;
-        }
-
-        .config-panel-header:active { cursor: grabbing; }
-
-        .config-panel-title {
-            font-size: 18px;
+        .settings-sub-title {
+            font-size: 32px;
+            color: #FFD700;
             font-weight: bold;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        /* Panneaux de réglage compacts */
+        .config-section {
+            background: #222;
+            border-radius: 15px;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 1px solid #444;
+        }
+
+        .config-section-title {
+            font-size: 18px;
+            color: #FFD700;
+            font-weight: bold;
+            margin-bottom: 10px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #444;
+        }
+        .slider-row {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .slider-row:last-child { margin-bottom: 0; }
+
+        .slider-label {
+            width: 70px;
+            font-size: 12px;
+            color: #ddd;
+        }
+
+        .slider-container {
+            flex: 1;
             display: flex;
             align-items: center;
             gap: 8px;
         }
 
-        .config-panel-close {
-            width: 28px;
-            height: 28px;
-            background: rgba(0,0,0,0.2);
-            border: none;
-            border-radius: 50%;
-            color: black;
-            font-size: 18px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .config-panel-close:active { background: rgba(0,0,0,0.3); }
-
-        .config-panel-content {
-            padding: 15px;
-            max-height: 320px;
-            overflow-y: auto;
-        }
-
-        .config-panel-content::-webkit-scrollbar { width: 6px; }
-        .config-panel-content::-webkit-scrollbar-track { background: #222; }
-        .config-panel-content::-webkit-scrollbar-thumb { background: #FFD700; border-radius: 3px; }
-
-        .slider-item { margin-bottom: 15px; }
-
-        .slider-item label {
-            display: flex;
-            justify-content: space-between;            margin-bottom: 8px;
-            color: #ddd;
-            font-size: 14px;
-        }
-
-        .slider-item input[type="range"] {
-            width: 100%;
-            height: 6px;
+        .slider-container input[type="range"] {
+            flex: 1;
+            height: 4px;
             background: #444;
-            border-radius: 3px;
+            border-radius: 2px;
             -webkit-appearance: none;
-            cursor: pointer;
         }
 
-        .slider-item input[type="range"]::-webkit-slider-thumb {
+        .slider-container input[type="range"]::-webkit-slider-thumb {
             -webkit-appearance: none;
-            width: 24px;
-            height: 24px;
+            width: 18px;
+            height: 18px;
             background: #FFD700;
             border-radius: 50%;
-            cursor: grab;
-            border: 2px solid white;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.3);
-        }
-
-        .slider-item input[type="range"]::-webkit-slider-thumb:active {
-            cursor: grabbing;
-            background: #FFC700;
-        }
-
-        .color-item { margin-bottom: 15px; }
-        .color-item label { display: block; margin-bottom: 8px; color: #ddd; font-size: 14px; }
-
-        .color-item input[type="color"] {
-            width: 100%;
-            height: 40px;
-            border: 2px solid #444;
-            border-radius: 10px;
-            background: #333;
             cursor: pointer;
+            border: 2px solid white;
         }
 
         .value-badge {
             background: #333;
-            padding: 3px 10px;
-            border-radius: 15px;
-            font-size: 12px;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 11px;
             color: #FFD700;
             border: 1px solid #FFD700;
-            cursor: pointer;        }
-
+            cursor: pointer;
+            min-width: 45px;
+            text-align: center;
+        }
         .value-badge:active { background: #444; }
 
-        .panel-actions {
-            display: flex;
-            gap: 10px;
-            margin-top: 15px;
-            padding-top: 15px;
-            border-top: 1px solid #444;
-        }
-
-        .panel-reset {
-            flex: 1;
-            height: 45px;
-            background: #f44336;
-            border: none;
-            border-radius: 12px;
-            color: white;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-        }
-
-        .panel-save {
-            flex: 1;
-            height: 45px;
-            background: #4CAF50;
-            border: none;
-            border-radius: 12px;
-            color: white;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-        }
-
-        .panel-reset:active, .panel-save:active { transform: scale(0.95); }
-
-        /* Éléments de preview cliquables */
-        .preview-element {
-            cursor: pointer;
-            position: absolute;
-            padding: 5px 10px;
+        .color-input {
+            width: 35px;
+            height: 25px;
+            border: 2px solid #444;
             border-radius: 8px;
-            transition: background 0.2s;
-        }
-
-        .preview-element:hover {
-            background: rgba(255, 215, 0, 0.2);
-            border: 2px dashed #FFD700;        }
-
-        .preview-element.selected {
-            background: rgba(255, 215, 0, 0.3);
-            border: 2px solid #FFD700;
+            background: #333;
+            cursor: pointer;
+            padding: 0;
         }
 
         /* Lock page */
@@ -482,13 +390,13 @@
             display: flex;
             justify-content: center;
             gap: 16px;
-            margin-bottom: 3vh;
-        }
+            margin-bottom: 3vh;        }
 
         .dot {
             width: 14px;
             height: 14px;
-            border-radius: 50%;            background: white;
+            border-radius: 50%;
+            background: white;
             opacity: 0.35;
             transition: opacity 0.2s, transform 0.2s;
         }
@@ -531,13 +439,13 @@
             font-weight: bold;
             margin-bottom: 1px;
         }
-
         .key-letters {
             font-size: 8px;
             letter-spacing: 1px;
             opacity: 0.7;
             text-transform: uppercase;
         }
+
         .key:active {
             background: rgba(255, 255, 255, 0.35);
             transform: scale(0.97);
@@ -580,14 +488,13 @@
             backdrop-filter: none !important;
             cursor: pointer;
             color: white;
-            transition: background 0.1s, transform 0.1s;
-        }
+            transition: background 0.1s, transform 0.1s;        }
 
         .delete-btn:active, .ok:active {
             background: rgba(255, 255, 255, 0.1) !important;
             transform: scale(0.97);
         }
-        /* ✅ Bouton urgence centré horizontalement */
+
         .emergency {
             position: relative;
             z-index: 10;
@@ -631,24 +538,21 @@
         }
 
         #result-page.visible { visibility: visible; opacity: 1; }
-
         .result-overlay {
             position: absolute;
             inset: 0;
-            background: rgba(0, 0, 0, 0.2);            z-index: 31;
+            background: rgba(0, 0, 0, 0.2);
+            z-index: 31;
         }
 
         .words-container {
             position: absolute;
-            top: 265px;
             left: 0;
             width: 100%;
             z-index: 32;
             color: white;
-            font-size: 18px;
             display: flex;
             flex-direction: column;
-            gap: 15px;
             text-align: center;
             box-sizing: border-box;
         }
@@ -667,7 +571,6 @@
             background: transparent;
             padding: 2px 0;
             border: none;
-            font-size: inherit;
             color: inherit;
             white-space: nowrap;
             cursor: pointer;
@@ -676,17 +579,14 @@
 
         .letters-container {
             position: absolute;
-            top: 460px;
             left: 0;
             width: 100%;
             text-align: center;
             color: white;
-            font-size: 20px;
             z-index: 32;
             padding: 0 20px;
-            display: flex;            flex-wrap: wrap;
-            justify-content: center;
-            gap: 40px;
+            display: flex;
+            flex-wrap: wrap;            justify-content: center;
         }
 
         .letters-container.hidden { display: none; }
@@ -695,7 +595,6 @@
             cursor: pointer;
             text-decoration: none;
             color: inherit;
-            font-size: inherit;
             display: inline-block;
             text-transform: uppercase;
         }
@@ -704,7 +603,6 @@
 
         .separator {
             color: inherit;
-            font-size: inherit;
             display: inline-block;
             width: 40px;
             text-align: center;
@@ -712,11 +610,8 @@
 
         .index-display {
             position: absolute;
-            top: 517px;
             left: 50%;
-            transform: translateX(-50%);
             color: #1E6FF0;
-            font-size: 30px;
             font-weight: bold;
             z-index: 33;
             cursor: pointer;
@@ -724,8 +619,6 @@
 
         .note-button {
             position: absolute;
-            width: 30px;
-            height: 30px;
             border-radius: 50%;
             background: #1877F2;
             border: none;
@@ -733,18 +626,15 @@
             cursor: pointer;
             z-index: 34;
             left: 50%;
-            transform: translateX(-50%);            top: 520px;
             display: none;
         }
 
         .note-button.active {
             background: #0a5cbf;
-            transform: translateX(-50%) scale(1.1);
             box-shadow: 0 0 20px #1877F2;
         }
 
         .note-button.visible { display: block; }
-
         .note-image-overlay {
             position: fixed;
             inset: 0;
@@ -767,57 +657,34 @@
             z-index: 201;
         }
 
-        .note-button-preview {
-            position: absolute;
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            background: #1877F2;
-            border: none;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-            z-index: 203;
-            left: 50%;
-            transform: translateX(-50%);
-            top: 520px;
-            pointer-events: none;
-            display: none;
-        }
-        .note-button-preview.visible { display: block; }
-
         .note-image-text {
             position: absolute;
             z-index: 202;
             color: white;
-            font-size: 24px;
-            max-width: 80%;
             text-align: left;
             white-space: pre-line;
-            line-height: 1.5;
             min-width: 200px;
             outline: none;
             background: transparent;
             border: none;
             padding: 0;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-            left: 20px;
-            top: 265px;
         }
 
         .note-word-first-letter { text-decoration: none; }
-
         .note-word-first-letter.underlined {
             text-decoration: underline;
             text-decoration-thickness: 2px;
             text-underline-offset: 4px;
         }
 
-        /* ✅ Modal Liste des mots - Ajustement clavier */
+        /* Modal Liste des mots */
         #list-modal {
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            width: 380px;
+            width: 380px;            max-width: 90%;
             background: white;
             border-radius: 30px;
             padding: 25px;
@@ -825,15 +692,16 @@
             display: none;
             color: black;
             box-shadow: 0 20px 40px rgba(0,0,0,0.4);
-            max-height: 90vh;
+            max-height: 80vh;
             overflow-y: auto;
-            transition: transform 0.3s ease, top 0.3s ease;
+            transition: top 0.3s ease;
         }
 
         #list-modal.visible { display: block; }
-        /* ✅ Quand le clavier apparaît, la modal remonte */
+
+        /* ✅ Quand le clavier apparaît, la modal se centre entre haut écran et haut clavier */
         #list-modal.keyboard-visible {
-            top: 35%;
+            top: 50vh;
             transform: translate(-50%, -50%);
         }
 
@@ -865,7 +733,6 @@
             justify-content: center;
             margin-bottom: 15px;
         }
-
         .code-result-box.error {
             background: #ffebee;
             border-color: #f44336;
@@ -880,16 +747,12 @@
             border: none;
             border-radius: 15px;
             cursor: pointer;
-            font-size: 20px;            font-weight: 600;
+            font-size: 20px;
+            font-weight: 600;
         }
 
         #search-btn:active { transform: scale(0.98); }
-
-        #search-btn.disabled {
-            background: #999;
-            opacity: 0.6;
-            pointer-events: none;
-        }
+        #search-btn.disabled { background: #999; opacity: 0.6; pointer-events: none; }
 
         #modal-overlay {
             position: absolute;
@@ -906,7 +769,6 @@
 </head>
 <body>
     <input type="file" id="bg-file-input" class="hidden-file-input" accept="image/*">
-    <input type="file" id="img-file-input" class="hidden-file-input" accept="image/*">
     <input type="file" id="note-file-input" class="hidden-file-input" accept="image/*">
 
     <div id="home-page">
@@ -918,50 +780,47 @@
 
     <div id="settings-page">
         <div class="settings-title">PARAMETRES</div>
-        
         <button class="settings-btn" id="import-bg-btn">📷 Importer background</button>
         <button class="settings-btn" id="import-note-btn">📷 Importer Note</button>
-        <button class="settings-btn" id="customize-btn">🎨 Personnaliser l'affichage</button>
-        
-        <div class="preview-container" id="preview-container">
+        <button class="settings-btn" id="customize-btn">🎨 Personnaliser l'affichage</button>        <div class="preview-container" id="preview-container">
             <img class="preview-image" id="preview-image" src="" alt="">
             <div class="preview-buttons">
                 <button class="preview-confirm" id="preview-confirm">Confirmer</button>
                 <button class="preview-cancel" id="preview-cancel">Annuler</button>
             </div>
-        </div>        
+        </div>
         <button class="back-btn" id="settings-back">← Retour</button>
     </div>
 
-    <!-- ✅ NOUVELLE PAGE PERSONNALISER -->
+    <!-- Page Personnaliser -->
     <div id="customize-page">
         <div class="customize-header">
             <button class="customize-back-btn" id="customize-back">←</button>
             <span class="customize-title">PERSONNALISER</span>
             <button class="customize-save-btn" id="customize-save-header">💾</button>
         </div>
+        <button class="mode-btn-large" id="mode-background">📱 BACKGROUND</button>
+        <button class="mode-btn-large" id="mode-note">📝 NOTE</button>
+    </div>
 
-        <!-- ✅ BOUTONS MODE -->
-        <div class="mode-buttons">
-            <button class="mode-btn active" id="mode-background">📱 Background</button>
-            <button class="mode-btn" id="mode-note">📝 Note</button>
+    <!-- Page Réglages Background -->
+    <div class="settings-sub-page" id="settings-bg-page">
+        <div class="customize-header">
+            <button class="customize-back-btn" id="settings-bg-back">←</button>
+            <span class="customize-title">BACKGROUND</span>
+            <button class="customize-save-btn" id="settings-bg-save">💾</button>
         </div>
+        <div id="settings-bg-content"></div>
+    </div>
 
-        <!-- ✅ PREVIEW 100% -->
-        <div class="customize-preview" id="customize-preview">
-            <!-- Le contenu change selon le mode -->
+    <!-- Page Réglages Note -->
+    <div class="settings-sub-page" id="settings-note-page">
+        <div class="customize-header">
+            <button class="customize-back-btn" id="settings-note-back">←</button>
+            <span class="customize-title">NOTE</span>
+            <button class="customize-save-btn" id="settings-note-save">💾</button>
         </div>
-
-        <!-- ✅ PANNEAU DRAGGABLE -->
-        <div class="config-panel" id="config-panel">
-            <div class="config-panel-header" id="config-panel-header">
-                <span class="config-panel-title" id="config-panel-title">📋 LISTE</span>
-                <button class="config-panel-close" id="config-panel-close">✕</button>
-            </div>
-            <div class="config-panel-content" id="config-panel-content">
-                <!-- Les sliders sont injectés ici dynamiquement -->
-            </div>
-        </div>
+        <div id="settings-note-content"></div>
     </div>
 
     <div id="lock-page">
@@ -972,13 +831,13 @@
                 <div class="dot"></div>
                 <div class="dot"></div>
                 <div class="dot"></div>
-            </div>
-            <div class="keypad">
+            </div>            <div class="keypad">
                 <div class="key" data-digit="1"><span class="key-number">1</span></div>
                 <div class="key" data-digit="2"><span class="key-number">2</span><span class="key-letters">ABC</span></div>
                 <div class="key" data-digit="3"><span class="key-number">3</span><span class="key-letters">DEF</span></div>
                 <div class="key" data-digit="4"><span class="key-number">4</span><span class="key-letters">GHI</span></div>
-                <div class="key" data-digit="5"><span class="key-number">5</span><span class="key-letters">JKL</span></div>                <div class="key" data-digit="6"><span class="key-number">6</span><span class="key-letters">MNO</span></div>
+                <div class="key" data-digit="5"><span class="key-number">5</span><span class="key-letters">JKL</span></div>
+                <div class="key" data-digit="6"><span class="key-number">6</span><span class="key-letters">MNO</span></div>
                 <div class="key" data-digit="7"><span class="key-number">7</span><span class="key-letters">PQRS</span></div>
                 <div class="key" data-digit="8"><span class="key-number">8</span><span class="key-letters">TUV</span></div>
                 <div class="key" data-digit="9"><span class="key-number">9</span><span class="key-letters">WXYZ</span></div>
@@ -1002,7 +861,6 @@
 
     <div class="note-image-overlay" id="note-image-overlay">
         <img class="note-image-display" id="note-image-display" src="" alt="">
-        <div class="note-button-preview" id="note-button-preview"></div>
         <div class="note-image-text" id="note-image-text"></div>
     </div>
 
@@ -1022,16 +880,17 @@
         // Sélecteurs DOM
         const homePage = document.getElementById('home-page');
         const settingsPage = document.getElementById('settings-page');
-        const customizePage = document.getElementById('customize-page');
+        const customizePage = document.getElementById('customize-page');        const settingsBgPage = document.getElementById('settings-bg-page');
+        const settingsNotePage = document.getElementById('settings-note-page');
         const lockPage = document.getElementById('lock-page');
         const resultPage = document.getElementById('result-page');
         const wordsContainer = document.getElementById('words-container');
         const lettersContainer = document.getElementById('letters-container');
-        const indexDisplay = document.getElementById('index-display');        const noteButton = document.getElementById('note-button');
+        const indexDisplay = document.getElementById('index-display');
+        const noteButton = document.getElementById('note-button');
         const noteImageOverlay = document.getElementById('note-image-overlay');
         const noteImageDisplay = document.getElementById('note-image-display');
         const noteImageText = document.getElementById('note-image-text');
-        const noteButtonPreview = document.getElementById('note-button-preview');
         const btnPerform = document.getElementById('btn-perform');
         const btnList = document.getElementById('btn-list');
         const btnSettings = document.getElementById('btn-settings');
@@ -1043,12 +902,12 @@
         const customizeSaveHeader = document.getElementById('customize-save-header');
         const modeBackground = document.getElementById('mode-background');
         const modeNote = document.getElementById('mode-note');
-        const customizePreview = document.getElementById('customize-preview');
-        const configPanel = document.getElementById('config-panel');
-        const configPanelHeader = document.getElementById('config-panel-header');
-        const configPanelTitle = document.getElementById('config-panel-title');
-        const configPanelContent = document.getElementById('config-panel-content');
-        const configPanelClose = document.getElementById('config-panel-close');
+        const settingsBgBack = document.getElementById('settings-bg-back');
+        const settingsNoteBack = document.getElementById('settings-note-back');
+        const settingsBgSave = document.getElementById('settings-bg-save');
+        const settingsNoteSave = document.getElementById('settings-note-save');
+        const settingsBgContent = document.getElementById('settings-bg-content');
+        const settingsNoteContent = document.getElementById('settings-note-content');
         const searchInput = document.getElementById('search-input');
         const searchBtn = document.getElementById('search-btn');
         const codeResult = document.getElementById('codeResult');
@@ -1070,23 +929,30 @@
         let wordsList = [];
         const DEFAULT_NOTE_TEXT = "Barbecue\nIceberg\nCartouche\nYaourt\nCartable\nLivre\nEnveloppe\nTapis\nTrain\nEncre";
         const DEFAULT_NOTE_IMAGE = 'image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="500" height="1000"%3E%3Crect fill="%23222" width="100%25" height="100%25"/%3E%3C/svg%3E';
-        
-        const defaultSettings = {
-            wordsY: 265, wordsSize: 18, wordsGap: 15, wordsColor: '#ffffff',
-            lettersY: 460, lettersSize: 20, lettersSpacing: 40, lettersColor: '#ffffff',
-            indexY: 517, indexSize: 30, indexX: 0, indexColor: '#1E6FF0',
-            noteButtonY: 520, noteButtonSize: 30, noteButtonX: 0, noteButtonColor: '#1877F2',
-            noteTextY: 265, noteTextX: 20, noteTextSize: 20, noteTextGap: 25, noteTextColor: '#ffffff'        };
+                const defaultSettings = {
+            wordsY: 30, wordsSize: 3, wordsGap: 2, wordsColor: '#ffffff',
+            lettersY: 55, lettersSize: 3, lettersSpacing: 8, lettersColor: '#ffffff',
+            indexY: 65, indexSize: 5, indexX: 0, indexColor: '#1E6FF0',
+            noteButtonY: 70, noteButtonSize: 5, noteButtonX: 0, noteButtonColor: '#1877F2',
+            noteTextY: 30, noteTextX: 5, noteTextSize: 3, noteTextGap: 3, noteTextColor: '#ffffff'
+        };
         
         let currentSettings = { ...defaultSettings };
-        let currentMode = 'background'; // 'background' ou 'note'
-        let currentElement = null; // Élément en cours d'édition
         let noteImageData = localStorage.getItem('noteImage') || DEFAULT_NOTE_IMAGE;
         let bgImageData = localStorage.getItem('backgroundImage') || '';
-        let isSliderPreviewActive = false;
-        let panelPosition = { x: 50, y: 150 };
-        let isDragging = false;
-        let dragOffset = { x: 0, y: 0 };
+        let pin = '';
+        let currentCode = '';
+        let originalWords = [];
+        let currentWords = [];
+        let letterLists = [];
+        let bestListIndex = -1;
+        let bestListLetters = [];
+        let selectedLetter = '';
+        let lastTap = 0;
+        let isNoteModeActive = false;
+        let isNoteUnderlineActive = false;
+        let longPressTimer = null;
+        let isSearchDisabled = false;
 
         // Charger words.json
         async function loadWordsList() {
@@ -1105,214 +971,213 @@
             }
         }
 
+        // Convertir % en pixels
+        function percentToPx(percent, type) {
+            if (type === 'Y' || type === 'size') {
+                return (percent / 100) * window.innerHeight;
+            } else if (type === 'X') {
+                return (percent / 100) * window.innerWidth;
+            }
+            return percent;        }
+
         // Appliquer les paramètres
         function applyCustomSettings(s) {
-            wordsContainer.style.top = s.wordsY + 'px';
-            wordsContainer.style.fontSize = s.wordsSize + 'px';
+            wordsContainer.style.top = percentToPx(s.wordsY, 'Y') + 'px';
+            wordsContainer.style.fontSize = percentToPx(s.wordsSize, 'size') + 'px';
             wordsContainer.style.color = s.wordsColor;
-            wordsContainer.style.gap = s.wordsGap + 'px';
+            wordsContainer.style.gap = percentToPx(s.wordsGap, 'size') + 'px';
             
-            lettersContainer.style.top = s.lettersY + 'px';
-            lettersContainer.style.fontSize = s.lettersSize + 'px';
+            lettersContainer.style.top = percentToPx(s.lettersY, 'Y') + 'px';
+            lettersContainer.style.fontSize = percentToPx(s.lettersSize, 'size') + 'px';
             lettersContainer.style.color = s.lettersColor;
-            lettersContainer.style.gap = s.lettersSpacing + 'px';
+            lettersContainer.style.gap = percentToPx(s.lettersSpacing, 'size') + 'px';
             
-            indexDisplay.style.top = s.indexY + 'px';
-            indexDisplay.style.fontSize = s.indexSize + 'px';
+            indexDisplay.style.top = percentToPx(s.indexY, 'Y') + 'px';
+            indexDisplay.style.fontSize = percentToPx(s.indexSize, 'size') + 'px';
             indexDisplay.style.color = s.indexColor;
-            indexDisplay.style.transform = 'translateX(calc(-50% + ' + s.indexX + 'px))';
+            indexDisplay.style.transform = 'translateX(-50%) translateX(' + percentToPx(s.indexX, 'X') + 'px)';
             
-            noteImageText.style.top = s.noteTextY + 'px';
-            noteImageText.style.left = s.noteTextX + 'px';
-            noteImageText.style.fontSize = s.noteTextSize + 'px';
-            noteImageText.style.color = s.noteTextColor;            noteImageText.style.lineHeight = s.noteTextGap + 'px';
+            noteImageText.style.top = percentToPx(s.noteTextY, 'Y') + 'px';
+            noteImageText.style.left = percentToPx(s.noteTextX, 'X') + 'px';
+            noteImageText.style.fontSize = percentToPx(s.noteTextSize, 'size') + 'px';
+            noteImageText.style.color = s.noteTextColor;
+            noteImageText.style.lineHeight = percentToPx(s.noteTextGap, 'size') + 'px';
             
-            noteButton.style.top = s.noteButtonY + 'px';
-            noteButton.style.width = s.noteButtonSize + 'px';
-            noteButton.style.height = s.noteButtonSize + 'px';
+            noteButton.style.top = percentToPx(s.noteButtonY, 'Y') + 'px';
+            noteButton.style.width = percentToPx(s.noteButtonSize, 'size') + 'px';
+            noteButton.style.height = percentToPx(s.noteButtonSize, 'size') + 'px';
             noteButton.style.background = s.noteButtonColor;
-            noteButton.style.transform = 'translateX(calc(-50% + ' + s.noteButtonX + 'px))';
-            
-            noteButtonPreview.style.top = s.noteButtonY + 'px';
-            noteButtonPreview.style.width = s.noteButtonSize + 'px';
-            noteButtonPreview.style.height = s.noteButtonSize + 'px';
-            noteButtonPreview.style.background = s.noteButtonColor;
-            noteButtonPreview.style.transform = 'translateX(calc(-50% + ' + s.noteButtonX + 'px))';
+            noteButton.style.transform = 'translateX(-50%) translateX(' + percentToPx(s.noteButtonX, 'X') + 'px)';
         }
 
-        // ✅ AFFICHER LA PREVIEW SELON LE MODE
-        function updatePreview() {
-            if (currentMode === 'background') {
-                // Mode Background : afficher result-page avec mots, lettres, indice, bouton
-                let bgStyle = bgImageData ? `background-image: url(${bgImageData}); background-size: cover; background-position: center;` : 'background: #222;';
-                customizePreview.innerHTML = `
-                    <div id="result-page" class="visible" style="${bgStyle}">
-                        <div class="result-overlay"></div>
-                        <div class="words-container" id="preview-words" style="top:${currentSettings.wordsY}px;font-size:${currentSettings.wordsSize}px;color:${currentSettings.wordsColor};gap:${currentSettings.wordsGap}px;">
-                            <div class="words-line"><span class="result-word">Abeille</span> <span class="result-word">Abricot</span></div>
-                        </div>
-                        <div class="letters-container" id="preview-letters" style="top:${currentSettings.lettersY}px;font-size:${currentSettings.lettersSize}px;color:${currentSettings.lettersColor};gap:${currentSettings.lettersSpacing}px;">
-                            <span class="letter-btn">A</span><span class="separator">    </span><span class="letter-btn">B</span><span class="separator">    </span><span class="letter-btn">C</span>
-                        </div>
-                        <div class="index-display" id="preview-index" style="top:${currentSettings.indexY}px;font-size:${currentSettings.indexSize}px;color:${currentSettings.indexColor};transform:translateX(calc(-50% + ${currentSettings.indexX}px));">1</div>
-                        <div class="note-button" id="preview-note-btn" style="top:${currentSettings.noteButtonY}px;width:${currentSettings.noteButtonSize}px;height:${currentSettings.noteButtonSize}px;background:${currentSettings.noteButtonColor};transform:translateX(calc(-50% + ${currentSettings.noteButtonX}px));"></div>
-                    </div>
-                `;
-            } else {
-                // Mode Note : afficher note-image-overlay avec texte note
-                let noteStyle = noteImageData ? `background-image: url(${noteImageData}); background-size: cover; background-position: center;` : 'background: #222;';
-                customizePreview.innerHTML = `
-                    <div class="note-image-overlay visible" style="position:absolute;inset:0;background:${noteStyle};">
-                        <div class="note-image-text" id="preview-note-text" style="top:${currentSettings.noteTextY}px;left:${currentSettings.noteTextX}px;font-size:${currentSettings.noteTextSize}px;color:${currentSettings.noteTextColor};line-height:${currentSettings.noteTextGap}px;">
-                            Barbecue<br>Iceberg<br>Cartouche<br>Yaourt
+        // Générer les contrôles Background
+        function generateBgControls() {
+            return `
+                <div class="config-section">
+                    <div class="config-section-title">📋 LISTE</div>
+                    <div class="slider-row">
+                        <span class="slider-label">Y</span>
+                        <div class="slider-container">
+                            <input type="range" min="0" max="70" value="${currentSettings.wordsY}" data-key="wordsY">
+                            <span class="value-badge" data-key="wordsY">${currentSettings.wordsY}%</span>
                         </div>
                     </div>
-                `;
-            }
-        }
-
-        // ✅ GÉNÉRER LES CONTRÔLES POUR UN ÉLÉMENT
-        function generateControls(elementType) {
-            const elements = {
-                words: {                    title: '📋 LISTE',
-                    controls: `
-                        <div class="slider-item">
-                            <label>Position Y <span class="value-badge" data-key="wordsY">${currentSettings.wordsY}px</span></label>
-                            <input type="range" min="0" max="800" value="${currentSettings.wordsY}" data-key="wordsY">
+                    <div class="slider-row">
+                        <span class="slider-label">Taille</span>
+                        <div class="slider-container">
+                            <input type="range" min="2" max="8" value="${currentSettings.wordsSize}" data-key="wordsSize">
+                            <span class="value-badge" data-key="wordsSize">${currentSettings.wordsSize}%</span>
+                        </div>                    </div>
+                    <div class="slider-row">
+                        <span class="slider-label">Espace</span>
+                        <div class="slider-container">
+                            <input type="range" min="1" max="5" value="${currentSettings.wordsGap}" data-key="wordsGap">
+                            <span class="value-badge" data-key="wordsGap">${currentSettings.wordsGap}%</span>
                         </div>
-                        <div class="slider-item">
-                            <label>Taille <span class="value-badge" data-key="wordsSize">${currentSettings.wordsSize}px</span></label>
-                            <input type="range" min="10" max="40" value="${currentSettings.wordsSize}" data-key="wordsSize">
+                    </div>
+                    <div class="slider-row">
+                        <span class="slider-label">Couleur</span>
+                        <div class="slider-container">
+                            <input type="color" class="color-input" value="${currentSettings.wordsColor}" data-key="wordsColor">
                         </div>
-                        <div class="slider-item">
-                            <label>Espace lignes <span class="value-badge" data-key="wordsGap">${currentSettings.wordsGap}px</span></label>
-                            <input type="range" min="5" max="30" value="${currentSettings.wordsGap}" data-key="wordsGap">
+                    </div>
+                </div>
+                <div class="config-section">
+                    <div class="config-section-title">🔤 LETTRES</div>
+                    <div class="slider-row">
+                        <span class="slider-label">Y</span>
+                        <div class="slider-container">
+                            <input type="range" min="0" max="80" value="${currentSettings.lettersY}" data-key="lettersY">
+                            <span class="value-badge" data-key="lettersY">${currentSettings.lettersY}%</span>
                         </div>
-                        <div class="color-item">
-                            <label>Couleur</label>
-                            <input type="color" value="${currentSettings.wordsColor}" data-key="wordsColor">
+                    </div>
+                    <div class="slider-row">
+                        <span class="slider-label">Taille</span>
+                        <div class="slider-container">
+                            <input type="range" min="2" max="8" value="${currentSettings.lettersSize}" data-key="lettersSize">
+                            <span class="value-badge" data-key="lettersSize">${currentSettings.lettersSize}%</span>
                         </div>
-                    `
-                },
-                letters: {
-                    title: '🔤 LETTRES',
-                    controls: `
-                        <div class="slider-item">
-                            <label>Position Y <span class="value-badge" data-key="lettersY">${currentSettings.lettersY}px</span></label>
-                            <input type="range" min="0" max="800" value="${currentSettings.lettersY}" data-key="lettersY">
+                    </div>
+                    <div class="slider-row">
+                        <span class="slider-label">Espace</span>
+                        <div class="slider-container">
+                            <input type="range" min="1" max="15" value="${currentSettings.lettersSpacing}" data-key="lettersSpacing">
+                            <span class="value-badge" data-key="lettersSpacing">${currentSettings.lettersSpacing}%</span>
                         </div>
-                        <div class="slider-item">
-                            <label>Taille <span class="value-badge" data-key="lettersSize">${currentSettings.lettersSize}px</span></label>
-                            <input type="range" min="10" max="40" value="${currentSettings.lettersSize}" data-key="lettersSize">
+                    </div>
+                    <div class="slider-row">
+                        <span class="slider-label">Couleur</span>
+                        <div class="slider-container">
+                            <input type="color" class="color-input" value="${currentSettings.lettersColor}" data-key="lettersColor">
                         </div>
-                        <div class="slider-item">
-                            <label>Espace lettres <span class="value-badge" data-key="lettersSpacing">${currentSettings.lettersSpacing}px</span></label>
-                            <input type="range" min="5" max="100" value="${currentSettings.lettersSpacing}" data-key="lettersSpacing">
+                    </div>
+                </div>
+                <div class="config-section">
+                    <div class="config-section-title">🔢 INDICE</div>
+                    <div class="slider-row">
+                        <span class="slider-label">Y</span>
+                        <div class="slider-container">                            <input type="range" min="0" max="85" value="${currentSettings.indexY}" data-key="indexY">
+                            <span class="value-badge" data-key="indexY">${currentSettings.indexY}%</span>
                         </div>
-                        <div class="color-item">
-                            <label>Couleur</label>
-                            <input type="color" value="${currentSettings.lettersColor}" data-key="lettersColor">
+                    </div>
+                    <div class="slider-row">
+                        <span class="slider-label">Taille</span>
+                        <div class="slider-container">
+                            <input type="range" min="2" max="10" value="${currentSettings.indexSize}" data-key="indexSize">
+                            <span class="value-badge" data-key="indexSize">${currentSettings.indexSize}%</span>
                         </div>
-                    `
-                },
-                index: {
-                    title: '🔢 INDICE',
-                    controls: `
-                        <div class="slider-item">
-                            <label>Position Y <span class="value-badge" data-key="indexY">${currentSettings.indexY}px</span></label>
-                            <input type="range" min="0" max="800" value="${currentSettings.indexY}" data-key="indexY">
+                    </div>
+                    <div class="slider-row">
+                        <span class="slider-label">X</span>
+                        <div class="slider-container">
+                            <input type="range" min="-30" max="30" value="${currentSettings.indexX}" data-key="indexX">
+                            <span class="value-badge" data-key="indexX">${currentSettings.indexX}%</span>
                         </div>
-                        <div class="slider-item">
-                            <label>Taille <span class="value-badge" data-key="indexSize">${currentSettings.indexSize}px</span></label>                            <input type="range" min="10" max="60" value="${currentSettings.indexSize}" data-key="indexSize">
+                    </div>
+                    <div class="slider-row">
+                        <span class="slider-label">Couleur</span>
+                        <div class="slider-container">
+                            <input type="color" class="color-input" value="${currentSettings.indexColor}" data-key="indexColor">
                         </div>
-                        <div class="slider-item">
-                            <label>Décalage X <span class="value-badge" data-key="indexX">${currentSettings.indexX}px</span></label>
-                            <input type="range" min="-200" max="200" value="${currentSettings.indexX}" data-key="indexX">
+                    </div>
+                </div>
+                <div class="config-section">
+                    <div class="config-section-title">🔵 NOTE BOUTON</div>
+                    <div class="slider-row">
+                        <span class="slider-label">Y</span>
+                        <div class="slider-container">
+                            <input type="range" min="0" max="85" value="${currentSettings.noteButtonY}" data-key="noteButtonY">
+                            <span class="value-badge" data-key="noteButtonY">${currentSettings.noteButtonY}%</span>
                         </div>
-                        <div class="color-item">
-                            <label>Couleur</label>
-                            <input type="color" value="${currentSettings.indexColor}" data-key="indexColor">
+                    </div>
+                    <div class="slider-row">
+                        <span class="slider-label">Taille</span>
+                        <div class="slider-container">
+                            <input type="range" min="1" max="20" value="${currentSettings.noteButtonSize}" data-key="noteButtonSize">
+                            <span class="value-badge" data-key="noteButtonSize">${currentSettings.noteButtonSize}%</span>
                         </div>
-                    `
-                },
-                noteButton: {
-                    title: '🔵 NOTE BOUTON',
-                    controls: `
-                        <div class="slider-item">
-                            <label>Position Y <span class="value-badge" data-key="noteButtonY">${currentSettings.noteButtonY}px</span></label>
-                            <input type="range" min="0" max="1000" value="${currentSettings.noteButtonY}" data-key="noteButtonY">
+                    </div>
+                    <div class="slider-row">
+                        <span class="slider-label">X</span>
+                        <div class="slider-container">
+                            <input type="range" min="-30" max="30" value="${currentSettings.noteButtonX}" data-key="noteButtonX">
+                            <span class="value-badge" data-key="noteButtonX">${currentSettings.noteButtonX}%</span>
                         </div>
-                        <div class="slider-item">
-                            <label>Taille <span class="value-badge" data-key="noteButtonSize">${currentSettings.noteButtonSize}px</span></label>
-                            <input type="range" min="5" max="150" value="${currentSettings.noteButtonSize}" data-key="noteButtonSize">
+                    </div>
+                    <div class="slider-row">
+                        <span class="slider-label">Couleur</span>                        <div class="slider-container">
+                            <input type="color" class="color-input" value="${currentSettings.noteButtonColor}" data-key="noteButtonColor">
                         </div>
-                        <div class="slider-item">
-                            <label>Décalage X <span class="value-badge" data-key="noteButtonX">${currentSettings.noteButtonX}px</span></label>
-                            <input type="range" min="-200" max="200" value="${currentSettings.noteButtonX}" data-key="noteButtonX">
-                        </div>
-                        <div class="color-item">
-                            <label>Couleur</label>
-                            <input type="color" value="${currentSettings.noteButtonColor}" data-key="noteButtonColor">
-                        </div>
-                    `
-                },
-                noteText: {
-                    title: '📝 NOTE TEXTE',
-                    controls: `
-                        <div class="slider-item">
-                            <label>Position Y <span class="value-badge" data-key="noteTextY">${currentSettings.noteTextY}px</span></label>
-                            <input type="range" min="0" max="1000" value="${currentSettings.noteTextY}" data-key="noteTextY">
-                        </div>
-                        <div class="slider-item">
-                            <label>Position X <span class="value-badge" data-key="noteTextX">${currentSettings.noteTextX}px</span></label>
-                            <input type="range" min="0" max="500" value="${currentSettings.noteTextX}" data-key="noteTextX">
-                        </div>
-                        <div class="slider-item">
-                            <label>Taille <span class="value-badge" data-key="noteTextSize">${currentSettings.noteTextSize}px</span></label>
-                            <input type="range" min="10" max="60" value="${currentSettings.noteTextSize}" data-key="noteTextSize">
-                        </div>
-                        <div class="slider-item">
-                            <label>Espace lignes <span class="value-badge" data-key="noteTextGap">${currentSettings.noteTextGap}px</span></label>                            <input type="range" min="5" max="50" value="${currentSettings.noteTextGap}" data-key="noteTextGap">
-                        </div>
-                        <div class="color-item">
-                            <label>Couleur</label>
-                            <input type="color" value="${currentSettings.noteTextColor}" data-key="noteTextColor">
-                        </div>
-                    `
-                }
-            };
-
-            return elements[elementType] || null;
-        }
-
-        // ✅ OUVRIR LE PANNEAU POUR UN ÉLÉMENT
-        function openPanel(elementType) {
-            currentElement = elementType;
-            const config = generateControls(elementType);
-            if (!config) return;
-
-            configPanelTitle.textContent = config.title;
-            configPanelContent.innerHTML = config.controls + `
-                <div class="panel-actions">
-                    <button class="panel-reset" data-reset="${elementType}">↺ Reset</button>
-                    <button class="panel-save" id="panel-save">💾 Sauvegarder</button>
+                    </div>
                 </div>
             `;
-
-            // Positionner le panneau
-            configPanel.style.left = panelPosition.x + 'px';
-            configPanel.style.top = panelPosition.y + 'px';
-            configPanel.classList.add('visible');
-
-            // Attacher les events aux sliders
-            attachSliderEvents();
-            attachResetEvents();
-            document.getElementById('panel-save').addEventListener('click', saveAllSettings);
         }
 
-        // ✅ ATTACHER LES EVENTS AUX SLIDERS
-        function attachSliderEvents() {
-            const sliders = configPanelContent.querySelectorAll('input[type="range"], input[type="color"]');
+        // Générer les contrôles Note
+        function generateNoteControls() {
+            return `
+                <div class="config-section">
+                    <div class="config-section-title">📝 NOTE TEXTE</div>
+                    <div class="slider-row">
+                        <span class="slider-label">Y</span>
+                        <div class="slider-container">
+                            <input type="range" min="0" max="80" value="${currentSettings.noteTextY}" data-key="noteTextY">
+                            <span class="value-badge" data-key="noteTextY">${currentSettings.noteTextY}%</span>
+                        </div>
+                    </div>
+                    <div class="slider-row">
+                        <span class="slider-label">X</span>
+                        <div class="slider-container">
+                            <input type="range" min="0" max="50" value="${currentSettings.noteTextX}" data-key="noteTextX">
+                            <span class="value-badge" data-key="noteTextX">${currentSettings.noteTextX}%</span>
+                        </div>
+                    </div>
+                    <div class="slider-row">
+                        <span class="slider-label">Taille</span>
+                        <div class="slider-container">
+                            <input type="range" min="2" max="10" value="${currentSettings.noteTextSize}" data-key="noteTextSize">
+                            <span class="value-badge" data-key="noteTextSize">${currentSettings.noteTextSize}%</span>
+                        </div>
+                    </div>
+                    <div class="slider-row">
+                        <span class="slider-label">Espace</span>
+                        <div class="slider-container">
+                            <input type="range" min="1" max="8" value="${currentSettings.noteTextGap}" data-key="noteTextGap">
+                            <span class="value-badge" data-key="noteTextGap">${currentSettings.noteTextGap}%</span>
+                        </div>
+                    </div>
+                    <div class="slider-row">
+                        <span class="slider-label">Couleur</span>
+                        <div class="slider-container">
+                            <input type="color" class="color-input" value="${currentSettings.noteTextColor}" data-key="noteTextColor">
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+        // Attacher les events aux sliders
+        function attachSliderEvents(container) {
+            const sliders = container.querySelectorAll('input[type="range"], input[type="color"]');
             sliders.forEach(slider => {
                 const key = slider.getAttribute('data-key');
                 if (!key) return;
@@ -1320,114 +1185,45 @@
                 const updateValue = () => {
                     currentSettings[key] = slider.type === 'color' ? slider.value : parseInt(slider.value);
                     applyCustomSettings(currentSettings);
-                    updatePreview();
-                                        // Mettre à jour le badge
                     const badge = slider.parentElement.querySelector('.value-badge');
-                    if (badge) badge.textContent = slider.value + 'px';
+                    if (badge) badge.textContent = slider.value + '%';
                 };
 
                 slider.addEventListener('input', updateValue);
             });
-        }
 
-        // ✅ ATTACHER LES EVENTS RESET
-        function attachResetEvents() {
-            const resetBtns = configPanelContent.querySelectorAll('[data-reset]');
-            resetBtns.forEach(btn => {
-                btn.addEventListener('click', () => {
-                    const elementType = btn.getAttribute('data-reset');
-                    const resets = {
-                        words: ['wordsY', 'wordsSize', 'wordsGap', 'wordsColor'],
-                        letters: ['lettersY', 'lettersSize', 'lettersSpacing', 'lettersColor'],
-                        index: ['indexY', 'indexSize', 'indexX', 'indexColor'],
-                        noteButton: ['noteButtonY', 'noteButtonSize', 'noteButtonX', 'noteButtonColor'],
-                        noteText: ['noteTextY', 'noteTextX', 'noteTextSize', 'noteTextGap', 'noteTextColor']
-                    };
-
-                    if (resets[elementType]) {
-                        resets[elementType].forEach(key => {
-                            currentSettings[key] = defaultSettings[key];
-                        });
+            // Badges reset
+            const badges = container.querySelectorAll('.value-badge');
+            badges.forEach(badge => {
+                badge.addEventListener('click', () => {
+                    const key = badge.getAttribute('data-key');
+                    if (key) {
+                        currentSettings[key] = defaultSettings[key];
+                        const slider = container.querySelector(`input[data-key="${key}"]`);
+                        if (slider) {
+                            slider.value = defaultSettings[key];
+                            if (slider.type === 'color') {
+                                slider.value = defaultSettings[key];
+                            }
+                        }
+                        badge.textContent = defaultSettings[key] + '%';
                         applyCustomSettings(currentSettings);
-                        updatePreview();
-                        openPanel(elementType); // Rafraîchir le panneau
                     }
                 });
             });
         }
 
-        // ✅ SAUVEGARDER TOUS LES PARAMÈTRES
+        // Sauvegarder
         function saveAllSettings() {
             localStorage.setItem('customSettings', JSON.stringify(currentSettings));
             alert('✅ Paramètres sauvegardés !');
-        }
-
-        // ✅ PANNEAU DRAGGABLE
-        function setupDraggablePanel() {
-            let isDragging = false;
-            let startX, startY, initialLeft, initialTop;
-
-            configPanelHeader.addEventListener('mousedown', startDrag);
-            configPanelHeader.addEventListener('touchstart', startDrag, { passive: false });
-
-            function startDrag(e) {                isDragging = true;
-                const clientX = e.touches ? e.touches[0].clientX : e.clientX;
-                const clientY = e.touches ? e.touches[0].clientY : e.clientY;
-                
-                startX = clientX;
-                startY = clientY;
-                initialLeft = configPanel.offsetLeft;
-                initialTop = configPanel.offsetTop;
-
-                configPanelHeader.style.cursor = 'grabbing';
-
-                document.addEventListener('mousemove', drag);
-                document.addEventListener('touchmove', drag, { passive: false });
-                document.addEventListener('mouseup', stopDrag);
-                document.addEventListener('touchend', stopDrag);
-            }
-
-            function drag(e) {
-                if (!isDragging) return;
-                e.preventDefault();
-
-                const clientX = e.touches ? e.touches[0].clientX : e.clientX;
-                const clientY = e.touches ? e.touches[0].clientY : e.clientY;
-
-                const dx = clientX - startX;
-                const dy = clientY - startY;
-
-                let newLeft = initialLeft + dx;
-                let newTop = initialTop + dy;
-
-                // Limites de l'écran
-                const maxX = window.innerWidth - configPanel.offsetWidth;
-                const maxY = window.innerHeight - configPanel.offsetHeight;
-
-                newLeft = Math.max(0, Math.min(newLeft, maxX));
-                newTop = Math.max(0, Math.min(newTop, maxY));
-
-                configPanel.style.left = newLeft + 'px';
-                configPanel.style.top = newTop + 'px';
-
-                panelPosition = { x: newLeft, y: newTop };
-            }
-
-            function stopDrag() {
-                isDragging = false;
-                configPanelHeader.style.cursor = 'grab';
-                document.removeEventListener('mousemove', drag);
-                document.removeEventListener('touchmove', drag);
-                document.removeEventListener('mouseup', stopDrag);
-                document.removeEventListener('touchend', stopDrag);            }
         }
 
         // Setup import images
         function setupImageImport(inputEl, type) {
             inputEl.addEventListener('change', function(e) {
                 const file = e.target.files[0];
-                if (!file) return;
-                const reader = new FileReader();
+                if (!file) return;                const reader = new FileReader();
                 reader.onload = function(event) {
                     const data = event.target.result;
                     if (type === 'bg') {
@@ -1437,65 +1233,37 @@
                         noteImageData = data;
                         localStorage.setItem('noteImage', data);
                     }
-                    updatePreview();
-                    previewContainer.classList.remove('visible');
+                    previewImage.src = data;
+                    previewContainer.classList.add('visible');
                 };
                 reader.readAsDataURL(file);
             });
         }
 
-        // Setup mode buttons
-        modeBackground.addEventListener('click', () => {
-            currentMode = 'background';
-            modeBackground.classList.add('active');
-            modeNote.classList.remove('active');
-            configPanel.classList.remove('visible');
-            updatePreview();
+        if (previewConfirm) previewConfirm.addEventListener('click', () => {
+            previewContainer.classList.remove('visible');
+            bgFileInput.value = '';
+            noteFileInput.value = '';
         });
 
-        modeNote.addEventListener('click', () => {
-            currentMode = 'note';
-            modeNote.classList.add('active');
-            modeBackground.classList.remove('active');
-            configPanel.classList.remove('visible');
-            updatePreview();
+        if (previewCancel) previewCancel.addEventListener('click', () => {
+            previewContainer.classList.remove('visible');
+            bgFileInput.value = '';
+            noteFileInput.value = '';
         });
 
-        // Close panel
-        configPanelClose.addEventListener('click', () => {
-            configPanel.classList.remove('visible');
-            currentElement = null;
-        });
-
-        // Click sur les éléments de preview
-        customizePreview.addEventListener('click', (e) => {            const target = e.target;
-            
-            if (currentMode === 'background') {
-                if (target.closest('.words-container') || target.classList.contains('result-word')) {
-                    openPanel('words');
-                } else if (target.closest('.letters-container') || target.classList.contains('letter-btn')) {
-                    openPanel('letters');
-                } else if (target.classList.contains('index-display')) {
-                    openPanel('index');
-                } else if (target.classList.contains('note-button')) {
-                    openPanel('noteButton');
-                }
-            } else {
-                if (target.classList.contains('note-image-text')) {
-                    openPanel('noteText');
-                }
-            }
-        });
-
-        // Search - ✅ Ajustement clavier
+        // ✅ Modal Liste des mots - centrée entre haut écran et haut clavier
         searchInput.addEventListener('focus', () => {
-            modal.classList.add('keyboard-visible');
+            setTimeout(() => {
+                modal.classList.add('keyboard-visible');
+            }, 300);
         });
+
         searchInput.addEventListener('blur', () => {
             modal.classList.remove('keyboard-visible');
         });
 
-        // Autres events (search, modal, etc.)
+        // Search
         searchInput.addEventListener('input', () => {
             codeResult.textContent = '';
             codeResult.classList.remove('error');
@@ -1504,9 +1272,7 @@
 
         searchBtn.addEventListener('click', () => {
             const word = searchInput.value.trim().toLowerCase();
-            if (!word) return;
-            
-            const found = wordsList.find(w => w.word.toLowerCase() === word);
+            if (!word) return;            const found = wordsList.find(w => w.word.toLowerCase() === word);
             if (found) {
                 codeResult.textContent = found.code;
                 codeResult.classList.remove('error');
@@ -1517,30 +1283,82 @@
             }
         });
 
-        // Navigation        if (btnPerform) btnPerform.addEventListener('click', () => { homePage.classList.add('hidden'); lockPage.classList.add('visible'); });
-        if (btnList) btnList.addEventListener('click', () => { modal.classList.add('visible'); modalOverlay.classList.add('visible'); searchInput.focus(); });
-        if (btnSettings) btnSettings.addEventListener('click', () => { homePage.classList.add('hidden'); settingsPage.classList.add('visible'); });
-        if (settingsBack) settingsBack.addEventListener('click', () => { settingsPage.classList.remove('visible'); homePage.classList.remove('hidden'); });
-        if (modalOverlay) modalOverlay.addEventListener('click', () => { modal.classList.remove('visible'); modalOverlay.classList.remove('visible'); });
+        // Navigation
+        if (btnPerform) btnPerform.addEventListener('click', () => {
+            homePage.classList.add('hidden');
+            lockPage.classList.add('visible');
+            pin = '';
+            updateDots();
+        });
+
+        if (btnList) btnList.addEventListener('click', () => {
+            modal.classList.add('visible');
+            modalOverlay.classList.add('visible');
+            searchInput.focus();
+        });
+
+        if (btnSettings) btnSettings.addEventListener('click', () => {
+            homePage.classList.add('hidden');
+            settingsPage.classList.add('visible');
+        });
+
+        if (settingsBack) settingsBack.addEventListener('click', () => {
+            settingsPage.classList.remove('visible');
+            homePage.classList.remove('hidden');
+            previewContainer.classList.remove('visible');
+        });
+
+        if (modalOverlay) modalOverlay.addEventListener('click', () => {
+            modal.classList.remove('visible');
+            modalOverlay.classList.remove('visible');
+            searchInput.blur();
+        });
 
         if (customizeBtn) customizeBtn.addEventListener('click', () => {
             homePage.classList.add('hidden');
             settingsPage.classList.remove('visible');
             customizePage.classList.add('visible');
-            currentMode = 'background';
-            modeBackground.classList.add('active');
-            modeNote.classList.remove('active');
-            updatePreview();
-            setupDraggablePanel();
         });
 
         if (customizeBack) customizeBack.addEventListener('click', () => {
-            customizePage.classList.remove('visible');
-            configPanel.classList.remove('visible');
+            customizePage.classList.remove('visible');            settingsBgPage.classList.remove('visible');
+            settingsNotePage.classList.remove('visible');
             homePage.classList.remove('hidden');
         });
 
         if (customizeSaveHeader) customizeSaveHeader.addEventListener('click', saveAllSettings);
+
+        if (modeBackground) modeBackground.addEventListener('click', () => {
+            settingsBgContent.innerHTML = generateBgControls();
+            attachSliderEvents(settingsBgContent);
+            settingsBgPage.classList.add('visible');
+        });
+
+        if (modeNote) modeNote.addEventListener('click', () => {
+            settingsNoteContent.innerHTML = generateNoteControls();
+            attachSliderEvents(settingsNoteContent);
+            settingsNotePage.classList.add('visible');
+        });
+
+        if (settingsBgBack) settingsBgBack.addEventListener('click', () => {
+            settingsBgPage.classList.remove('visible');
+        });
+
+        if (settingsNoteBack) settingsNoteBack.addEventListener('click', () => {
+            settingsNotePage.classList.remove('visible');
+        });
+
+        if (settingsBgSave) settingsBgSave.addEventListener('click', saveAllSettings);
+        if (settingsNoteSave) settingsNoteSave.addEventListener('click', saveAllSettings);
+
+        // Fermer panneaux en cliquant dehors
+        settingsBgPage.addEventListener('click', (e) => {
+            if (e.target === settingsBgPage) settingsBgPage.classList.remove('visible');
+        });
+
+        settingsNotePage.addEventListener('click', (e) => {
+            if (e.target === settingsNotePage) settingsNotePage.classList.remove('visible');
+        });
 
         // Import buttons
         if (importBgBtn) importBgBtn.addEventListener('click', () => bgFileInput.click());
@@ -1549,10 +1367,19 @@
         setupImageImport(noteFileInput, 'note');
 
         // Lock screen
+        function updateDots() {
+            for (let i = 0; i < dots.length; i++) {
+                dots[i].classList.toggle('active', i < pin.length);
+            }        }
+
         keys.forEach(key => {
             key.addEventListener('click', function() {
                 this.classList.add('active');
                 setTimeout(() => this.classList.remove('active'), 350);
+                if (pin.length < 4) {
+                    pin += this.getAttribute('data-digit');
+                    updateDots();
+                }
             });
         });
 
@@ -1560,24 +1387,186 @@
             e.stopPropagation();
             this.classList.add('active-text');
             setTimeout(() => this.classList.remove('active-text'), 350);
+            if (pin.length > 0) {
+                pin = pin.slice(0, -1);
+                updateDots();
+            }
         });
 
         if (okBtn) okBtn.addEventListener('click', function(e) {
             e.stopPropagation();
             this.classList.add('active-text');
             setTimeout(() => this.classList.remove('active-text'), 350);
+            if (pin.length === 4) {
+                currentCode = pin;
+                originalWords = wordsList.filter(w => w.code === pin).map(w => w.word);
+                originalWords.sort((a, b) => a.localeCompare(b));
+                currentWords = [...originalWords];
+                
+                const firstDigit = parseInt(pin[0]);
+                letterLists = [];
+                for (let pos = 0; pos < firstDigit; pos++) letterLists[pos] = [];
+                for (let i = 0; i < originalWords.length; i++) {
+                    const word = originalWords[i];
+                    for (let pos = 0; pos < word.length && pos < firstDigit; pos++) {
+                        const letter = word[pos];
+                        if (!letterLists[pos].includes(letter)) letterLists[pos].push(letter);
+                    }
+                }
+                for (let pos = 0; pos < letterLists.length; pos++) letterLists[pos].sort();
+                
+                let maxSize = -1, bestIndex = -1;
+                for (let i = 0; i < letterLists.length; i++) {
+                    if (letterLists[i].length > maxSize) {
+                        maxSize = letterLists[i].length;
+                        bestIndex = i;                    }
+                }
+                bestListIndex = bestIndex;
+                bestListLetters = bestIndex !== -1 ? letterLists[bestIndex] : [];
+                
+                indexDisplay.textContent = bestListIndex !== -1 ? (bestListIndex + 1).toString() : '';
+                
+                wordsContainer.innerHTML = '';
+                if (currentWords.length === 0) {
+                    wordsContainer.innerHTML = '<div class="words-line"><span class="result-word">Aucun mot</span></div>';
+                } else {
+                    const line = document.createElement('div');
+                    line.className = 'words-line';
+                    currentWords.forEach((word, i) => {
+                        const span = document.createElement('span');
+                        span.className = 'result-word';
+                        span.textContent = word;
+                        span.addEventListener('click', (e) => {
+                            e.stopPropagation();
+                            window.open('https://www.google.com/search?tbm=isch&q=' + encodeURIComponent(word), '_blank');
+                        });
+                        line.appendChild(span);
+                        if (i < currentWords.length - 1) {
+                            const space = document.createElement('span');
+                            space.textContent = ' ';
+                            line.appendChild(space);
+                        }
+                    });
+                    wordsContainer.appendChild(line);
+                }
+                
+                lettersContainer.innerHTML = '';
+                if (bestListIndex !== -1 && bestListLetters.length > 0) {
+                    bestListLetters.forEach((letter, i) => {
+                        const span = document.createElement('span');
+                        span.className = 'letter-btn';
+                        if (selectedLetter === letter) span.classList.add('selected');
+                        span.textContent = letter.toUpperCase();
+                        span.addEventListener('click', (e) => {
+                            e.stopPropagation();
+                            if (span.classList.contains('selected')) {
+                                span.classList.remove('selected');
+                                selectedLetter = '';
+                                currentWords = [...originalWords];
+                                wordsContainer.innerHTML = '';
+                                const line = document.createElement('div');
+                                line.className = 'words-line';
+                                currentWords.forEach((word, j) => {
+                                    const wordSpan = document.createElement('span');
+                                    wordSpan.className = 'result-word';                                    wordSpan.textContent = word;
+                                    line.appendChild(wordSpan);
+                                    if (j < currentWords.length - 1) {
+                                        const space = document.createElement('span');
+                                        space.textContent = ' ';
+                                        line.appendChild(space);
+                                    }
+                                });
+                                wordsContainer.appendChild(line);
+                            }
+                        });
+                        lettersContainer.appendChild(span);
+                        if (i < bestListLetters.length - 1) {
+                            const spacer = document.createElement('span');
+                            spacer.className = 'separator';
+                            spacer.innerHTML = '    ';
+                            lettersContainer.appendChild(spacer);
+                        }
+                    });
+                }
+                
+                wordsContainer.classList.remove('hidden');
+                lettersContainer.classList.remove('hidden');
+                lockPage.classList.remove('visible');
+                resultPage.classList.add('visible');
+                pin = '';
+                updateDots();
+            }
+        });
+
+        if (indexDisplay) indexDisplay.addEventListener('click', function(e) {
+            e.stopPropagation();
+            wordsContainer.classList.toggle('hidden');
+            lettersContainer.classList.toggle('hidden');
+        });
+
+        if (resultPage) resultPage.addEventListener('click', function(e) {
+            if (e.target.classList.contains('result-word') || e.target.classList.contains('letter-btn') || e.target === indexDisplay) return;
+            let now = new Date().getTime();
+            let timeDiff = now - lastTap;
+            if (timeDiff < 300 && timeDiff > 0) {
+                resultPage.classList.remove('visible');
+                lockPage.classList.add('visible');
+                selectedLetter = '';
+                lastTap = 0;
+            } else {
+                lastTap = now;
+                setTimeout(() => lastTap = 0, 300);
+            }
         });
         if (emergencyBtn) emergencyBtn.addEventListener('click', function(e) {
             e.stopPropagation();
             lockPage.classList.remove('visible');
             homePage.classList.remove('hidden');
+            pin = '';
+            updateDots();
+        });
+
+        // Appui long note
+        function setupLongPressUnderline() {
+            const handlePressStart = () => {
+                longPressTimer = setTimeout(() => {
+                    isNoteUnderlineActive = !isNoteUnderlineActive;
+                    const text = noteImageText.innerHTML;
+                    const lines = text.split('<br>');
+                    const newLines = lines.map(line => {
+                        if (line.length > 0) {
+                            const firstChar = line.charAt(0);
+                            const rest = line.slice(1);
+                            const className = isNoteUnderlineActive ? 'note-word-first-letter underlined' : 'note-word-first-letter';
+                            return '<span class="' + className + '">' + firstChar + '</span>' + rest;
+                        }
+                        return line;
+                    });
+                    noteImageText.innerHTML = newLines.join('<br>');
+                    if (navigator.vibrate) navigator.vibrate(50);
+                }, 1000);
+            };
+            const handlePressEnd = () => {
+                if (longPressTimer) { clearTimeout(longPressTimer); longPressTimer = null; }
+            };
+            noteImageOverlay.addEventListener('touchstart', handlePressStart, { passive: true });
+            noteImageOverlay.addEventListener('touchend', handlePressEnd);
+            noteImageOverlay.addEventListener('touchcancel', handlePressEnd);
+            noteImageOverlay.addEventListener('mousedown', handlePressStart);
+            noteImageOverlay.addEventListener('mouseup', handlePressEnd);
+            noteImageOverlay.addEventListener('mouseleave', handlePressEnd);
+        }
+
+        if (noteImageOverlay) noteImageOverlay.addEventListener('dblclick', (e) => {
+            e.preventDefault();
+            noteImageOverlay.classList.remove('visible');
+            isNoteModeActive = false;
         });
 
         // Service Worker
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', async () => {
-                try {
-                    await navigator.serviceWorker.register(BASE_PATH + 'sw.js', { scope: BASE_PATH });
+                try {                    await navigator.serviceWorker.register(BASE_PATH + 'sw.js', { scope: BASE_PATH });
                 } catch (error) { console.error('SW error:', error); }
             });
         }
@@ -1590,6 +1579,8 @@
         }
         applyCustomSettings(currentSettings);
         loadWordsList();
+        setupLongPressUnderline();
+        if (noteImageText) noteImageText.innerHTML = DEFAULT_NOTE_TEXT.replace(/\n/g, '<br>');
         console.log('[ENIGMA] ✅ Application initialisée');
     })();
     </script>
