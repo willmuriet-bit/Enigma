@@ -263,6 +263,7 @@
             z-index: 51;
         }
         
+        /* ✅ CORRECTION 3 : Texte NOTE sans gras */
         .note-text {
             position: absolute;
             top: 262px;
@@ -271,7 +272,7 @@
             z-index: 52;
             color: white;
             font-size: 18px;
-            font-weight: bold;
+            font-weight: normal; /* ✅ PAS DE GRAS */
             text-align: left;
             text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
             padding: 20px;
@@ -291,8 +292,8 @@
         #list-modal.keyboard-open { top: 30px; transform: translate(-50%, 0); }
         #search-input { width: 100%; padding: 18px; border: 2px solid #ddd; border-radius: 15px; font-size: 18px; height: 60px; box-sizing: border-box; margin-bottom: 15px; }
         .code-result-box { width: 100%; padding: 18px; border: 2px solid #1976d2; border-radius: 15px; font-size: 20px; text-align: center; background: #e3f2fd; color: #1976d2; font-weight: bold; min-height: 60px; display: flex; align-items: center; justify-content: center; margin-bottom: 15px; }
-        .code-result-box.error { background: #ffebee; border-color: #f44336; color: #f44336; }
-        #search-btn { width: 100%; padding: 18px; background: #4CAF50; color: white; border: none; border-radius: 15px; cursor: pointer; font-size: 20px; font-weight: 600; }        #search-btn.disabled { background: #999; opacity: 0.6; pointer-events: none; }
+        .code-result-box.error { background: #ffebee; border-color: #f44336; color: #f44336; }        #search-btn { width: 100%; padding: 18px; background: #4CAF50; color: white; border: none; border-radius: 15px; cursor: pointer; font-size: 20px; font-weight: 600; }
+        #search-btn.disabled { background: #999; opacity: 0.6; pointer-events: none; }
         #modal-overlay { position: absolute; inset: 0; background: rgba(0,0,0,0.7); z-index: 90; display: none; }
         #modal-overlay.visible { display: block; }
         .hidden-file-input { display: none; }
@@ -340,8 +341,8 @@
             <div class="control-header">
                 <h3>📋 Liste</h3>
                 <button class="preview-btn" id="preview-list-btn">👁️</button>
-            </div>
-            <div class="slider-item">                <label>Position Y <span class="value-badge" id="words-y-value">265px</span></label>
+            </div>            <div class="slider-item">
+                <label>Position Y <span class="value-badge" id="words-y-value">265px</span></label>
                 <input type="range" id="words-y" min="0" max="800" value="265">
             </div>
             <div class="slider-item">
@@ -389,8 +390,8 @@
                 <input type="range" id="index-y" min="0" max="800" value="517">
             </div>
             <div class="slider-item">
-                <label>Taille <span class="value-badge" id="index-size-value">30px</span></label>
-                <input type="range" id="index-size" min="10" max="60" value="30">            </div>
+                <label>Taille <span class="value-badge" id="index-size-value">30px</span></label>                <input type="range" id="index-size" min="10" max="60" value="30">
+            </div>
             <div class="color-item">
                 <label>Couleur</label>
                 <input type="color" id="index-color" value="#1E6FF0">
@@ -402,7 +403,8 @@
         </div>
         <div class="customize-actions">
             <button class="customize-save" id="customize-save">💾 Sauvegarder</button>
-            <button class="customize-reset" id="customize-reset">↺ Reset</button>
+            <!-- ✅ CORRECTION 2 : Bouton Reset → Reinitialiser -->
+            <button class="customize-reset" id="customize-reset">↺ Reinitialiser</button>
         </div>
     </div>
 
@@ -410,7 +412,8 @@
     <div id="customize-note-page">
         <div class="customize-header">
             <button class="customize-back-btn" id="customize-note-back">←</button>
-            <span class="customize-title">PERSONNALISER NOTE</span>
+            <!-- ✅ CORRECTION 1 : Titre "PERSONNALISER NOTE" → "PERSONNALISER" -->
+            <span class="customize-title">PERSONNALISER</span>
         </div>
         
         <!-- Les 10 mots affichés sur l'image de fond -->
@@ -436,10 +439,10 @@
             <div class="slider-item">
                 <label>Position X <span class="value-badge" id="note-x-value">0px</span></label>
                 <input type="range" id="note-x" min="-500" max="500" value="0">
-            </div>
-            
+            </div>            
             <div class="slider-item">
-                <label>Position Y <span class="value-badge" id="note-y-value">262px</span></label>                <input type="range" id="note-y" min="0" max="800" value="262">
+                <label>Position Y <span class="value-badge" id="note-y-value">262px</span></label>
+                <input type="range" id="note-y" min="0" max="800" value="262">
             </div>
             
             <div class="slider-item">
@@ -460,7 +463,8 @@
         
         <div class="customize-actions" style="position: relative; z-index: 60;">
             <button class="customize-save" id="customize-note-save">💾 Sauvegarder</button>
-            <button class="customize-reset" id="customize-note-reset">↺ Reset</button>
+            <!-- ✅ CORRECTION 2 : Bouton Reset → Reinitialiser -->
+            <button class="customize-reset" id="customize-note-reset">↺ Reinitialiser</button>
         </div>
     </div>
 
@@ -484,11 +488,11 @@
             <div class="bottom-row">
                 <div class="delete-btn" id="deleteBtn">⌫</div>
                 <div class="key"><span class="key-number">0</span></div>
-                <div class="ok" id="okBtn">OK</div>
-            </div>
+                <div class="ok" id="okBtn">OK</div>            </div>
         </div>
         <div class="emergency" id="emergencyBtn">📞 Appel d'urgence</div>
     </div>
+
     <div id="result-page">
         <div class="words-container" id="words-container"></div>
         <div class="letters-container" id="letters-container"></div>
@@ -533,11 +537,11 @@
     const customizeBack = document.getElementById('customize-back');
     const customizeNoteBack = document.getElementById('customize-note-back');
     const customizeSave = document.getElementById('customize-save');
-    const customizeReset = document.getElementById('customize-reset');
-    const customizeNoteSave = document.getElementById('customize-note-save');
+    const customizeReset = document.getElementById('customize-reset');    const customizeNoteSave = document.getElementById('customize-note-save');
     const customizeNoteReset = document.getElementById('customize-note-reset');
     const previewListBtn = document.getElementById('preview-list-btn');
-    const previewLettersBtn = document.getElementById('preview-letters-btn');    const previewIndexBtn = document.getElementById('preview-index-btn');
+    const previewLettersBtn = document.getElementById('preview-letters-btn');
+    const previewIndexBtn = document.getElementById('preview-index-btn');
     const previewNoteBtn = document.getElementById('preview-note-btn');
     const testCodeInput = document.getElementById('test-code-input');
     const wordsY = document.getElementById('words-y');
@@ -582,11 +586,11 @@
     const previewImage = document.getElementById('preview-image');
     const previewConfirm = document.getElementById('preview-confirm');
     const previewCancel = document.getElementById('preview-cancel');
-    const keys = document.querySelectorAll('#lock-page .key');
-    const dots = document.querySelectorAll('#lock-page .dot');
+    const keys = document.querySelectorAll('#lock-page .key');    const dots = document.querySelectorAll('#lock-page .dot');
     const deleteBtn = document.getElementById('deleteBtn');
     const okBtn = document.getElementById('okBtn');
     const emergencyBtn = document.getElementById('emergencyBtn');
+
     const wordsList = [
         { code: "7131", word: "Abeille" }, { code: "7141", word: "Abricot" }, { code: "9141", word: "Accordéon" },
         { code: "6131", word: "Agenda" }, { code: "6141", word: "Agneau" }, { code: "5121", word: "Aigle" },
@@ -619,7 +623,6 @@
     let indexClickCount = 0;
     let indexClickTimer = null;
 
-    // ✅ CORRECTION 1 : Réinitialiser compteur et état quand l'app revient au premier plan (Google Image)
     document.addEventListener('visibilitychange', function() {
         if (!document.hidden) {
             indexClickCount = 0;
@@ -631,11 +634,10 @@
         }
     });
 
-    // ✅ CORRECTION 2 : Réinitialiser quand on ferme la page NOTE (double-clic)
     function resetAfterNotePageClose() {
-        indexClickCount = 0;
-        clearTimeout(indexClickTimer);
-        wordsContainer.classList.add('hidden');        lettersContainer.classList.add('hidden');
+        indexClickCount = 0;        clearTimeout(indexClickTimer);
+        wordsContainer.classList.add('hidden');
+        lettersContainer.classList.add('hidden');
         noteModeActive = false;
         indexDisplay.classList.remove('note-mode-active');
     }
@@ -683,8 +685,8 @@
         try { const saved = localStorage.getItem('noteSettings'); if (saved) return JSON.parse(saved); } catch(e) {}
         return { ...defaultNoteSettings };
     }
-
     function saveNoteSettings(settings) { try { localStorage.setItem('noteSettings', JSON.stringify(settings)); } catch(e) {} }
+
     function applyCustomSettings(settings) {
         wordsContainer.style.top = settings.wordsY + 'px';
         wordsContainer.style.fontSize = settings.wordsSize + 'px';
@@ -731,9 +733,9 @@
         
         noteX.value = settings.noteX;
         noteY.value = settings.noteY;
-        noteSize.value = settings.noteSize;
-        noteColor.value = settings.noteColor;
-        noteLineHeight.value = settings.noteLineHeight;    }
+        noteSize.value = settings.noteSize;        noteColor.value = settings.noteColor;
+        noteLineHeight.value = settings.noteLineHeight;
+    }
 
     function applyNoteSettingsToNotePage(settings) {
         noteText.style.transform = 'translateX(calc(-50% + ' + settings.noteX + 'px))';
@@ -780,9 +782,9 @@
         lettersContainer.classList.remove('hidden');
     }
 
-    function displayWords(words) {
-        wordsContainer.innerHTML = '';
-        if (words.length === 0) {            wordsContainer.innerHTML = '<div class="words-line">Aucun mot</div>';
+    function displayWords(words) {        wordsContainer.innerHTML = '';
+        if (words.length === 0) {
+            wordsContainer.innerHTML = '<div class="words-line">Aucun mot</div>';
             return;
         }
         var line = document.createElement('div');
@@ -829,9 +831,9 @@
         for (var i = 0; i < letters.length; i++) {
             var letter = letters[i];
             var span = document.createElement('span');
-            span.className = 'letter-btn' + (selectedLetter === letter ? ' selected' : '');
-            span.textContent = letter.toUpperCase();
-            (function(ltr) {                span.addEventListener('click', function(e) {
+            span.className = 'letter-btn' + (selectedLetter === letter ? ' selected' : '');            span.textContent = letter.toUpperCase();
+            (function(ltr) {
+                span.addEventListener('click', function(e) {
                     e.stopPropagation();
                     if (selectedLetter === ltr) {
                         selectedLetter = '';
@@ -878,9 +880,9 @@
             allSliders[i].addEventListener('touchcancel', stopDragging);
         }
     }
-
     var previewBtns = [previewListBtn, previewLettersBtn, previewIndexBtn, previewNoteBtn];
-    for (var i = 0; i < previewBtns.length; i++) {        if (previewBtns[i]) {
+    for (var i = 0; i < previewBtns.length; i++) {
+        if (previewBtns[i]) {
             previewBtns[i].addEventListener('touchstart', startDragging);
             previewBtns[i].addEventListener('touchend', stopDragging);
             previewBtns[i].addEventListener('touchcancel', stopDragging);
@@ -927,9 +929,9 @@
                 indexY.value = defaultValue;
             }
             else if (setting === 'indexSize') {
-                indexDisplay.style.fontSize = defaultValue + 'px';
-                indexSizeValue.textContent = defaultValue + 'px';
-                indexSize.value = defaultValue;            }
+                indexDisplay.style.fontSize = defaultValue + 'px';                indexSizeValue.textContent = defaultValue + 'px';
+                indexSize.value = defaultValue;
+            }
             else if (setting === 'indexX') {
                 indexDisplay.style.transform = 'translateX(calc(-50% + ' + defaultValue + 'px))';
                 indexXValue.textContent = defaultValue + 'px';
@@ -976,9 +978,9 @@
     indexXValue.addEventListener('click', resetToDefault('indexX', defaultSettings.indexX));
 
     noteXValue.addEventListener('click', resetNoteToDefault('noteX', defaultNoteSettings.noteX));
-    noteYValue.addEventListener('click', resetNoteToDefault('noteY', defaultNoteSettings.noteY));
-    noteSizeValue.addEventListener('click', resetNoteToDefault('noteSize', defaultNoteSettings.noteSize));
+    noteYValue.addEventListener('click', resetNoteToDefault('noteY', defaultNoteSettings.noteY));    noteSizeValue.addEventListener('click', resetNoteToDefault('noteSize', defaultNoteSettings.noteSize));
     noteLineHeightValue.addEventListener('click', resetNoteToDefault('noteLineHeight', defaultNoteSettings.noteLineHeight));
+
     wordsY.addEventListener('input', function(e) { currentSettings.wordsY = parseInt(e.target.value); wordsYValue.textContent = currentSettings.wordsY + 'px'; wordsContainer.style.top = currentSettings.wordsY + 'px'; });
     wordsSize.addEventListener('input', function(e) { currentSettings.wordsSize = parseInt(e.target.value); wordsSizeValue.textContent = currentSettings.wordsSize + 'px'; wordsContainer.style.fontSize = currentSettings.wordsSize + 'px'; });
     wordsColor.addEventListener('input', function(e) { currentSettings.wordsColor = e.target.value; wordsContainer.style.color = currentSettings.wordsColor; });
@@ -1025,9 +1027,9 @@
 
     btnPerform.addEventListener('click', function() {
         homePage.classList.add('hidden');
-        lockPage.classList.add('visible');
-        pin = '';
-        updateDots();    });
+        lockPage.classList.add('visible');        pin = '';
+        updateDots();
+    });
 
     btnList.addEventListener('click', function() {
         resetModalToNormal();
@@ -1074,9 +1076,9 @@
     });
 
     customizeSave.addEventListener('click', function() {
-        saveCustomSettings(currentSettings);
-        customizePage.classList.remove('visible', 'preview-mode');
-        resultPage.classList.remove('preview-mode');        settingsPage.classList.add('visible');
+        saveCustomSettings(currentSettings);        customizePage.classList.remove('visible', 'preview-mode');
+        resultPage.classList.remove('preview-mode');
+        settingsPage.classList.add('visible');
         isPreviewMode = false;
     });
 
@@ -1123,9 +1125,9 @@
         codeResult.textContent = '';
         codeResult.classList.remove('error');
         enableSearchButton();
-        keyboardVisible = false;
-        modal.classList.remove('keyboard-open');
+        keyboardVisible = false;        modal.classList.remove('keyboard-open');
     }
+
     function animateKey(element) {
         if (!element) return;
         element.classList.add('active');
@@ -1172,9 +1174,9 @@
         if (emergencyBtn.classList) emergencyBtn.classList.add('active-text');
         setTimeout(function() { if (emergencyBtn.classList) emergencyBtn.classList.remove('active-text'); }, 350);
         lockPage.classList.remove('visible');
-        homePage.classList.remove('hidden');
-        pin = '';
-        updateDots();    });
+        homePage.classList.remove('hidden');        pin = '';
+        updateDots();
+    });
 
     indexDisplay.addEventListener('click', function(e) {
         e.stopPropagation();
@@ -1198,13 +1200,12 @@
         }
     });
 
-    // ✅ CORRECTION 3 : Appel de resetAfterNotePageClose() quand on ferme la page NOTE
     notePage.addEventListener('click', function(e) {
         var now = Date.now();
         if (now - noteLastTap < 300 && now - noteLastTap > 0) {
             notePage.classList.remove('visible');
             noteText.contentEditable = "false";
-            resetAfterNotePageClose(); // ✅ Réinitialisation ici !
+            resetAfterNotePageClose();
             noteLastTap = 0;
         } else {
             noteLastTap = now;
@@ -1222,8 +1223,8 @@
         lastTap = now;
     });
 
-    function setupImageImport(input, target, storageKey) {
-        input.addEventListener('change', function(e) {            var file = e.target.files[0];
+    function setupImageImport(input, target, storageKey) {        input.addEventListener('change', function(e) {
+            var file = e.target.files[0];
             if (file) {
                 var reader = new FileReader();
                 reader.onload = function(event) {
