@@ -59,10 +59,35 @@
         #customize-page { position: absolute; inset: 0; background: rgba(0, 0, 0, 0.95); z-index: 40; visibility: hidden; opacity: 0; transition: visibility 0.3s, opacity 0.3s; overflow-y: auto; padding: 20px; color: white; }
         #customize-page.visible { visibility: visible; opacity: 1; }
         
-        #customize-note-page { position: absolute; inset: 0; background: rgba(0, 0, 0, 0.95); z-index: 70; visibility: hidden; opacity: 0; transition: visibility 0.3s, opacity 0.3s; overflow-y: auto; padding: 20px; color: white; }
+        #customize-note-page { 
+            position: absolute; 
+            inset: 0; 
+            background: rgba(0, 0, 0, 0.95); 
+            z-index: 70; 
+            visibility: hidden; 
+            opacity: 0; 
+            transition: visibility 0.3s, opacity 0.3s; 
+            overflow-y: auto; 
+            padding: 20px; 
+            color: white;
+            /* ✅ CORRECTION 1 & 3 : Image NOTE ajustée et visible */
+            background-size: cover !important;
+            background-position: center !important;
+            background-repeat: no-repeat !important;
+        }
         #customize-note-page.visible { visibility: visible; opacity: 1; }
         
-        #customize-page.dragging-slider, #customize-note-page.dragging-slider { background: transparent !important; pointer-events: none; }
+        /* ✅ CORRECTION 3 : Séparation des deux pages */
+        #customize-page.dragging-slider { 
+            background: transparent !important; 
+            pointer-events: none; 
+        }
+        
+        #customize-note-page.dragging-slider { 
+            /* Pas de background: transparent ici ! Garde l'image NOTE visible */
+            pointer-events: none; 
+        }
+        
         #customize-page.dragging-slider .control-group, #customize-page.dragging-slider .test-code-section, #customize-page.dragging-slider .customize-header, #customize-page.dragging-slider .customize-actions,
         #customize-note-page.dragging-slider .control-group, #customize-note-page.dragging-slider .customize-header, #customize-note-page.dragging-slider .customize-actions { opacity: 0 !important; pointer-events: none; }
         #customize-page.dragging-slider input[type="range"], #customize-note-page.dragging-slider input[type="range"] { opacity: 1 !important; position: relative; z-index: 9999; pointer-events: auto; }
@@ -72,7 +97,6 @@
         
         #result-page.preview-mode { visibility: visible !important; opacity: 1 !important; z-index: 35; pointer-events: none; }
         #customize-note-page.preview-mode { background: rgba(0, 0, 0, 0.85); }
-
         .customize-header { display: flex; align-items: center; margin-bottom: 30px; padding-top: 20px; }
         .customize-back-btn { width: 40px; height: 40px; background: #333; border: none; border-radius: 50%; color: white; font-size: 24px; cursor: pointer; margin-right: 15px; }
         .customize-back-btn:active { background: #555; }
@@ -96,7 +120,8 @@
             background: #444;
             border-radius: 3px;
             -webkit-appearance: none;
-            pointer-events: none;        }
+            pointer-events: none;
+        }
         
         .slider-item input[type="range"]::-webkit-slider-thumb {
             -webkit-appearance: none;
@@ -120,8 +145,7 @@
         }
         
         .color-item { margin-bottom: 20px; }
-        .color-item label { display: block; margin-bottom: 8px; color: #ddd; }
-        .color-item input[type="color"] { width: 100%; height: 45px; border: 2px solid #444; border-radius: 10px; background: #333; }
+        .color-item label { display: block; margin-bottom: 8px; color: #ddd; }        .color-item input[type="color"] { width: 100%; height: 45px; border: 2px solid #444; border-radius: 10px; background: #333; }
         .value-badge { background: #333; padding: 3px 10px; border-radius: 15px; font-size: 14px; color: #FFD700; border: 1px solid #FFD700; cursor: pointer; }
         .value-badge:active { background: #444; }
 
@@ -145,7 +169,8 @@
             background-repeat: no-repeat !important;
         }
         
-        #result-page {            position: absolute;
+        #result-page {
+            position: absolute;
             inset: 0;
             z-index: 30;
             visibility: hidden;
@@ -169,8 +194,7 @@
         .pin-dots { display: flex; justify-content: center; gap: 16px; margin-bottom: 3vh; }
         .dot { width: 14px; height: 14px; border-radius: 50%; background: white; opacity: 0.35; transition: opacity 0.2s, transform 0.2s; }
         .dot.active { opacity: 1; transform: scale(1.25); }
-        .keypad { display: grid; grid-template-columns: repeat(3, 70px); justify-content: center; gap: 20px 25px; margin-bottom: 15px; }
-        .key { width: 70px; height: 70px; border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center; background: rgba(255, 255, 255, 0.2); backdrop-filter: blur(12px); cursor: pointer; border: 1px solid rgba(255,255,255,0.1); color: white; }
+        .keypad { display: grid; grid-template-columns: repeat(3, 70px); justify-content: center; gap: 20px 25px; margin-bottom: 15px; }        .key { width: 70px; height: 70px; border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center; background: rgba(255, 255, 255, 0.2); backdrop-filter: blur(12px); cursor: pointer; border: 1px solid rgba(255,255,255,0.1); color: white; }
         .key-number { font-size: 28px; font-weight: 500; }
         .key-letters { font-size: 10px; color: rgba(255, 255, 255, 0.6); margin-top: 2px; }
         .key:active { background: rgba(255, 255, 255, 0.35); transform: scale(0.97); }
@@ -194,7 +218,8 @@
         .letters-container.hidden { display: none; }
         .letter-btn { cursor: pointer; text-transform: uppercase; }
         .letter-btn.selected { text-decoration: underline; }
-                .index-display {
+        
+        .index-display {
             position: absolute;
             top: 517px;
             left: 50%;
@@ -215,18 +240,10 @@
             animation: auraPulse 1.5s ease-in-out infinite;
         }
 
-        /* ===== CORRECTION 1 & 3 : Image NOTE ajustée et visible pendant sliders ===== */
-        #customize-note-page {
-            background-size: cover !important;
-            background-position: center !important;
-            background-repeat: no-repeat !important;
-        }
-
         #note-page {
             position: absolute;
             inset: 0;
-            z-index: 50;
-            visibility: hidden;
+            z-index: 50;            visibility: hidden;
             opacity: 0;
             transition: visibility 0.3s, opacity 0.3s;
             background-size: cover !important;
@@ -243,7 +260,8 @@
         }
         
         .note-overlay {
-            position: absolute;            inset: 0;
+            position: absolute;
+            inset: 0;
             background: rgba(0, 0, 0, 0.4);
             z-index: 51;
         }
@@ -274,8 +292,7 @@
         #search-btn { width: 100%; padding: 18px; background: #4CAF50; color: white; border: none; border-radius: 15px; cursor: pointer; font-size: 20px; font-weight: 600; }
         #search-btn.disabled { background: #999; opacity: 0.6; pointer-events: none; }
         #modal-overlay { position: absolute; inset: 0; background: rgba(0,0,0,0.7); z-index: 90; display: none; }
-        #modal-overlay.visible { display: block; }
-        .hidden-file-input { display: none; }
+        #modal-overlay.visible { display: block; }        .hidden-file-input { display: none; }
     </style>
 </head>
 <body>
@@ -292,7 +309,8 @@
 
     <div id="settings-page">
         <div class="settings-title">PARAMÈTRES</div>
-        <button class="settings-btn" id="import-bg-btn">📷 Importer lock screen</button>        <button class="settings-btn" id="import-img-btn">📷 Importer background</button>
+        <button class="settings-btn" id="import-bg-btn">📷 Importer lock screen</button>
+        <button class="settings-btn" id="import-img-btn">📷 Importer background</button>
         <button class="settings-btn" id="import-note-btn">📷 Importer note</button>
         <button class="settings-btn" id="customize-btn">🎨 Modifier background</button>
         <button class="settings-btn" id="modify-note-btn">🎨 Modifier note</button>
@@ -323,8 +341,7 @@
             <div class="slider-item">
                 <label>Position Y <span class="value-badge" id="words-y-value">265px</span></label>
                 <input type="range" id="words-y" min="0" max="800" value="265">
-            </div>
-            <div class="slider-item">
+            </div>            <div class="slider-item">
                 <label>Taille <span class="value-badge" id="words-size-value">18px</span></label>
                 <input type="range" id="words-size" min="10" max="40" value="18">
             </div>
@@ -341,7 +358,8 @@
             <div class="control-header">
                 <h3>🔤 Lettres</h3>
                 <button class="preview-btn" id="preview-letters-btn">👁️</button>
-            </div>            <div class="slider-item">
+            </div>
+            <div class="slider-item">
                 <label>Position Y <span class="value-badge" id="letters-y-value">460px</span></label>
                 <input type="range" id="letters-y" min="0" max="800" value="460">
             </div>
@@ -372,8 +390,7 @@
                 <input type="range" id="index-size" min="10" max="60" value="30">
             </div>
             <div class="color-item">
-                <label>Couleur</label>
-                <input type="color" id="index-color" value="#1E6FF0">
+                <label>Couleur</label>                <input type="color" id="index-color" value="#1E6FF0">
             </div>
             <div class="slider-item">
                 <label>Décalage X <span class="value-badge" id="index-x-value">-45px</span></label>
@@ -390,7 +407,8 @@
     <div id="customize-note-page">
         <div class="customize-header">
             <button class="customize-back-btn" id="customize-note-back">←</button>
-            <span class="customize-title">PERSONNALISER NOTE</span>        </div>
+            <span class="customize-title">PERSONNALISER NOTE</span>
+        </div>
         
         <!-- Les 10 mots affichés sur l'image de fond -->
         <div class="note-words-container" id="note-words-container" style="position: absolute; top: 262px; left: 50%; transform: translateX(-50%); z-index: 55; color: white; font-size: 18px; text-align: left; line-height: 15px; padding: 20px; max-width: 80%;">
@@ -421,8 +439,7 @@
                 <label>Position Y <span class="value-badge" id="note-y-value">262px</span></label>
                 <input type="range" id="note-y" min="0" max="800" value="262">
             </div>
-            
-            <div class="slider-item">
+                        <div class="slider-item">
                 <label>Taille <span class="value-badge" id="note-size-value">18px</span></label>
                 <input type="range" id="note-size" min="10" max="40" value="18">
             </div>
@@ -439,7 +456,8 @@
         </div>
         
         <div class="customize-actions" style="position: relative; z-index: 60;">
-            <button class="customize-save" id="customize-note-save">💾 Sauvegarder</button>            <button class="customize-reset" id="customize-note-reset">↺ Reset</button>
+            <button class="customize-save" id="customize-note-save">💾 Sauvegarder</button>
+            <button class="customize-reset" id="customize-note-reset">↺ Reset</button>
         </div>
     </div>
 
@@ -470,8 +488,7 @@
     </div>
 
     <div id="result-page">
-        <div class="words-container" id="words-container"></div>
-        <div class="letters-container" id="letters-container"></div>
+        <div class="words-container" id="words-container"></div>        <div class="letters-container" id="letters-container"></div>
         <div class="index-display" id="index-display"></div>
     </div>
 
@@ -488,7 +505,8 @@
     </div>
 
     <script>
-(function() {    const homePage = document.getElementById('home-page');
+(function() {
+    const homePage = document.getElementById('home-page');
     const settingsPage = document.getElementById('settings-page');
     const customizePage = document.getElementById('customize-page');
     const customizeNotePage = document.getElementById('customize-note-page');
@@ -519,8 +537,7 @@
     const previewLettersBtn = document.getElementById('preview-letters-btn');
     const previewIndexBtn = document.getElementById('preview-index-btn');
     const previewNoteBtn = document.getElementById('preview-note-btn');
-    const testCodeInput = document.getElementById('test-code-input');
-    const wordsY = document.getElementById('words-y');
+    const testCodeInput = document.getElementById('test-code-input');    const wordsY = document.getElementById('words-y');
     const wordsSize = document.getElementById('words-size');
     const wordsColor = document.getElementById('words-color');
     const wordsLineHeight = document.getElementById('words-line-height');
@@ -537,7 +554,8 @@
     const noteSize = document.getElementById('note-size');
     const noteColor = document.getElementById('note-color');
     const noteLineHeight = document.getElementById('note-line-height');
-    const wordsYValue = document.getElementById('words-y-value');    const wordsSizeValue = document.getElementById('words-size-value');
+    const wordsYValue = document.getElementById('words-y-value');
+    const wordsSizeValue = document.getElementById('words-size-value');
     const wordsLineHeightValue = document.getElementById('words-line-height-value');
     const lettersYValue = document.getElementById('letters-y-value');
     const lettersSizeValue = document.getElementById('letters-size-value');
@@ -568,8 +586,7 @@
     const emergencyBtn = document.getElementById('emergencyBtn');
 
     const wordsList = [
-        { code: "7131", word: "Abeille" }, { code: "7141", word: "Abricot" }, { code: "9141", word: "Accordéon" },
-        { code: "6131", word: "Agenda" }, { code: "6141", word: "Agneau" }, { code: "5121", word: "Aigle" },
+        { code: "7131", word: "Abeille" }, { code: "7141", word: "Abricot" }, { code: "9141", word: "Accordéon" },        { code: "6131", word: "Agenda" }, { code: "6141", word: "Agneau" }, { code: "5121", word: "Aigle" },
         { code: "8121", word: "Aiguille" }, { code: "3121", word: "Ail" }, { code: "4121", word: "Aile" }
     ];
 
@@ -586,6 +603,7 @@
         noteColor: '#ffffff',
         noteLineHeight: 15
     };
+
     let pin = '', currentCode = '', originalWords = [], currentWords = [];
     let letterLists = [], bestListIndex = -1, bestListLetters = [];
     let selectedLetter = '', lastTap = 0, isPreviewMode = false;
@@ -618,7 +636,6 @@
         clearTimeout(blurTimeout);
         blurTimeout = setTimeout(() => { keyboardVisible = false; modal.classList.remove('keyboard-open'); }, 300);
     });
-
     function searchWord(word) {
         const normalized = word.trim().toLowerCase();
         for (let i = 0; i < wordsList.length; i++) {
@@ -636,6 +653,7 @@
     }
 
     function saveCustomSettings(settings) { try { localStorage.setItem('customSettings', JSON.stringify(settings)); } catch(e) {} }
+
     function loadNoteSettings() {
         try { const saved = localStorage.getItem('noteSettings'); if (saved) return JSON.parse(saved); } catch(e) {}
         return { ...defaultNoteSettings };
@@ -666,8 +684,7 @@
         indexYValue.textContent = settings.indexY + 'px';
         indexSizeValue.textContent = settings.indexSize + 'px';
         indexXValue.textContent = settings.indexX + 'px';
-        
-        wordsY.value = settings.wordsY; wordsSize.value = settings.wordsSize; wordsColor.value = settings.wordsColor;
+                wordsY.value = settings.wordsY; wordsSize.value = settings.wordsSize; wordsColor.value = settings.wordsColor;
         wordsLineHeight.value = settings.wordsLineHeight; lettersY.value = settings.lettersY;
         lettersSize.value = settings.lettersSize; lettersColor.value = settings.lettersColor;
         lettersSpacing.value = settings.lettersSpacing; indexY.value = settings.indexY;
@@ -684,7 +701,8 @@
         
         noteXValue.textContent = settings.noteX + 'px';
         noteYValue.textContent = settings.noteY + 'px';
-        noteSizeValue.textContent = settings.noteSize + 'px';        noteLineHeightValue.textContent = settings.noteLineHeight + 'px';
+        noteSizeValue.textContent = settings.noteSize + 'px';
+        noteLineHeightValue.textContent = settings.noteLineHeight + 'px';
         
         noteX.value = settings.noteX;
         noteY.value = settings.noteY;
@@ -715,8 +733,7 @@
         
         bestListIndex = -1;
         var maxSize = 0;
-        for (var i = 0; i < letterLists.length; i++) {
-            if (letterLists[i].length > maxSize) {
+        for (var i = 0; i < letterLists.length; i++) {            if (letterLists[i].length > maxSize) {
                 maxSize = letterLists[i].length;
                 bestListIndex = i;
             }
@@ -733,7 +750,8 @@
     function displayWords(words) {
         wordsContainer.innerHTML = '';
         if (words.length === 0) {
-            wordsContainer.innerHTML = '<div class="words-line">Aucun mot</div>';            return;
+            wordsContainer.innerHTML = '<div class="words-line">Aucun mot</div>';
+            return;
         }
         var line = document.createElement('div');
         line.className = 'words-line';
@@ -745,7 +763,6 @@
             (function(w) {
                 span.addEventListener('click', function(e) {
                     e.stopPropagation();
-                    // ===== CORRECTION 2 : Utiliser note-page au lieu de result-page quand mode NOTE actif =====
                     if (noteModeActive) {
                         openNotePage(w);
                     } else {
@@ -759,16 +776,13 @@
         wordsContainer.appendChild(line);
     }
 
-    // ===== CORRECTION 2 : Fonction pour ouvrir note-page avec image NOTE =====
     function openNotePage(word) {
         noteText.textContent = word;
-        // Copier l'image NOTE vers note-page
         var noteBg = customizeNotePage.style.backgroundImage;
         if (noteBg) {
             notePage.style.backgroundImage = noteBg;
         }
-        notePage.classList.add('visible');
-    }
+        notePage.classList.add('visible');    }
 
     function displayLetterButtons(index, letters) {
         lettersContainer.innerHTML = '';
@@ -782,7 +796,8 @@
                 span.addEventListener('click', function(e) {
                     e.stopPropagation();
                     if (selectedLetter === ltr) {
-                        selectedLetter = '';                        currentWords = originalWords.slice();
+                        selectedLetter = '';
+                        currentWords = originalWords.slice();
                     } else {
                         selectedLetter = ltr;
                         currentWords = originalWords.filter(function(w) { return w[index] === ltr; });
@@ -816,7 +831,6 @@
         resultPage.classList.remove('dragging-active');
         customizeNotePage.classList.remove('dragging-slider');
     }
-
     var allSliders = [wordsY, wordsSize, wordsLineHeight, lettersY, lettersSize, lettersSpacing, indexY, indexSize, indexX, noteX, noteY, noteSize, noteLineHeight];
     for (var i = 0; i < allSliders.length; i++) {
         if (allSliders[i]) {
@@ -831,7 +845,8 @@
         if (previewBtns[i]) {
             previewBtns[i].addEventListener('touchstart', startDragging);
             previewBtns[i].addEventListener('touchend', stopDragging);
-            previewBtns[i].addEventListener('touchcancel', stopDragging);        }
+            previewBtns[i].addEventListener('touchcancel', stopDragging);
+        }
     }
 
     function resetToDefault(setting, defaultValue) {
@@ -865,8 +880,7 @@
             }
             else if (setting === 'lettersSpacing') {
                 lettersContainer.style.gap = defaultValue + 'px';
-                lettersSpacingValue.textContent = defaultValue + 'px';
-                lettersSpacing.value = defaultValue;
+                lettersSpacingValue.textContent = defaultValue + 'px';                lettersSpacing.value = defaultValue;
             }
             else if (setting === 'indexY') {
                 indexDisplay.style.top = defaultValue + 'px';
@@ -880,7 +894,8 @@
             }
             else if (setting === 'indexX') {
                 indexDisplay.style.transform = 'translateX(calc(-50% + ' + defaultValue + 'px))';
-                indexXValue.textContent = defaultValue + 'px';                indexX.value = defaultValue;
+                indexXValue.textContent = defaultValue + 'px';
+                indexX.value = defaultValue;
             }
         };
     }
@@ -914,8 +929,7 @@
 
     wordsYValue.addEventListener('click', resetToDefault('wordsY', defaultSettings.wordsY));
     wordsSizeValue.addEventListener('click', resetToDefault('wordsSize', defaultSettings.wordsSize));
-    wordsLineHeightValue.addEventListener('click', resetToDefault('wordsLineHeight', defaultSettings.wordsLineHeight));
-    lettersYValue.addEventListener('click', resetToDefault('lettersY', defaultSettings.lettersY));
+    wordsLineHeightValue.addEventListener('click', resetToDefault('wordsLineHeight', defaultSettings.wordsLineHeight));    lettersYValue.addEventListener('click', resetToDefault('lettersY', defaultSettings.lettersY));
     lettersSizeValue.addEventListener('click', resetToDefault('lettersSize', defaultSettings.lettersSize));
     lettersSpacingValue.addEventListener('click', resetToDefault('lettersSpacing', defaultSettings.lettersSpacing));
     indexYValue.addEventListener('click', resetToDefault('indexY', defaultSettings.indexY));
@@ -929,7 +943,8 @@
 
     wordsY.addEventListener('input', function(e) { currentSettings.wordsY = parseInt(e.target.value); wordsYValue.textContent = currentSettings.wordsY + 'px'; wordsContainer.style.top = currentSettings.wordsY + 'px'; });
     wordsSize.addEventListener('input', function(e) { currentSettings.wordsSize = parseInt(e.target.value); wordsSizeValue.textContent = currentSettings.wordsSize + 'px'; wordsContainer.style.fontSize = currentSettings.wordsSize + 'px'; });
-    wordsColor.addEventListener('input', function(e) { currentSettings.wordsColor = e.target.value; wordsContainer.style.color = currentSettings.wordsColor; });    wordsLineHeight.addEventListener('input', function(e) { currentSettings.wordsLineHeight = parseInt(e.target.value); wordsLineHeightValue.textContent = currentSettings.wordsLineHeight + 'px'; wordsContainer.style.lineHeight = currentSettings.wordsLineHeight + 'px'; });
+    wordsColor.addEventListener('input', function(e) { currentSettings.wordsColor = e.target.value; wordsContainer.style.color = currentSettings.wordsColor; });
+    wordsLineHeight.addEventListener('input', function(e) { currentSettings.wordsLineHeight = parseInt(e.target.value); wordsLineHeightValue.textContent = currentSettings.wordsLineHeight + 'px'; wordsContainer.style.lineHeight = currentSettings.wordsLineHeight + 'px'; });
     lettersY.addEventListener('input', function(e) { currentSettings.lettersY = parseInt(e.target.value); lettersYValue.textContent = currentSettings.lettersY + 'px'; lettersContainer.style.top = currentSettings.lettersY + 'px'; });
     lettersSize.addEventListener('input', function(e) { currentSettings.lettersSize = parseInt(e.target.value); lettersSizeValue.textContent = currentSettings.lettersSize + 'px'; lettersContainer.style.fontSize = currentSettings.lettersSize + 'px'; });
     lettersColor.addEventListener('input', function(e) { currentSettings.lettersColor = e.target.value; lettersContainer.style.color = currentSettings.lettersColor; });
@@ -963,8 +978,7 @@
             disableSearchButton();
             searchInput.blur();
         } else {
-            codeResult.textContent = 'Mot introuvable !';
-            codeResult.classList.add('error');
+            codeResult.textContent = 'Mot introuvable !';            codeResult.classList.add('error');
         }
     });
 
@@ -978,7 +992,8 @@
     });
 
     btnList.addEventListener('click', function() {
-        resetModalToNormal();        modal.classList.add('visible');
+        resetModalToNormal();
+        modal.classList.add('visible');
         modalOverlay.classList.add('visible');
     });
 
@@ -1012,7 +1027,6 @@
         currentSettings = loadCustomSettings();
         applyCustomSettings(currentSettings);
     });
-
     customizeNoteBack.addEventListener('click', function() {
         customizeNotePage.classList.remove('visible', 'preview-mode');
         settingsPage.classList.add('visible');
@@ -1027,6 +1041,7 @@
         settingsPage.classList.add('visible');
         isPreviewMode = false;
     });
+
     customizeNoteSave.addEventListener('click', function() {
         saveNoteSettings(currentNoteSettings);
         customizeNotePage.classList.remove('visible', 'preview-mode');
@@ -1061,8 +1076,7 @@
     function updateDots() {
         for (var i = 0; i < dots.length; i++) {
             if (i < pin.length) dots[i].classList.add('active');
-            else dots[i].classList.remove('active');
-        }
+            else dots[i].classList.remove('active');        }
     }
 
     function resetModalToNormal() {
@@ -1076,7 +1090,8 @@
 
     function animateKey(element) {
         if (!element) return;
-        element.classList.add('active');        setTimeout(function() { element.classList.remove('active'); }, 350);
+        element.classList.add('active');
+        setTimeout(function() { element.classList.remove('active'); }, 350);
     }
 
     for (var i = 0; i < keys.length; i++) {
@@ -1110,8 +1125,7 @@
             lockPage.classList.remove('visible');
             resultPage.classList.add('visible');
             pin = '';
-            updateDots();
-        }
+            updateDots();        }
     });
 
     emergencyBtn.addEventListener('click', function(e) {
@@ -1125,7 +1139,8 @@
     });
 
     indexDisplay.addEventListener('click', function(e) {
-        e.stopPropagation();        indexClickCount++;
+        e.stopPropagation();
+        indexClickCount++;
         
         if (indexClickCount === 1) {
             indexClickTimer = setTimeout(function() {
@@ -1159,8 +1174,7 @@
         if (e.target.classList.contains('result-word') || e.target.classList.contains('letter-btn') || e.target === indexDisplay) return;
         var now = Date.now();
         if (now - lastTap < 300 && now - lastTap > 0) {
-            resultPage.classList.remove('visible');
-            lockPage.classList.add('visible');
+            resultPage.classList.remove('visible');            lockPage.classList.add('visible');
             selectedLetter = '';
         }
         lastTap = now;
@@ -1174,7 +1188,8 @@
                 reader.onload = function(event) {
                     currentPreviewData = event.target.result;
                     previewImage.src = currentPreviewData;
-                    previewContainer.classList.add('visible');                    currentPreviewTarget = target === lockPage ? 'bg' : (target === resultPage ? 'img' : 'note');
+                    previewContainer.classList.add('visible');
+                    currentPreviewTarget = target === lockPage ? 'bg' : (target === resultPage ? 'img' : 'note');
                 };
                 reader.readAsDataURL(file);
             }
@@ -1189,7 +1204,6 @@
         var savedNote = localStorage.getItem('noteImage');
         if (savedNote) {
             customizeNotePage.style.backgroundImage = 'url(' + savedNote + ')';
-            // ===== CORRECTION 2 : Appliquer aussi à note-page =====
             notePage.style.backgroundImage = 'url(' + savedNote + ')';
         }
     } catch(e) {}
@@ -1209,9 +1223,7 @@
         } else if (currentPreviewTarget === 'img') {
             resultPage.style.backgroundImage = 'url(' + currentPreviewData + ')';
             try { localStorage.setItem('resultImage', currentPreviewData); } catch(e) {}
-        } else if (currentPreviewTarget === 'note') {
-            customizeNotePage.style.backgroundImage = 'url(' + currentPreviewData + ')';
-            // ===== CORRECTION 2 : Appliquer aussi à note-page =====
+        } else if (currentPreviewTarget === 'note') {            customizeNotePage.style.backgroundImage = 'url(' + currentPreviewData + ')';
             notePage.style.backgroundImage = 'url(' + currentPreviewData + ')';
             try { localStorage.setItem('noteImage', currentPreviewData); } catch(e) {}
         }
@@ -1223,6 +1235,7 @@
         previewContainer.classList.remove('visible');
         currentPreviewData = '';
     });
+
     currentSettings = loadCustomSettings();
     applyCustomSettings(currentSettings);
     currentNoteSettings = loadNoteSettings();
