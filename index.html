@@ -16,20 +16,253 @@
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif; -webkit-tap-highlight-color: transparent; }
         body { height: 100vh; overflow: hidden; color: white; }
 
-        @keyframes soulignement { 0% { width: 0; opacity: 0; } 50% { width: 100%; opacity: 1; } 100% { width: 100%; opacity: 0.7; } }
-        @keyframes scintillement { 0% { text-shadow: 0 0 5px #FFD700, 0 0 10px #FFD700, 0 0 15px #FFD700; } 50% { text-shadow: 0 0 20px #FFD700, 0 0 30px #FFD700, 0 0 40px #FFD700; } 100% { text-shadow: 0 0 5px #FFD700, 0 0 10px #FFD700, 0 0 15px #FFD700; } }
-        @keyframes apparitionBouton { 0% { opacity: 0; transform: translateY(30px); } 100% { opacity: 1; transform: translateY(0); } }
-        @keyframes ripple { 0% { transform: scale(0, 0) translate(-50%, -50%); opacity: 0.5; } 100% { transform: scale(20, 20) translate(-50%, -50%); opacity: 0; } }
-        @keyframes circleWave { 0% { opacity: 0.9; transform: scale(0.5); } 70% { opacity: 0.5; transform: scale(1.3); } 100% { opacity: 0; transform: scale(1.6); } }
-        
         @keyframes auraPulse {
             0% { text-shadow: 0 0 5px currentColor, 0 0 10px currentColor, 0 0 15px currentColor; }
             50% { text-shadow: 0 0 20px currentColor, 0 0 30px currentColor, 0 0 40px currentColor; }
             100% { text-shadow: 0 0 5px currentColor, 0 0 10px currentColor, 0 0 15px currentColor; }
         }
 
-        .app-title { font-family: 'Georgia', 'Times New Roman', serif; font-size: 68px; font-weight: bold; color: #FFD700; text-shadow: 0 0 15px rgba(255, 215, 0, 0.7), 0 0 30px rgba(255, 215, 0, 0.4); letter-spacing: 6px; margin-bottom: 100px; position: relative; top: -40px; text-transform: uppercase; padding-bottom: 15px; animation: scintillement 2s ease-in-out infinite; }
-        .app-title::after { content: ''; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 0; height: 3px; background: #FFD700; box-shadow: 0 0 10px #FFD700; animation: soulignement 1.5s ease-out forwards; }
+        /* ===== ANIMATION ENIGMA AVEC PARTICULES ===== */
+        .app-title-wrapper {
+            position: relative;
+            display: inline-block;
+            transform: translateZ(0);
+            will-change: transform;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            -webkit-touch-callout: none;
+            /* ✅ REMONTÉ DE 20PX SUPPLÉMENTAIRES (15px - 20px = -5px) */
+            margin-top: -5px;
+        }
+
+        .app-title {
+            /* ✅ POLICE ET TAILLE DEMANDÉES */
+            font-family: 'Georgia', 'Times New Roman', serif !important;
+            font-size: 68px !important;
+            font-weight: bold;
+            letter-spacing: 8px;
+            text-transform: uppercase;
+            padding-bottom: 15px;
+            display: flex;
+            justify-content: center;
+            position: relative;            z-index: 2;
+            filter: drop-shadow(0 0 12px rgba(255, 215, 0, 0.5));
+            transform: translateZ(0);
+            will-change: transform, text-shadow, color;
+            backface-visibility: hidden;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            -webkit-touch-callout: none;
+            line-height: 1.1;
+        }
+
+        .app-title .letter {
+            display: inline-block;
+            color: #FFD700;
+            text-shadow: 
+                0 0 8px rgba(255, 215, 0, 0.6),
+                0 0 18px rgba(255, 215, 0, 0.4),
+                0 0 28px rgba(255, 215, 0, 0.25);
+            animation: letterGoldWave 3.2s cubic-bezier(0.4, 0, 0.2, 1) infinite,
+                       letterGoldPulse 4.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+            animation-delay: calc(var(--i) * 0.1s);
+            position: relative;
+            transform: translateZ(0);
+            will-change: transform, text-shadow, color;
+            backface-visibility: hidden;
+            pointer-events: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            -webkit-touch-callout: none;
+            font-family: inherit;
+            font-size: inherit;
+        }
+
+        @keyframes letterGoldPulse {
+            0%, 100% {
+                text-shadow: 
+                    0 0 8px rgba(255, 215, 0, 0.6),
+                    0 0 18px rgba(255, 215, 0, 0.4),
+                    0 0 28px rgba(255, 215, 0, 0.25);
+            }
+            50% {
+                text-shadow: 
+                    0 0 15px rgba(255, 215, 0, 0.9),
+                    0 0 30px rgba(255, 215, 0, 0.7),
+                    0 0 50px rgba(255, 200, 0, 0.5),
+                    0 0 70px rgba(255, 215, 0, 0.35);            }
+        }
+
+        @keyframes letterGoldWave {
+            0%, 100% {
+                color: #FFD700;
+                transform: translateY(0) scale(1);
+            }
+            50% {
+                color: #FFFFE0;
+                text-shadow: 
+                    0 0 20px rgba(255, 215, 0, 1),
+                    0 0 40px rgba(255, 215, 0, 0.85),
+                    0 0 65px rgba(255, 200, 0, 0.65),
+                    0 0 90px rgba(255, 215, 0, 0.45),
+                    0 0 120px rgba(255, 215, 0, 0.25);
+                transform: translateY(-7px) scale(1.03);
+            }
+        }
+
+        .particle {
+            position: absolute;
+            background: #FFD700;
+            border-radius: 50%;
+            opacity: 0;
+            box-shadow: 
+                0 0 10px #FFD700, 
+                0 0 22px #FFA500,
+                0 0 35px rgba(255, 215, 0, 0.6),
+                0 0 50px rgba(255, 200, 0, 0.35);
+            pointer-events: none;
+            transform: translateZ(0);
+            will-change: transform, opacity;
+            backface-visibility: hidden;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        /* Animations des particules (inchangées) */
+        .particle:nth-child(1) { width: 4px; height: 4px; top: -10px; left: 10%; animation: particleFloat 3.5s cubic-bezier(0.4, 0, 0.2, 1) infinite; animation-delay: 0s; }
+        .particle:nth-child(2) { width: 3px; height: 3px; top: 20px; left: 85%; animation: particleFloat 4s cubic-bezier(0.4, 0, 0.2, 1) infinite; animation-delay: 0.4s; }
+        .particle:nth-child(3) { width: 5px; height: 5px; top: -5px; left: 50%; animation: particleFloat 4.5s cubic-bezier(0.4, 0, 0.2, 1) infinite; animation-delay: 0.8s; }
+        .particle:nth-child(4) { width: 3px; height: 3px; top: 35px; left: 20%; animation: particleFloat 3.7s cubic-bezier(0.4, 0, 0.2, 1) infinite; animation-delay: 1.2s; }
+        .particle:nth-child(5) { width: 4px; height: 4px; top: 10px; left: 70%; animation: particleFloat 4.2s cubic-bezier(0.4, 0, 0.2, 1) infinite; animation-delay: 1.6s; }
+        .particle:nth-child(6) { width: 3px; height: 3px; top: -15px; left: 35%; animation: particleFloat 4.7s cubic-bezier(0.4, 0, 0.2, 1) infinite; animation-delay: 0.6s; }
+        .particle:nth-child(7) { width: 4px; height: 4px; top: 25px; left: 5%; animation: particleFloat 3.8s cubic-bezier(0.4, 0, 0.2, 1) infinite; animation-delay: 0.2s; }
+        .particle:nth-child(8) { width: 3px; height: 3px; top: -8px; left: 90%; animation: particleFloat 4.1s cubic-bezier(0.4, 0, 0.2, 1) infinite; animation-delay: 1s; }
+        .particle:nth-child(9) { width: 5px; height: 5px; top: 15px; left: 45%; animation: particleFloat 5s cubic-bezier(0.4, 0, 0.2, 1) infinite; animation-delay: 0.5s; }        .particle:nth-child(10) { width: 3px; height: 3px; top: -12px; left: 60%; animation: particleFloat 3.9s cubic-bezier(0.4, 0, 0.2, 1) infinite; animation-delay: 1.5s; }
+        .particle:nth-child(11) { width: 4px; height: 4px; top: 30px; left: 80%; animation: particleFloat 4.4s cubic-bezier(0.4, 0, 0.2, 1) infinite; animation-delay: 0.7s; }
+        .particle:nth-child(12) { width: 3px; height: 3px; top: -6px; left: 25%; animation: particleFloat 4.6s cubic-bezier(0.4, 0, 0.2, 1) infinite; animation-delay: 1.3s; }
+        .particle:nth-child(13) { width: 4px; height: 4px; top: -20px; left: 15%; animation: particleFloat 4s cubic-bezier(0.4, 0, 0.2, 1) infinite; animation-delay: 0.1s; }
+        .particle:nth-child(14) { width: 3px; height: 3px; top: 40px; left: 95%; animation: particleFloat 4.8s cubic-bezier(0.4, 0, 0.2, 1) infinite; animation-delay: 0.9s; }
+        .particle:nth-child(15) { width: 5px; height: 5px; top: -3px; left: 40%; animation: particleFloat 3.6s cubic-bezier(0.4, 0, 0.2, 1) infinite; animation-delay: 0.3s; }
+        .particle:nth-child(16) { width: 3px; height: 3px; top: 28px; left: 3%; animation: particleFloat 4.9s cubic-bezier(0.4, 0, 0.2, 1) infinite; animation-delay: 1.4s; }
+        .particle:nth-child(17) { width: 4px; height: 4px; top: -18px; left: 75%; animation: particleFloat 4s cubic-bezier(0.4, 0, 0.2, 1) infinite; animation-delay: 0.25s; }
+        .particle:nth-child(18) { width: 3px; height: 3px; top: 45px; left: 55%; animation: particleFloat 5.1s cubic-bezier(0.4, 0, 0.2, 1) infinite; animation-delay: 1.7s; }
+        .particle:nth-child(19) { width: 5px; height: 5px; top: -7px; left: 30%; animation: particleFloat 3.7s cubic-bezier(0.4, 0, 0.2, 1) infinite; animation-delay: 0s; }
+        .particle:nth-child(20) { width: 3px; height: 3px; top: 38px; left: 65%; animation: particleFloat 4.5s cubic-bezier(0.4, 0, 0.2, 1) infinite; animation-delay: 1.1s; }
+        .particle:nth-child(21) { width: 4px; height: 4px; top: -14px; left: 88%; animation: particleFloat 4.2s cubic-bezier(0.4, 0, 0.2, 1) infinite; animation-delay: 0.45s; }
+        .particle:nth-child(22) { width: 3px; height: 3px; top: 42px; left: 12%; animation: particleFloat 5s cubic-bezier(0.4, 0, 0.2, 1) infinite; animation-delay: 1.55s; }
+        .particle:nth-child(23) { width: 5px; height: 5px; top: -9px; left: 52%; animation: particleFloat 3.9s cubic-bezier(0.4, 0, 0.2, 1) infinite; animation-delay: 0.65s; }
+        .particle:nth-child(24) { width: 3px; height: 3px; top: 33px; left: 78%; animation: particleFloat 4.7s cubic-bezier(0.4, 0, 0.2, 1) infinite; animation-delay: 1.35s; }
+        .particle:nth-child(25) { width: 4px; height: 4px; top: -25px; left: 22%; animation: particleFloat 4.3s cubic-bezier(0.4, 0, 0.2, 1) infinite; animation-delay: 0.15s; }
+        .particle:nth-child(26) { width: 3px; height: 3px; top: 48px; left: 8%; animation: particleFloat 5.2s cubic-bezier(0.4, 0, 0.2, 1) infinite; animation-delay: 0.85s; }
+        .particle:nth-child(27) { width: 5px; height: 5px; top: -2px; left: 68%; animation: particleFloat 3.8s cubic-bezier(0.4, 0, 0.2, 1) infinite; animation-delay: 0.55s; }
+        .particle:nth-child(28) { width: 3px; height: 3px; top: 36px; left: 92%; animation: particleFloat 4.6s cubic-bezier(0.4, 0, 0.2, 1) infinite; animation-delay: 1.25s; }
+        .particle:nth-child(29) { width: 4px; height: 4px; top: -16px; left: 44%; animation: particleFloat 4.1s cubic-bezier(0.4, 0, 0.2, 1) infinite; animation-delay: 0.35s; }
+        .particle:nth-child(30) { width: 3px; height: 3px; top: 44px; left: 58%; animation: particleFloat 5.3s cubic-bezier(0.4, 0, 0.2, 1) infinite; animation-delay: 1.65s; }
+        .particle:nth-child(31) { width: 5px; height: 5px; top: -11px; left: 34%; animation: particleFloat 3.5s cubic-bezier(0.4, 0, 0.2, 1) infinite; animation-delay: 0.05s; }
+        .particle:nth-child(32) { width: 3px; height: 3px; top: 32px; left: 76%; animation: particleFloat 4.4s cubic-bezier(0.4, 0, 0.2, 1) infinite; animation-delay: 1.45s; }
+        .particle:nth-child(33) { width: 4px; height: 4px; top: -19px; left: 62%; animation: particleFloat 4s cubic-bezier(0.4, 0, 0.2, 1) infinite; animation-delay: 0.75s; }
+        .particle:nth-child(34) { width: 3px; height: 3px; top: 46px; left: 18%; animation: particleFloat 5.1s cubic-bezier(0.4, 0, 0.2, 1) infinite; animation-delay: 1.05s; }
+        .particle:nth-child(35) { width: 5px; height: 5px; top: -4px; left: 50%; animation: particleFloat 3.7s cubic-bezier(0.4, 0, 0.2, 1) infinite; animation-delay: 0.95s; }
+        .particle:nth-child(36) { width: 3px; height: 3px; top: 39px; left: 82%; animation: particleFloat 4.8s cubic-bezier(0.4, 0, 0.2, 1) infinite; animation-delay: 1.85s; }
+        .particle:nth-child(37) { width: 4px; height: 4px; top: -13px; left: 28%; animation: particleFloat 4.2s cubic-bezier(0.4, 0, 0.2, 1) infinite; animation-delay: 0.22s; }
+        .particle:nth-child(38) { width: 3px; height: 3px; top: 41px; left: 72%; animation: particleFloat 4.9s cubic-bezier(0.4, 0, 0.2, 1) infinite; animation-delay: 1.12s; }
+        .particle:nth-child(39) { width: 5px; height: 5px; top: -8px; left: 46%; animation: particleFloat 3.6s cubic-bezier(0.4, 0, 0.2, 1) infinite; animation-delay: 0.42s; }
+        .particle:nth-child(40) { width: 3px; height: 3px; top: 37px; left: 14%; animation: particleFloat 5s cubic-bezier(0.4, 0, 0.2, 1) infinite; animation-delay: 1.52s; }
+        .particle:nth-child(41) { width: 4px; height: 4px; top: -21px; left: 86%; animation: particleFloat 4.4s cubic-bezier(0.4, 0, 0.2, 1) infinite; animation-delay: 0.62s; }
+        .particle:nth-child(42) { width: 3px; height: 3px; top: 43px; left: 4%; animation: particleFloat 5.2s cubic-bezier(0.4, 0, 0.2, 1) infinite; animation-delay: 1.72s; }
+        .particle:nth-child(43) { width: 5px; height: 5px; top: -6px; left: 56%; animation: particleFloat 3.8s cubic-bezier(0.4, 0, 0.2, 1) infinite; animation-delay: 0.18s; }
+        .particle:nth-child(44) { width: 3px; height: 3px; top: 34px; left: 94%; animation: particleFloat 4.7s cubic-bezier(0.4, 0, 0.2, 1) infinite; animation-delay: 1.38s; }
+        .particle:nth-child(45) { width: 4px; height: 4px; top: -17px; left: 38%; animation: particleFloat 4.1s cubic-bezier(0.4, 0, 0.2, 1) infinite; animation-delay: 0.52s; }
+        .particle:nth-child(46) { width: 3px; height: 3px; top: 47px; left: 66%; animation: particleFloat 5.4s cubic-bezier(0.4, 0, 0.2, 1) infinite; animation-delay: 1.92s; }
+        .particle:nth-child(47) { width: 5px; height: 5px; top: -10px; left: 24%; animation: particleFloat 3.9s cubic-bezier(0.4, 0, 0.2, 1) infinite; animation-delay: 0.32s; }
+        .particle:nth-child(48) { width: 3px; height: 3px; top: 31px; left: 79%; animation: particleFloat 4.5s cubic-bezier(0.4, 0, 0.2, 1) infinite; animation-delay: 1.62s; }
+
+        @keyframes particleFloat {
+            0% { opacity: 0; transform: translateY(0) scale(0.5) rotate(0deg); }
+            15% { opacity: 0.85; }
+            50% { opacity: 1; }
+            85% { opacity: 0.7; }
+            100% { opacity: 0; transform: translateY(-80px) scale(1.4) rotate(180deg); }
+        }
+
+        .app-title::after {
+            content: '';            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, #FFD700, #FFEC8B, #FFD700, transparent);
+            box-shadow: 0 0 12px #FFD700, 0 0 25px rgba(255, 215, 0, 0.6), 0 0 40px rgba(255, 200, 0, 0.35);
+            opacity: 0;
+            animation: soulignementAnim 1.8s cubic-bezier(0.4, 0, 0.2, 1) forwards, 
+                       waveGlow 2.5s cubic-bezier(0.4, 0, 0.2, 1) infinite 1.8s;
+            transform: translateX(-50%) translateZ(0);
+            will-change: width, opacity, box-shadow;
+            backface-visibility: hidden;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        @keyframes soulignementAnim {
+            0% { width: 0; opacity: 0; }
+            50% { width: 100%; opacity: 1; }
+            100% { width: 100%; opacity: 0.85; }
+        }
+
+        @keyframes waveGlow {
+            0%, 100% { opacity: 0.65; box-shadow: 0 0 12px #FFD700, 0 0 25px rgba(255, 215, 0, 0.5); }
+            50% { opacity: 1; box-shadow: 0 0 22px #FFD700, 0 0 42px rgba(255, 215, 0, 0.8), 0 0 65px rgba(255, 200, 0, 0.55); }
+        }
+
+        .app-title-wrapper::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) translateZ(0);
+            width: 125%;
+            height: 155%;
+            background: radial-gradient(ellipse at center, 
+                        rgba(255, 215, 0, 0.08) 0%, 
+                        rgba(255, 200, 0, 0.05) 40%, 
+                        transparent 72%);
+            z-index: 1;
+            animation: ambientGlow 5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+            pointer-events: none;
+            will-change: opacity, transform;
+            backface-visibility: hidden;
+            -webkit-user-select: none;
+            -moz-user-select: none;            -ms-user-select: none;
+            user-select: none;
+        }
+
+        @keyframes ambientGlow {
+            0%, 100% { opacity: 0.45; transform: translate(-50%, -50%) scale(1); }
+            50% { opacity: 0.9; transform: translate(-50%, -50%) scale(1.06); }
+        }
+
+        @media (max-width: 768px) {
+            .app-title { font-size: 48px; letter-spacing: 5px; }
+            .particle { width: 3px; height: 3px; }
+        }
+        @media (max-width: 500px) { .particle:nth-child(n+37) { display: none; } }
+        @media (max-width: 400px) { .particle:nth-child(n+25) { display: none; } }
+        /* ===== FIN ANIMATION ENIGMA ===== */
+
+        @keyframes apparitionBouton { 0% { opacity: 0; transform: translateY(30px); } 100% { opacity: 1; transform: translateY(0); } }
+        @keyframes ripple { 0% { transform: scale(0, 0) translate(-50%, -50%); opacity: 0.5; } 100% { transform: scale(20, 20) translate(-50%, -50%); opacity: 0; } }
+        @keyframes circleWave { 0% { opacity: 0.9; transform: scale(0.5); } 70% { opacity: 0.5; transform: scale(1.3); } 100% { opacity: 0; transform: scale(1.6); } }
 
         .home-btn { width: 320px; height: 65px; background: white; color: black; border: none; border-radius: 15px; font-size: 24px; font-weight: 600; letter-spacing: 1px; cursor: pointer; box-shadow: 0 4px 15px rgba(255, 255, 255, 0.2); transition: transform 0.2s, box-shadow 0.2s, background 0.2s; position: relative; overflow: hidden; margin: 12px 0; opacity: 0; transform: translateY(30px); animation: apparitionBouton 0.5s ease-out forwards; }
         #btn-perform { animation-delay: 0.2s; } #btn-list { animation-delay: 0.4s; } #btn-settings { animation-delay: 0.6s; }
@@ -47,7 +280,8 @@
         .settings-btn { width: 320px; height: 65px; background: #333; color: white; border: none; border-radius: 15px; font-size: 22px; font-weight: 600; cursor: pointer; margin: 10px 0; transition: background 0.2s; }
         .settings-btn:active { background: #555; }
 
-        .preview-container { width: 320px; margin: 20px 0; display: none; flex-direction: column; align-items: center; }        .preview-container.visible { display: flex; }
+        .preview-container { width: 320px; margin: 20px 0; display: none; flex-direction: column; align-items: center; }
+        .preview-container.visible { display: flex; }
         .preview-image { width: 200px; height: 200px; object-fit: cover; border-radius: 15px; border: 3px solid #FFD700; margin-bottom: 15px; }
         .preview-buttons { display: flex; gap: 20px; }
         .preview-confirm, .preview-cancel { width: 120px; height: 50px; border: none; border-radius: 10px; font-size: 18px; font-weight: 600; cursor: pointer; }
@@ -58,8 +292,7 @@
 
         #customize-page { position: absolute; inset: 0; background: rgba(0, 0, 0, 0.95); z-index: 40; visibility: hidden; opacity: 0; transition: visibility 0.3s, opacity 0.3s; overflow-y: auto; padding: 20px; color: white; }
         #customize-page.visible { visibility: visible; opacity: 1; }
-        
-        #customize-note-page { 
+                #customize-note-page { 
             position: absolute; 
             inset: 0; 
             background: rgba(0, 0, 0, 0.95); 
@@ -76,14 +309,8 @@
         }
         #customize-note-page.visible { visibility: visible; opacity: 1; }
         
-        #customize-page.dragging-slider { 
-            background: transparent !important; 
-            pointer-events: none; 
-        }
-        
-        #customize-note-page.dragging-slider { 
-            pointer-events: none; 
-        }
+        #customize-page.dragging-slider { background: transparent !important; pointer-events: none; }
+        #customize-note-page.dragging-slider { pointer-events: none; }
         
         #customize-page.dragging-slider .control-group, #customize-page.dragging-slider .test-code-section, #customize-page.dragging-slider .customize-header, #customize-page.dragging-slider .customize-actions,
         #customize-note-page.dragging-slider .control-group, #customize-note-page.dragging-slider .customize-header, #customize-note-page.dragging-slider .customize-actions { opacity: 0 !important; pointer-events: none; }
@@ -96,7 +323,8 @@
         #customize-note-page.preview-mode { background: rgba(0, 0, 0, 0.85); }
 
         .customize-header { display: flex; align-items: center; margin-bottom: 30px; padding-top: 20px; }
-        .customize-back-btn { width: 40px; height: 40px; background: #333; border: none; border-radius: 50%; color: white; font-size: 24px; cursor: pointer; margin-right: 15px; }        .customize-back-btn:active { background: #555; }
+        .customize-back-btn { width: 40px; height: 40px; background: #333; border: none; border-radius: 50%; color: white; font-size: 24px; cursor: pointer; margin-right: 15px; }
+        .customize-back-btn:active { background: #555; }
         .customize-title { font-size: 32px; color: #FFD700; font-weight: bold; }
 
         .test-code-section { background: #222; border-radius: 15px; padding: 20px; margin-bottom: 25px; border: 1px solid #444; text-align: center; }
@@ -113,8 +341,7 @@
         
         .slider-item input[type="range"] {
             width: 100%;
-            height: 6px;
-            background: #444;
+            height: 6px;            background: #444;
             border-radius: 3px;
             -webkit-appearance: none;
             pointer-events: none;
@@ -146,6 +373,7 @@
         .color-item input[type="color"] { width: 100%; height: 45px; border: 2px solid #444; border-radius: 10px; background: #333; }
         .value-badge { background: #333; padding: 3px 10px; border-radius: 15px; font-size: 14px; color: #FFD700; border: 1px solid #FFD700; cursor: pointer; }
         .value-badge:active { background: #444; }
+
         .customize-actions { display: flex; gap: 15px; margin-top: 30px; margin-bottom: 30px; }
         .customize-save { flex: 1.2; height: 55px; background: #4CAF50; border: none; border-radius: 15px; color: white; font-size: 20px; font-weight: 600; cursor: pointer; }
         .customize-reset { flex: 1; height: 55px; background: #f44336; border: none; border-radius: 15px; color: white; font-size: 18px; font-weight: 600; cursor: pointer; }
@@ -162,8 +390,7 @@
             justify-content: flex-end;
             background: #1a1a1a;
             background-size: cover !important;
-            background-position: center !important;
-            background-repeat: no-repeat !important;
+            background-position: center !important;            background-repeat: no-repeat !important;
         }
         
         #result-page {
@@ -194,7 +421,8 @@
         .keypad { display: grid; grid-template-columns: repeat(3, 70px); justify-content: center; gap: 20px 25px; margin-bottom: 15px; }
         .key { width: 70px; height: 70px; border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center; background: rgba(255, 255, 255, 0.2); backdrop-filter: blur(12px); cursor: pointer; border: 1px solid rgba(255,255,255,0.1); color: white; }
         .key-number { font-size: 28px; font-weight: 500; }
-        .key-letters { font-size: 10px; color: rgba(255, 255, 255, 0.6); margin-top: 2px; }        .key:active { background: rgba(255, 255, 255, 0.35); transform: scale(0.97); }
+        .key-letters { font-size: 10px; color: rgba(255, 255, 255, 0.6); margin-top: 2px; }
+        .key:active { background: rgba(255, 255, 255, 0.35); transform: scale(0.97); }
         .key::after { content: ''; position: absolute; inset: 0; border-radius: 50%; border: 2px solid rgba(255, 255, 255, 0.9); opacity: 0; pointer-events: none; }
         .active::after, .active-text::after { animation: circleWave 0.4s ease-out forwards; }
 
@@ -211,8 +439,7 @@
         .words-container.hidden { display: none; }
         .words-line { display: flex; flex-wrap: wrap; justify-content: center; gap: 5px; padding: 0 20px; }
         .result-word { cursor: pointer; }
-        .letters-container { position: absolute; top: 460px; width: 100%; text-align: center; color: white; font-size: 20px; z-index: 32; padding: 0 20px; display: flex; flex-wrap: wrap; justify-content: center; gap: 40px; }
-        .letters-container.hidden { display: none; }
+        .letters-container { position: absolute; top: 460px; width: 100%; text-align: center; color: white; font-size: 20px; z-index: 32; padding: 0 20px; display: flex; flex-wrap: wrap; justify-content: center; gap: 40px; }        .letters-container.hidden { display: none; }
         .letter-btn { cursor: pointer; text-transform: uppercase; }
         .letter-btn.selected { text-decoration: underline; }
         
@@ -243,7 +470,8 @@
             z-index: 50;
             visibility: hidden;
             opacity: 0;
-            transition: visibility 0.3s, opacity 0.3s;            background-size: cover !important;
+            transition: visibility 0.3s, opacity 0.3s;
+            background-size: cover !important;
             background-position: center !important;
             background-repeat: no-repeat !important;
             display: flex;
@@ -260,10 +488,8 @@
             position: absolute;
             inset: 0;
             background: rgba(0, 0, 0, 0.4);
-            z-index: 51;
-        }
+            z-index: 51;        }
         
-        /* ✅ CORRECTION 3 : Texte NOTE sans gras */
         .note-text {
             position: absolute;
             top: 262px;
@@ -272,7 +498,7 @@
             z-index: 52;
             color: white;
             font-size: 18px;
-            font-weight: normal; /* ✅ PAS DE GRAS */
+            font-weight: normal;
             text-align: left;
             text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
             padding: 20px;
@@ -292,7 +518,8 @@
         #list-modal.keyboard-open { top: 30px; transform: translate(-50%, 0); }
         #search-input { width: 100%; padding: 18px; border: 2px solid #ddd; border-radius: 15px; font-size: 18px; height: 60px; box-sizing: border-box; margin-bottom: 15px; }
         .code-result-box { width: 100%; padding: 18px; border: 2px solid #1976d2; border-radius: 15px; font-size: 20px; text-align: center; background: #e3f2fd; color: #1976d2; font-weight: bold; min-height: 60px; display: flex; align-items: center; justify-content: center; margin-bottom: 15px; }
-        .code-result-box.error { background: #ffebee; border-color: #f44336; color: #f44336; }        #search-btn { width: 100%; padding: 18px; background: #4CAF50; color: white; border: none; border-radius: 15px; cursor: pointer; font-size: 20px; font-weight: 600; }
+        .code-result-box.error { background: #ffebee; border-color: #f44336; color: #f44336; }
+        #search-btn { width: 100%; padding: 18px; background: #4CAF50; color: white; border: none; border-radius: 15px; cursor: pointer; font-size: 20px; font-weight: 600; }
         #search-btn.disabled { background: #999; opacity: 0.6; pointer-events: none; }
         #modal-overlay { position: absolute; inset: 0; background: rgba(0,0,0,0.7); z-index: 90; display: none; }
         #modal-overlay.visible { display: block; }
@@ -303,9 +530,32 @@
     <input type="file" id="bg-file-input" class="hidden-file-input" accept="image/*">
     <input type="file" id="img-file-input" class="hidden-file-input" accept="image/*">
     <input type="file" id="note-file-input" class="hidden-file-input" accept="image/*">
-
     <div id="home-page">
-        <div class="app-title">ENIGMA</div>
+        <!-- ✅ ANIMATION ENIGMA : margin-top -5px (+ police/taille) -->
+        <div class="app-title-wrapper">
+            <div class="app-title">
+                <span class="letter" style="--i: 0">E</span>
+                <span class="letter" style="--i: 1">N</span>
+                <span class="letter" style="--i: 2">I</span>
+                <span class="letter" style="--i: 3">G</span>                <span class="letter" style="--i: 4">M</span>
+                <span class="letter" style="--i: 5">A</span>
+            </div>
+            <!-- 48 particules dorées -->
+            <div class="particle"></div><div class="particle"></div><div class="particle"></div><div class="particle"></div>
+            <div class="particle"></div><div class="particle"></div><div class="particle"></div><div class="particle"></div>
+            <div class="particle"></div><div class="particle"></div><div class="particle"></div><div class="particle"></div>
+            <div class="particle"></div><div class="particle"></div><div class="particle"></div><div class="particle"></div>
+            <div class="particle"></div><div class="particle"></div><div class="particle"></div><div class="particle"></div>
+            <div class="particle"></div><div class="particle"></div><div class="particle"></div><div class="particle"></div>
+            <div class="particle"></div><div class="particle"></div><div class="particle"></div><div class="particle"></div>
+            <div class="particle"></div><div class="particle"></div><div class="particle"></div><div class="particle"></div>
+            <div class="particle"></div><div class="particle"></div><div class="particle"></div><div class="particle"></div>
+            <div class="particle"></div><div class="particle"></div><div class="particle"></div><div class="particle"></div>
+            <div class="particle"></div><div class="particle"></div><div class="particle"></div><div class="particle"></div>
+            <div class="particle"></div><div class="particle"></div><div class="particle"></div><div class="particle"></div>
+            <div class="particle"></div><div class="particle"></div><div class="particle"></div><div class="particle"></div>
+        </div>
+        
         <button class="home-btn" id="btn-perform">PERFORMER</button>
         <button class="home-btn" id="btn-list">LISTE DES MOTS</button>
         <button class="home-btn" id="btn-settings">PARAMETRES</button>
@@ -336,12 +586,12 @@
         <div class="test-code-section">
             <div class="test-code-title">🎯 TESTER UN CODE</div>
             <input type="tel" id="test-code-input" placeholder="Code" maxlength="4">
-        </div>
-        <div class="control-group">
+        </div>        <div class="control-group">
             <div class="control-header">
                 <h3>📋 Liste</h3>
                 <button class="preview-btn" id="preview-list-btn">👁️</button>
-            </div>            <div class="slider-item">
+            </div>
+            <div class="slider-item">
                 <label>Position Y <span class="value-badge" id="words-y-value">265px</span></label>
                 <input type="range" id="words-y" min="0" max="800" value="265">
             </div>
@@ -385,12 +635,12 @@
                 <h3>🔢 Indice</h3>
                 <button class="preview-btn" id="preview-index-btn">👁️</button>
             </div>
-            <div class="slider-item">
-                <label>Position Y <span class="value-badge" id="index-y-value">517px</span></label>
+            <div class="slider-item">                <label>Position Y <span class="value-badge" id="index-y-value">517px</span></label>
                 <input type="range" id="index-y" min="0" max="800" value="517">
             </div>
             <div class="slider-item">
-                <label>Taille <span class="value-badge" id="index-size-value">30px</span></label>                <input type="range" id="index-size" min="10" max="60" value="30">
+                <label>Taille <span class="value-badge" id="index-size-value">30px</span></label>
+                <input type="range" id="index-size" min="10" max="60" value="30">
             </div>
             <div class="color-item">
                 <label>Couleur</label>
@@ -403,7 +653,6 @@
         </div>
         <div class="customize-actions">
             <button class="customize-save" id="customize-save">💾 Sauvegarder</button>
-            <!-- ✅ CORRECTION 2 : Bouton Reset → Reinitialiser -->
             <button class="customize-reset" id="customize-reset">↺ Reinitialiser</button>
         </div>
     </div>
@@ -412,11 +661,9 @@
     <div id="customize-note-page">
         <div class="customize-header">
             <button class="customize-back-btn" id="customize-note-back">←</button>
-            <!-- ✅ CORRECTION 1 : Titre "PERSONNALISER NOTE" → "PERSONNALISER" -->
             <span class="customize-title">PERSONNALISER</span>
         </div>
         
-        <!-- Les 10 mots affichés sur l'image de fond -->
         <div class="note-words-container" id="note-words-container" style="position: absolute; top: 262px; left: 50%; transform: translateX(-50%); z-index: 55; color: white; font-size: 18px; text-align: left; line-height: 15px; padding: 20px; max-width: 80%;">
             <div class="note-word-item">Barbecue</div>
             <div class="note-word-item">Iceberg</div>
@@ -429,7 +676,6 @@
             <div class="note-word-item">Train</div>
             <div class="note-word-item">Encre</div>
         </div>
-        
         <div class="control-group" style="position: relative; z-index: 60;">
             <div class="control-header">
                 <h3>📝 Note</h3>
@@ -438,8 +684,8 @@
             
             <div class="slider-item">
                 <label>Position X <span class="value-badge" id="note-x-value">0px</span></label>
-                <input type="range" id="note-x" min="-500" max="500" value="0">
-            </div>            
+                <input type="range" id="note-x" min="-500" max="500" value="0">            </div>
+            
             <div class="slider-item">
                 <label>Position Y <span class="value-badge" id="note-y-value">262px</span></label>
                 <input type="range" id="note-y" min="0" max="800" value="262">
@@ -463,7 +709,6 @@
         
         <div class="customize-actions" style="position: relative; z-index: 60;">
             <button class="customize-save" id="customize-note-save">💾 Sauvegarder</button>
-            <!-- ✅ CORRECTION 2 : Bouton Reset → Reinitialiser -->
             <button class="customize-reset" id="customize-note-reset">↺ Reinitialiser</button>
         </div>
     </div>
@@ -774,7 +1019,6 @@
             }
         }
         bestListLetters = bestListIndex !== -1 ? letterLists[bestListIndex] : [];
-        
         indexDisplay.textContent = bestListIndex !== -1 ? (bestListIndex + 1).toString() : '';
         displayWords(currentWords);
         displayLetterButtons(bestListIndex, bestListLetters);
@@ -782,8 +1026,8 @@
         lettersContainer.classList.remove('hidden');
     }
 
-    function displayWords(words) {        wordsContainer.innerHTML = '';
-        if (words.length === 0) {
+    function displayWords(words) {
+        wordsContainer.innerHTML = '';        if (words.length === 0) {
             wordsContainer.innerHTML = '<div class="words-line">Aucun mot</div>';
             return;
         }
@@ -831,8 +1075,8 @@
         for (var i = 0; i < letters.length; i++) {
             var letter = letters[i];
             var span = document.createElement('span');
-            span.className = 'letter-btn' + (selectedLetter === letter ? ' selected' : '');            span.textContent = letter.toUpperCase();
-            (function(ltr) {
+            span.className = 'letter-btn' + (selectedLetter === letter ? ' selected' : '');
+            span.textContent = letter.toUpperCase();            (function(ltr) {
                 span.addEventListener('click', function(e) {
                     e.stopPropagation();
                     if (selectedLetter === ltr) {
@@ -871,7 +1115,6 @@
         resultPage.classList.remove('dragging-active');
         customizeNotePage.classList.remove('dragging-slider');
     }
-
     var allSliders = [wordsY, wordsSize, wordsLineHeight, lettersY, lettersSize, lettersSpacing, indexY, indexSize, indexX, noteX, noteY, noteSize, noteLineHeight];
     for (var i = 0; i < allSliders.length; i++) {
         if (allSliders[i]) {
@@ -880,9 +1123,9 @@
             allSliders[i].addEventListener('touchcancel', stopDragging);
         }
     }
+
     var previewBtns = [previewListBtn, previewLettersBtn, previewIndexBtn, previewNoteBtn];
-    for (var i = 0; i < previewBtns.length; i++) {
-        if (previewBtns[i]) {
+    for (var i = 0; i < previewBtns.length; i++) {        if (previewBtns[i]) {
             previewBtns[i].addEventListener('touchstart', startDragging);
             previewBtns[i].addEventListener('touchend', stopDragging);
             previewBtns[i].addEventListener('touchcancel', stopDragging);
@@ -929,9 +1172,9 @@
                 indexY.value = defaultValue;
             }
             else if (setting === 'indexSize') {
-                indexDisplay.style.fontSize = defaultValue + 'px';                indexSizeValue.textContent = defaultValue + 'px';
-                indexSize.value = defaultValue;
-            }
+                indexDisplay.style.fontSize = defaultValue + 'px';
+                indexSizeValue.textContent = defaultValue + 'px';
+                indexSize.value = defaultValue;            }
             else if (setting === 'indexX') {
                 indexDisplay.style.transform = 'translateX(calc(-50% + ' + defaultValue + 'px))';
                 indexXValue.textContent = defaultValue + 'px';
@@ -978,9 +1221,9 @@
     indexXValue.addEventListener('click', resetToDefault('indexX', defaultSettings.indexX));
 
     noteXValue.addEventListener('click', resetNoteToDefault('noteX', defaultNoteSettings.noteX));
-    noteYValue.addEventListener('click', resetNoteToDefault('noteY', defaultNoteSettings.noteY));    noteSizeValue.addEventListener('click', resetNoteToDefault('noteSize', defaultNoteSettings.noteSize));
+    noteYValue.addEventListener('click', resetNoteToDefault('noteY', defaultNoteSettings.noteY));
+    noteSizeValue.addEventListener('click', resetNoteToDefault('noteSize', defaultNoteSettings.noteSize));
     noteLineHeightValue.addEventListener('click', resetNoteToDefault('noteLineHeight', defaultNoteSettings.noteLineHeight));
-
     wordsY.addEventListener('input', function(e) { currentSettings.wordsY = parseInt(e.target.value); wordsYValue.textContent = currentSettings.wordsY + 'px'; wordsContainer.style.top = currentSettings.wordsY + 'px'; });
     wordsSize.addEventListener('input', function(e) { currentSettings.wordsSize = parseInt(e.target.value); wordsSizeValue.textContent = currentSettings.wordsSize + 'px'; wordsContainer.style.fontSize = currentSettings.wordsSize + 'px'; });
     wordsColor.addEventListener('input', function(e) { currentSettings.wordsColor = e.target.value; wordsContainer.style.color = currentSettings.wordsColor; });
@@ -1027,9 +1270,9 @@
 
     btnPerform.addEventListener('click', function() {
         homePage.classList.add('hidden');
-        lockPage.classList.add('visible');        pin = '';
-        updateDots();
-    });
+        lockPage.classList.add('visible');
+        pin = '';
+        updateDots();    });
 
     btnList.addEventListener('click', function() {
         resetModalToNormal();
@@ -1067,7 +1310,6 @@
         currentSettings = loadCustomSettings();
         applyCustomSettings(currentSettings);
     });
-
     customizeNoteBack.addEventListener('click', function() {
         customizeNotePage.classList.remove('visible', 'preview-mode');
         settingsPage.classList.add('visible');
@@ -1076,10 +1318,10 @@
     });
 
     customizeSave.addEventListener('click', function() {
-        saveCustomSettings(currentSettings);        customizePage.classList.remove('visible', 'preview-mode');
+        saveCustomSettings(currentSettings);
+        customizePage.classList.remove('visible', 'preview-mode');
         resultPage.classList.remove('preview-mode');
-        settingsPage.classList.add('visible');
-        isPreviewMode = false;
+        settingsPage.classList.add('visible');        isPreviewMode = false;
     });
 
     customizeNoteSave.addEventListener('click', function() {
@@ -1125,9 +1367,9 @@
         codeResult.textContent = '';
         codeResult.classList.remove('error');
         enableSearchButton();
-        keyboardVisible = false;        modal.classList.remove('keyboard-open');
+        keyboardVisible = false;
+        modal.classList.remove('keyboard-open');
     }
-
     function animateKey(element) {
         if (!element) return;
         element.classList.add('active');
@@ -1174,10 +1416,10 @@
         if (emergencyBtn.classList) emergencyBtn.classList.add('active-text');
         setTimeout(function() { if (emergencyBtn.classList) emergencyBtn.classList.remove('active-text'); }, 350);
         lockPage.classList.remove('visible');
-        homePage.classList.remove('hidden');        pin = '';
+        homePage.classList.remove('hidden');
+        pin = '';
         updateDots();
     });
-
     indexDisplay.addEventListener('click', function(e) {
         e.stopPropagation();
         indexClickCount++;
@@ -1223,10 +1465,10 @@
         lastTap = now;
     });
 
-    function setupImageImport(input, target, storageKey) {        input.addEventListener('change', function(e) {
+    function setupImageImport(input, target, storageKey) {
+        input.addEventListener('change', function(e) {
             var file = e.target.files[0];
-            if (file) {
-                var reader = new FileReader();
+            if (file) {                var reader = new FileReader();
                 reader.onload = function(event) {
                     currentPreviewData = event.target.result;
                     previewImage.src = currentPreviewData;
@@ -1273,9 +1515,9 @@
         previewContainer.classList.remove('visible');
         currentPreviewData = '';
     });
+
     previewCancel.addEventListener('click', function() {
-        previewContainer.classList.remove('visible');
-        currentPreviewData = '';
+        previewContainer.classList.remove('visible');        currentPreviewData = '';
     });
 
     currentSettings = loadCustomSettings();
@@ -1284,6 +1526,26 @@
     applyNoteSettings(currentNoteSettings);
     updateDots();
     resetModalToNormal();
+    
+    // ===== ANIMATION DU TITRE ENIGMA =====
+    const title = document.querySelector('.app-title');
+    if (title) {
+        title.addEventListener('click', (e) => { e.preventDefault(); e.stopPropagation(); return false; });
+        title.addEventListener('selectstart', (e) => { e.preventDefault(); return false; });
+    }
+    
+    window.addEventListener('load', () => {
+        const letters = document.querySelectorAll('.app-title .letter');
+        letters.forEach((letter, i) => {
+            letter.style.opacity = '0';
+            letter.style.transform = 'translateY(15px)';
+            setTimeout(() => {
+                letter.style.transition = 'opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1), transform 0.4s cubic-bezier(0.4, 0, 0.2, 1)';
+                letter.style.opacity = '1';
+                letter.style.transform = 'translateY(0)';
+            }, 100 + (i * 60));
+        });
+    });
 })();
     </script>
 </body>
