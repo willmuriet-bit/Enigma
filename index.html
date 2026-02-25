@@ -70,21 +70,18 @@
             overflow-y: auto; 
             padding: 20px; 
             color: white;
-            /* ✅ CORRECTION 1 & 3 : Image NOTE ajustée et visible */
             background-size: cover !important;
             background-position: center !important;
             background-repeat: no-repeat !important;
         }
         #customize-note-page.visible { visibility: visible; opacity: 1; }
         
-        /* ✅ CORRECTION 3 : Séparation des deux pages */
         #customize-page.dragging-slider { 
             background: transparent !important; 
             pointer-events: none; 
         }
         
         #customize-note-page.dragging-slider { 
-            /* Pas de background: transparent ici ! Garde l'image NOTE visible */
             pointer-events: none; 
         }
         
@@ -97,9 +94,9 @@
         
         #result-page.preview-mode { visibility: visible !important; opacity: 1 !important; z-index: 35; pointer-events: none; }
         #customize-note-page.preview-mode { background: rgba(0, 0, 0, 0.85); }
+
         .customize-header { display: flex; align-items: center; margin-bottom: 30px; padding-top: 20px; }
-        .customize-back-btn { width: 40px; height: 40px; background: #333; border: none; border-radius: 50%; color: white; font-size: 24px; cursor: pointer; margin-right: 15px; }
-        .customize-back-btn:active { background: #555; }
+        .customize-back-btn { width: 40px; height: 40px; background: #333; border: none; border-radius: 50%; color: white; font-size: 24px; cursor: pointer; margin-right: 15px; }        .customize-back-btn:active { background: #555; }
         .customize-title { font-size: 32px; color: #FFD700; font-weight: bold; }
 
         .test-code-section { background: #222; border-radius: 15px; padding: 20px; margin-bottom: 25px; border: 1px solid #444; text-align: center; }
@@ -145,10 +142,10 @@
         }
         
         .color-item { margin-bottom: 20px; }
-        .color-item label { display: block; margin-bottom: 8px; color: #ddd; }        .color-item input[type="color"] { width: 100%; height: 45px; border: 2px solid #444; border-radius: 10px; background: #333; }
+        .color-item label { display: block; margin-bottom: 8px; color: #ddd; }
+        .color-item input[type="color"] { width: 100%; height: 45px; border: 2px solid #444; border-radius: 10px; background: #333; }
         .value-badge { background: #333; padding: 3px 10px; border-radius: 15px; font-size: 14px; color: #FFD700; border: 1px solid #FFD700; cursor: pointer; }
         .value-badge:active { background: #444; }
-
         .customize-actions { display: flex; gap: 15px; margin-top: 30px; margin-bottom: 30px; }
         .customize-save { flex: 1.2; height: 55px; background: #4CAF50; border: none; border-radius: 15px; color: white; font-size: 20px; font-weight: 600; cursor: pointer; }
         .customize-reset { flex: 1; height: 55px; background: #f44336; border: none; border-radius: 15px; color: white; font-size: 18px; font-weight: 600; cursor: pointer; }
@@ -194,10 +191,10 @@
         .pin-dots { display: flex; justify-content: center; gap: 16px; margin-bottom: 3vh; }
         .dot { width: 14px; height: 14px; border-radius: 50%; background: white; opacity: 0.35; transition: opacity 0.2s, transform 0.2s; }
         .dot.active { opacity: 1; transform: scale(1.25); }
-        .keypad { display: grid; grid-template-columns: repeat(3, 70px); justify-content: center; gap: 20px 25px; margin-bottom: 15px; }        .key { width: 70px; height: 70px; border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center; background: rgba(255, 255, 255, 0.2); backdrop-filter: blur(12px); cursor: pointer; border: 1px solid rgba(255,255,255,0.1); color: white; }
+        .keypad { display: grid; grid-template-columns: repeat(3, 70px); justify-content: center; gap: 20px 25px; margin-bottom: 15px; }
+        .key { width: 70px; height: 70px; border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center; background: rgba(255, 255, 255, 0.2); backdrop-filter: blur(12px); cursor: pointer; border: 1px solid rgba(255,255,255,0.1); color: white; }
         .key-number { font-size: 28px; font-weight: 500; }
-        .key-letters { font-size: 10px; color: rgba(255, 255, 255, 0.6); margin-top: 2px; }
-        .key:active { background: rgba(255, 255, 255, 0.35); transform: scale(0.97); }
+        .key-letters { font-size: 10px; color: rgba(255, 255, 255, 0.6); margin-top: 2px; }        .key:active { background: rgba(255, 255, 255, 0.35); transform: scale(0.97); }
         .key::after { content: ''; position: absolute; inset: 0; border-radius: 50%; border: 2px solid rgba(255, 255, 255, 0.9); opacity: 0; pointer-events: none; }
         .active::after, .active-text::after { animation: circleWave 0.4s ease-out forwards; }
 
@@ -243,10 +240,10 @@
         #note-page {
             position: absolute;
             inset: 0;
-            z-index: 50;            visibility: hidden;
+            z-index: 50;
+            visibility: hidden;
             opacity: 0;
-            transition: visibility 0.3s, opacity 0.3s;
-            background-size: cover !important;
+            transition: visibility 0.3s, opacity 0.3s;            background-size: cover !important;
             background-position: center !important;
             background-repeat: no-repeat !important;
             display: flex;
@@ -266,21 +263,26 @@
             z-index: 51;
         }
         
+        /* ✅ NOUVEAU : Styles pour le texte NOTE liés aux réglages */
         .note-text {
-            position: relative;
+            position: absolute;
+            top: 262px;
+            left: 50%;
+            transform: translateX(calc(-50% + 0px));
             z-index: 52;
             color: white;
-            font-size: 40px;
+            font-size: 18px;
             font-weight: bold;
-            text-align: center;
+            text-align: left;
             text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
             padding: 20px;
-            max-width: 90%;
+            max-width: 80%;
             word-wrap: break-word;
             user-select: none;
             -webkit-user-select: none;
             -moz-user-select: none;
             -ms-user-select: none;
+            line-height: 15px;
         }
 
         #list-modal { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 380px; background: white; border-radius: 30px; padding: 25px; z-index: 100; display: none; color: black; box-shadow: 0 20px 40px rgba(0,0,0,0.4); transition: top 0.3s ease-out, transform 0.3s ease-out; }
@@ -290,9 +292,9 @@
         .code-result-box { width: 100%; padding: 18px; border: 2px solid #1976d2; border-radius: 15px; font-size: 20px; text-align: center; background: #e3f2fd; color: #1976d2; font-weight: bold; min-height: 60px; display: flex; align-items: center; justify-content: center; margin-bottom: 15px; }
         .code-result-box.error { background: #ffebee; border-color: #f44336; color: #f44336; }
         #search-btn { width: 100%; padding: 18px; background: #4CAF50; color: white; border: none; border-radius: 15px; cursor: pointer; font-size: 20px; font-weight: 600; }
-        #search-btn.disabled { background: #999; opacity: 0.6; pointer-events: none; }
-        #modal-overlay { position: absolute; inset: 0; background: rgba(0,0,0,0.7); z-index: 90; display: none; }
-        #modal-overlay.visible { display: block; }        .hidden-file-input { display: none; }
+        #search-btn.disabled { background: #999; opacity: 0.6; pointer-events: none; }        #modal-overlay { position: absolute; inset: 0; background: rgba(0,0,0,0.7); z-index: 90; display: none; }
+        #modal-overlay.visible { display: block; }
+        .hidden-file-input { display: none; }
     </style>
 </head>
 <body>
@@ -339,9 +341,9 @@
                 <button class="preview-btn" id="preview-list-btn">👁️</button>
             </div>
             <div class="slider-item">
-                <label>Position Y <span class="value-badge" id="words-y-value">265px</span></label>
-                <input type="range" id="words-y" min="0" max="800" value="265">
-            </div>            <div class="slider-item">
+                <label>Position Y <span class="value-badge" id="words-y-value">265px</span></label>                <input type="range" id="words-y" min="0" max="800" value="265">
+            </div>
+            <div class="slider-item">
                 <label>Taille <span class="value-badge" id="words-size-value">18px</span></label>
                 <input type="range" id="words-size" min="10" max="40" value="18">
             </div>
@@ -388,9 +390,9 @@
             <div class="slider-item">
                 <label>Taille <span class="value-badge" id="index-size-value">30px</span></label>
                 <input type="range" id="index-size" min="10" max="60" value="30">
-            </div>
-            <div class="color-item">
-                <label>Couleur</label>                <input type="color" id="index-color" value="#1E6FF0">
+            </div>            <div class="color-item">
+                <label>Couleur</label>
+                <input type="color" id="index-color" value="#1E6FF0">
             </div>
             <div class="slider-item">
                 <label>Décalage X <span class="value-badge" id="index-x-value">-45px</span></label>
@@ -437,9 +439,9 @@
             
             <div class="slider-item">
                 <label>Position Y <span class="value-badge" id="note-y-value">262px</span></label>
-                <input type="range" id="note-y" min="0" max="800" value="262">
-            </div>
-                        <div class="slider-item">
+                <input type="range" id="note-y" min="0" max="800" value="262">            </div>
+            
+            <div class="slider-item">
                 <label>Taille <span class="value-badge" id="note-size-value">18px</span></label>
                 <input type="range" id="note-size" min="10" max="40" value="18">
             </div>
@@ -486,9 +488,9 @@
         </div>
         <div class="emergency" id="emergencyBtn">📞 Appel d'urgence</div>
     </div>
-
     <div id="result-page">
-        <div class="words-container" id="words-container"></div>        <div class="letters-container" id="letters-container"></div>
+        <div class="words-container" id="words-container"></div>
+        <div class="letters-container" id="letters-container"></div>
         <div class="index-display" id="index-display"></div>
     </div>
 
@@ -513,8 +515,8 @@
     const lockPage = document.getElementById('lock-page');
     const resultPage = document.getElementById('result-page');
     const notePage = document.getElementById('note-page');
-    const noteWordsContainer = document.getElementById('note-words-container');
     const noteText = document.getElementById('note-text');
+    const noteWordsContainer = document.getElementById('note-words-container');
     const wordsContainer = document.getElementById('words-container');
     const lettersContainer = document.getElementById('letters-container');
     const indexDisplay = document.getElementById('index-display');
@@ -535,9 +537,9 @@
     const customizeNoteReset = document.getElementById('customize-note-reset');
     const previewListBtn = document.getElementById('preview-list-btn');
     const previewLettersBtn = document.getElementById('preview-letters-btn');
-    const previewIndexBtn = document.getElementById('preview-index-btn');
-    const previewNoteBtn = document.getElementById('preview-note-btn');
-    const testCodeInput = document.getElementById('test-code-input');    const wordsY = document.getElementById('words-y');
+    const previewIndexBtn = document.getElementById('preview-index-btn');    const previewNoteBtn = document.getElementById('preview-note-btn');
+    const testCodeInput = document.getElementById('test-code-input');
+    const wordsY = document.getElementById('words-y');
     const wordsSize = document.getElementById('words-size');
     const wordsColor = document.getElementById('words-color');
     const wordsLineHeight = document.getElementById('words-line-height');
@@ -584,9 +586,9 @@
     const deleteBtn = document.getElementById('deleteBtn');
     const okBtn = document.getElementById('okBtn');
     const emergencyBtn = document.getElementById('emergencyBtn');
-
     const wordsList = [
-        { code: "7131", word: "Abeille" }, { code: "7141", word: "Abricot" }, { code: "9141", word: "Accordéon" },        { code: "6131", word: "Agenda" }, { code: "6141", word: "Agneau" }, { code: "5121", word: "Aigle" },
+        { code: "7131", word: "Abeille" }, { code: "7141", word: "Abricot" }, { code: "9141", word: "Accordéon" },
+        { code: "6131", word: "Agenda" }, { code: "6141", word: "Agneau" }, { code: "5121", word: "Aigle" },
         { code: "8121", word: "Aiguille" }, { code: "3121", word: "Ail" }, { code: "4121", word: "Aile" }
     ];
 
@@ -633,9 +635,9 @@
 
     searchInput.addEventListener('focus', function() { keyboardVisible = true; modal.classList.add('keyboard-open'); });
     searchInput.addEventListener('blur', function() {
-        clearTimeout(blurTimeout);
-        blurTimeout = setTimeout(() => { keyboardVisible = false; modal.classList.remove('keyboard-open'); }, 300);
+        clearTimeout(blurTimeout);        blurTimeout = setTimeout(() => { keyboardVisible = false; modal.classList.remove('keyboard-open'); }, 300);
     });
+
     function searchWord(word) {
         const normalized = word.trim().toLowerCase();
         for (let i = 0; i < wordsList.length; i++) {
@@ -682,9 +684,9 @@
         lettersSizeValue.textContent = settings.lettersSize + 'px';
         lettersSpacingValue.textContent = settings.lettersSpacing + 'px';
         indexYValue.textContent = settings.indexY + 'px';
-        indexSizeValue.textContent = settings.indexSize + 'px';
-        indexXValue.textContent = settings.indexX + 'px';
-                wordsY.value = settings.wordsY; wordsSize.value = settings.wordsSize; wordsColor.value = settings.wordsColor;
+        indexSizeValue.textContent = settings.indexSize + 'px';        indexXValue.textContent = settings.indexX + 'px';
+        
+        wordsY.value = settings.wordsY; wordsSize.value = settings.wordsSize; wordsColor.value = settings.wordsColor;
         wordsLineHeight.value = settings.wordsLineHeight; lettersY.value = settings.lettersY;
         lettersSize.value = settings.lettersSize; lettersColor.value = settings.lettersColor;
         lettersSpacing.value = settings.lettersSpacing; indexY.value = settings.indexY;
@@ -711,6 +713,15 @@
         noteLineHeight.value = settings.noteLineHeight;
     }
 
+    // ✅ NOUVEAU : Appliquer les réglages NOTE à la page note-text
+    function applyNoteSettingsToNotePage(settings) {
+        noteText.style.transform = 'translateX(calc(-50% + ' + settings.noteX + 'px))';
+        noteText.style.top = settings.noteY + 'px';
+        noteText.style.fontSize = settings.noteSize + 'px';
+        noteText.style.color = settings.noteColor;
+        noteText.style.lineHeight = settings.noteLineHeight + 'px';
+    }
+
     function updatePreviewWithCode(code) {
         if (code.length !== 4) return;
         currentCode = code;
@@ -722,8 +733,7 @@
         letterLists = [];
         for (var pos = 0; pos < firstDigit; pos++) {
             letterLists[pos] = [];
-            for (var i = 0; i < originalWords.length; i++) {
-                var word = originalWords[i];
+            for (var i = 0; i < originalWords.length; i++) {                var word = originalWords[i];
                 if (word.length > pos && letterLists[pos].indexOf(word[pos]) === -1) {
                     letterLists[pos].push(word[pos]);
                 }
@@ -733,7 +743,8 @@
         
         bestListIndex = -1;
         var maxSize = 0;
-        for (var i = 0; i < letterLists.length; i++) {            if (letterLists[i].length > maxSize) {
+        for (var i = 0; i < letterLists.length; i++) {
+            if (letterLists[i].length > maxSize) {
                 maxSize = letterLists[i].length;
                 bestListIndex = i;
             }
@@ -771,18 +782,24 @@
                 });
             })(word);
             line.appendChild(span);
-            if (i < words.length - 1) line.appendChild(document.createTextNode(' '));
-        }
+            if (i < words.length - 1) line.appendChild(document.createTextNode(' '));        }
         wordsContainer.appendChild(line);
     }
 
+    // ✅ CORRECTION : Appliquer les réglages NOTE quand on ouvre la page NOTE
     function openNotePage(word) {
         noteText.textContent = word;
+        
+        // Charger les réglages NOTE et les appliquer
+        currentNoteSettings = loadNoteSettings();
+        applyNoteSettingsToNotePage(currentNoteSettings);
+        
         var noteBg = customizeNotePage.style.backgroundImage;
         if (noteBg) {
             notePage.style.backgroundImage = noteBg;
         }
-        notePage.classList.add('visible');    }
+        notePage.classList.add('visible');
+    }
 
     function displayLetterButtons(index, letters) {
         lettersContainer.innerHTML = '';
@@ -814,8 +831,7 @@
                 spacer.innerHTML = '    ';
                 lettersContainer.appendChild(spacer);
             }
-        }
-    }
+        }    }
 
     function startDragging() { 
         if (customizePage.classList.contains('visible')) {
@@ -831,6 +847,7 @@
         resultPage.classList.remove('dragging-active');
         customizeNotePage.classList.remove('dragging-slider');
     }
+
     var allSliders = [wordsY, wordsSize, wordsLineHeight, lettersY, lettersSize, lettersSpacing, indexY, indexSize, indexX, noteX, noteY, noteSize, noteLineHeight];
     for (var i = 0; i < allSliders.length; i++) {
         if (allSliders[i]) {
@@ -863,8 +880,7 @@
                 wordsSizeValue.textContent = defaultValue + 'px';
                 wordsSize.value = defaultValue;
             }
-            else if (setting === 'wordsLineHeight') {
-                wordsContainer.style.lineHeight = defaultValue + 'px';
+            else if (setting === 'wordsLineHeight') {                wordsContainer.style.lineHeight = defaultValue + 'px';
                 wordsLineHeightValue.textContent = defaultValue + 'px';
                 wordsLineHeight.value = defaultValue;
             }
@@ -880,7 +896,8 @@
             }
             else if (setting === 'lettersSpacing') {
                 lettersContainer.style.gap = defaultValue + 'px';
-                lettersSpacingValue.textContent = defaultValue + 'px';                lettersSpacing.value = defaultValue;
+                lettersSpacingValue.textContent = defaultValue + 'px';
+                lettersSpacing.value = defaultValue;
             }
             else if (setting === 'indexY') {
                 indexDisplay.style.top = defaultValue + 'px';
@@ -912,8 +929,7 @@
             else if (setting === 'noteY') {
                 noteWordsContainer.style.top = defaultValue + 'px';
                 noteYValue.textContent = defaultValue + 'px';
-                noteY.value = defaultValue;
-            }
+                noteY.value = defaultValue;            }
             else if (setting === 'noteSize') {
                 noteWordsContainer.style.fontSize = defaultValue + 'px';
                 noteSizeValue.textContent = defaultValue + 'px';
@@ -929,7 +945,8 @@
 
     wordsYValue.addEventListener('click', resetToDefault('wordsY', defaultSettings.wordsY));
     wordsSizeValue.addEventListener('click', resetToDefault('wordsSize', defaultSettings.wordsSize));
-    wordsLineHeightValue.addEventListener('click', resetToDefault('wordsLineHeight', defaultSettings.wordsLineHeight));    lettersYValue.addEventListener('click', resetToDefault('lettersY', defaultSettings.lettersY));
+    wordsLineHeightValue.addEventListener('click', resetToDefault('wordsLineHeight', defaultSettings.wordsLineHeight));
+    lettersYValue.addEventListener('click', resetToDefault('lettersY', defaultSettings.lettersY));
     lettersSizeValue.addEventListener('click', resetToDefault('lettersSize', defaultSettings.lettersSize));
     lettersSpacingValue.addEventListener('click', resetToDefault('lettersSpacing', defaultSettings.lettersSpacing));
     indexYValue.addEventListener('click', resetToDefault('indexY', defaultSettings.indexY));
@@ -961,8 +978,7 @@
     noteLineHeight.addEventListener('input', function(e) { currentNoteSettings.noteLineHeight = parseInt(e.target.value); noteLineHeightValue.textContent = currentNoteSettings.noteLineHeight + 'px'; noteWordsContainer.style.lineHeight = currentNoteSettings.noteLineHeight + 'px'; });
 
     testCodeInput.addEventListener('input', function(e) {
-        var code = e.target.value.trim();
-        if (code.length === 4 && /^\d+$/.test(code)) updatePreviewWithCode(code);
+        var code = e.target.value.trim();        if (code.length === 4 && /^\d+$/.test(code)) updatePreviewWithCode(code);
     });
 
     searchInput.addEventListener('input', function() { enableSearchButton(); codeResult.textContent = ''; codeResult.classList.remove('error'); });
@@ -978,7 +994,8 @@
             disableSearchButton();
             searchInput.blur();
         } else {
-            codeResult.textContent = 'Mot introuvable !';            codeResult.classList.add('error');
+            codeResult.textContent = 'Mot introuvable !';
+            codeResult.classList.add('error');
         }
     });
 
@@ -1010,8 +1027,7 @@
     });
 
     customizeBtn.addEventListener('click', function() {
-        settingsPage.classList.remove('visible');
-        isPreviewMode = true;
+        settingsPage.classList.remove('visible');        isPreviewMode = true;
         customizePage.classList.add('visible', 'preview-mode');
         resultPage.classList.add('preview-mode');
         currentSettings = loadCustomSettings();
@@ -1027,6 +1043,7 @@
         currentSettings = loadCustomSettings();
         applyCustomSettings(currentSettings);
     });
+
     customizeNoteBack.addEventListener('click', function() {
         customizeNotePage.classList.remove('visible', 'preview-mode');
         settingsPage.classList.add('visible');
@@ -1059,8 +1076,7 @@
     });
 
     settingsBack.addEventListener('click', function() {
-        settingsPage.classList.remove('visible');
-        homePage.classList.remove('hidden');
+        settingsPage.classList.remove('visible');        homePage.classList.remove('hidden');
         previewContainer.classList.remove('visible');
     });
 
@@ -1076,7 +1092,8 @@
     function updateDots() {
         for (var i = 0; i < dots.length; i++) {
             if (i < pin.length) dots[i].classList.add('active');
-            else dots[i].classList.remove('active');        }
+            else dots[i].classList.remove('active');
+        }
     }
 
     function resetModalToNormal() {
@@ -1108,8 +1125,7 @@
     deleteBtn.addEventListener('click', function(e) {
         e.stopPropagation();
         if (deleteBtn.classList) deleteBtn.classList.add('active-text');
-        setTimeout(function() { if (deleteBtn.classList) deleteBtn.classList.remove('active-text'); }, 350);
-        if (pin.length > 0) {
+        setTimeout(function() { if (deleteBtn.classList) deleteBtn.classList.remove('active-text'); }, 350);        if (pin.length > 0) {
             pin = pin.slice(0, -1);
             updateDots();
         }
@@ -1125,7 +1141,8 @@
             lockPage.classList.remove('visible');
             resultPage.classList.add('visible');
             pin = '';
-            updateDots();        }
+            updateDots();
+        }
     });
 
     emergencyBtn.addEventListener('click', function(e) {
@@ -1157,8 +1174,7 @@
                 indexDisplay.classList.remove('note-mode-active');
             }
             indexClickCount = 0;
-        }
-    });
+        }    });
 
     notePage.addEventListener('click', function(e) {
         var now = Date.now();
@@ -1174,7 +1190,8 @@
         if (e.target.classList.contains('result-word') || e.target.classList.contains('letter-btn') || e.target === indexDisplay) return;
         var now = Date.now();
         if (now - lastTap < 300 && now - lastTap > 0) {
-            resultPage.classList.remove('visible');            lockPage.classList.add('visible');
+            resultPage.classList.remove('visible');
+            lockPage.classList.add('visible');
             selectedLetter = '';
         }
         lastTap = now;
@@ -1207,7 +1224,6 @@
             notePage.style.backgroundImage = 'url(' + savedNote + ')';
         }
     } catch(e) {}
-
     setupImageImport(bgFileInput, lockPage, 'backgroundImage');
     setupImageImport(imgFileInput, resultPage, 'resultImage');
     setupImageImport(noteFileInput, customizeNotePage, 'noteImage');
@@ -1223,7 +1239,8 @@
         } else if (currentPreviewTarget === 'img') {
             resultPage.style.backgroundImage = 'url(' + currentPreviewData + ')';
             try { localStorage.setItem('resultImage', currentPreviewData); } catch(e) {}
-        } else if (currentPreviewTarget === 'note') {            customizeNotePage.style.backgroundImage = 'url(' + currentPreviewData + ')';
+        } else if (currentPreviewTarget === 'note') {
+            customizeNotePage.style.backgroundImage = 'url(' + currentPreviewData + ')';
             notePage.style.backgroundImage = 'url(' + currentPreviewData + ')';
             try { localStorage.setItem('noteImage', currentPreviewData); } catch(e) {}
         }
