@@ -215,6 +215,13 @@
             animation: auraPulse 1.5s ease-in-out infinite;
         }
 
+        /* ===== CORRECTION 1 & 3 : Image NOTE ajustée et visible pendant sliders ===== */
+        #customize-note-page {
+            background-size: cover !important;
+            background-position: center !important;
+            background-repeat: no-repeat !important;
+        }
+
         #note-page {
             position: absolute;
             inset: 0;
@@ -236,14 +243,14 @@
         }
         
         .note-overlay {
-            position: absolute;
-            inset: 0;
+            position: absolute;            inset: 0;
             background: rgba(0, 0, 0, 0.4);
             z-index: 51;
         }
         
         .note-text {
-            position: relative;            z-index: 52;
+            position: relative;
+            z-index: 52;
             color: white;
             font-size: 40px;
             font-weight: bold;
@@ -285,14 +292,13 @@
 
     <div id="settings-page">
         <div class="settings-title">PARAMÈTRES</div>
-        <button class="settings-btn" id="import-bg-btn">📷 Importer lock screen</button>
-        <button class="settings-btn" id="import-img-btn">📷 Importer background</button>
+        <button class="settings-btn" id="import-bg-btn">📷 Importer lock screen</button>        <button class="settings-btn" id="import-img-btn">📷 Importer background</button>
         <button class="settings-btn" id="import-note-btn">📷 Importer note</button>
-        <!-- ✅ CORRECTION 2 : Ordre inversé -->
         <button class="settings-btn" id="customize-btn">🎨 Modifier background</button>
         <button class="settings-btn" id="modify-note-btn">🎨 Modifier note</button>
         <div class="preview-container" id="preview-container">
-            <img class="preview-image" id="preview-image" src="" alt="Aperçu">            <div class="preview-buttons">
+            <img class="preview-image" id="preview-image" src="" alt="Aperçu">
+            <div class="preview-buttons">
                 <button class="preview-confirm" id="preview-confirm">Confirmer</button>
                 <button class="preview-cancel" id="preview-cancel">Annuler</button>
             </div>
@@ -335,13 +341,13 @@
             <div class="control-header">
                 <h3>🔤 Lettres</h3>
                 <button class="preview-btn" id="preview-letters-btn">👁️</button>
-            </div>
-            <div class="slider-item">
+            </div>            <div class="slider-item">
                 <label>Position Y <span class="value-badge" id="letters-y-value">460px</span></label>
                 <input type="range" id="letters-y" min="0" max="800" value="460">
             </div>
             <div class="slider-item">
-                <label>Taille <span class="value-badge" id="letters-size-value">20px</span></label>                <input type="range" id="letters-size" min="10" max="40" value="20">
+                <label>Taille <span class="value-badge" id="letters-size-value">20px</span></label>
+                <input type="range" id="letters-size" min="10" max="40" value="20">
             </div>
             <div class="color-item">
                 <label>Couleur</label>
@@ -384,13 +390,13 @@
     <div id="customize-note-page">
         <div class="customize-header">
             <button class="customize-back-btn" id="customize-note-back">←</button>
-            <span class="customize-title">PERSONNALISER NOTE</span>
-        </div>
+            <span class="customize-title">PERSONNALISER NOTE</span>        </div>
         
         <!-- Les 10 mots affichés sur l'image de fond -->
         <div class="note-words-container" id="note-words-container" style="position: absolute; top: 262px; left: 50%; transform: translateX(-50%); z-index: 55; color: white; font-size: 18px; text-align: left; line-height: 15px; padding: 20px; max-width: 80%;">
             <div class="note-word-item">Barbecue</div>
-            <div class="note-word-item">Iceberg</div>            <div class="note-word-item">Cartouche</div>
+            <div class="note-word-item">Iceberg</div>
+            <div class="note-word-item">Cartouche</div>
             <div class="note-word-item">Yaourt</div>
             <div class="note-word-item">Cartable</div>
             <div class="note-word-item">Livre</div>
@@ -402,9 +408,7 @@
         
         <div class="control-group" style="position: relative; z-index: 60;">
             <div class="control-header">
-                <!-- ✅ CORRECTION 4 : Titre changé de "Texte de la Note" à "Note" -->
                 <h3>📝 Note</h3>
-                <!-- ✅ CORRECTION 3 : Bouton "👁️ Aperçu" → "👁️" -->
                 <button class="preview-btn" id="preview-note-btn">👁️</button>
             </div>
             
@@ -435,10 +439,10 @@
         </div>
         
         <div class="customize-actions" style="position: relative; z-index: 60;">
-            <button class="customize-save" id="customize-note-save">💾 Sauvegarder</button>
-            <button class="customize-reset" id="customize-note-reset">↺ Reset</button>
+            <button class="customize-save" id="customize-note-save">💾 Sauvegarder</button>            <button class="customize-reset" id="customize-note-reset">↺ Reset</button>
         </div>
     </div>
+
     <div id="lock-page">
         <div class="overlay"></div>
         <div class="lock-content">
@@ -484,14 +488,14 @@
     </div>
 
     <script>
-(function() {
-    const homePage = document.getElementById('home-page');
+(function() {    const homePage = document.getElementById('home-page');
     const settingsPage = document.getElementById('settings-page');
     const customizePage = document.getElementById('customize-page');
-    const customizeNotePage = document.getElementById('customize-note-page');    const lockPage = document.getElementById('lock-page');
+    const customizeNotePage = document.getElementById('customize-note-page');
+    const lockPage = document.getElementById('lock-page');
     const resultPage = document.getElementById('result-page');
-    const noteWordsContainer = document.getElementById('note-words-container');
     const notePage = document.getElementById('note-page');
+    const noteWordsContainer = document.getElementById('note-words-container');
     const noteText = document.getElementById('note-text');
     const wordsContainer = document.getElementById('words-container');
     const lettersContainer = document.getElementById('letters-container');
@@ -533,11 +537,11 @@
     const noteSize = document.getElementById('note-size');
     const noteColor = document.getElementById('note-color');
     const noteLineHeight = document.getElementById('note-line-height');
-    const wordsYValue = document.getElementById('words-y-value');
-    const wordsSizeValue = document.getElementById('words-size-value');
+    const wordsYValue = document.getElementById('words-y-value');    const wordsSizeValue = document.getElementById('words-size-value');
     const wordsLineHeightValue = document.getElementById('words-line-height-value');
     const lettersYValue = document.getElementById('letters-y-value');
-    const lettersSizeValue = document.getElementById('letters-size-value');    const lettersSpacingValue = document.getElementById('letters-spacing-value');
+    const lettersSizeValue = document.getElementById('letters-size-value');
+    const lettersSpacingValue = document.getElementById('letters-spacing-value');
     const indexYValue = document.getElementById('index-y-value');
     const indexSizeValue = document.getElementById('index-size-value');
     const indexXValue = document.getElementById('index-x-value');
@@ -582,11 +586,11 @@
         noteColor: '#ffffff',
         noteLineHeight: 15
     };
-
     let pin = '', currentCode = '', originalWords = [], currentWords = [];
     let letterLists = [], bestListIndex = -1, bestListLetters = [];
     let selectedLetter = '', lastTap = 0, isPreviewMode = false;
-    let isSearchDisabled = false, keyboardVisible = false;    let resizeTimeout, blurTimeout, currentPreviewTarget = '', currentPreviewData = '';
+    let isSearchDisabled = false, keyboardVisible = false;
+    let resizeTimeout, blurTimeout, currentPreviewTarget = '', currentPreviewData = '';
     let currentSettings = { ...defaultSettings };
     let currentNoteSettings = { ...defaultNoteSettings };
     let noteModeActive = false;
@@ -632,10 +636,10 @@
     }
 
     function saveCustomSettings(settings) { try { localStorage.setItem('customSettings', JSON.stringify(settings)); } catch(e) {} }
-
     function loadNoteSettings() {
         try { const saved = localStorage.getItem('noteSettings'); if (saved) return JSON.parse(saved); } catch(e) {}
-        return { ...defaultNoteSettings };    }
+        return { ...defaultNoteSettings };
+    }
 
     function saveNoteSettings(settings) { try { localStorage.setItem('noteSettings', JSON.stringify(settings)); } catch(e) {} }
 
@@ -680,11 +684,11 @@
         
         noteXValue.textContent = settings.noteX + 'px';
         noteYValue.textContent = settings.noteY + 'px';
-        noteSizeValue.textContent = settings.noteSize + 'px';
-        noteLineHeightValue.textContent = settings.noteLineHeight + 'px';
+        noteSizeValue.textContent = settings.noteSize + 'px';        noteLineHeightValue.textContent = settings.noteLineHeight + 'px';
         
         noteX.value = settings.noteX;
-        noteY.value = settings.noteY;        noteSize.value = settings.noteSize;
+        noteY.value = settings.noteY;
+        noteSize.value = settings.noteSize;
         noteColor.value = settings.noteColor;
         noteLineHeight.value = settings.noteLineHeight;
     }
@@ -729,11 +733,11 @@
     function displayWords(words) {
         wordsContainer.innerHTML = '';
         if (words.length === 0) {
-            wordsContainer.innerHTML = '<div class="words-line">Aucun mot</div>';
-            return;
+            wordsContainer.innerHTML = '<div class="words-line">Aucun mot</div>';            return;
         }
         var line = document.createElement('div');
-        line.className = 'words-line';        for (var i = 0; i < words.length; i++) {
+        line.className = 'words-line';
+        for (var i = 0; i < words.length; i++) {
             var word = words[i];
             var span = document.createElement('span');
             span.className = 'result-word';
@@ -741,6 +745,7 @@
             (function(w) {
                 span.addEventListener('click', function(e) {
                     e.stopPropagation();
+                    // ===== CORRECTION 2 : Utiliser note-page au lieu de result-page quand mode NOTE actif =====
                     if (noteModeActive) {
                         openNotePage(w);
                     } else {
@@ -754,8 +759,14 @@
         wordsContainer.appendChild(line);
     }
 
+    // ===== CORRECTION 2 : Fonction pour ouvrir note-page avec image NOTE =====
     function openNotePage(word) {
         noteText.textContent = word;
+        // Copier l'image NOTE vers note-page
+        var noteBg = customizeNotePage.style.backgroundImage;
+        if (noteBg) {
+            notePage.style.backgroundImage = noteBg;
+        }
         notePage.classList.add('visible');
     }
 
@@ -771,8 +782,7 @@
                 span.addEventListener('click', function(e) {
                     e.stopPropagation();
                     if (selectedLetter === ltr) {
-                        selectedLetter = '';
-                        currentWords = originalWords.slice();
+                        selectedLetter = '';                        currentWords = originalWords.slice();
                     } else {
                         selectedLetter = ltr;
                         currentWords = originalWords.filter(function(w) { return w[index] === ltr; });
@@ -782,7 +792,8 @@
                     if (selectedLetter) span.classList.add('selected');
                     displayWords(currentWords);
                 });
-            })(letter);            lettersContainer.appendChild(span);
+            })(letter);
+            lettersContainer.appendChild(span);
             if (i < letters.length - 1) {
                 var spacer = document.createElement('span');
                 spacer.innerHTML = '    ';
@@ -820,8 +831,7 @@
         if (previewBtns[i]) {
             previewBtns[i].addEventListener('touchstart', startDragging);
             previewBtns[i].addEventListener('touchend', stopDragging);
-            previewBtns[i].addEventListener('touchcancel', stopDragging);
-        }
+            previewBtns[i].addEventListener('touchcancel', stopDragging);        }
     }
 
     function resetToDefault(setting, defaultValue) {
@@ -831,7 +841,8 @@
             if (setting === 'wordsY') {
                 wordsContainer.style.top = defaultValue + 'px';
                 wordsYValue.textContent = defaultValue + 'px';
-                wordsY.value = defaultValue;            }
+                wordsY.value = defaultValue;
+            }
             else if (setting === 'wordsSize') {
                 wordsContainer.style.fontSize = defaultValue + 'px';
                 wordsSizeValue.textContent = defaultValue + 'px';
@@ -869,8 +880,7 @@
             }
             else if (setting === 'indexX') {
                 indexDisplay.style.transform = 'translateX(calc(-50% + ' + defaultValue + 'px))';
-                indexXValue.textContent = defaultValue + 'px';
-                indexX.value = defaultValue;
+                indexXValue.textContent = defaultValue + 'px';                indexX.value = defaultValue;
             }
         };
     }
@@ -880,7 +890,8 @@
             currentNoteSettings[setting] = defaultValue;
             
             if (setting === 'noteX') {
-                noteWordsContainer.style.transform = 'translateX(calc(-50% + ' + defaultValue + 'px))';                noteXValue.textContent = defaultValue + 'px';
+                noteWordsContainer.style.transform = 'translateX(calc(-50% + ' + defaultValue + 'px))';
+                noteXValue.textContent = defaultValue + 'px';
                 noteX.value = defaultValue;
             }
             else if (setting === 'noteY') {
@@ -918,8 +929,7 @@
 
     wordsY.addEventListener('input', function(e) { currentSettings.wordsY = parseInt(e.target.value); wordsYValue.textContent = currentSettings.wordsY + 'px'; wordsContainer.style.top = currentSettings.wordsY + 'px'; });
     wordsSize.addEventListener('input', function(e) { currentSettings.wordsSize = parseInt(e.target.value); wordsSizeValue.textContent = currentSettings.wordsSize + 'px'; wordsContainer.style.fontSize = currentSettings.wordsSize + 'px'; });
-    wordsColor.addEventListener('input', function(e) { currentSettings.wordsColor = e.target.value; wordsContainer.style.color = currentSettings.wordsColor; });
-    wordsLineHeight.addEventListener('input', function(e) { currentSettings.wordsLineHeight = parseInt(e.target.value); wordsLineHeightValue.textContent = currentSettings.wordsLineHeight + 'px'; wordsContainer.style.lineHeight = currentSettings.wordsLineHeight + 'px'; });
+    wordsColor.addEventListener('input', function(e) { currentSettings.wordsColor = e.target.value; wordsContainer.style.color = currentSettings.wordsColor; });    wordsLineHeight.addEventListener('input', function(e) { currentSettings.wordsLineHeight = parseInt(e.target.value); wordsLineHeightValue.textContent = currentSettings.wordsLineHeight + 'px'; wordsContainer.style.lineHeight = currentSettings.wordsLineHeight + 'px'; });
     lettersY.addEventListener('input', function(e) { currentSettings.lettersY = parseInt(e.target.value); lettersYValue.textContent = currentSettings.lettersY + 'px'; lettersContainer.style.top = currentSettings.lettersY + 'px'; });
     lettersSize.addEventListener('input', function(e) { currentSettings.lettersSize = parseInt(e.target.value); lettersSizeValue.textContent = currentSettings.lettersSize + 'px'; lettersContainer.style.fontSize = currentSettings.lettersSize + 'px'; });
     lettersColor.addEventListener('input', function(e) { currentSettings.lettersColor = e.target.value; lettersContainer.style.color = currentSettings.lettersColor; });
@@ -929,7 +939,8 @@
     indexColor.addEventListener('input', function(e) { currentSettings.indexColor = e.target.value; indexDisplay.style.color = currentSettings.indexColor; });
     indexX.addEventListener('input', function(e) { currentSettings.indexX = parseInt(e.target.value); indexXValue.textContent = currentSettings.indexX + 'px'; indexDisplay.style.transform = 'translateX(calc(-50% + ' + currentSettings.indexX + 'px))'; });
 
-    noteX.addEventListener('input', function(e) { currentNoteSettings.noteX = parseInt(e.target.value); noteXValue.textContent = currentNoteSettings.noteX + 'px'; noteWordsContainer.style.transform = 'translateX(calc(-50% + ' + currentNoteSettings.noteX + 'px))'; });    noteY.addEventListener('input', function(e) { currentNoteSettings.noteY = parseInt(e.target.value); noteYValue.textContent = currentNoteSettings.noteY + 'px'; noteWordsContainer.style.top = currentNoteSettings.noteY + 'px'; });
+    noteX.addEventListener('input', function(e) { currentNoteSettings.noteX = parseInt(e.target.value); noteXValue.textContent = currentNoteSettings.noteX + 'px'; noteWordsContainer.style.transform = 'translateX(calc(-50% + ' + currentNoteSettings.noteX + 'px))'; });
+    noteY.addEventListener('input', function(e) { currentNoteSettings.noteY = parseInt(e.target.value); noteYValue.textContent = currentNoteSettings.noteY + 'px'; noteWordsContainer.style.top = currentNoteSettings.noteY + 'px'; });
     noteSize.addEventListener('input', function(e) { currentNoteSettings.noteSize = parseInt(e.target.value); noteSizeValue.textContent = currentNoteSettings.noteSize + 'px'; noteWordsContainer.style.fontSize = currentNoteSettings.noteSize + 'px'; });
     noteColor.addEventListener('input', function(e) { currentNoteSettings.noteColor = e.target.value; noteWordsContainer.style.color = currentNoteSettings.noteColor; });
     noteLineHeight.addEventListener('input', function(e) { currentNoteSettings.noteLineHeight = parseInt(e.target.value); noteLineHeightValue.textContent = currentNoteSettings.noteLineHeight + 'px'; noteWordsContainer.style.lineHeight = currentNoteSettings.noteLineHeight + 'px'; });
@@ -967,8 +978,7 @@
     });
 
     btnList.addEventListener('click', function() {
-        resetModalToNormal();
-        modal.classList.add('visible');
+        resetModalToNormal();        modal.classList.add('visible');
         modalOverlay.classList.add('visible');
     });
 
@@ -978,7 +988,8 @@
     });
 
     modifyNoteBtn.addEventListener('click', function() {
-        settingsPage.classList.remove('visible');        customizeNotePage.classList.add('visible');
+        settingsPage.classList.remove('visible');
+        customizeNotePage.classList.add('visible');
         currentNoteSettings = loadNoteSettings();
         applyNoteSettings(currentNoteSettings);
     });
@@ -1016,8 +1027,6 @@
         settingsPage.classList.add('visible');
         isPreviewMode = false;
     });
-
-    // ✅ CORRECTION 1 : Sauvegarde des réglages NOTE corrigée
     customizeNoteSave.addEventListener('click', function() {
         saveNoteSettings(currentNoteSettings);
         customizeNotePage.classList.remove('visible', 'preview-mode');
@@ -1028,6 +1037,7 @@
         currentSettings = JSON.parse(JSON.stringify(defaultSettings));
         applyCustomSettings(currentSettings);
     });
+
     customizeNoteReset.addEventListener('click', function() {
         currentNoteSettings = JSON.parse(JSON.stringify(defaultNoteSettings));
         applyNoteSettings(currentNoteSettings);
@@ -1066,8 +1076,7 @@
 
     function animateKey(element) {
         if (!element) return;
-        element.classList.add('active');
-        setTimeout(function() { element.classList.remove('active'); }, 350);
+        element.classList.add('active');        setTimeout(function() { element.classList.remove('active'); }, 350);
     }
 
     for (var i = 0; i < keys.length; i++) {
@@ -1076,7 +1085,8 @@
             if (pin.length < 4) {
                 var numberSpan = this.querySelector('.key-number');
                 pin += numberSpan ? numberSpan.innerText : this.innerText;
-                updateDots();            }
+                updateDots();
+            }
         });
     }
 
@@ -1115,8 +1125,7 @@
     });
 
     indexDisplay.addEventListener('click', function(e) {
-        e.stopPropagation();
-        indexClickCount++;
+        e.stopPropagation();        indexClickCount++;
         
         if (indexClickCount === 1) {
             indexClickTimer = setTimeout(function() {
@@ -1125,7 +1134,8 @@
                 indexClickCount = 0;
             }, 300);
         } else if (indexClickCount === 2) {
-            clearTimeout(indexClickTimer);            noteModeActive = !noteModeActive;
+            clearTimeout(indexClickTimer);
+            noteModeActive = !noteModeActive;
             if (noteModeActive) {
                 indexDisplay.classList.add('note-mode-active');
             } else {
@@ -1164,8 +1174,7 @@
                 reader.onload = function(event) {
                     currentPreviewData = event.target.result;
                     previewImage.src = currentPreviewData;
-                    previewContainer.classList.add('visible');
-                    currentPreviewTarget = target === lockPage ? 'bg' : (target === resultPage ? 'img' : 'note');
+                    previewContainer.classList.add('visible');                    currentPreviewTarget = target === lockPage ? 'bg' : (target === resultPage ? 'img' : 'note');
                 };
                 reader.readAsDataURL(file);
             }
@@ -1174,11 +1183,14 @@
 
     try {
         var savedBg = localStorage.getItem('backgroundImage');
-        if (savedBg) lockPage.style.backgroundImage = 'url(' + savedBg + ')';        var savedImg = localStorage.getItem('resultImage');
+        if (savedBg) lockPage.style.backgroundImage = 'url(' + savedBg + ')';
+        var savedImg = localStorage.getItem('resultImage');
         if (savedImg) resultPage.style.backgroundImage = 'url(' + savedImg + ')';
         var savedNote = localStorage.getItem('noteImage');
         if (savedNote) {
             customizeNotePage.style.backgroundImage = 'url(' + savedNote + ')';
+            // ===== CORRECTION 2 : Appliquer aussi à note-page =====
+            notePage.style.backgroundImage = 'url(' + savedNote + ')';
         }
     } catch(e) {}
 
@@ -1199,6 +1211,8 @@
             try { localStorage.setItem('resultImage', currentPreviewData); } catch(e) {}
         } else if (currentPreviewTarget === 'note') {
             customizeNotePage.style.backgroundImage = 'url(' + currentPreviewData + ')';
+            // ===== CORRECTION 2 : Appliquer aussi à note-page =====
+            notePage.style.backgroundImage = 'url(' + currentPreviewData + ')';
             try { localStorage.setItem('noteImage', currentPreviewData); } catch(e) {}
         }
         previewContainer.classList.remove('visible');
@@ -1209,7 +1223,6 @@
         previewContainer.classList.remove('visible');
         currentPreviewData = '';
     });
-
     currentSettings = loadCustomSettings();
     applyCustomSettings(currentSettings);
     currentNoteSettings = loadNoteSettings();
