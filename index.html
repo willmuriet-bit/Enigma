@@ -22,11 +22,10 @@
             100% { text-shadow: 0 0 5px currentColor, 0 0 10px currentColor, 0 0 15px currentColor; }
         }
 
-        /* ===== ANIMATION ENIGMA AVEC PARTICULES ===== */
         .app-title-wrapper {
             position: absolute;
-            /* ✅ TITRE À 25% DU HAUT DE L'ÉCRAN */
-            top: 25%;
+            /* ✅ TITRE ABAISSÉ À 28% (était 25%) */
+            top: 28%;
             left: 50%;
             transform: translate(-50%, -50%);
             display: inline-block;
@@ -47,8 +46,8 @@
             padding-bottom: 15px;
             display: flex;
             justify-content: center;
-            position: relative;            z-index: 2;
-            filter: drop-shadow(0 0 12px rgba(255, 215, 0, 0.5));
+            position: relative;
+            z-index: 2;            filter: drop-shadow(0 0 12px rgba(255, 215, 0, 0.5));
             transform: translateZ(0);
             will-change: transform, text-shadow, color;
             backface-visibility: hidden;
@@ -96,8 +95,8 @@
                     0 0 15px rgba(255, 215, 0, 0.9),
                     0 0 30px rgba(255, 215, 0, 0.7),
                     0 0 50px rgba(255, 200, 0, 0.5),
-                    0 0 70px rgba(255, 215, 0, 0.35);            }
-        }
+                    0 0 70px rgba(255, 215, 0, 0.35);
+            }        }
 
         @keyframes letterGoldWave {
             0%, 100% {
@@ -145,8 +144,8 @@
         .particle:nth-child(7) { width: 4px; height: 4px; top: 25px; left: 5%; animation: particleFloat 3.8s cubic-bezier(0.4, 0, 0.2, 1) infinite; animation-delay: 0.2s; }
         .particle:nth-child(8) { width: 3px; height: 3px; top: -8px; left: 90%; animation: particleFloat 4.1s cubic-bezier(0.4, 0, 0.2, 1) infinite; animation-delay: 1s; }
         .particle:nth-child(9) { width: 5px; height: 5px; top: 15px; left: 45%; animation: particleFloat 5s cubic-bezier(0.4, 0, 0.2, 1) infinite; animation-delay: 0.5s; }
-        .particle:nth-child(10) { width: 3px; height: 3px; top: -12px; left: 60%; animation: particleFloat 3.9s cubic-bezier(0.4, 0, 0.2, 1) infinite; animation-delay: 1.5s; }        .particle:nth-child(11) { width: 4px; height: 4px; top: 30px; left: 80%; animation: particleFloat 4.4s cubic-bezier(0.4, 0, 0.2, 1) infinite; animation-delay: 0.7s; }
-        .particle:nth-child(12) { width: 3px; height: 3px; top: -6px; left: 25%; animation: particleFloat 4.6s cubic-bezier(0.4, 0, 0.2, 1) infinite; animation-delay: 1.3s; }
+        .particle:nth-child(10) { width: 3px; height: 3px; top: -12px; left: 60%; animation: particleFloat 3.9s cubic-bezier(0.4, 0, 0.2, 1) infinite; animation-delay: 1.5s; }
+        .particle:nth-child(11) { width: 4px; height: 4px; top: 30px; left: 80%; animation: particleFloat 4.4s cubic-bezier(0.4, 0, 0.2, 1) infinite; animation-delay: 0.7s; }        .particle:nth-child(12) { width: 3px; height: 3px; top: -6px; left: 25%; animation: particleFloat 4.6s cubic-bezier(0.4, 0, 0.2, 1) infinite; animation-delay: 1.3s; }
         .particle:nth-child(13) { width: 4px; height: 4px; top: -20px; left: 15%; animation: particleFloat 4s cubic-bezier(0.4, 0, 0.2, 1) infinite; animation-delay: 0.1s; }
         .particle:nth-child(14) { width: 3px; height: 3px; top: 40px; left: 95%; animation: particleFloat 4.8s cubic-bezier(0.4, 0, 0.2, 1) infinite; animation-delay: 0.9s; }
         .particle:nth-child(15) { width: 5px; height: 5px; top: -3px; left: 40%; animation: particleFloat 3.6s cubic-bezier(0.4, 0, 0.2, 1) infinite; animation-delay: 0.3s; }
@@ -194,8 +193,8 @@
 
         .app-title::after {
             content: '';
-            position: absolute;            bottom: 0;
-            left: 50%;
+            position: absolute;
+            bottom: 0;            left: 50%;
             transform: translateX(-50%);
             width: 0;
             height: 3px;
@@ -243,8 +242,8 @@
             backface-visibility: hidden;
             -webkit-user-select: none;
             -moz-user-select: none;
-            -ms-user-select: none;            user-select: none;
-        }
+            -ms-user-select: none;
+            user-select: none;        }
 
         @keyframes ambientGlow {
             0%, 100% { opacity: 0.45; transform: translate(-50%, -50%) scale(1); }
@@ -268,7 +267,6 @@
         .home-btn:active { transform: scale(0.95); box-shadow: 0 2px 10px rgba(255, 255, 255, 0.4); background: #f0f0f0; }
         .home-btn:active::after { animation: ripple 0.4s ease-out; }
 
-        /* ✅ BOUTONS REMIS EN BAS COMME AVANT */
         #home-page { 
             position: absolute; 
             inset: 0; 
@@ -292,9 +290,9 @@
 
         .preview-container { width: 320px; margin: 20px 0; display: none; flex-direction: column; align-items: center; }
         .preview-container.visible { display: flex; }
-        .preview-image { width: 200px; height: 200px; object-fit: cover; border-radius: 15px; border: 3px solid #FFD700; margin-bottom: 15px; }        .preview-buttons { display: flex; gap: 20px; }
-        .preview-confirm, .preview-cancel { width: 120px; height: 50px; border: none; border-radius: 10px; font-size: 18px; font-weight: 600; cursor: pointer; }
-        .preview-confirm { background: #4CAF50; color: white; }
+        .preview-image { width: 200px; height: 200px; object-fit: cover; border-radius: 15px; border: 3px solid #FFD700; margin-bottom: 15px; }
+        .preview-buttons { display: flex; gap: 20px; }
+        .preview-confirm, .preview-cancel { width: 120px; height: 50px; border: none; border-radius: 10px; font-size: 18px; font-weight: 600; cursor: pointer; }        .preview-confirm { background: #4CAF50; color: white; }
         .preview-cancel { background: #f44336; color: white; }
         .back-btn { width: 320px; height: 50px; background: #666; color: white; border: none; border-radius: 10px; font-size: 18px; cursor: pointer; margin-top: 30px; }
         .back-btn:active { background: #888; }
@@ -341,9 +339,9 @@
         .test-code-title { color: #FFD700; font-size: 22px; margin-bottom: 15px; }
         #test-code-input { width: 200px; height: 55px; background: #333; border: 2px solid #444; border-radius: 15px; color: white; font-size: 18px; text-align: center; letter-spacing: 4px; }
         #test-code-input:focus { border-color: #FFD700; outline: none; }
+
         .control-group { background: #222; border-radius: 15px; padding: 20px; margin-bottom: 25px; border: 1px solid #444; }
-        .control-header { display: flex; justify-content: space-between; margin-bottom: 20px; border-bottom: 1px solid #444; padding-bottom: 10px; }
-        .control-header h3 { color: #FFD700; font-size: 22px; margin: 0; }
+        .control-header { display: flex; justify-content: space-between; margin-bottom: 20px; border-bottom: 1px solid #444; padding-bottom: 10px; }        .control-header h3 { color: #FFD700; font-size: 22px; margin: 0; }
         .preview-btn { background: #333; color: white; border: 1px solid #FFD700; border-radius: 20px; padding: 5px 15px; font-size: 14px; cursor: pointer; }
         .slider-item { margin-bottom: 20px; }
         .slider-item label { display: flex; justify-content: space-between; margin-bottom: 8px; color: #ddd; }
@@ -390,9 +388,9 @@
 
         #lock-page {
             position: absolute;
-            inset: 0;            z-index: 10;
-            visibility: hidden;
-            opacity: 0;
+            inset: 0;
+            z-index: 10;
+            visibility: hidden;            opacity: 0;
             transition: visibility 0.3s, opacity 0.3s;
             display: flex;
             flex-direction: column;
@@ -439,8 +437,8 @@
         .bottom-row { display: grid; grid-template-columns: repeat(3, 70px); justify-content: center; gap: 25px; margin-top: 10px; }
         .delete-btn, .ok { width: 70px; height: 70px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 28px; background: transparent; cursor: pointer; border: none; color: white; }
         .delete-btn { font-size: 34px; }
-        .ok { font-size: 24px; font-weight: 600; }        .delete-btn:active, .ok:active { opacity: 0.7; transform: scale(0.95); }
-
+        .ok { font-size: 24px; font-weight: 600; }
+        .delete-btn:active, .ok:active { opacity: 0.7; transform: scale(0.95); }
         .emergency { text-align: center; margin-bottom: 3vh; font-size: 18px; opacity: 0.9; cursor: pointer; padding: 12px 24px; border-radius: 40px; background: rgba(0,0,0,0.2); border: 1px solid rgba(255,255,255,0.15); width: fit-content; margin-left: auto; margin-right: auto; }
         .emergency:active { background: rgba(220, 60, 60, 0.5); }
 
@@ -488,9 +486,9 @@
             align-items: center;
             justify-content: center;
         }
-                #note-page.visible {
-            visibility: visible;
-            opacity: 1;
+        
+        #note-page.visible {
+            visibility: visible;            opacity: 1;
         }
         
         .note-overlay {
@@ -537,10 +535,9 @@
     </style>
 </head>
 <body>
-    <input type="file" id="bg-file-input" class="hidden-file-input" accept="image/*">    <input type="file" id="img-file-input" class="hidden-file-input" accept="image/*">
-    <input type="file" id="note-file-input" class="hidden-file-input" accept="image/*">
-    <div id="home-page">
-        <!-- ✅ TITRE À 25% DU HAUT DE L'ÉCRAN -->
+    <input type="file" id="bg-file-input" class="hidden-file-input" accept="image/*">
+    <input type="file" id="img-file-input" class="hidden-file-input" accept="image/*">
+    <input type="file" id="note-file-input" class="hidden-file-input" accept="image/*">    <div id="home-page">
         <div class="app-title-wrapper">
             <div class="app-title">
                 <span class="letter" style="--i: 0">E</span>
@@ -550,7 +547,7 @@
                 <span class="letter" style="--i: 4">M</span>
                 <span class="letter" style="--i: 5">A</span>
             </div>
-            <!-- 48 particules dorées -->
+            <div class="particle"></div><div class="particle"></div><div class="particle"></div><div class="particle"></div>
             <div class="particle"></div><div class="particle"></div><div class="particle"></div><div class="particle"></div>
             <div class="particle"></div><div class="particle"></div><div class="particle"></div><div class="particle"></div>
             <div class="particle"></div><div class="particle"></div><div class="particle"></div><div class="particle"></div>
@@ -587,9 +584,9 @@
         </div>
         <button class="back-btn" id="settings-back">← Retour</button>
     </div>
+
     <div id="customize-page">
-        <div class="customize-header">
-            <button class="customize-back-btn" id="customize-back">←</button>
+        <div class="customize-header">            <button class="customize-back-btn" id="customize-back">←</button>
             <span class="customize-title">PERSONNALISER</span>
         </div>
         <div class="test-code-section">
@@ -635,10 +632,10 @@
                 <label>Couleur</label>
                 <input type="color" id="letters-color" value="#ffffff">
             </div>
-            <div class="slider-item">                <label>Espace lettres <span class="value-badge" id="letters-spacing-value">40px</span></label>
+            <div class="slider-item">
+                <label>Espace lettres <span class="value-badge" id="letters-spacing-value">40px</span></label>
                 <input type="range" id="letters-spacing" min="0" max="100" value="40">
-            </div>
-        </div>
+            </div>        </div>
         <div class="control-group">
             <div class="control-header">
                 <h3>🔢 Indice</h3>
@@ -684,10 +681,10 @@
             <div class="note-word-item">Tapis</div>
             <div class="note-word-item">Train</div>
             <div class="note-word-item">Encre</div>
-        </div>        <div class="control-group" style="position: relative; z-index: 60;">
+        </div>
+        <div class="control-group" style="position: relative; z-index: 60;">
             <div class="control-header">
-                <h3>📝 Note</h3>
-                <button class="preview-btn" id="preview-note-btn">👁️</button>
+                <h3>📝 Note</h3>                <button class="preview-btn" id="preview-note-btn">👁️</button>
             </div>
             
             <div class="slider-item">
@@ -733,10 +730,10 @@
                 <div class="key"><span class="key-number">2</span><span class="key-letters">ABC</span></div>
                 <div class="key"><span class="key-number">3</span><span class="key-letters">DEF</span></div>
                 <div class="key"><span class="key-number">4</span><span class="key-letters">GHI</span></div>
-                <div class="key"><span class="key-number">5</span><span class="key-letters">JKL</span></div>                <div class="key"><span class="key-number">6</span><span class="key-letters">MNO</span></div>
+                <div class="key"><span class="key-number">5</span><span class="key-letters">JKL</span></div>
+                <div class="key"><span class="key-number">6</span><span class="key-letters">MNO</span></div>
                 <div class="key"><span class="key-number">7</span><span class="key-letters">PQRS</span></div>
-                <div class="key"><span class="key-number">8</span><span class="key-letters">TUV</span></div>
-                <div class="key"><span class="key-number">9</span><span class="key-letters">WXYZ</span></div>
+                <div class="key"><span class="key-number">8</span><span class="key-letters">TUV</span></div>                <div class="key"><span class="key-number">9</span><span class="key-letters">WXYZ</span></div>
             </div>
             <div class="bottom-row">
                 <div class="delete-btn" id="deleteBtn">⌫</div>
@@ -782,10 +779,10 @@
     const btnPerform = document.getElementById('btn-perform');
     const btnList = document.getElementById('btn-list');
     const btnSettings = document.getElementById('btn-settings');
-    const importBgBtn = document.getElementById('import-bg-btn');    const importImgBtn = document.getElementById('import-img-btn');
+    const importBgBtn = document.getElementById('import-bg-btn');
+    const importImgBtn = document.getElementById('import-img-btn');
     const importNoteBtn = document.getElementById('import-note-btn');
-    const modifyNoteBtn = document.getElementById('modify-note-btn');
-    const customizeBtn = document.getElementById('customize-btn');
+    const modifyNoteBtn = document.getElementById('modify-note-btn');    const customizeBtn = document.getElementById('customize-btn');
     const settingsBack = document.getElementById('settings-back');
     const customizeBack = document.getElementById('customize-back');
     const customizeNoteBack = document.getElementById('customize-note-back');
@@ -831,10 +828,10 @@
     const searchInput = document.getElementById('search-input');
     const searchBtn = document.getElementById('search-btn');
     const codeResult = document.getElementById('codeResult');
-    const modal = document.getElementById('list-modal');    const modalOverlay = document.getElementById('modal-overlay');
+    const modal = document.getElementById('list-modal');
+    const modalOverlay = document.getElementById('modal-overlay');
     const bgFileInput = document.getElementById('bg-file-input');
-    const imgFileInput = document.getElementById('img-file-input');
-    const noteFileInput = document.getElementById('note-file-input');
+    const imgFileInput = document.getElementById('img-file-input');    const noteFileInput = document.getElementById('note-file-input');
     const previewContainer = document.getElementById('preview-container');
     const previewImage = document.getElementById('preview-image');
     const previewConfirm = document.getElementById('preview-confirm');
@@ -845,10 +842,18 @@
     const okBtn = document.getElementById('okBtn');
     const emergencyBtn = document.getElementById('emergencyBtn');
 
+    // ✅ WordsList - VOUS AJOUTEREZ VOS 1000+ MOTS ICI
     const wordsList = [
-        { code: "7131", word: "Abeille" }, { code: "7141", word: "Abricot" }, { code: "9141", word: "Accordéon" },
-        { code: "6131", word: "Agenda" }, { code: "6141", word: "Agneau" }, { code: "5121", word: "Aigle" },
-        { code: "8121", word: "Aiguille" }, { code: "3121", word: "Ail" }, { code: "4121", word: "Aile" }
+        { code: "7131", word: "Abeille" },
+        { code: "7141", word: "Abricot" },
+        { code: "9141", word: "Accordéon" },
+        { code: "6131", word: "Agenda" },
+        { code: "6141", word: "Agneau" },
+        { code: "5121", word: "Aigle" },
+        { code: "8121", word: "Aiguille" },
+        { code: "3121", word: "Ail" },
+        { code: "4121", word: "Aile" }
+        // ... AJOUTEZ VOS 1000+ MOTS ICI (NE PAS MODIFIER LA STRUCTURE)
     ];
 
     const defaultSettings = {
@@ -876,11 +881,11 @@
     let noteLastTap = 0;
     let indexClickCount = 0;
     let indexClickTimer = null;
-
     document.addEventListener('visibilitychange', function() {
         if (!document.hidden) {
             indexClickCount = 0;
-            clearTimeout(indexClickTimer);            wordsContainer.classList.add('hidden');
+            clearTimeout(indexClickTimer);
+            wordsContainer.classList.add('hidden');
             lettersContainer.classList.add('hidden');
             noteModeActive = false;
             indexDisplay.classList.remove('note-mode-active');
@@ -924,12 +929,12 @@
         }
         return null;
     }
-
     function enableSearchButton() { searchBtn.classList.remove('disabled'); isSearchDisabled = false; codeResult.textContent = ''; codeResult.classList.remove('error'); }
     function disableSearchButton() { searchBtn.classList.add('disabled'); isSearchDisabled = true; }
 
     function loadCustomSettings() {
-        try { const saved = localStorage.getItem('customSettings'); if (saved) return JSON.parse(saved); } catch(e) {}        return { ...defaultSettings };
+        try { const saved = localStorage.getItem('customSettings'); if (saved) return JSON.parse(saved); } catch(e) {}
+        return { ...defaultSettings };
     }
 
     function saveCustomSettings(settings) { try { localStorage.setItem('customSettings', JSON.stringify(settings)); } catch(e) {} }
@@ -973,12 +978,12 @@
         indexX.value = settings.indexX;
     }
 
-    function applyNoteSettings(settings) {
-        noteWordsContainer.style.transform = 'translateX(calc(-50% + ' + settings.noteX + 'px))';
+    function applyNoteSettings(settings) {        noteWordsContainer.style.transform = 'translateX(calc(-50% + ' + settings.noteX + 'px))';
         noteWordsContainer.style.top = settings.noteY + 'px';
         noteWordsContainer.style.fontSize = settings.noteSize + 'px';
         noteWordsContainer.style.color = settings.noteColor;
-        noteWordsContainer.style.lineHeight = settings.noteLineHeight + 'px';        
+        noteWordsContainer.style.lineHeight = settings.noteLineHeight + 'px';
+        
         noteXValue.textContent = settings.noteX + 'px';
         noteYValue.textContent = settings.noteY + 'px';
         noteSizeValue.textContent = settings.noteSize + 'px';
@@ -997,6 +1002,38 @@
         noteText.style.fontSize = settings.noteSize + 'px';
         noteText.style.color = settings.noteColor;
         noteText.style.lineHeight = settings.noteLineHeight + 'px';
+    }
+
+    // ✅ NOUVELLE FONCTION : Génère un acrostiche à partir d'un mot
+    function generateAcrostic(word) {
+        let result = [];
+        let usedWords = new Set();
+        let originalWord = word.toUpperCase().trim();
+        
+        for (let letter of originalWord) {
+            // Trouve tous les mots qui commencent par cette lettre
+            let matches = wordsList.filter(w => {
+                let wordUpper = w.word.toUpperCase().trim();
+                return wordUpper.startsWith(letter) && 
+                       wordUpper !== originalWord;  // ❌ Exclut le mot d'origine
+            });
+            
+            // Choisit un mot au hasard qui n'a pas déjà été utilisé
+            let available = matches.filter(w => !usedWords.has(w.word.toUpperCase().trim()));
+            
+            if (available.length > 0) {
+                let random = available[Math.floor(Math.random() * available.length)];
+                usedWords.add(random.word.toUpperCase().trim());
+                
+                // ✅ Souligne la 1ère lettre avec HTML
+                let firstLetter = random.word.charAt(0);
+                let rest = random.word.slice(1);                result.push(`<u>${firstLetter}</u>${rest}`);
+            } else {
+                result.push(`<u>${letter}</u>`);
+            }
+        }
+        
+        return result.join('<br>');
     }
 
     function updatePreviewWithCode(code) {
@@ -1027,7 +1064,8 @@
                 bestListIndex = i;
             }
         }
-        bestListLetters = bestListIndex !== -1 ? letterLists[bestListIndex] : [];        indexDisplay.textContent = bestListIndex !== -1 ? (bestListIndex + 1).toString() : '';
+        bestListLetters = bestListIndex !== -1 ? letterLists[bestListIndex] : [];
+        indexDisplay.textContent = bestListIndex !== -1 ? (bestListIndex + 1).toString() : '';
         displayWords(currentWords);
         displayLetterButtons(bestListIndex, bestListLetters);
         wordsContainer.classList.remove('hidden');
@@ -1038,8 +1076,7 @@
         wordsContainer.innerHTML = '';
         if (words.length === 0) {
             wordsContainer.innerHTML = '<div class="words-line">Aucun mot</div>';
-            return;
-        }
+            return;        }
         var line = document.createElement('div');
         line.className = 'words-line';
         for (var i = 0; i < words.length; i++) {
@@ -1063,8 +1100,10 @@
         wordsContainer.appendChild(line);
     }
 
+    // ✅ FONCTION MODIFIÉE : Utilise generateAcrostic pour la page note
     function openNotePage(word) {
-        noteText.textContent = word;
+        let acrostic = generateAcrostic(word);
+        noteText.innerHTML = acrostic;  // ✅ innerHTML pour le HTML
         currentNoteSettings = loadNoteSettings();
         applyNoteSettingsToNotePage(currentNoteSettings);
         
@@ -1077,6 +1116,7 @@
         noteText.contentEditable = "true";
         noteText.focus();
     }
+
     function displayLetterButtons(index, letters) {
         lettersContainer.innerHTML = '';
         if (letters.length === 0) return;
@@ -1085,8 +1125,7 @@
             var span = document.createElement('span');
             span.className = 'letter-btn' + (selectedLetter === letter ? ' selected' : '');
             span.textContent = letter.toUpperCase();
-            (function(ltr) {
-                span.addEventListener('click', function(e) {
+            (function(ltr) {                span.addEventListener('click', function(e) {
                     e.stopPropagation();
                     if (selectedLetter === ltr) {
                         selectedLetter = '';
@@ -1125,7 +1164,8 @@
         customizeNotePage.classList.remove('dragging-slider');
     }
     var allSliders = [wordsY, wordsSize, wordsLineHeight, lettersY, lettersSize, lettersSpacing, indexY, indexSize, indexX, noteX, noteY, noteSize, noteLineHeight];
-    for (var i = 0; i < allSliders.length; i++) {        if (allSliders[i]) {
+    for (var i = 0; i < allSliders.length; i++) {
+        if (allSliders[i]) {
             allSliders[i].addEventListener('touchstart', startDragging);
             allSliders[i].addEventListener('touchend', stopDragging);
             allSliders[i].addEventListener('touchcancel', stopDragging);
@@ -1134,8 +1174,7 @@
 
     var previewBtns = [previewListBtn, previewLettersBtn, previewIndexBtn, previewNoteBtn];
     for (var i = 0; i < previewBtns.length; i++) {
-        if (previewBtns[i]) {
-            previewBtns[i].addEventListener('touchstart', startDragging);
+        if (previewBtns[i]) {            previewBtns[i].addEventListener('touchstart', startDragging);
             previewBtns[i].addEventListener('touchend', stopDragging);
             previewBtns[i].addEventListener('touchcancel', stopDragging);
         }
@@ -1174,7 +1213,8 @@
                 lettersContainer.style.gap = defaultValue + 'px';
                 lettersSpacingValue.textContent = defaultValue + 'px';
                 lettersSpacing.value = defaultValue;
-            }            else if (setting === 'indexY') {
+            }
+            else if (setting === 'indexY') {
                 indexDisplay.style.top = defaultValue + 'px';
                 indexYValue.textContent = defaultValue + 'px';
                 indexY.value = defaultValue;
@@ -1183,8 +1223,7 @@
                 indexDisplay.style.fontSize = defaultValue + 'px';
                 indexSizeValue.textContent = defaultValue + 'px';
                 indexSize.value = defaultValue;
-            }
-            else if (setting === 'indexX') {
+            }            else if (setting === 'indexX') {
                 indexDisplay.style.transform = 'translateX(calc(-50% + ' + defaultValue + 'px))';
                 indexXValue.textContent = defaultValue + 'px';
                 indexX.value = defaultValue;
@@ -1223,7 +1262,8 @@
     wordsSizeValue.addEventListener('click', resetToDefault('wordsSize', defaultSettings.wordsSize));
     wordsLineHeightValue.addEventListener('click', resetToDefault('wordsLineHeight', defaultSettings.wordsLineHeight));
     lettersYValue.addEventListener('click', resetToDefault('lettersY', defaultSettings.lettersY));
-    lettersSizeValue.addEventListener('click', resetToDefault('lettersSize', defaultSettings.lettersSize));    lettersSpacingValue.addEventListener('click', resetToDefault('lettersSpacing', defaultSettings.lettersSpacing));
+    lettersSizeValue.addEventListener('click', resetToDefault('lettersSize', defaultSettings.lettersSize));
+    lettersSpacingValue.addEventListener('click', resetToDefault('lettersSpacing', defaultSettings.lettersSpacing));
     indexYValue.addEventListener('click', resetToDefault('indexY', defaultSettings.indexY));
     indexSizeValue.addEventListener('click', resetToDefault('indexSize', defaultSettings.indexSize));
     indexXValue.addEventListener('click', resetToDefault('indexX', defaultSettings.indexX));
@@ -1232,7 +1272,6 @@
     noteYValue.addEventListener('click', resetNoteToDefault('noteY', defaultNoteSettings.noteY));
     noteSizeValue.addEventListener('click', resetNoteToDefault('noteSize', defaultNoteSettings.noteSize));
     noteLineHeightValue.addEventListener('click', resetNoteToDefault('noteLineHeight', defaultNoteSettings.noteLineHeight));
-
     wordsY.addEventListener('input', function(e) { currentSettings.wordsY = parseInt(e.target.value); wordsYValue.textContent = currentSettings.wordsY + 'px'; wordsContainer.style.top = currentSettings.wordsY + 'px'; });
     wordsSize.addEventListener('input', function(e) { currentSettings.wordsSize = parseInt(e.target.value); wordsSizeValue.textContent = currentSettings.wordsSize + 'px'; wordsContainer.style.fontSize = currentSettings.wordsSize + 'px'; });
     wordsColor.addEventListener('input', function(e) { currentSettings.wordsColor = e.target.value; wordsContainer.style.color = currentSettings.wordsColor; });
@@ -1272,7 +1311,8 @@
         } else {
             codeResult.textContent = 'Mot introuvable !';
             codeResult.classList.add('error');
-        }    });
+        }
+    });
 
     searchInput.addEventListener('keypress', function(e) { if (e.key === 'Enter' && !isSearchDisabled) searchBtn.click(); });
 
@@ -1282,7 +1322,6 @@
         pin = '';
         updateDots();
     });
-
     btnList.addEventListener('click', function() {
         resetModalToNormal();
         modal.classList.add('visible');
@@ -1321,7 +1360,8 @@
     });
     customizeNoteBack.addEventListener('click', function() {
         customizeNotePage.classList.remove('visible', 'preview-mode');
-        settingsPage.classList.add('visible');        currentNoteSettings = loadNoteSettings();
+        settingsPage.classList.add('visible');
+        currentNoteSettings = loadNoteSettings();
         applyNoteSettings(currentNoteSettings);
     });
 
@@ -1330,8 +1370,7 @@
         customizePage.classList.remove('visible', 'preview-mode');
         resultPage.classList.remove('preview-mode');
         settingsPage.classList.add('visible');
-        isPreviewMode = false;
-    });
+        isPreviewMode = false;    });
 
     customizeNoteSave.addEventListener('click', function() {
         saveNoteSettings(currentNoteSettings);
@@ -1370,6 +1409,7 @@
             else dots[i].classList.remove('active');
         }
     }
+
     function resetModalToNormal() {
         searchInput.value = '';
         codeResult.textContent = '';
@@ -1379,8 +1419,7 @@
         modal.classList.remove('keyboard-open');
     }
 
-    function animateKey(element) {
-        if (!element) return;
+    function animateKey(element) {        if (!element) return;
         element.classList.add('active');
         setTimeout(function() { element.classList.remove('active'); }, 350);
     }
@@ -1419,6 +1458,7 @@
             updateDots();
         }
     });
+
     emergencyBtn.addEventListener('click', function(e) {
         e.stopPropagation();
         if (emergencyBtn.classList) emergencyBtn.classList.add('active-text');
@@ -1428,7 +1468,6 @@
         pin = '';
         updateDots();
     });
-
     indexDisplay.addEventListener('click', function(e) {
         e.stopPropagation();
         indexClickCount++;
@@ -1468,7 +1507,8 @@
         var now = Date.now();
         if (now - lastTap < 300 && now - lastTap > 0) {
             resultPage.classList.remove('visible');
-            lockPage.classList.add('visible');            selectedLetter = '';
+            lockPage.classList.add('visible');
+            selectedLetter = '';
         }
         lastTap = now;
     });
@@ -1477,8 +1517,7 @@
         input.addEventListener('change', function(e) {
             var file = e.target.files[0];
             if (file) {
-                var reader = new FileReader();
-                reader.onload = function(event) {
+                var reader = new FileReader();                reader.onload = function(event) {
                     currentPreviewData = event.target.result;
                     previewImage.src = currentPreviewData;
                     previewContainer.classList.add('visible');
@@ -1517,7 +1556,8 @@
             resultPage.style.backgroundImage = 'url(' + currentPreviewData + ')';
             try { localStorage.setItem('resultImage', currentPreviewData); } catch(e) {}
         } else if (currentPreviewTarget === 'note') {
-            customizeNotePage.style.backgroundImage = 'url(' + currentPreviewData + ')';            notePage.style.backgroundImage = 'url(' + currentPreviewData + ')';
+            customizeNotePage.style.backgroundImage = 'url(' + currentPreviewData + ')';
+            notePage.style.backgroundImage = 'url(' + currentPreviewData + ')';
             try { localStorage.setItem('noteImage', currentPreviewData); } catch(e) {}
         }
         previewContainer.classList.remove('visible');
@@ -1526,8 +1566,7 @@
 
     previewCancel.addEventListener('click', function() {
         previewContainer.classList.remove('visible');
-        currentPreviewData = '';
-    });
+        currentPreviewData = '';    });
 
     currentSettings = loadCustomSettings();
     applyCustomSettings(currentSettings);
