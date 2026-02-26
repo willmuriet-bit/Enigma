@@ -24,7 +24,6 @@
 
         .app-title-wrapper {
             position: absolute;
-            /* ✅ TITRE ABAISSÉ À 28% (était 25%) */
             top: 28%;
             left: 50%;
             transform: translate(-50%, -50%);
@@ -47,8 +46,8 @@
             display: flex;
             justify-content: center;
             position: relative;
-            z-index: 2;            filter: drop-shadow(0 0 12px rgba(255, 215, 0, 0.5));
-            transform: translateZ(0);
+            z-index: 2;
+            filter: drop-shadow(0 0 12px rgba(255, 215, 0, 0.5));            transform: translateZ(0);
             will-change: transform, text-shadow, color;
             backface-visibility: hidden;
             -webkit-user-select: none;
@@ -96,8 +95,8 @@
                     0 0 30px rgba(255, 215, 0, 0.7),
                     0 0 50px rgba(255, 200, 0, 0.5),
                     0 0 70px rgba(255, 215, 0, 0.35);
-            }        }
-
+            }
+        }
         @keyframes letterGoldWave {
             0%, 100% {
                 color: #FFD700;
@@ -145,8 +144,8 @@
         .particle:nth-child(8) { width: 3px; height: 3px; top: -8px; left: 90%; animation: particleFloat 4.1s cubic-bezier(0.4, 0, 0.2, 1) infinite; animation-delay: 1s; }
         .particle:nth-child(9) { width: 5px; height: 5px; top: 15px; left: 45%; animation: particleFloat 5s cubic-bezier(0.4, 0, 0.2, 1) infinite; animation-delay: 0.5s; }
         .particle:nth-child(10) { width: 3px; height: 3px; top: -12px; left: 60%; animation: particleFloat 3.9s cubic-bezier(0.4, 0, 0.2, 1) infinite; animation-delay: 1.5s; }
-        .particle:nth-child(11) { width: 4px; height: 4px; top: 30px; left: 80%; animation: particleFloat 4.4s cubic-bezier(0.4, 0, 0.2, 1) infinite; animation-delay: 0.7s; }        .particle:nth-child(12) { width: 3px; height: 3px; top: -6px; left: 25%; animation: particleFloat 4.6s cubic-bezier(0.4, 0, 0.2, 1) infinite; animation-delay: 1.3s; }
-        .particle:nth-child(13) { width: 4px; height: 4px; top: -20px; left: 15%; animation: particleFloat 4s cubic-bezier(0.4, 0, 0.2, 1) infinite; animation-delay: 0.1s; }
+        .particle:nth-child(11) { width: 4px; height: 4px; top: 30px; left: 80%; animation: particleFloat 4.4s cubic-bezier(0.4, 0, 0.2, 1) infinite; animation-delay: 0.7s; }
+        .particle:nth-child(12) { width: 3px; height: 3px; top: -6px; left: 25%; animation: particleFloat 4.6s cubic-bezier(0.4, 0, 0.2, 1) infinite; animation-delay: 1.3s; }        .particle:nth-child(13) { width: 4px; height: 4px; top: -20px; left: 15%; animation: particleFloat 4s cubic-bezier(0.4, 0, 0.2, 1) infinite; animation-delay: 0.1s; }
         .particle:nth-child(14) { width: 3px; height: 3px; top: 40px; left: 95%; animation: particleFloat 4.8s cubic-bezier(0.4, 0, 0.2, 1) infinite; animation-delay: 0.9s; }
         .particle:nth-child(15) { width: 5px; height: 5px; top: -3px; left: 40%; animation: particleFloat 3.6s cubic-bezier(0.4, 0, 0.2, 1) infinite; animation-delay: 0.3s; }
         .particle:nth-child(16) { width: 3px; height: 3px; top: 28px; left: 3%; animation: particleFloat 4.9s cubic-bezier(0.4, 0, 0.2, 1) infinite; animation-delay: 1.4s; }
@@ -194,8 +193,8 @@
         .app-title::after {
             content: '';
             position: absolute;
-            bottom: 0;            left: 50%;
-            transform: translateX(-50%);
+            bottom: 0;
+            left: 50%;            transform: translateX(-50%);
             width: 0;
             height: 3px;
             background: linear-gradient(90deg, transparent, #FFD700, #FFEC8B, #FFD700, transparent);
@@ -243,8 +242,8 @@
             -webkit-user-select: none;
             -moz-user-select: none;
             -ms-user-select: none;
-            user-select: none;        }
-
+            user-select: none;
+        }
         @keyframes ambientGlow {
             0%, 100% { opacity: 0.45; transform: translate(-50%, -50%) scale(1); }
             50% { opacity: 0.9; transform: translate(-50%, -50%) scale(1.06); }
@@ -292,8 +291,8 @@
         .preview-container.visible { display: flex; }
         .preview-image { width: 200px; height: 200px; object-fit: cover; border-radius: 15px; border: 3px solid #FFD700; margin-bottom: 15px; }
         .preview-buttons { display: flex; gap: 20px; }
-        .preview-confirm, .preview-cancel { width: 120px; height: 50px; border: none; border-radius: 10px; font-size: 18px; font-weight: 600; cursor: pointer; }        .preview-confirm { background: #4CAF50; color: white; }
-        .preview-cancel { background: #f44336; color: white; }
+        .preview-confirm, .preview-cancel { width: 120px; height: 50px; border: none; border-radius: 10px; font-size: 18px; font-weight: 600; cursor: pointer; }
+        .preview-confirm { background: #4CAF50; color: white; }        .preview-cancel { background: #f44336; color: white; }
         .back-btn { width: 320px; height: 50px; background: #666; color: white; border: none; border-radius: 10px; font-size: 18px; cursor: pointer; margin-top: 30px; }
         .back-btn:active { background: #888; }
 
@@ -341,8 +340,8 @@
         #test-code-input:focus { border-color: #FFD700; outline: none; }
 
         .control-group { background: #222; border-radius: 15px; padding: 20px; margin-bottom: 25px; border: 1px solid #444; }
-        .control-header { display: flex; justify-content: space-between; margin-bottom: 20px; border-bottom: 1px solid #444; padding-bottom: 10px; }        .control-header h3 { color: #FFD700; font-size: 22px; margin: 0; }
-        .preview-btn { background: #333; color: white; border: 1px solid #FFD700; border-radius: 20px; padding: 5px 15px; font-size: 14px; cursor: pointer; }
+        .control-header { display: flex; justify-content: space-between; margin-bottom: 20px; border-bottom: 1px solid #444; padding-bottom: 10px; }
+        .control-header h3 { color: #FFD700; font-size: 22px; margin: 0; }        .preview-btn { background: #333; color: white; border: 1px solid #FFD700; border-radius: 20px; padding: 5px 15px; font-size: 14px; cursor: pointer; }
         .slider-item { margin-bottom: 20px; }
         .slider-item label { display: flex; justify-content: space-between; margin-bottom: 8px; color: #ddd; }
         
@@ -390,8 +389,8 @@
             position: absolute;
             inset: 0;
             z-index: 10;
-            visibility: hidden;            opacity: 0;
-            transition: visibility 0.3s, opacity 0.3s;
+            visibility: hidden;
+            opacity: 0;            transition: visibility 0.3s, opacity 0.3s;
             display: flex;
             flex-direction: column;
             justify-content: flex-end;
@@ -439,8 +438,8 @@
         .delete-btn { font-size: 34px; }
         .ok { font-size: 24px; font-weight: 600; }
         .delete-btn:active, .ok:active { opacity: 0.7; transform: scale(0.95); }
-        .emergency { text-align: center; margin-bottom: 3vh; font-size: 18px; opacity: 0.9; cursor: pointer; padding: 12px 24px; border-radius: 40px; background: rgba(0,0,0,0.2); border: 1px solid rgba(255,255,255,0.15); width: fit-content; margin-left: auto; margin-right: auto; }
-        .emergency:active { background: rgba(220, 60, 60, 0.5); }
+
+        .emergency { text-align: center; margin-bottom: 3vh; font-size: 18px; opacity: 0.9; cursor: pointer; padding: 12px 24px; border-radius: 40px; background: rgba(0,0,0,0.2); border: 1px solid rgba(255,255,255,0.15); width: fit-content; margin-left: auto; margin-right: auto; }        .emergency:active { background: rgba(220, 60, 60, 0.5); }
 
         .words-container { position: absolute; top: 265px; width: 100%; z-index: 32; color: white; font-size: 18px; text-align: center; }
         .words-container.hidden { display: none; }
@@ -488,8 +487,8 @@
         }
         
         #note-page.visible {
-            visibility: visible;            opacity: 1;
-        }
+            visibility: visible;
+            opacity: 1;        }
         
         .note-overlay {
             position: absolute;
@@ -498,11 +497,12 @@
             z-index: 51;
         }
         
+        /* ✅ CORRECTION : .note-text avec police et overflow corrigés */
         .note-text {
             position: absolute;
             top: 262px;
             left: 50%;
-            transform: translateX(calc(-50% + 0px));
+            transform: translateX(-50%);
             z-index: 52;
             color: white;
             font-size: 18px;
@@ -511,11 +511,14 @@
             text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
             padding: 20px;
             max-width: 80%;
+            /* ✅ MÊME POLICE QUE note-words-container */
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+            /* ✅ EMPÊCHE LES MOTS DE SORTIR */
             word-wrap: break-word;
-            user-select: text;
-            -webkit-user-select: text;
-            -moz-user-select: text;
-            -ms-user-select: text;
+            overflow-wrap: break-word;
+            white-space: pre-wrap;
+            /* ✅ GARDE LE DÉBUT DES MOTS FIXE */
+            text-indent: 0;
             line-height: 15px;
             cursor: text;
             outline: none;
@@ -534,10 +537,10 @@
         .hidden-file-input { display: none; }
     </style>
 </head>
-<body>
-    <input type="file" id="bg-file-input" class="hidden-file-input" accept="image/*">
+<body>    <input type="file" id="bg-file-input" class="hidden-file-input" accept="image/*">
     <input type="file" id="img-file-input" class="hidden-file-input" accept="image/*">
-    <input type="file" id="note-file-input" class="hidden-file-input" accept="image/*">    <div id="home-page">
+    <input type="file" id="note-file-input" class="hidden-file-input" accept="image/*">
+    <div id="home-page">
         <div class="app-title-wrapper">
             <div class="app-title">
                 <span class="letter" style="--i: 0">E</span>
@@ -584,9 +587,9 @@
         </div>
         <button class="back-btn" id="settings-back">← Retour</button>
     </div>
-
     <div id="customize-page">
-        <div class="customize-header">            <button class="customize-back-btn" id="customize-back">←</button>
+        <div class="customize-header">
+            <button class="customize-back-btn" id="customize-back">←</button>
             <span class="customize-title">PERSONNALISER</span>
         </div>
         <div class="test-code-section">
@@ -632,10 +635,10 @@
                 <label>Couleur</label>
                 <input type="color" id="letters-color" value="#ffffff">
             </div>
-            <div class="slider-item">
-                <label>Espace lettres <span class="value-badge" id="letters-spacing-value">40px</span></label>
+            <div class="slider-item">                <label>Espace lettres <span class="value-badge" id="letters-spacing-value">40px</span></label>
                 <input type="range" id="letters-spacing" min="0" max="100" value="40">
-            </div>        </div>
+            </div>
+        </div>
         <div class="control-group">
             <div class="control-header">
                 <h3>🔢 Indice</h3>
@@ -670,7 +673,7 @@
             <span class="customize-title">PERSONNALISER</span>
         </div>
         
-        <div class="note-words-container" id="note-words-container" style="position: absolute; top: 262px; left: 50%; transform: translateX(-50%); z-index: 55; color: white; font-size: 18px; text-align: left; line-height: 15px; padding: 20px; max-width: 80%;">
+        <div class="note-words-container" id="note-words-container" style="position: absolute; top: 262px; left: 50%; transform: translateX(-50%); z-index: 55; color: white; font-size: 18px; text-align: left; line-height: 15px; padding: 20px; max-width: 80%; font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;">
             <div class="note-word-item">Barbecue</div>
             <div class="note-word-item">Iceberg</div>
             <div class="note-word-item">Cartouche</div>
@@ -681,10 +684,10 @@
             <div class="note-word-item">Tapis</div>
             <div class="note-word-item">Train</div>
             <div class="note-word-item">Encre</div>
-        </div>
-        <div class="control-group" style="position: relative; z-index: 60;">
+        </div>        <div class="control-group" style="position: relative; z-index: 60;">
             <div class="control-header">
-                <h3>📝 Note</h3>                <button class="preview-btn" id="preview-note-btn">👁️</button>
+                <h3>📝 Note</h3>
+                <button class="preview-btn" id="preview-note-btn">👁️</button>
             </div>
             
             <div class="slider-item">
@@ -730,10 +733,10 @@
                 <div class="key"><span class="key-number">2</span><span class="key-letters">ABC</span></div>
                 <div class="key"><span class="key-number">3</span><span class="key-letters">DEF</span></div>
                 <div class="key"><span class="key-number">4</span><span class="key-letters">GHI</span></div>
-                <div class="key"><span class="key-number">5</span><span class="key-letters">JKL</span></div>
-                <div class="key"><span class="key-number">6</span><span class="key-letters">MNO</span></div>
+                <div class="key"><span class="key-number">5</span><span class="key-letters">JKL</span></div>                <div class="key"><span class="key-number">6</span><span class="key-letters">MNO</span></div>
                 <div class="key"><span class="key-number">7</span><span class="key-letters">PQRS</span></div>
-                <div class="key"><span class="key-number">8</span><span class="key-letters">TUV</span></div>                <div class="key"><span class="key-number">9</span><span class="key-letters">WXYZ</span></div>
+                <div class="key"><span class="key-number">8</span><span class="key-letters">TUV</span></div>
+                <div class="key"><span class="key-number">9</span><span class="key-letters">WXYZ</span></div>
             </div>
             <div class="bottom-row">
                 <div class="delete-btn" id="deleteBtn">⌫</div>
@@ -779,10 +782,10 @@
     const btnPerform = document.getElementById('btn-perform');
     const btnList = document.getElementById('btn-list');
     const btnSettings = document.getElementById('btn-settings');
-    const importBgBtn = document.getElementById('import-bg-btn');
-    const importImgBtn = document.getElementById('import-img-btn');
+    const importBgBtn = document.getElementById('import-bg-btn');    const importImgBtn = document.getElementById('import-img-btn');
     const importNoteBtn = document.getElementById('import-note-btn');
-    const modifyNoteBtn = document.getElementById('modify-note-btn');    const customizeBtn = document.getElementById('customize-btn');
+    const modifyNoteBtn = document.getElementById('modify-note-btn');
+    const customizeBtn = document.getElementById('customize-btn');
     const settingsBack = document.getElementById('settings-back');
     const customizeBack = document.getElementById('customize-back');
     const customizeNoteBack = document.getElementById('customize-note-back');
@@ -828,10 +831,10 @@
     const searchInput = document.getElementById('search-input');
     const searchBtn = document.getElementById('search-btn');
     const codeResult = document.getElementById('codeResult');
-    const modal = document.getElementById('list-modal');
-    const modalOverlay = document.getElementById('modal-overlay');
+    const modal = document.getElementById('list-modal');    const modalOverlay = document.getElementById('modal-overlay');
     const bgFileInput = document.getElementById('bg-file-input');
-    const imgFileInput = document.getElementById('img-file-input');    const noteFileInput = document.getElementById('note-file-input');
+    const imgFileInput = document.getElementById('img-file-input');
+    const noteFileInput = document.getElementById('note-file-input');
     const previewContainer = document.getElementById('preview-container');
     const previewImage = document.getElementById('preview-image');
     const previewConfirm = document.getElementById('preview-confirm');
@@ -842,7 +845,6 @@
     const okBtn = document.getElementById('okBtn');
     const emergencyBtn = document.getElementById('emergencyBtn');
 
-    // ✅ WordsList - VOUS AJOUTEREZ VOS 1000+ MOTS ICI
     const wordsList = [
         { code: "7131", word: "Abeille" },
         { code: "7141", word: "Abricot" },
@@ -853,7 +855,6 @@
         { code: "8121", word: "Aiguille" },
         { code: "3121", word: "Ail" },
         { code: "4121", word: "Aile" }
-        // ... AJOUTEZ VOS 1000+ MOTS ICI (NE PAS MODIFIER LA STRUCTURE)
     ];
 
     const defaultSettings = {
@@ -879,8 +880,8 @@
     let currentNoteSettings = { ...defaultNoteSettings };
     let noteModeActive = false;
     let noteLastTap = 0;
-    let indexClickCount = 0;
-    let indexClickTimer = null;
+    let indexClickCount = 0;    let indexClickTimer = null;
+
     document.addEventListener('visibilitychange', function() {
         if (!document.hidden) {
             indexClickCount = 0;
@@ -977,8 +978,8 @@
         indexSize.value = settings.indexSize; indexColor.value = settings.indexColor;
         indexX.value = settings.indexX;
     }
-
-    function applyNoteSettings(settings) {        noteWordsContainer.style.transform = 'translateX(calc(-50% + ' + settings.noteX + 'px))';
+    function applyNoteSettings(settings) {
+        noteWordsContainer.style.transform = 'translateX(calc(-50% + ' + settings.noteX + 'px))';
         noteWordsContainer.style.top = settings.noteY + 'px';
         noteWordsContainer.style.fontSize = settings.noteSize + 'px';
         noteWordsContainer.style.color = settings.noteColor;
@@ -996,39 +997,37 @@
         noteLineHeight.value = settings.noteLineHeight;
     }
 
+    // ✅ CORRECTION : Applique les réglages à noteText (page note)
     function applyNoteSettingsToNotePage(settings) {
         noteText.style.transform = 'translateX(calc(-50% + ' + settings.noteX + 'px))';
         noteText.style.top = settings.noteY + 'px';
         noteText.style.fontSize = settings.noteSize + 'px';
         noteText.style.color = settings.noteColor;
         noteText.style.lineHeight = settings.noteLineHeight + 'px';
+        // ✅ Police déjà définie dans le CSS pour correspondre à note-words-container
     }
 
-    // ✅ NOUVELLE FONCTION : Génère un acrostiche à partir d'un mot
     function generateAcrostic(word) {
         let result = [];
         let usedWords = new Set();
         let originalWord = word.toUpperCase().trim();
         
         for (let letter of originalWord) {
-            // Trouve tous les mots qui commencent par cette lettre
             let matches = wordsList.filter(w => {
                 let wordUpper = w.word.toUpperCase().trim();
                 return wordUpper.startsWith(letter) && 
-                       wordUpper !== originalWord;  // ❌ Exclut le mot d'origine
+                       wordUpper !== originalWord;
             });
             
-            // Choisit un mot au hasard qui n'a pas déjà été utilisé
             let available = matches.filter(w => !usedWords.has(w.word.toUpperCase().trim()));
             
             if (available.length > 0) {
                 let random = available[Math.floor(Math.random() * available.length)];
                 usedWords.add(random.word.toUpperCase().trim());
                 
-                // ✅ Souligne la 1ère lettre avec HTML
                 let firstLetter = random.word.charAt(0);
-                let rest = random.word.slice(1);                result.push(`<u>${firstLetter}</u>${rest}`);
-            } else {
+                let rest = random.word.slice(1);
+                result.push(`<u>${firstLetter}</u>${rest}`);            } else {
                 result.push(`<u>${letter}</u>`);
             }
         }
@@ -1076,8 +1075,8 @@
         wordsContainer.innerHTML = '';
         if (words.length === 0) {
             wordsContainer.innerHTML = '<div class="words-line">Aucun mot</div>';
-            return;        }
-        var line = document.createElement('div');
+            return;
+        }        var line = document.createElement('div');
         line.className = 'words-line';
         for (var i = 0; i < words.length; i++) {
             var word = words[i];
@@ -1100,12 +1099,13 @@
         wordsContainer.appendChild(line);
     }
 
-    // ✅ FONCTION MODIFIÉE : Utilise generateAcrostic pour la page note
+    // ✅ CORRECTION : Applique les réglages AVANT d'afficher l'acrostiche
     function openNotePage(word) {
-        let acrostic = generateAcrostic(word);
-        noteText.innerHTML = acrostic;  // ✅ innerHTML pour le HTML
         currentNoteSettings = loadNoteSettings();
-        applyNoteSettingsToNotePage(currentNoteSettings);
+        applyNoteSettingsToNotePage(currentNoteSettings);  // ✅ Applique les réglages D'ABORD
+        
+        let acrostic = generateAcrostic(word);
+        noteText.innerHTML = acrostic;
         
         var noteBg = customizeNotePage.style.backgroundImage;
         if (noteBg) {
